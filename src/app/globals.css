@@ -1,0 +1,49 @@
+@import "../styles/tokens.css";
+@import "katex/dist/katex.min.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    line-height: 1.6;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Accessible focus rings */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Accessible skip link */
+  .skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 100;
+  }
+
+  .skip-to-content:focus {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    width: auto;
+    height: auto;
+    padding: 8px 16px;
+    background: var(--color-surface-raised);
+    color: var(--color-text);
+    border: 2px solid var(--color-focus);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}

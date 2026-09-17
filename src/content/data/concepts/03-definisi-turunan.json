@@ -1,0 +1,136 @@
+{
+  "id": "30000000-0000-4000-8000-000000000003",
+  "moduleId": "20000000-0000-4000-8000-000000000001",
+  "slug": "definisi-turunan",
+  "title": "Definisi Turunan: Secant Menjadi Tangent",
+  "summary": "Momen penemuan kalkulus: bagaimana limit mengubah garis potong dua titik menjadi garis singgung sesaat pada satu titik tunggal.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami konsep limit diferensiasi saat jarak h mendekati nol",
+    "Menjelaskan bagaimana garis potong bertransformasi menjadi garis singgung (tangent)",
+    "Menghitung kemiringan garis singgung f'(x) untuk fungsi kuadrat f(x) = x²"
+  ],
+  "prerequisites": ["laju-perubahan"],
+  "misconceptions": [
+    {
+      "code": "DIVIDE_BY_ZERO_CONFUSION",
+      "label": "Mengira turunan membagi dengan angka nol 0/0",
+      "remediation": "Ingat konsep limit: h mendekati nol (sangat dekat), bukan sama persis dengan nol, sehingga kita tidak pernah membagi dengan nol mutlak."
+    },
+    {
+      "code": "CONSTANT_SLOPE_ASSUMPTION",
+      "label": "Menganggap kemiringan kurva bernilai tetap di semua titik",
+      "remediation": "Pada kurva melengkung seperti f(x) = x², kemiringan garis singgung berubah-ubah seiring berjalannya nilai x."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000008",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Teka-Teki Kemiringan pada Satu Titik",
+      "instruction": "Renungkan teka-teki matematis ini.",
+      "content": "Jika kita ingin mengukur kemiringan garis di antara dua titik yang terpisah, kita membagi perubahan tinggi dengan perubahan jarak datar: $m = \\frac{\\Delta y}{\\Delta x}$.\n\nTetapi bagaimana jika kita ingin mengukur kemiringan tepat pada **satu titik tunggal**?\nJika kita hanya memakai satu titik, maka $\\Delta x = 0$ dan $\\Delta y = 0$. Pembagian $\\frac{0}{0}$ tidak memiliki arti! Bagaimana para matematikawan memecahkan teka-teki ini tanpa membagi dengan nol?",
+      "estimatedMinutes": 2
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000009",
+      "kind": "explore",
+      "sortOrder": 2,
+      "title": "Eksplorasi: Mendekatkan Titik Kedua",
+      "instruction": "Amati bagaimana garis potong berubah ketika selisih jarak h diperkecil.",
+      "content": "Bayangkan titik $A(x, f(x))$ tetap diam di tempat, dan titik kedua $B(x+h, f(x+h))$ kita dorong semakin dekat ke titik $A$.\n\nKetika jarak $h = 2$, garis yang menghubungkan keduanya memotong kurva di dua titik berjarak.\nKetika jarak $h = 0.5$, garis potong semakin rapat.\nKetika jarak $h = 0.001$, kedua titik nyaris menyatu sempurna!",
+      "estimatedMinutes": 3,
+      "config": {
+        "functionExpression": "x^2",
+        "fixedX": 1,
+        "sliderMinH": 0.01,
+        "sliderMaxH": 2.0,
+        "defaultH": 1.0
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000010",
+      "kind": "predict",
+      "sortOrder": 3,
+      "title": "Prediksi: Apa yang Terjadi saat Jarak h Mendekati Nol?",
+      "instruction": "Pilihlah prediksimu sebelum melihat teorema formal.",
+      "content": "Ketika titik kedua didorong semakin dekat sehingga jarak horizontal $h$ menuju nol ($h \\to 0$):\nApa yang terjadi pada garis potong (secant line)?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Perhatikan arah garis saat kedua titik semakin menempel pada kurva.",
+        "concept": "Garis potong (memotong 2 titik) akan menyentuh kurva pada 1 titik saja ketika h mendekati 0.",
+        "strategy": "Pikirkan definisi garis singgung lingkaran atau kurva.",
+        "solution": "Garis potong bertransformasi menjadi garis singgung (tangent line) yang hanya menyentuh kurva tepat pada titik tersebut."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-tangent",
+            "label": "Garis potong menjadi Garis Singgung (Tangent Line) yang menyentuh kurva tepat di titik tersebut",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Secant line berputar dan konvergen menjadi garis singgung (tangent line)."
+          },
+          {
+            "id": "opt-hilang",
+            "label": "Garis tersebut hilang dan kemiringannya tidak bisa dihitung",
+            "isCorrect": false,
+            "misconceptionCode": "DIVIDE_BY_ZERO_CONFUSION",
+            "feedback": "Meskipun h mendekati 0, rasio limitnya tetap menghasilkan angka kemiringan yang nyata dan terdefinisi!"
+          },
+          {
+            "id": "opt-horizontal",
+            "label": "Garis tersebut selalu menjadi garis horizontal datar (m = 0)",
+            "isCorrect": false,
+            "feedback": "Garis hanya horizontal jika kurva sedang berada di puncak atau lembah. Pada bagian miring, garis singgung tetap miring."
+          }
+        ],
+        "feedbackCorrect": "Prediksi tepat! Kamu telah menemukan konsep kunci diferensiasi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000011",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Definisi Formal Turunan",
+      "instruction": "Pelajari rumus inti kalkulus diferensial.",
+      "content": "Turunan dari fungsi $f(x)$ pada suatu titik, dilambangkan dengan $f'(x)$ (baca: *f aksen x*), didefinisikan sebagai nilai limit dari laju perubahan rata-rata ketika $h \\to 0$:\n\n$$f'(x) = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}$$\n\nSecara geometris, $f'(x)$ adalah **kemiringan garis singgung (slope of the tangent line)** kurva $f$ di titik $x$.\nSecara fisika, $f'(x)$ adalah **laju perubahan sesaat** (misalnya kecepatan sesaat).",
+      "estimatedMinutes": 3
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000012",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Kemiringan Garis Singgung f(x) = x²",
+      "instruction": "Gunakan aturan turunan untuk mencari kemiringan sesaat.",
+      "content": "Untuk fungsi kuadrat $f(x) = x^2$, aturan turunan menghasilkan rumus kemiringan:\n\n$$f'(x) = 2x$$\n\nBerapakah kemiringan garis singgung kurva $f(x) = x^2$ tepat pada titik $x = 3$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Kamu diberikan fungsi turunan f'(x) = 2x dan nilai x = 3.",
+        "concept": "Untuk mencari kemiringan pada x = 3, substitusikan nilai x = 3 ke dalam rumus turunan f'(x).",
+        "strategy": "Hitung f'(3) = 2 × 3.",
+        "solution": "f'(3) = 2(3) = 6. Kemiringan garis singgung di x = 3 adalah 6."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 6,
+        "tolerance": 0.001,
+        "units": "",
+        "feedbackCorrect": "Luar biasa! Kemiringan kurva pada x = 3 adalah 6.",
+        "misconceptions": [
+          {
+            "code": "USED_ORIGINAL_FUNCTION",
+            "triggerValue": 9,
+            "feedback": "Angka 9 adalah nilai fungsi f(3) = 3² (ketinggian titik), bukan kemiringan garis singgung f'(3) = 2(3)."
+          },
+          {
+            "code": "CONFUSED_X_VALUE",
+            "triggerValue": 3,
+            "feedback": "Angka 3 adalah koordinat x. Kemiringan garis singgung di titik tersebut adalah 2x = 2(3) = 6."
+          }
+        ]
+      }
+    }
+  ]
+}

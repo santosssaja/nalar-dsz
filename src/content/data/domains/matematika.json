@@ -1,0 +1,8 @@
+{
+  "id": "10000000-0000-4000-8000-000000000001",
+  "slug": "matematika",
+  "title": "Matematika",
+  "summary": "Fondasi numerik, aljabar, geometri, logika, dan kalkulus terapan.",
+  "sortOrder": 1,
+  "moduleSlugs": ["turunan"]
+}

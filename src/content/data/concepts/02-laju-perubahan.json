@@ -1,0 +1,74 @@
+{
+  "id": "30000000-0000-4000-8000-000000000002",
+  "moduleId": "20000000-0000-4000-8000-000000000001",
+  "slug": "laju-perubahan",
+  "title": "Laju Perubahan Rata-rata",
+  "summary": "Memahami bagaimana dua kuantitas berubah relatif satu sama lain dan bagaimana secant line menggambarkan rata-rata tersebut.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Menghitung laju perubahan rata-rata dari rasio selisih kuantitas Δy / Δx",
+    "Menghubungkan kecepatan rata-rata dengan kemiringan garis potong (secant line)"
+  ],
+  "prerequisites": ["perubahan"],
+  "misconceptions": [
+    {
+      "code": "RATE_TIME_UNIT",
+      "label": "Lupa membagi dengan interval waktu Δt",
+      "remediation": "Ingat bahwa kecepatan bukan sekadar jarak tempuh, melainkan rasio jarak tempuh per satuan waktu (Δs / Δt)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000005",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Spidometer vs Waktu Tempuh",
+      "instruction": "Pikirkan paradoks speedometer berikut.",
+      "content": "Sebuah mobil menempuh perjalanan Jakarta–Bandung sejauh 140 km dalam waktu tepat 2 jam. Jika kita hitung rata-ratanya:\n\n$$\\text{Kecepatan rata-rata} = \\frac{140\\text{ km}}{2\\text{ jam}} = 70\\text{ km/jam}$$\n\nNamun, apakah jarum spidometer mobil selalu menunjuk tepat pada angka 70 km/jam di setiap lampu merah, gerbang tol, dan tanjakan? Tentu tidak! Di sinilah kita membedakan antara **kecepatan rata-rata** dan **kecepatan sesaat**.",
+      "estimatedMinutes": 3
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000006",
+      "kind": "understand",
+      "sortOrder": 2,
+      "title": "Kemiringan Tali Busur (Secant Line)",
+      "instruction": "Pelajari representasi geometris dari laju rata-rata.",
+      "content": "Jika kita menggambar grafik fungsi $y = f(x)$, laju perubahan rata-rata antara titik $A(x_1, f(x_1))$ dan $B(x_2, f(x_2))$ adalah kemiringan garis lurus yang menghubungkan kedua titik tersebut (disebut **secant line** atau garis potong):\n\n$$m_{\\text{sec}} = \\frac{\\Delta y}{\\Delta x} = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}$$\n\nGaris potong ini merata-ratakan semua lekukan kurva di antara titik $A$ dan $B$.",
+      "estimatedMinutes": 3
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000007",
+      "kind": "practice",
+      "sortOrder": 3,
+      "title": "Latihan: Laju Perubahan Rata-rata Fungsi Kuadrat",
+      "instruction": "Hitunglah kemiringan secant line pada fungsi f(x) = x².",
+      "content": "Diketahui kurva fungsi $f(x) = x^2$. Kita memilih dua titik pada kurva:\n- Titik $A$ pada saat $x_1 = 1 \\implies f(1) = 1$\n- Titik $B$ pada saat $x_2 = 3 \\implies f(3) = 9$\n\nBerapakah laju perubahan rata-rata $m_{\\text{sec}} = \\frac{f(3) - f(1)}{3 - 1}$ kurva tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus kemiringan garis m = Δy / Δx.",
+        "concept": "Δy = f(3) - f(1) = 9 - 1 = 8. Δx = 3 - 1 = 2.",
+        "strategy": "Bagilah Δy dengan Δx (8 dibagi 2).",
+        "solution": "m = (9 - 1) / (3 - 1) = 8 / 2 = 4."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 4,
+        "tolerance": 0.001,
+        "units": "",
+        "feedbackCorrect": "Luar biasa! Kemiringan secant line adalah 4.",
+        "misconceptions": [
+          {
+            "code": "FORGOT_DELTA_X_DIVISION",
+            "triggerValue": 8,
+            "feedback": "Kamu baru menghitung Δy (9 - 1 = 8). Jangan lupa membaginya dengan interval Δx (3 - 1 = 2)."
+          },
+          {
+            "code": "INVERTED_SLOPE",
+            "triggerValue": 0.25,
+            "feedback": "Kemiringan adalah Δy / Δx, bukan kebalikannya Δx / Δy."
+          }
+        ]
+      }
+    }
+  ]
+}

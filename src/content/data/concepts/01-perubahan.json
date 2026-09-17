@@ -1,0 +1,108 @@
+{
+  "id": "30000000-0000-4000-8000-000000000001",
+  "moduleId": "20000000-0000-4000-8000-000000000001",
+  "slug": "perubahan",
+  "title": "Perubahan: Diskrit dan Kontinu",
+  "summary": "Membangun intuisi awal tentang bagaimana kuantitas berubah, melompat langkah demi langkah atau mengalir tanpa henti.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Membedakan perubahan diskrit dengan perubahan kontinu dalam fenomena nyata",
+    "Memahami bahwa kalkulus berfokus pada dinamika perubahan yang mulus dan kontinu"
+  ],
+  "prerequisites": [],
+  "misconceptions": [
+    {
+      "code": "DISCRETE_CONTINUOUS_CONFUSION",
+      "label": "Menyamakan waktu jam digital dengan aliran waktu sebenarnya",
+      "remediation": "Perhatikan bahwa angka jam digital melompat per detik, namun waktu di alam mengalir secara kontinu tanpa celah."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000001",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Anak Tangga vs Tanjakan Bukit",
+      "instruction": "Amati kedua cara mencapai puncak ketinggian ini.",
+      "content": "Bayangkan kamu mendaki ketinggian 10 meter. Cara pertama: kamu menaiki tangga dengan 50 anak tangga setinggi 20 cm. Cara kedua: kamu berjalan menaiki lereng bukit yang landai dan mulus.\n\nPada tangga, ketinggian kakimu **melompat** secara bertahap (diskrit). Pada lereng bukit, ketinggianmu bertambah di setiap milimeter langkah tanpa ada lompatan (kontinu). Kalkulus lahir untuk menjelaskan perubahan mulus di lereng bukit!",
+      "estimatedMinutes": 2
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000002",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Aliran Air dalam Waduk",
+      "instruction": "Buat prediksi sebelum melihat ulasan saintifik.",
+      "content": "Ketika sebuah waduk dibuka dan air mengalir keluar memenuhi sungai, apakah perubahan volume air di dalam waduk merupakan perubahan **diskrit** atau **kontinu**?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Pikirkan apakah volume berkurang tetes demi tetes secara terputus-putus atau mengalir mulus.",
+        "concept": "Perubahan kontinu terjadi ketika nilai variabel dapat mengambil nilai berapapun di dalam suatu interval tanpa lompatan.",
+        "strategy": "Perhatikan bahwa zat cair makroskopis mengalir tanpa jeda waktu.",
+        "solution": "Volume air mengalir secara kontinu karena di setiap sepersekian detik, volume berkurang secara mulus tanpa jeda jeda langkah."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-kontinu",
+            "label": "Kontinu — volume air berkurang secara mulus di setiap titik waktu",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Aliran air mengalir mulus di setiap rentang waktu terkecil."
+          },
+          {
+            "id": "opt-diskrit",
+            "label": "Diskrit — volume melompat dalam takaran liter per detik",
+            "isCorrect": false,
+            "misconceptionCode": "DISCRETE_CONTINUOUS_CONFUSION",
+            "feedback": "Meskipun kita mengukurnya per detik, alam tidak menunggu satu detik untuk mengalirkan air."
+          }
+        ],
+        "feedbackCorrect": "Bagus sekali! Model mentalmu tentang perubahan kontinu sudah terbentuk."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000003",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Notasi Perubahan: Delta (Δ)",
+      "instruction": "Pelajari notasi matematika untuk perubahan nilai.",
+      "content": "Dalam matematika dan fisika, lambang Yunani **Delta ($\\Delta$)** melambangkan selisih antara nilai akhir dan nilai awal:\n\n$$\\Delta x = x_2 - x_1$$\n$$\\Delta y = y_2 - y_1$$\n\nJika $\\Delta x$ besar, kita sedang melihat rentang yang lebar. Tetapi apa yang terjadi jika rentang $\\Delta x$ diperkecil hingga nyaris nol? Di situlah keajaiban turunan dimulai!",
+      "estimatedMinutes": 3
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000004",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Menghitung Selisih Nilai (Δy)",
+      "instruction": "Hitunglah nilai perubahan fungsi.",
+      "content": "Diberikan posisi sebuah benda mengikuti persamaan $y = 3x + 2$. Pada saat $x_1 = 1$, posisinya $y_1 = 5$. Pada saat $x_2 = 4$, posisinya $y_2 = 14$.\n\nBerapakah nilai perubahan posisi $\\Delta y$ benda tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Kamu diminta mencari nilai selisih posisi Δy.",
+        "concept": "Gunakan rumus Δy = y₂ - y₁.",
+        "strategy": "Kurangkan posisi akhir (y₂ = 14) dengan posisi awal (y₁ = 5).",
+        "solution": "Δy = 14 - 5 = 9."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 9,
+        "tolerance": 0.001,
+        "units": "",
+        "feedbackCorrect": "Benar! Perubahan posisi Δy adalah 9 satuan.",
+        "misconceptions": [
+          {
+            "code": "INVERTED_DELTA",
+            "triggerValue": -9,
+            "feedback": "Periksa arah perubahan: Δy adalah nilai akhir dikurangi nilai awal (14 - 5), bukan sebaliknya."
+          },
+          {
+            "code": "DELTA_X_INSTEAD",
+            "triggerValue": 3,
+            "feedback": "Angka 3 adalah Δx (4 - 1). Yang ditanyakan adalah perubahan posisi Δy (14 - 5)."
+          }
+        ]
+      }
+    }
+  ]
+}

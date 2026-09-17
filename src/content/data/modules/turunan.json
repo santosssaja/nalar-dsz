@@ -1,0 +1,43 @@
+{
+  "id": "20000000-0000-4000-8000-000000000001",
+  "domainId": "10000000-0000-4000-8000-000000000001",
+  "domainSlug": "matematika",
+  "slug": "turunan",
+  "title": "Kalkulus: Turunan",
+  "summary": "Pelajari bagaimana suatu besaran berubah terhadap besaran lainnya, dari laju rata-rata hingga laju perubahan sesaat.",
+  "estimatedMinutes": 240,
+  "prerequisites": [
+    {
+      "slug": "limit",
+      "title": "Konsep Limit & Pendekatan",
+      "required": true
+    },
+    {
+      "slug": "fungsi-grafik",
+      "title": "Fungsi dan Grafik Koordinat",
+      "required": false
+    }
+  ],
+  "conceptSlugs": ["perubahan", "laju-perubahan", "definisi-turunan"],
+  "learningPath": {
+    "slug": "jalur-utama-turunan",
+    "title": "Jalur Utama Intuisi Turunan",
+    "nodes": [
+      {
+        "conceptSlug": "perubahan",
+        "sortOrder": 1,
+        "required": true
+      },
+      {
+        "conceptSlug": "laju-perubahan",
+        "sortOrder": 2,
+        "required": true
+      },
+      {
+        "conceptSlug": "definisi-turunan",
+        "sortOrder": 3,
+        "required": true
+      }
+    ]
+  }
+}
