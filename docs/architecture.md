@@ -71,9 +71,23 @@ Recommendation engine memprioritaskan, berurutan:
 
 Rekomendasi harus dapat dijelaskan lewat `reason_code` dan `reason_text`.
 
-## AI / Nai
+## AI / Nai (Multi-Provider Architecture)
 
 Nai tidak langsung mengakses database luas atau internet. Orchestrator memberikan context terstruktur: concept aktif, tujuan step, rubric, hint yang diizinkan, attempt ringkas, mode bantuan, dan policy. Simpan provider/model/version serta keputusan evaluasi, bukan chain-of-thought.
+
+Sistem AI diorganisasikan dalam pola **Multi-Provider Adapter Pattern** (`src/server/ai/`):
+1. **Contract Interface (`IAiProvider` in `types.ts`)**: Mengabstraksikan metode `socraticGuidance` dan `evaluateTeachMode`.
+2. **Provider Factory (`getAiProvider` in `factory.ts`)**: Menginisialisasi instance provider secara lazy-loaded singleton. Default provider adalah **Google Gemma** (`gemma-2-9b-it`).
+3. **Provider Catalog (`AI_PROVIDERS_CATALOG`)**: Mendukung 5 adapter:
+   - `GemmaProvider` (Google Gemma via `@google/generative-ai` atau Ollama lokal)
+   - `GoogleGeminiProvider` (Google Gemini 1.5 Flash/Pro)
+   - `OpenAiProvider` (OpenAI GPT-4o-mini / GPT-4o)
+   - `AnthropicProvider` (Claude 3.5 Haiku / Sonnet)
+   - `CuratedLocalProvider` (Mesin Sokratis lokal deterministik berbasis rule & rubrik kurasi)
+4. **Hierarki Seleksi**:
+   - Client dapat memilih provider dan model melalui dropdown di UI (`NaiTutorDrawer`) atau parameter request `POST /api/v1/ai/tutor`.
+   - Pengguna/developer dapat memberikan custom API key atau local endpoint URL (misal Ollama) secara aman per request tanpa mengubah konfigurasi server global.
+   - **Graceful Fallback**: Jika credential cloud tidak disetel atau API provider mengalami kegagalan, adapter otomatis jatuh ke `CuratedLocalProvider` tanpa menghasilkan crash 500 bagi pengguna.
 
 Gunakan timeout, rate limit per actor, retry terbatas, dan fallback ke hint terkurasi. Kegagalan AI tidak boleh menghalangi lesson non-AI.
 

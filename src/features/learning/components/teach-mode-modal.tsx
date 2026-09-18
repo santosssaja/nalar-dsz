@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { GraduationCap, X, Bot, CheckCircle, AlertCircle } from "lucide-react";
 import { ConceptContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
-import { AiTeachEvaluation } from "@/server/ai/types";
+import { AiTeachEvaluation, AiProviderName } from "@/server/ai/types";
 
 interface TeachModeModalProps {
   concept: ConceptContent;
@@ -15,6 +15,7 @@ interface TeachModeModalProps {
 
 export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps) {
   const [mounted, setMounted] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState<AiProviderName>("gemma");
   const [teachingText, setTeachingText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [evaluation, setEvaluation] = useState<AiTeachEvaluation | null>(null);
@@ -74,7 +75,7 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
           conceptSlug: concept.slug,
           naiQuestion,
           userTeachingExplanation: teachingText,
-          provider: "gemma",
+          provider: selectedProvider,
         }),
       });
 
@@ -113,14 +114,28 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-1.5 rounded-lg border border-border text-text-muted hover:text-text hover:bg-surface text-xs transition-colors"
-            aria-label="Tutup modal"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <select
+              value={selectedProvider}
+              onChange={(e) => setSelectedProvider(e.target.value as AiProviderName)}
+              className="px-2 py-1 rounded bg-surface border border-border text-[11px] text-text focus:outline-none focus:ring-1 focus:ring-accent"
+              aria-label="Pilih model AI untuk evaluasi mengajar"
+            >
+              <option value="gemma">Google Gemma (Default)</option>
+              <option value="google">Google Gemini</option>
+              <option value="openai">OpenAI GPT</option>
+              <option value="anthropic">Anthropic Claude</option>
+              <option value="curated">Mode Offline Terkurasi</option>
+            </select>
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-lg border border-border text-text-muted hover:text-text hover:bg-surface text-xs transition-colors"
+              aria-label="Tutup modal"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Nai's Student Prompt */}

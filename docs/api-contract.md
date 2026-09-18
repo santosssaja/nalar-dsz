@@ -40,6 +40,9 @@ Kode error: `UNAUTHENTICATED`, `FORBIDDEN`, `NOT_FOUND`, `VALIDATION_ERROR`, `CO
 | `POST /attempts` | Submit satu response aktivitas | evaluation, feedback, evidence, progress |
 | `POST /hints` | Meminta hint layer | allowed hint + usage event |
 | `POST /ai/explain-feedback` | Evaluasi explain-it-back | rubric feedback, evidence jika final |
+| `GET /ai/providers` | Katalog provider & model AI | daftar provider (`gemma`, `google`, `openai`, `anthropic`, `curated`), model aktif, metadata |
+| `POST /ai/tutor` | Bimbingan Sokratis AI Tutor Nai | respons dialog Sokratis, model info, dan panduan berpikir |
+| `POST /ai/teach` | Evaluasi Mode Guru (Teach Mode) | skor pemahaman konsep, respons persona murid Nai, dan saran |
 | `POST /sync` | Push outbox guest/member | accepted/rejected event IDs + snapshot |
 | `POST /auth/claim-device` | Klaim device guest saat login | merge summary |
 
@@ -107,6 +110,76 @@ Request berisi event outbox dengan client-generated UUID stabil:
 
 Response mengembalikan status setiap event, `serverTime`, dan progress yang berubah. Event diterima secara idempoten melalui `eventId`; event valid lain tetap diproses jika satu event gagal.
 
-## Kontrak AI
+## Kontrak AI & Pemilihan Provider/Model
 
-Endpoint AI tidak menerima prompt mentah sebagai satu-satunya input. Ia menerima mode yang diizinkan (`hint`, `socratic`, `explainFeedback`) dan referensi step/concept. Server membangun prompt dari content/rubric, menerapkan rate limit, dan memfilter output ke schema response yang tervalidasi.
+Endpoint AI tidak menerima prompt mentah sebagai satu-satunya input. Ia menerima mode yang diizinkan (`socratic`, `teach`, `explainFeedback`) dan referensi step/concept terkurasi. Server membangun prompt dari content/rubric, menerapkan rate limit, dan memfilter output ke schema response yang tervalidasi.
+
+### Pilihan Provider & Model yang Didukung
+
+| Provider ID | Default Model | Pilihan Model Tambahan | Tipe Eksekusi / SDK |
+| --- | --- | --- | --- |
+| `gemma` (Default) | `gemma-2-9b-it` | `gemma-2-27b-it`, `gemma-2-2b-it` | Google Generative AI SDK / Local endpoint kompatibel |
+| `google` | `gemini-1.5-flash` | `gemini-1.5-pro`, `gemini-2.0-flash` | Google Generative AI SDK |
+| `openai` | `gpt-4o-mini` | `gpt-4o` | OpenAI Official SDK |
+| `anthropic` | `claude-3-5-haiku-20241022` | `claude-3-5-sonnet-20241022` | Anthropic Official SDK |
+| `curated` | `curated-socratic-engine` | - | Deterministik Lokal Offline (Zero API Key / Zero Cost) |
+
+### `POST /ai/tutor` (Dialog Sokratis)
+
+Request:
+```json
+{
+  "conceptSlug": "definisi-turunan",
+  "stepId": "def-step-explore",
+  "userQuestion": "Kenapa nilai h harus mendekati nol?",
+  "provider": "gemma",
+  "model": "gemma-2-9b-it",
+  "apiKey": "optional-custom-key",
+  "endpoint": "optional-custom-endpoint"
+}
+```
+
+Response:
+```json
+{
+  "data": {
+    "answer": "Pertanyaan yang tajam! Jika h tepat bernilai 0, pembagian apa yang akan terjadi pada kemiringan kurva?",
+    "provider": "gemma",
+    "model": "gemma-2-9b-it",
+    "actorKind": "guest"
+  }
+}
+```
+
+### `POST /ai/teach` (Mode Guru / Teach Mode)
+
+Request:
+```json
+{
+  "conceptSlug": "vektor",
+  "naiQuestion": "Guru, kenapa gaya 5 N dan 5 N bisa menghasilkan total 0 N?",
+  "userTeachingExplanation": "Karena kedua gaya bekerja saling berlawanan arah 180 derajat...",
+  "provider": "gemma",
+  "model": "gemma-2-9b-it"
+}
+```
+
+Response:
+```json
+{
+  "data": {
+    "evaluation": {
+      "understood": true,
+      "score": 92,
+      "naiResponse": "Wah, sekarang Nai paham! Jadi arah sama pentingnya dengan besar gaya ya!",
+      "feedbackForTeacher": "Penjelasan sangat jernih dan berhasil mematahkan miskonsepsi skalar.",
+      "suggestions": ["Coba tambahkan contoh kondisi tegak lurus 90 derajat."]
+    },
+    "provider": "gemma",
+    "actorKind": "guest"
+  }
+}
+```
+
+### Prinsip Graceful Fallback
+Jika provider LLM eksternal tidak memiliki API key di environment server, mengalami rate limit, atau offline, sistem otomatis beralih (*graceful fallback*) ke **`curated`** (Mode Offline Terkurasi). Pembelajaran tidak pernah terblokir oleh kegagalan API eksternal.
