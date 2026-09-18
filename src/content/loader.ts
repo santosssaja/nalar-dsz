@@ -74,6 +74,10 @@ export function getConceptBySlug(slug: string): ConceptContent | undefined {
   return loadAllContent().concepts.find((c) => c.slug === slug);
 }
 
+export function getConceptById(id: string): ConceptContent | undefined {
+  return loadAllContent().concepts.find((c) => c.id === id);
+}
+
 export function getStepById(stepId: string): { concept: ConceptContent; step: StepContent } | undefined {
   const allConcepts = loadAllContent().concepts;
   for (const concept of allConcepts) {

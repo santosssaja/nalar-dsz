@@ -10,17 +10,29 @@
     "Menjelaskan bagaimana garis potong bertransformasi menjadi garis singgung (tangent)",
     "Menghitung kemiringan garis singgung f'(x) untuk fungsi kuadrat f(x) = x²"
   ],
-  "prerequisites": ["laju-perubahan"],
+  "prerequisites": [
+    "laju-perubahan"
+  ],
   "misconceptions": [
     {
       "code": "DIVIDE_BY_ZERO_CONFUSION",
-      "label": "Mengira turunan membagi dengan angka nol 0/0",
+      "label": "Mengira turunan membagi dengan angka nol (0/0)",
       "remediation": "Ingat konsep limit: h mendekati nol (sangat dekat), bukan sama persis dengan nol, sehingga kita tidak pernah membagi dengan nol mutlak."
     },
     {
       "code": "CONSTANT_SLOPE_ASSUMPTION",
       "label": "Menganggap kemiringan kurva bernilai tetap di semua titik",
       "remediation": "Pada kurva melengkung seperti f(x) = x², kemiringan garis singgung berubah-ubah seiring berjalannya nilai x."
+    },
+    {
+      "code": "USED_ORIGINAL_FUNCTION",
+      "label": "Menggunakan nilai fungsi asli f(x) alih-alih nilai turunan f'(x)",
+      "remediation": "Nilai f(x) menunjukkan posisi atau ketinggian titik, sedangkan turunan f'(x) menunjukkan kemiringan kurva pada titik tersebut."
+    },
+    {
+      "code": "CONFUSED_X_VALUE",
+      "label": "Menyebutkan nilai koordinat x alih-alih menghitung kemiringan f'(x)",
+      "remediation": "Substitusikan nilai x ke dalam rumus turunan f'(x) = 2x, bukan hanya mengambil nilai x saja."
     }
   ],
   "steps": [
@@ -31,7 +43,11 @@
       "title": "Teka-Teki Kemiringan pada Satu Titik",
       "instruction": "Renungkan teka-teki matematis ini.",
       "content": "Jika kita ingin mengukur kemiringan garis di antara dua titik yang terpisah, kita membagi perubahan tinggi dengan perubahan jarak datar: $m = \\frac{\\Delta y}{\\Delta x}$.\n\nTetapi bagaimana jika kita ingin mengukur kemiringan tepat pada **satu titik tunggal**?\nJika kita hanya memakai satu titik, maka $\\Delta x = 0$ dan $\\Delta y = 0$. Pembagian $\\frac{0}{0}$ tidak memiliki arti! Bagaimana para matematikawan memecahkan teka-teki ini tanpa membagi dengan nol?",
-      "estimatedMinutes": 2
+      "estimatedMinutes": 2,
+      "accessibility": {
+        "altText": "Teka-teki matematis mengukur kemiringan pada satu titik saat delta x dan delta y bernilai nol.",
+        "screenReaderNote": "Langkah awal mengantarkan tantangan filosofis dan teknis pembagian 0 dibagi 0 pada kemiringan satu titik."
+      }
     },
     {
       "id": "40000000-0000-4000-8000-000000000009",
@@ -47,6 +63,10 @@
         "sliderMinH": 0.01,
         "sliderMaxH": 2.0,
         "defaultH": 1.0
+      },
+      "accessibility": {
+        "altText": "Simulasi interaktif kurva f(x) = x kuadrat dengan slider jarak h dari 0.01 hingga 2.0.",
+        "screenReaderNote": "Visualisasi garis potong (secant line) menghubungkan titik tetap (1, 1) dengan titik bergerak (1+h, (1+h)^2). Geser slider untuk melihat garis mendekati garis singgung saat h mengecil."
       }
     },
     {
@@ -87,6 +107,10 @@
           }
         ],
         "feedbackCorrect": "Prediksi tepat! Kamu telah menemukan konsep kunci diferensiasi."
+      },
+      "accessibility": {
+        "altText": "Soal prediksi pilihan ganda: Apa yang terjadi pada secant line saat h menuju nol.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi tentang transformasi garis potong menjadi garis singgung."
       }
     },
     {
@@ -96,7 +120,11 @@
       "title": "Definisi Formal Turunan",
       "instruction": "Pelajari rumus inti kalkulus diferensial.",
       "content": "Turunan dari fungsi $f(x)$ pada suatu titik, dilambangkan dengan $f'(x)$ (baca: *f aksen x*), didefinisikan sebagai nilai limit dari laju perubahan rata-rata ketika $h \\to 0$:\n\n$$f'(x) = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}$$\n\nSecara geometris, $f'(x)$ adalah **kemiringan garis singgung (slope of the tangent line)** kurva $f$ di titik $x$.\nSecara fisika, $f'(x)$ adalah **laju perubahan sesaat** (misalnya kecepatan sesaat).",
-      "estimatedMinutes": 3
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus formal limit turunan f'(x) sama dengan limit h menuju 0 dari f(x+h) dikurangi f(x) dibagi h.",
+        "screenReaderNote": "Definisi formal turunan menggunakan limit untuk menghindari pembagian dengan nol secara langsung."
+      }
     },
     {
       "id": "40000000-0000-4000-8000-000000000012",
@@ -130,7 +158,49 @@
             "feedback": "Angka 3 adalah koordinat x. Kemiringan garis singgung di titik tersebut adalah 2x = 2(3) = 6."
           }
         ]
+      },
+      "accessibility": {
+        "altText": "Latihan menghitung kemiringan garis singgung fungsi f(x) = x kuadrat di x = 3 dengan rumus turunan f'(x) = 2x.",
+        "screenReaderNote": "Masukkan nilai kemiringan hasil substitusi x = 3 ke dalam f'(x) = 2x."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000013",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Esensi Garis Singgung dan Limit",
+      "instruction": "Tuliskan pemahamanmu tentang bagaimana konsep turunan bekerja.",
+      "content": "Setelah menjelajahi animasi garis potong, membuat prediksi limit, dan menghitung rumus turunan:\n\n**Bagaimana kamu akan menjelaskan konsep turunan kepada seorang teman yang belum pernah belajar kalkulus?**\n\nJelaskan bagaimana dua titik yang berjarak $h$ didekatkan hingga menghasilkan kemiringan garis singgung sesaat pada satu titik.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta peserta didik menjelaskan konsep turunan dengan kata-kata sendiri.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai garis potong, limit h menuju nol, dan garis singgung."
       }
     }
-  ]
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-definisi-turunan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-geom",
+        "name": "Transformasi Garis Singgung",
+        "description": "Menjelaskan garis potong (secant) yang berputar menjadi garis singgung (tangent) di satu titik",
+        "weight": 1
+      },
+      {
+        "id": "crit-limit",
+        "name": "Peran Limit dan Jarak h Mendekati Nol",
+        "description": "Menyebutkan selisih jarak horizontal h mendekati nol melalui limit tanpa pembagian nol",
+        "weight": 1
+      },
+      {
+        "id": "crit-meaning",
+        "name": "Makna Kemiringan Sesaat",
+        "description": "Menjelaskan turunan f'(x) sebagai kemiringan kurva atau laju perubahan sesaat",
+        "weight": 1
+      }
+    ]
+  }
 }

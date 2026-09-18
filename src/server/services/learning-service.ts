@@ -2,7 +2,7 @@ import { eq, and } from "drizzle-orm";
 import { randomUUID } from "crypto";
 import { getDb, ensureDbInitialized, attempts, learningEvidence, conceptProgress, mistakeEvents } from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
-import { getStepById } from "@/content/loader";
+import { getStepById, getConceptById } from "@/content/loader";
 import { evaluateStepResponse, EvaluationResult } from "./evaluator";
 import {
   getDimensionForStep,
@@ -10,7 +10,18 @@ import {
   applyMasteryUpdate,
   ConceptMasterySnapshot,
 } from "./mastery-engine";
+import { scheduleOrUpdateReview } from "./retrieval-service";
 import { HintLevel } from "@/content/schema";
+
+export interface NextActionOutput {
+  type: "continue" | "hint" | "remedial";
+  reasonCode: string;
+  remedialInfo?: {
+    code: string;
+    label: string;
+    remediation: string;
+  };
+}
 
 export interface SubmitAttemptInput {
   actor: Actor;
@@ -29,10 +40,7 @@ export interface SubmitAttemptOutput {
     dimensions: Omit<ConceptMasterySnapshot, "status">;
     status: ConceptMasterySnapshot["status"];
   };
-  nextAction: {
-    type: "continue" | "hint" | "remedial";
-    reasonCode: string;
-  };
+  nextAction: NextActionOutput;
 }
 
 export async function submitAttempt(
@@ -114,11 +122,25 @@ export async function submitAttempt(
   // 5. Database writes
   const attemptId = randomUUID();
 
-  const nextAction = isCorrect
-    ? { type: "continue" as const, reasonCode: "STEP_COMPLETED" }
+  const activeMisconception = evaluation.misconceptionCodes.length > 0
+    ? concept.misconceptions.find((m) => m.code === evaluation.misconceptionCodes[0])
+    : undefined;
+
+  const nextAction: NextActionOutput = isCorrect
+    ? { type: "continue", reasonCode: "STEP_COMPLETED" }
     : evaluation.misconceptionCodes.length > 0
-    ? { type: "remedial" as const, reasonCode: "MISCONCEPTION_ACTIVE" }
-    : { type: "hint" as const, reasonCode: "RETRY_WITH_HINT" };
+    ? {
+        type: "remedial",
+        reasonCode: "MISCONCEPTION_ACTIVE",
+        remedialInfo: activeMisconception
+          ? {
+              code: activeMisconception.code,
+              label: activeMisconception.label,
+              remediation: activeMisconception.remediation,
+            }
+          : undefined,
+      }
+    : { type: "hint", reasonCode: "RETRY_WITH_HINT" };
 
   const outputResult: SubmitAttemptOutput = {
     attemptId,
@@ -138,7 +160,7 @@ export async function submitAttempt(
     nextAction,
   };
 
-  // Content version placeholder for now
+  // Content version placeholder
   const dummyContentVersionId = "00000000-0000-0000-0000-000000000001";
 
   // Insert attempt
@@ -211,6 +233,13 @@ export async function submitAttempt(
     }
   }
 
+  // Spaced review scheduling
+  try {
+    await scheduleOrUpdateReview(actor.learnerDeviceId, concept.id, isCorrect);
+  } catch (err) {
+    console.error("Failed to schedule review:", err);
+  }
+
   return outputResult;
 }
 
@@ -242,6 +271,129 @@ export async function getLearnerConceptProgress(
     retention: progress.retention,
     status: progress.status as ConceptMasterySnapshot["status"],
   };
+}
+
+export interface LearnerConceptProgressItem {
+  conceptId: string;
+  conceptSlug: string;
+  conceptTitle: string;
+  dimensions: Omit<ConceptMasterySnapshot, "status">;
+  status: ConceptMasterySnapshot["status"];
+  updatedAt: Date;
+}
+
+export async function getAllLearnerProgress(
+  actor: Actor
+): Promise<LearnerConceptProgressItem[]> {
+  await ensureDbInitialized();
+  const db = getDb();
+
+  const rows = await db
+    .select()
+    .from(conceptProgress)
+    .where(eq(conceptProgress.learnerDeviceId, actor.learnerDeviceId));
+
+  const result: LearnerConceptProgressItem[] = [];
+  for (const row of rows) {
+    const concept = getConceptById(row.conceptId);
+    if (concept) {
+      result.push({
+        conceptId: row.conceptId,
+        conceptSlug: concept.slug,
+        conceptTitle: concept.title,
+        dimensions: {
+          understanding: row.understanding,
+          practice: row.practice,
+          application: row.application,
+          transfer: row.transfer,
+          explanation: row.explanation,
+          retention: row.retention,
+        },
+        status: row.status as ConceptMasterySnapshot["status"],
+        updatedAt: row.updatedAt,
+      });
+    }
+  }
+  return result;
+}
+
+export interface MistakeSummaryItem {
+  misconceptionCode: string;
+  label: string;
+  remediation: string;
+  count: number;
+  lastOccurredAt: Date;
+  conceptId: string;
+  conceptTitle: string;
+}
+
+export async function getMistakeSummaryForLearner(
+  actor: Actor,
+  conceptId?: string
+): Promise<MistakeSummaryItem[]> {
+  await ensureDbInitialized();
+  const db = getDb();
+
+  const query = db
+    .select({
+      id: mistakeEvents.id,
+      conceptId: mistakeEvents.conceptId,
+      misconceptionCode: mistakeEvents.misconceptionCode,
+      createdAt: mistakeEvents.createdAt,
+    })
+    .from(mistakeEvents)
+    .innerJoin(attempts, eq(mistakeEvents.attemptId, attempts.id))
+    .where(
+      and(
+        eq(attempts.learnerDeviceId, actor.learnerDeviceId),
+        conceptId ? eq(mistakeEvents.conceptId, conceptId) : undefined
+      )
+    );
+
+  const rows = await query;
+  const map = new Map<string, {
+    count: number;
+    lastOccurredAt: Date;
+    conceptId: string;
+    misconceptionCode: string;
+  }>();
+
+  for (const row of rows) {
+    const key = `${row.conceptId}:${row.misconceptionCode}`;
+    const existing = map.get(key);
+    if (!existing) {
+      map.set(key, {
+        count: 1,
+        lastOccurredAt: row.createdAt,
+        conceptId: row.conceptId,
+        misconceptionCode: row.misconceptionCode,
+      });
+    } else {
+      existing.count += 1;
+      if (row.createdAt > existing.lastOccurredAt) {
+        existing.lastOccurredAt = row.createdAt;
+      }
+    }
+  }
+
+  const result: MistakeSummaryItem[] = [];
+  for (const item of map.values()) {
+    const concept = getConceptById(item.conceptId);
+    const taxonomy = concept?.misconceptions.find(
+      (m) => m.code === item.misconceptionCode
+    );
+    result.push({
+      misconceptionCode: item.misconceptionCode,
+      label: taxonomy?.label ?? item.misconceptionCode,
+      remediation: taxonomy?.remediation ?? "Tinjau kembali konsep ini untuk memperdalam pemahaman.",
+      count: item.count,
+      lastOccurredAt: item.lastOccurredAt,
+      conceptId: item.conceptId,
+      conceptTitle: concept?.title ?? "Konsep Pembelajaran",
+    });
+  }
+
+  return result.sort((a, b) => b.lastOccurredAt.getTime() - a.lastOccurredAt.getTime());
 }
 
 export function getStepHint(stepId: string, level: HintLevel): { level: HintLevel; hintText: string } | null {

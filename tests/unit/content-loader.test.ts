@@ -38,7 +38,7 @@ describe("Curated Content Loader", () => {
   it("should validate concept 03-definisi-turunan steps and hints", () => {
     const concept = getConceptBySlug("definisi-turunan");
     expect(concept).toBeDefined();
-    expect(concept?.steps.length).toBe(5);
+    expect(concept?.steps.length).toBe(6);
 
     const kinds = concept?.steps.map((s) => s.kind);
     expect(kinds).toContain("encounter");
@@ -46,6 +46,7 @@ describe("Curated Content Loader", () => {
     expect(kinds).toContain("predict");
     expect(kinds).toContain("understand");
     expect(kinds).toContain("practice");
+    expect(kinds).toContain("explain");
 
     // Check predict step has hints
     const predictStep = concept?.steps.find((s) => s.kind === "predict");

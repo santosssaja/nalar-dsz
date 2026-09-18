@@ -118,6 +118,9 @@
 }
 
 /* Reduced motion preference */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after,
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -127,4 +130,13 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Font scaling classes */
+.font-scale-large {
+  font-size: 112.5%;
+}
+
+.font-scale-small {
+  font-size: 90%;
 }

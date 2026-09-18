@@ -157,12 +157,41 @@ export function StepExplore({ step, isCompleted, onCompleted }: StepExploreProps
             step="0.02"
             value={h}
             onChange={(e) => setH(parseFloat(e.target.value))}
-            className="w-full accent-accent cursor-pointer h-2 bg-border rounded-lg"
-            aria-label="Penggeser jarak h"
+            className="w-full accent-accent cursor-pointer h-2 bg-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+            aria-label="Penggeser jarak horizontal h"
             aria-valuemin={0.02}
             aria-valuemax={2.0}
             aria-valuenow={h}
+            aria-valuetext={`Jarak h adalah ${h.toFixed(2)}, kemiringan secant adalah ${slopeSecant.toFixed(3)}`}
           />
+
+          {/* Quick presets for keyboard / touch users */}
+          <div className="flex flex-wrap items-center gap-2 pt-1" aria-label="Pilihan cepat jarak h">
+            <span className="text-[11px] text-text-muted font-medium">Pilihan Cepat:</span>
+            {[
+              { val: 1.5, label: "Jauh (h = 1.5)" },
+              { val: 0.5, label: "Sedang (h = 0.5)" },
+              { val: 0.1, label: "Dekat (h = 0.1)" },
+              { val: 0.02, label: "Limit (h → 0)" },
+            ].map((p) => (
+              <button
+                key={p.val}
+                type="button"
+                onClick={() => setH(p.val)}
+                className={`px-2.5 py-1 rounded text-[11px] font-mono font-medium border transition-colors ${
+                  Math.abs(h - p.val) < 0.01
+                    ? "bg-accent text-surface-raised border-accent shadow-2xs"
+                    : "bg-surface-raised border-border text-text hover:bg-surface"
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="sr-only" aria-live="polite">
+            {`Jarak h diatur ke ${h.toFixed(2)}. Kemiringan garis secant adalah ${slopeSecant.toFixed(3)}, mendekati kemiringan garis singgung 2.0.`}
+          </div>
         </div>
 
         {/* Real-time Math Feedback */}

@@ -15,6 +15,16 @@
       "code": "DISCRETE_CONTINUOUS_CONFUSION",
       "label": "Menyamakan waktu jam digital dengan aliran waktu sebenarnya",
       "remediation": "Perhatikan bahwa angka jam digital melompat per detik, namun waktu di alam mengalir secara kontinu tanpa celah."
+    },
+    {
+      "code": "INVERTED_DELTA",
+      "label": "Menghitung selisih secara terbalik (nilai awal dikurangi nilai akhir)",
+      "remediation": "Perubahan Δy selalu didefinisikan sebagai nilai akhir dikurangi nilai awal: Δy = y₂ - y₁."
+    },
+    {
+      "code": "DELTA_X_INSTEAD",
+      "label": "Menukar perubahan variabel input (Δx) dengan variabel output (Δy)",
+      "remediation": "Pastikan menghitung variabel yang diminta: Δy untuk posisi vertikal/keluaran, bukan Δx untuk jarak/masukan."
     }
   ],
   "steps": [
@@ -25,7 +35,11 @@
       "title": "Anak Tangga vs Tanjakan Bukit",
       "instruction": "Amati kedua cara mencapai puncak ketinggian ini.",
       "content": "Bayangkan kamu mendaki ketinggian 10 meter. Cara pertama: kamu menaiki tangga dengan 50 anak tangga setinggi 20 cm. Cara kedua: kamu berjalan menaiki lereng bukit yang landai dan mulus.\n\nPada tangga, ketinggian kakimu **melompat** secara bertahap (diskrit). Pada lereng bukit, ketinggianmu bertambah di setiap milimeter langkah tanpa ada lompatan (kontinu). Kalkulus lahir untuk menjelaskan perubahan mulus di lereng bukit!",
-      "estimatedMinutes": 2
+      "estimatedMinutes": 2,
+      "accessibility": {
+        "altText": "Ilustrasi perbandingan menaiki tangga diskrit bertingkat dengan mendaki lereng bukit berkontur mulus kontinu.",
+        "screenReaderNote": "Materi pengantar membedakan perubahan diskrit (bertahap dengan lompatan) dan perubahan kontinu (mengalir mulus tanpa henti)."
+      }
     },
     {
       "id": "40000000-0000-4000-8000-000000000002",
@@ -39,7 +53,7 @@
         "orientation": "Pikirkan apakah volume berkurang tetes demi tetes secara terputus-putus atau mengalir mulus.",
         "concept": "Perubahan kontinu terjadi ketika nilai variabel dapat mengambil nilai berapapun di dalam suatu interval tanpa lompatan.",
         "strategy": "Perhatikan bahwa zat cair makroskopis mengalir tanpa jeda waktu.",
-        "solution": "Volume air mengalir secara kontinu karena di setiap sepersekian detik, volume berkurang secara mulus tanpa jeda jeda langkah."
+        "solution": "Volume air mengalir secara kontinu karena di setiap sepersekian detik, volume berkurang secara mulus tanpa jeda langkah."
       },
       "evaluation": {
         "type": "choice",
@@ -59,6 +73,10 @@
           }
         ],
         "feedbackCorrect": "Bagus sekali! Model mentalmu tentang perubahan kontinu sudah terbentuk."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi konseptual mengenai sifat aliran air waduk: diskrit atau kontinu.",
+        "screenReaderNote": "Pilih salah satu dari dua opsi jawaban yang tersedia untuk menguji pemahaman awalmu."
       }
     },
     {
@@ -68,7 +86,11 @@
       "title": "Notasi Perubahan: Delta (Δ)",
       "instruction": "Pelajari notasi matematika untuk perubahan nilai.",
       "content": "Dalam matematika dan fisika, lambang Yunani **Delta ($\\Delta$)** melambangkan selisih antara nilai akhir dan nilai awal:\n\n$$\\Delta x = x_2 - x_1$$\n$$\\Delta y = y_2 - y_1$$\n\nJika $\\Delta x$ besar, kita sedang melihat rentang yang lebar. Tetapi apa yang terjadi jika rentang $\\Delta x$ diperkecil hingga nyaris nol? Di situlah keajaiban turunan dimulai!",
-      "estimatedMinutes": 3
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus matematika delta x sama dengan x2 dikurangi x1, dan delta y sama dengan y2 dikurangi y1.",
+        "screenReaderNote": "Delta adalah simbol Yunani berupa segitiga yang melambangkan perubahan atau selisih antara nilai akhir dan nilai awal."
+      }
     },
     {
       "id": "40000000-0000-4000-8000-000000000004",
@@ -102,6 +124,10 @@
             "feedback": "Angka 3 adalah Δx (4 - 1). Yang ditanyakan adalah perubahan posisi Δy (14 - 5)."
           }
         ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung delta y dengan y1 sama dengan 5 dan y2 sama dengan 14.",
+        "screenReaderNote": "Ketikkan nilai numerik selisih ketinggian delta y pada kolom input yang disediakan."
       }
     }
   ]

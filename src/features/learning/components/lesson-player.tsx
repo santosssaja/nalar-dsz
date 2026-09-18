@@ -1,14 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ConceptContent, StepContent } from "@/content/schema";
 import { ConceptMasterySnapshot } from "@/server/services/mastery-engine";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { StepPredict } from "./step-predict";
 import { StepExplore } from "./step-explore";
 import { StepPractice } from "./step-practice";
+import { StepExplain } from "./step-explain";
 import { LessonSummary } from "./lesson-summary";
 import { EvaluationResult } from "@/server/services/evaluator";
+import {
+  queueOutboxEvent,
+  flushOutbox,
+  getPendingOutboxEvents,
+} from "../lib/outbox";
 
 interface LessonPlayerProps {
   concept: ConceptContent;
@@ -29,6 +35,8 @@ export function LessonPlayer({
     initialProgress
   );
   const [isFinished, setIsFinished] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
+  const [pendingSyncCount, setPendingSyncCount] = useState(0);
 
   const currentStep: StepContent = steps[currentStepIndex];
   const isCurrentCompleted = completedStepIds.includes(currentStep?.id);
@@ -39,13 +47,46 @@ export function LessonPlayer({
   const getIdempotencyKey = (stepId: string) => {
     let key = stepIdempotencyKeys.get(stepId);
     if (!key) {
-      key = typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
-        ? crypto.randomUUID()
-        : "a0000000-0000-4000-8000-" + Math.random().toString(16).substring(2, 14).padEnd(12, "0");
+      key =
+        typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+          ? crypto.randomUUID()
+          : "a0000000-0000-4000-8000-" +
+            Math.random().toString(16).substring(2, 14).padEnd(12, "0");
       stepIdempotencyKeys.set(stepId, key);
     }
     return key;
   };
+
+  // Check online status & check outbox on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsOffline(!navigator.onLine);
+
+      const handleOnline = async () => {
+        setIsOffline(false);
+        const res = await flushOutbox();
+        if (res.synced > 0) {
+          setPendingSyncCount(0);
+        }
+      };
+
+      const handleOffline = () => {
+        setIsOffline(true);
+      };
+
+      window.addEventListener("online", handleOnline);
+      window.addEventListener("offline", handleOffline);
+
+      getPendingOutboxEvents().then((events) => {
+        setPendingSyncCount(events.length);
+      });
+
+      return () => {
+        window.removeEventListener("online", handleOnline);
+        window.removeEventListener("offline", handleOffline);
+      };
+    }
+  }, []);
 
   const handleStepSubmit = async (
     response: Record<string, unknown>,
@@ -53,6 +94,10 @@ export function LessonPlayer({
   ): Promise<EvaluationResult | null> => {
     setIsSubmitting(true);
     try {
+      if (typeof navigator !== "undefined" && !navigator.onLine) {
+        throw new Error("Koneksi offline");
+      }
+
       const res = await fetch("/api/v1/attempts", {
         method: "POST",
         headers: {
@@ -89,8 +134,22 @@ export function LessonPlayer({
         return null;
       }
     } catch (err) {
-      console.error("Network error during submit:", err);
-      return null;
+      console.warn("Attempt submission offline or failed, queuing into outbox:", err);
+      // Queue into IndexedDB outbox for local-first resilience
+      await queueOutboxEvent(currentStep.id, response, usedHintsCount);
+      setIsOffline(true);
+      setPendingSyncCount((prev) => prev + 1);
+
+      if (!completedStepIds.includes(currentStep.id)) {
+        setCompletedStepIds((prev) => [...prev, currentStep.id]);
+      }
+
+      return {
+        status: "correct",
+        feedback: "Jawaban tersimpan aman di perangkat (Mode Offline). Progres akan disinkronkan saat kembali online.",
+        misconceptionCodes: [],
+        availableHintLevel: "orientation",
+      };
     } finally {
       setIsSubmitting(false);
     }
@@ -142,22 +201,32 @@ export function LessonPlayer({
           <h2 className="text-base font-bold text-text mt-0.5">{concept.title}</h2>
         </div>
 
-        <div className="text-right">
-          <span className="text-xs font-semibold text-text-muted">
-            Langkah {currentStepIndex + 1} dari {steps.length}
-          </span>
-          <div
-            className="w-32 sm:w-48 h-2 rounded-full bg-surface border border-border mt-1 overflow-hidden"
-            role="progressbar"
-            aria-valuenow={progressPercentage}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label={`Progres pelajaran: ${progressPercentage}%`}
-          >
+        <div className="flex items-center gap-4">
+          {/* Offline indicator */}
+          {isOffline && (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span>Offline {pendingSyncCount > 0 ? `(${pendingSyncCount} tertunda)` : ""}</span>
+            </div>
+          )}
+
+          <div className="text-right">
+            <span className="text-xs font-semibold text-text-muted">
+              Langkah {currentStepIndex + 1} dari {steps.length}
+            </span>
             <div
-              className="h-full bg-accent transition-all duration-300 rounded-full"
-              style={{ width: `${progressPercentage}%` }}
-            />
+              className="w-28 sm:w-40 h-2 rounded-full bg-surface border border-border mt-1 overflow-hidden"
+              role="progressbar"
+              aria-valuenow={progressPercentage}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Progres pelajaran: ${progressPercentage}%`}
+            >
+              <div
+                className="h-full bg-accent transition-all duration-300 rounded-full"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -189,8 +258,15 @@ export function LessonPlayer({
           isSubmitting={isSubmitting}
           onNext={handleNextStep}
         />
+      ) : currentStep.kind === "explain" ? (
+        <StepExplain
+          step={currentStep}
+          conceptSlug={concept.slug}
+          isCompleted={isCurrentCompleted}
+          onCompleted={handleNextStep}
+        />
       ) : (
-        /* encounter, understand, explain, retrieve, etc. */
+        /* encounter, understand, retrieve, etc. */
         <div className="p-6 rounded-xl bg-surface-raised border border-border space-y-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent capitalize">

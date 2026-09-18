@@ -9,6 +9,8 @@ export type Actor =
 
 export const DEVICE_KEY_COOKIE = "nalar_device_key";
 
+export const SESSION_USER_COOKIE = "nalar_session_user_id";
+
 export function hashDeviceKey(rawKey: string): string {
   return createHash("sha256").update(rawKey).digest("hex");
 }
@@ -16,13 +18,21 @@ export function hashDeviceKey(rawKey: string): string {
 export async function resolveActor(): Promise<Actor> {
   await ensureDbInitialized();
   const db = getDb();
-  const cookieStore = await cookies();
-  const headerStore = await headers();
+  let deviceKey: string | undefined;
+  let sessionUserId: string | undefined;
 
-  // Check header or cookie for device key
-  let deviceKey =
-    headerStore.get("x-device-key") ||
-    cookieStore.get(DEVICE_KEY_COOKIE)?.value;
+  try {
+    const cookieStore = await cookies();
+    const headerStore = await headers();
+    deviceKey =
+      headerStore.get("x-device-key") ||
+      cookieStore.get(DEVICE_KEY_COOKIE)?.value;
+    sessionUserId =
+      headerStore.get("x-user-id") ||
+      cookieStore.get(SESSION_USER_COOKIE)?.value;
+  } catch {
+    // Fallback when called outside active Next.js request scope (e.g. tests or build)
+  }
 
   if (!deviceKey) {
     // Generate new anonymous device key for guest
@@ -43,6 +53,7 @@ export async function resolveActor(): Promise<Actor> {
     const [inserted] = await db
       .insert(learnerDevices)
       .values({
+        userId: sessionUserId,
         deviceKeyHash: keyHash,
         lastSeenAt: new Date(),
       })
@@ -59,11 +70,20 @@ export async function resolveActor(): Promise<Actor> {
       naiVisible: true,
     });
   } else {
-    // Update last seen
-    await db
-      .update(learnerDevices)
-      .set({ lastSeenAt: new Date() })
-      .where(eq(learnerDevices.id, device.id));
+    // If session user exists but device isn't linked, update device.userId
+    if (sessionUserId && device.userId !== sessionUserId) {
+      await db
+        .update(learnerDevices)
+        .set({ userId: sessionUserId, lastSeenAt: new Date() })
+        .where(eq(learnerDevices.id, device.id));
+      device.userId = sessionUserId;
+    } else {
+      // Update last seen
+      await db
+        .update(learnerDevices)
+        .set({ lastSeenAt: new Date() })
+        .where(eq(learnerDevices.id, device.id));
+    }
   }
 
   if (device.userId) {

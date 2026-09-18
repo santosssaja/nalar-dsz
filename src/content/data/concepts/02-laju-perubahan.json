@@ -9,12 +9,24 @@
     "Menghitung laju perubahan rata-rata dari rasio selisih kuantitas Δy / Δx",
     "Menghubungkan kecepatan rata-rata dengan kemiringan garis potong (secant line)"
   ],
-  "prerequisites": ["perubahan"],
+  "prerequisites": [
+    "perubahan"
+  ],
   "misconceptions": [
     {
       "code": "RATE_TIME_UNIT",
       "label": "Lupa membagi dengan interval waktu Δt",
       "remediation": "Ingat bahwa kecepatan bukan sekadar jarak tempuh, melainkan rasio jarak tempuh per satuan waktu (Δs / Δt)."
+    },
+    {
+      "code": "FORGOT_DELTA_X_DIVISION",
+      "label": "Menghitung perubahan total Δy tanpa membaginya dengan interval Δx",
+      "remediation": "Laju perubahan adalah rasio kemiringan: selalu bagi selisih ketinggian (Δy) dengan selisih jarak (Δx)."
+    },
+    {
+      "code": "INVERTED_SLOPE",
+      "label": "Menghitung kemiringan terbalik (Δx / Δy alih-alih Δy / Δx)",
+      "remediation": "Kemiringan garis selalu rasio tegak terhadap mendatar: m = Δy / Δx (rise over run)."
     }
   ],
   "steps": [
@@ -25,7 +37,11 @@
       "title": "Spidometer vs Waktu Tempuh",
       "instruction": "Pikirkan paradoks speedometer berikut.",
       "content": "Sebuah mobil menempuh perjalanan Jakarta–Bandung sejauh 140 km dalam waktu tepat 2 jam. Jika kita hitung rata-ratanya:\n\n$$\\text{Kecepatan rata-rata} = \\frac{140\\text{ km}}{2\\text{ jam}} = 70\\text{ km/jam}$$\n\nNamun, apakah jarum spidometer mobil selalu menunjuk tepat pada angka 70 km/jam di setiap lampu merah, gerbang tol, dan tanjakan? Tentu tidak! Di sinilah kita membedakan antara **kecepatan rata-rata** dan **kecepatan sesaat**.",
-      "estimatedMinutes": 3
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi perjalanan mobil 140 km dalam 2 jam menghasilkan kecepatan rata-rata 70 km per jam.",
+        "screenReaderNote": "Paradoks speedometer membedakan laju perubahan rata-rata dari seluruh perjalanan dengan laju sesaat pada suatu detik tertentu."
+      }
     },
     {
       "id": "40000000-0000-4000-8000-000000000006",
@@ -34,7 +50,11 @@
       "title": "Kemiringan Tali Busur (Secant Line)",
       "instruction": "Pelajari representasi geometris dari laju rata-rata.",
       "content": "Jika kita menggambar grafik fungsi $y = f(x)$, laju perubahan rata-rata antara titik $A(x_1, f(x_1))$ dan $B(x_2, f(x_2))$ adalah kemiringan garis lurus yang menghubungkan kedua titik tersebut (disebut **secant line** atau garis potong):\n\n$$m_{\\text{sec}} = \\frac{\\Delta y}{\\Delta x} = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}$$\n\nGaris potong ini merata-ratakan semua lekukan kurva di antara titik $A$ dan $B$.",
-      "estimatedMinutes": 3
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus matematis m secant sama dengan delta y dibagi delta x, atau f(x2) dikurangi f(x1) dibagi x2 dikurangi x1.",
+        "screenReaderNote": "Secant line adalah garis lurus yang memotong dua titik pada kurva. Kemiringannya mewakili laju perubahan rata-rata di antara dua titik tersebut."
+      }
     },
     {
       "id": "40000000-0000-4000-8000-000000000007",
@@ -68,6 +88,10 @@
             "feedback": "Kemiringan adalah Δy / Δx, bukan kebalikannya Δx / Δy."
           }
         ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung kemiringan secant line antara titik (1, 1) dan (3, 9) pada kurva f(x) = x kuadrat.",
+        "screenReaderNote": "Hitung rasio perubahan tegak f(3) - f(1) dibagi perubahan mendatar 3 - 1, lalu masukkan jawaban numerik."
       }
     }
   ]

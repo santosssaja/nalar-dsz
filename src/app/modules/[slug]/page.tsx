@@ -2,7 +2,15 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { getModuleBySlug, getConcepts } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
-import { getLearnerConceptProgress } from "@/server/services/learning-service";
+import {
+  getLearnerConceptProgress,
+  getMistakeSummaryForLearner,
+} from "@/server/services/learning-service";
+import { getNextRecommendation } from "@/server/services/recommendation-engine";
+import { getDueReviews } from "@/server/services/retrieval-service";
+import { RecommendationCard } from "@/features/learning/components/recommendation-card";
+import { SpacedReviewBanner } from "@/features/learning/components/spaced-review-banner";
+import { MistakeMap } from "@/features/learning/components/mistake-map";
 
 export const dynamic = "force-dynamic";
 
@@ -21,14 +29,22 @@ export default async function ModuleOverviewPage({
   const actor = await resolveActor();
   const allConcepts = getConcepts(slug);
 
-  // Fetch progress for all concepts in parallel
-  const progressList = await Promise.all(
-    allConcepts.map(async (c) => {
-      const p = await getLearnerConceptProgress(actor, c.id);
-      return { conceptId: c.id, progress: p };
-    })
+  // Fetch progress, recommendations, due reviews, and mistakes in parallel
+  const [progressList, recommendation, dueReviews, mistakes] = await Promise.all([
+    Promise.all(
+      allConcepts.map(async (c) => {
+        const p = await getLearnerConceptProgress(actor, c.id);
+        return { conceptId: c.id, progress: p };
+      })
+    ),
+    getNextRecommendation(actor, slug),
+    getDueReviews(actor),
+    getMistakeSummaryForLearner(actor),
+  ]);
+
+  const progressMap = new Map(
+    progressList.map((item) => [item.conceptId, item.progress])
   );
-  const progressMap = new Map(progressList.map((item) => [item.conceptId, item.progress]));
 
   return (
     <div className="space-y-10 py-4 max-w-4xl mx-auto">
@@ -79,6 +95,14 @@ export default async function ModuleOverviewPage({
           </div>
         </div>
       </div>
+
+      {/* Spaced Review Due Banner */}
+      {dueReviews.length > 0 && (
+        <SpacedReviewBanner dueReviews={dueReviews} />
+      )}
+
+      {/* Adaptive Recommendation Card */}
+      <RecommendationCard recommendation={recommendation} />
 
       {/* Prerequisites Checklist */}
       <div className="p-6 rounded-2xl bg-surface-raised border border-border space-y-3">
@@ -170,6 +194,11 @@ export default async function ModuleOverviewPage({
             );
           })}
         </div>
+      </div>
+
+      {/* Mistake Map & Remedial Section */}
+      <div className="pt-4 border-t border-border">
+        <MistakeMap mistakes={mistakes} />
       </div>
     </div>
   );

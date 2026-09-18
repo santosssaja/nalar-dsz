@@ -2,18 +2,15 @@
 
 ## Snapshot saat ini
 
-**Tanggal pembaruan:** 2026-09-17  
-**Tahap:** Tahap 1 — Curated learning loop selesai  
-**Source code aplikasi:** Next.js 15 App Router (TypeScript strict), Tailwind CSS + design tokens, Drizzle ORM PostgreSQL schema (19 tabel), adapter PGlite / in-memory untuk pengujian, actor/device resolver, health check endpoint, content loader & schema Zod, modul terkurasi Turunan (3 konsep, 12 steps, prasyarat Limit), lesson player interaktif (encounter, explore visualizer, predict engine, understand KaTeX, practice dengan misconception trap), hint drawer 4-layer, deterministic evaluator, 6-dimension mastery engine, dan API attempts idempoten UUID (`/api/v1/*`). Seluruh test (9 files, 22 tests) dan production build Next.js lolos 100%.
+**Tanggal pembaruan:** 2026-09-18  
+**Tahap:** Tahap 4 — Scale content dengan aman selesai (Seluruh Milestone MVP Selesai)  
+**Source code aplikasi:** Next.js 15 App Router (TypeScript strict), Tailwind CSS + design tokens, Drizzle ORM PostgreSQL schema (19 tabel), adapter PGlite / in-memory, actor/device resolver (guest & member session), health check endpoint, content loader & schema Zod, modul terkurasi Turunan (3 konsep, 13 steps, prasyarat Limit), lesson player interaktif (encounter, explore visualizer dengan keyboard preset & aria-live, predict engine, understand KaTeX, practice dengan misconception trap, explain-it-back dengan rubric evaluator), hint drawer 4-layer, deterministic evaluator, 6-dimension mastery engine, mistake events aggregator & visualizer (MistakeMap), spaced retrieval review queue (`/api/v1/progress/review`), adaptive recommendation engine (`/api/v1/learning/next`), IndexedDB outbox wrapper untuk offline-first learning (`/api/v1/sync`), auth service dengan guest device claiming & non-destructive progress merge (`/api/v1/auth/*`), preferensi aksesibilitas live sync (`/api/v1/preferences`), dialog interaktif (PreferencesModal, AuthModal), NavHeader responsif WCAG 2.2 AA, content publishing pipeline dengan audit checksum SHA-256 dan DAG cycle validation (`/api/v1/content/*`), dashboard observabilitas metrik platform (`/observability`), dan laboratorium interaktif STEM Nalar Lab (`/lab`). Seluruh test suite (22 files, 51 tests), ESLint, dan production build Next.js lolos 100%.
 
 ## Target implementasi berikutnya
 
-Tahap berikutnya adalah **Tahap 2 — Adaptation dan local-first** dari [delivery-plan.md](./delivery-plan.md):
-- Mistake events aggregator dan mistake map visualization per konsep.
-- Spaced retrieval scheduler & review queue.
-- Recommendation engine (prerequisite incomplete → review due → active misconception remedial → next path node).
-- Client-side IndexedDB outbox wrapper untuk offline-first learning dan `POST /api/v1/sync`.
-- Explain-it-back rubric evaluator dengan Nai AI scaffolding orchestrator dan static rule fallback.
+Seluruh target dari [delivery-plan.md](./delivery-plan.md) (Tahap 0 hingga Tahap 4) telah berhasil diselesaikan secara utuh:
+- Deployment preview dan CI/CD setup ke infrastruktur cloud production jika provider telah ditentukan oleh pengguna.
+- Penambahan domain sains lain (Fisika / Biologi) menggunakan authoring pipeline yang telah teruji.
 
 ## Scope yang sedang dikunci
 
