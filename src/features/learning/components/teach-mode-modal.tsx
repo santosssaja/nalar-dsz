@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { GraduationCap, X, Bot, CheckCircle, AlertCircle } from "lucide-react";
 import { ConceptContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
-import { AiTeachEvaluation, AiProviderName } from "@/server/ai/types";
+import { AiTeachEvaluation } from "@/server/ai/types";
 
 interface TeachModeModalProps {
   concept: ConceptContent;
@@ -15,7 +15,6 @@ interface TeachModeModalProps {
 
 export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps) {
   const [mounted, setMounted] = useState(false);
-  const [selectedProvider, setSelectedProvider] = useState<AiProviderName>("gemma");
   const [teachingText, setTeachingText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [evaluation, setEvaluation] = useState<AiTeachEvaluation | null>(null);
@@ -23,6 +22,17 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   // Generate starter question from Nai according to the concept
   const naiQuestion = React.useMemo(() => {
@@ -75,7 +85,7 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
           conceptSlug: concept.slug,
           naiQuestion,
           userTeachingExplanation: teachingText,
-          provider: selectedProvider,
+          provider: "gemma",
         }),
       });
 
@@ -98,7 +108,12 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
   if (!isOpen || !mounted) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 animate-in fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="w-full max-w-2xl bg-surface-raised border border-border rounded-2xl shadow-2xl p-6 space-y-5 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border pb-3">
@@ -114,28 +129,14 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <select
-              value={selectedProvider}
-              onChange={(e) => setSelectedProvider(e.target.value as AiProviderName)}
-              className="px-2 py-1 rounded bg-surface border border-border text-[11px] text-text focus:outline-none focus:ring-1 focus:ring-accent"
-              aria-label="Pilih model AI untuk evaluasi mengajar"
-            >
-              <option value="gemma">Google Gemma (Default)</option>
-              <option value="google">Google Gemini</option>
-              <option value="openai">OpenAI GPT</option>
-              <option value="anthropic">Anthropic Claude</option>
-              <option value="curated">Mode Offline Terkurasi</option>
-            </select>
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-1.5 rounded-lg border border-border text-text-muted hover:text-text hover:bg-surface text-xs transition-colors"
-              aria-label="Tutup modal"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="p-1.5 rounded-lg border border-border text-text-muted hover:text-text hover:bg-surface text-xs transition-colors"
+            aria-label="Tutup modal"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Nai's Student Prompt */}

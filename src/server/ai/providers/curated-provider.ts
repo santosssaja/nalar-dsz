@@ -6,6 +6,7 @@ import {
   AiSocraticContext,
   AiTeachContext,
   AiTeachEvaluation,
+  AiChatChunk,
 } from "../types";
 
 export class CuratedLocalProvider implements IAiProvider {
@@ -63,6 +64,41 @@ export class CuratedLocalProvider implements IAiProvider {
 
     return {
       text: fullText,
+      provider: "curated",
+      model: "curated-socratic-engine",
+    };
+  }
+
+  async *socraticGuidanceStream(
+    context: AiSocraticContext,
+    options?: AiChatOptions
+  ): AsyncIterable<AiChatChunk> {
+    const stepInfo = context.stepTitle ? `langkah "${context.stepTitle}"` : "langkah ini";
+    const conceptInfo = context.conceptTitle || "konsep ini";
+
+    const thoughts = [
+      `Menganalisis pertanyaan siswa pada ${stepInfo} (${conceptInfo}).\n`,
+      `Mendeteksi intisari pertanyaan: "${context.userQuestion}".\n`,
+      `Memeriksa kemungkinan miskonsepsi kognitif atau permintaan solusi langsung.\n`,
+      `Merumuskan scaffolding Sokrates: arahkan pemikiran siswa ke hubungan variabel dasar tanpa membocorkan jawaban akhir.\n`,
+    ];
+
+    for (const thoughtChunk of thoughts) {
+      yield { type: "thought", content: thoughtChunk };
+      await new Promise((r) => setTimeout(r, 35));
+    }
+
+    const guidance = await this.socraticGuidance(context, options);
+    const words = guidance.text.split(/(\s+)/);
+    for (const w of words) {
+      if (w) {
+        yield { type: "text", content: w };
+        await new Promise((r) => setTimeout(r, 15));
+      }
+    }
+
+    yield {
+      type: "done",
       provider: "curated",
       model: "curated-socratic-engine",
     };

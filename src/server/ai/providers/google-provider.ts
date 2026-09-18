@@ -6,6 +6,7 @@ import {
   AiSocraticContext,
   AiTeachContext,
   AiTeachEvaluation,
+  AiChatChunk,
 } from "../types";
 import {
   NAI_SOCRATIC_SYSTEM_PROMPT,
@@ -15,13 +16,19 @@ import {
 } from "../prompts";
 import { CuratedLocalProvider } from "./curated-provider";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { transformThinkTags } from "../stream-utils";
 
 export class GoogleGeminiProvider implements IAiProvider {
   public readonly name = "google" as const;
   private readonly fallback = new CuratedLocalProvider();
 
   private getApiKey(options?: AiChatOptions): string | undefined {
-    return options?.apiKey || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    return (
+      options?.apiKey ||
+      process.env.GEMINI_API_KEY ||
+      process.env.GOOGLE_API_KEY ||
+      process.env.AI_API_KEY
+    );
   }
 
   private getModelName(options?: AiChatOptions): string {
@@ -80,6 +87,52 @@ export class GoogleGeminiProvider implements IAiProvider {
       provider: "google",
       model: "gemini-1.5-flash (offline-curated)",
     };
+  }
+
+  async *socraticGuidanceStream(
+    context: AiSocraticContext,
+    options?: AiChatOptions
+  ): AsyncIterable<AiChatChunk> {
+    const messages: AiMessage[] = [
+      { role: "system", content: NAI_SOCRATIC_SYSTEM_PROMPT },
+      ...(context.recentChatHistory || []),
+      { role: "user", content: buildSocraticPrompt(context) },
+    ];
+
+    const apiKey = this.getApiKey(options);
+    const modelName = this.getModelName(options);
+
+    if (apiKey) {
+      try {
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const prompt = messages.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
+        const resultStream = await model.generateContentStream(prompt);
+
+        async function* readGenAiStream(): AsyncGenerator<string> {
+          for await (const chunk of resultStream.stream) {
+            const text = chunk.text();
+            if (text) yield text;
+          }
+        }
+
+        for await (const chunk of transformThinkTags(readGenAiStream())) {
+          yield { ...chunk, provider: "google", model: modelName };
+        }
+        yield { type: "done", provider: "google", model: modelName };
+        return;
+      } catch {
+        // Fall through to fallback
+      }
+    }
+
+    for await (const chunk of this.fallback.socraticGuidanceStream(context, options)) {
+      yield {
+        ...chunk,
+        provider: "google",
+        model: `${modelName} (offline-curated)`,
+      };
+    }
   }
 
   async evaluateTeachMode(

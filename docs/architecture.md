@@ -84,10 +84,12 @@ Sistem AI diorganisasikan dalam pola **Multi-Provider Adapter Pattern** (`src/se
    - `OpenAiProvider` (OpenAI GPT-4o-mini / GPT-4o)
    - `AnthropicProvider` (Claude 3.5 Haiku / Sonnet)
    - `CuratedLocalProvider` (Mesin Sokratis lokal deterministik berbasis rule & rubrik kurasi)
-4. **Hierarki Seleksi**:
-   - Client dapat memilih provider dan model melalui dropdown di UI (`NaiTutorDrawer`) atau parameter request `POST /api/v1/ai/tutor`.
-   - Pengguna/developer dapat memberikan custom API key atau local endpoint URL (misal Ollama) secara aman per request tanpa mengubah konfigurasi server global.
-   - **Graceful Fallback**: Jika credential cloud tidak disetel atau API provider mengalami kegagalan, adapter otomatis jatuh ke `CuratedLocalProvider` tanpa menghasilkan crash 500 bagi pengguna.
+4. **Hierarki Konfigurasi Server-Side**:
+   - Provider default dikonfigurasi melalui environment variable `AI_DEFAULT_PROVIDER` (default: `gemma`).
+   - Setiap provider membaca kredensial/endpoint masing-masing di sisi server (`GEMMA_API_KEY`, `GEMMA_ENDPOINT`, `GEMINI_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`).
+   - Frontend tidak memuat input API key/endpoint agar UI tetap tenang, fokus pada pembelajaran, dan bebas dari risiko kebocoran kredensial.
+   - **Graceful Fallback**: Jika credential cloud tidak disetel, kuota habis, atau API eksternal gagal/offline, adapter otomatis jatuh ke `CuratedLocalProvider` tanpa menghasilkan crash 500 bagi pengguna.
+   - Panduan lengkap konfigurasi dan skenario setup tersedia di [docs/llm-configuration.md](./llm-configuration.md).
 
 Gunakan timeout, rate limit per actor, retry terbatas, dan fallback ke hint terkurasi. Kegagalan AI tidak boleh menghalangi lesson non-AI.
 

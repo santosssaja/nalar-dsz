@@ -50,9 +50,20 @@ export interface AiTeachEvaluation {
   suggestions: string[];
 }
 
+export interface AiChatChunk {
+  type: "thought" | "text" | "done" | "error";
+  content?: string;
+  provider?: AiProviderName;
+  model?: string;
+}
+
 export interface IAiProvider {
   readonly name: AiProviderName;
   chat(messages: AiMessage[], options?: AiChatOptions): Promise<AiChatResponse>;
   socraticGuidance(context: AiSocraticContext, options?: AiChatOptions): Promise<AiChatResponse>;
+  socraticGuidanceStream?(
+    context: AiSocraticContext,
+    options?: AiChatOptions
+  ): AsyncIterable<AiChatChunk>;
   evaluateTeachMode(context: AiTeachContext, options?: AiChatOptions): Promise<AiTeachEvaluation>;
 }

@@ -16,7 +16,7 @@ Nalar memakai **Next.js App Router dengan TypeScript** yang dideploy sebagai apl
 | Client local-first | IndexedDB melalui wrapper kecil | Menyimpan guest identity, preferences, cached content, serta outbox sync. |
 | Styling | Tailwind CSS + CSS variables + komponen headless aksesibel | Token konsisten dan UI kecil tanpa desain SaaS generik. |
 | Konten matematika | MDX/JSON tervalidasi + KaTeX | Konten dikurasi, rendering aman, dan formula konsisten. |
-| AI | Provider AI melalui server adapter | Provider/model dapat diganti; context selalu berasal dari content dan rubric terkurasi. |
+| AI | Provider AI melalui server adapter | Multi-provider (Gemma, Gemini, OpenAI, Claude, Curated). Lihat [llm-configuration.md](./llm-configuration.md). |
 | Observability | Structured logs, error tracking, product analytics privacy-aware | Mendiagnosis error dan mengukur meaningful mastery. |
 | Testing | Vitest, React Testing Library, Playwright, axe | Unit, component, end-to-end, dan aksesibilitas otomatis. |
 

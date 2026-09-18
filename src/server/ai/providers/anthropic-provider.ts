@@ -6,6 +6,7 @@ import {
   AiSocraticContext,
   AiTeachContext,
   AiTeachEvaluation,
+  AiChatChunk,
 } from "../types";
 import {
   NAI_SOCRATIC_SYSTEM_PROMPT,
@@ -15,26 +16,32 @@ import {
 } from "../prompts";
 import { CuratedLocalProvider } from "./curated-provider";
 import Anthropic from "@anthropic-ai/sdk";
+import { transformThinkTags } from "../stream-utils";
 
 export class AnthropicProvider implements IAiProvider {
   public readonly name = "anthropic" as const;
   private readonly fallback = new CuratedLocalProvider();
 
   private getApiKey(options?: AiChatOptions): string | undefined {
-    return options?.apiKey || process.env.ANTHROPIC_API_KEY;
+    return options?.apiKey || process.env.ANTHROPIC_API_KEY || process.env.AI_API_KEY;
   }
 
   private getModelName(options?: AiChatOptions): string {
     return options?.model || process.env.ANTHROPIC_MODEL || "claude-3-5-haiku-20241022";
   }
 
+  private getEndpoint(options?: AiChatOptions): string | undefined {
+    return options?.endpoint || process.env.ANTHROPIC_BASE_URL || process.env.ANTHROPIC_ENDPOINT;
+  }
+
   async chat(messages: AiMessage[], options?: AiChatOptions): Promise<AiChatResponse> {
     const apiKey = this.getApiKey(options);
     const modelName = this.getModelName(options);
+    const baseURL = this.getEndpoint(options);
 
     if (apiKey) {
       try {
-        const client = new Anthropic({ apiKey, baseURL: options?.endpoint });
+        const client = new Anthropic({ apiKey, baseURL: baseURL || undefined });
         const systemMsg = messages.find((m) => m.role === "system")?.content;
         const nonSystemMsgs = messages
           .filter((m) => m.role !== "system")

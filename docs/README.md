@@ -35,6 +35,7 @@ Setelah itu, baca dokumen berdasarkan jenis pekerjaan:
 | [execution-guide.md](./execution-guide.md) | Protokol kerja, aturan asumsi, dan handoff agent |
 | [project-state.md](./project-state.md) | Kondisi repository saat ini dan pekerjaan berikutnya |
 | [laporan-perbedaan-konsep-implementasi.md](./laporan-perbedaan-konsep-implementasi.md) | Analisis keselarasan dan perbedaan dokumen konsep dengan implementasi |
+| [llm-configuration.md](./llm-configuration.md) | Panduan konfigurasi LLM (Gemma, Ollama, Gemini, OpenAI, Claude, Curated) |
 | [decisions.md](./decisions.md) | Keputusan yang terkunci, usulan, dan cara mengubahnya |
 
 ## Istilah inti

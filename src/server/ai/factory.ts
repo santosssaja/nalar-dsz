@@ -53,11 +53,24 @@ export const AI_PROVIDERS_CATALOG: ProviderCatalogItem[] = [
   },
 ];
 
+export function resolveProviderName(raw?: string): AiProviderName {
+  if (!raw) return "gemma";
+  const lower = raw.toLowerCase().trim();
+  if (lower === "gemini") return "google";
+  if (lower === "mock" || lower === "none" || lower === "local") return "curated";
+  if (["gemma", "google", "openai", "anthropic", "curated"].includes(lower)) {
+    return lower as AiProviderName;
+  }
+  return "gemma";
+}
+
 const providersCache: Partial<Record<AiProviderName, IAiProvider>> = {};
 
 export function getAiProvider(providerName?: AiProviderName): IAiProvider {
-  // Default to Google Gemma
-  const target: AiProviderName = providerName || "gemma";
+  // Default to Google Gemma or configured AI_DEFAULT_PROVIDER / AI_PROVIDER
+  const target: AiProviderName =
+    providerName ||
+    resolveProviderName(process.env.AI_DEFAULT_PROVIDER || process.env.AI_PROVIDER);
 
   if (!providersCache[target]) {
     switch (target) {
