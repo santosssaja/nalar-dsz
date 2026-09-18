@@ -76,4 +76,85 @@ describe("Auth & Device Claiming API", () => {
     const setCookie = res.headers.get("set-cookie");
     expect(setCookie).toBeDefined();
   });
+
+  it("POST /api/v1/auth/request-verification sends email verification and GET /api/v1/auth/verify verifies token", async () => {
+    const { POST: requestVerificationHandler } = await import(
+      "@/app/api/v1/auth/request-verification/route"
+    );
+    const { GET: verifyHandler } = await import("@/app/api/v1/auth/verify/route");
+
+    const email = `magic-${randomUUID()}@example.com`;
+
+    // 1. Request verification in register mode
+    const req = new NextRequest(
+      "http://localhost:3000/api/v1/auth/request-verification",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          displayName: "Budi Santoso",
+          mode: "register",
+        }),
+      }
+    );
+
+    const res = await requestVerificationHandler(req);
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.data.email).toBe(email);
+    expect(json.data.devVerificationUrl).toBeDefined();
+
+    // 2. Extract token from verification URL
+    const url = new URL(json.data.devVerificationUrl);
+    const token = url.searchParams.get("token");
+    expect(token).toBeDefined();
+
+    // 3. Verify token via GET /api/v1/auth/verify
+    const verifyReq = new NextRequest(
+      `http://localhost:3000/api/v1/auth/verify?token=${token}`,
+      {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      }
+    );
+
+    const verifyRes = await verifyHandler(verifyReq);
+    expect(verifyRes.status).toBe(200);
+    const verifyJson = await verifyRes.json();
+    expect(verifyJson.data.user.email).toBe(email);
+    expect(verifyJson.data.user.displayName).toBe("Budi Santoso");
+
+    // Check cookie
+    const setCookie = verifyRes.headers.get("set-cookie");
+    expect(setCookie).toContain("nalar_session_user_id");
+
+    // 4. Repeated use of consumed token should fail
+    const repeatVerify = await verifyHandler(verifyReq);
+    expect(repeatVerify.status).toBe(400);
+  });
+
+  it("POST /api/v1/auth/request-verification returns 404 if login requested for unregistered email", async () => {
+    const { POST: requestVerificationHandler } = await import(
+      "@/app/api/v1/auth/request-verification/route"
+    );
+
+    const email = `unregistered-${randomUUID()}@example.com`;
+    const req = new NextRequest(
+      "http://localhost:3000/api/v1/auth/request-verification",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          mode: "login",
+        }),
+      }
+    );
+
+    const res = await requestVerificationHandler(req);
+    expect(res.status).toBe(404);
+    const json = await res.json();
+    expect(json.error.code).toBe("USER_NOT_FOUND");
+  });
 });

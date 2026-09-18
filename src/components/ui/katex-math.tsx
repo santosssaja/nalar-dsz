@@ -6,9 +6,16 @@ import katex from "katex";
 interface MathRendererProps {
   content: string;
   className?: string;
+  as?: "div" | "span";
+  inline?: boolean;
 }
 
-export function MathRenderer({ content, className = "" }: MathRendererProps) {
+export function MathRenderer({
+  content,
+  className = "",
+  as = "div",
+  inline = false,
+}: MathRendererProps) {
   const renderedHtml = useMemo(() => {
     if (!content) return "";
 
@@ -42,9 +49,11 @@ export function MathRenderer({ content, className = "" }: MathRendererProps) {
     return parsed;
   }, [content]);
 
+  const Component = inline ? "span" : as;
+
   return (
-    <div
-      className={`leading-relaxed ${className}`}
+    <Component
+      className={inline ? className : `leading-relaxed ${className}`}
       dangerouslySetInnerHTML={{ __html: renderedHtml }}
     />
   );

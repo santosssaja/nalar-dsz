@@ -35,6 +35,7 @@ describe("PreferencesService (Theme & Accessibility Settings)", () => {
 
     expect(prefs).toBeDefined();
     expect(prefs.theme).toBe("light");
+    expect(prefs.highContrast).toBe(false);
     expect(prefs.fontScale).toBe("normal");
     expect(prefs.reducedMotion).toBe(false);
     expect(prefs.naiVisible).toBe(true);
@@ -42,20 +43,23 @@ describe("PreferencesService (Theme & Accessibility Settings)", () => {
 
   it("updates accessibility settings and persists them", async () => {
     const updated = await updateLearnerPreferences(testActor, {
-      theme: "contrast",
+      theme: "dark",
+      highContrast: true,
       fontScale: "large",
       reducedMotion: true,
       naiVisible: false,
     });
 
-    expect(updated.theme).toBe("contrast");
+    expect(updated.theme).toBe("dark");
+    expect(updated.highContrast).toBe(true);
     expect(updated.fontScale).toBe("large");
     expect(updated.reducedMotion).toBe(true);
     expect(updated.naiVisible).toBe(false);
 
     // Verify subsequent read matches
     const fetched = await getLearnerPreferences(testActor);
-    expect(fetched.theme).toBe("contrast");
+    expect(fetched.theme).toBe("dark");
+    expect(fetched.highContrast).toBe(true);
     expect(fetched.reducedMotion).toBe(true);
   });
 });

@@ -3,6 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { UserPreferences } from "@/server/services/preferences-service";
 
+import {
+  THEME_STORAGE_KEY,
+  CONTRAST_STORAGE_KEY,
+  MOTION_STORAGE_KEY,
+  FONT_STORAGE_KEY,
+  PREFERENCES_EVENT,
+  applyPreferencesToDom,
+} from "@/components/theme/theme-provider";
+
 interface PreferencesModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -11,6 +20,7 @@ interface PreferencesModalProps {
 export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
   const [preferences, setPreferences] = useState<UserPreferences>({
     theme: "light",
+    highContrast: false,
     fontScale: "normal",
     reducedMotion: false,
     naiVisible: true,
@@ -19,49 +29,103 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
+    // Only synchronize when the modal is open. When closed (e.g. clicking Selesai), do nothing!
+    if (!isOpen) return;
+
+    // 1. Read current local preferences first
+    if (typeof window !== "undefined") {
+      const localTheme = (localStorage.getItem(THEME_STORAGE_KEY) as UserPreferences["theme"]) || null;
+      const localContrast = localStorage.getItem(CONTRAST_STORAGE_KEY);
+      const localMotion = localStorage.getItem(MOTION_STORAGE_KEY);
+      const localFont = (localStorage.getItem(FONT_STORAGE_KEY) as UserPreferences["fontScale"]) || null;
+      setPreferences((prev) => ({
+        ...prev,
+        theme: localTheme || prev.theme,
+        highContrast:
+          localContrast !== null
+            ? localContrast === "true"
+            : (localTheme === "contrast" ? true : prev.highContrast),
+        reducedMotion: localMotion !== null ? localMotion === "true" : prev.reducedMotion,
+        fontScale: localFont || prev.fontScale,
+      }));
+    }
+
+    // 2. Fetch server preferences to sync non-local state (e.g. naiVisible)
+    let isMounted = true;
     fetch("/api/v1/preferences")
       .then((res) => res.json())
       .then((json) => {
-        if (json.data) {
-          setPreferences(json.data);
-          applyToDom(json.data);
+        if (!isMounted || !json.data) return;
+
+        const currentLocalTheme = (localStorage.getItem(THEME_STORAGE_KEY) as UserPreferences["theme"]) || null;
+        const currentLocalContrast = localStorage.getItem(CONTRAST_STORAGE_KEY);
+        const currentLocalMotion = localStorage.getItem(MOTION_STORAGE_KEY);
+        const currentLocalFont = (localStorage.getItem(FONT_STORAGE_KEY) as UserPreferences["fontScale"]) || null;
+
+        // If local preferences were empty, adopt server values
+        if (!currentLocalTheme && json.data.theme) {
+          localStorage.setItem(THEME_STORAGE_KEY, json.data.theme);
+          document.cookie = `nalar_theme=${json.data.theme}; path=/; max-age=31536000; SameSite=Lax`;
+        }
+        if (currentLocalContrast === null && typeof json.data.highContrast === "boolean") {
+          localStorage.setItem(CONTRAST_STORAGE_KEY, String(json.data.highContrast));
+          document.cookie = `nalar_high_contrast=${json.data.highContrast}; path=/; max-age=31536000; SameSite=Lax`;
+        }
+        if (currentLocalMotion === null && typeof json.data.reducedMotion === "boolean") {
+          localStorage.setItem(MOTION_STORAGE_KEY, String(json.data.reducedMotion));
+        }
+        if (!currentLocalFont && json.data.fontScale) {
+          localStorage.setItem(FONT_STORAGE_KEY, json.data.fontScale);
+        }
+
+        const merged: UserPreferences = {
+          ...json.data,
+          theme: currentLocalTheme || json.data.theme || "light",
+          highContrast:
+            currentLocalContrast !== null
+              ? currentLocalContrast === "true"
+              : Boolean(json.data.highContrast),
+          reducedMotion: currentLocalMotion !== null ? currentLocalMotion === "true" : Boolean(json.data.reducedMotion),
+          fontScale: currentLocalFont || json.data.fontScale || "normal",
+        };
+
+        setPreferences(merged);
+
+        // Only apply to DOM if local was empty and we adopted new server preferences
+        if (!currentLocalTheme && json.data.theme) {
+          applyPreferencesToDom(merged);
         }
       })
       .catch((err) => console.warn("Could not fetch preferences:", err));
-  }, []);
 
-  const applyToDom = (prefs: UserPreferences) => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-
-    // Theme
-    root.classList.remove("dark", "high-contrast");
-    if (prefs.theme === "dark") {
-      root.classList.add("dark");
-    } else if (prefs.theme === "contrast") {
-      root.classList.add("high-contrast");
-    }
-
-    // Reduced Motion
-    if (prefs.reducedMotion) {
-      root.classList.add("reduced-motion");
-    } else {
-      root.classList.remove("reduced-motion");
-    }
-
-    // Font Scale
-    root.classList.remove("font-scale-small", "font-scale-large");
-    if (prefs.fontScale === "large") {
-      root.classList.add("font-scale-large");
-    } else if (prefs.fontScale === "small") {
-      root.classList.add("font-scale-small");
-    }
-  };
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen]);
 
   const updatePreference = async (partial: Partial<UserPreferences>) => {
     const updated = { ...preferences, ...partial };
     setPreferences(updated);
-    applyToDom(updated);
+    applyPreferencesToDom(updated);
+
+    // Save locally immediately
+    if (typeof window !== "undefined") {
+      if (updated.theme) {
+        localStorage.setItem(THEME_STORAGE_KEY, updated.theme);
+        document.cookie = `nalar_theme=${updated.theme}; path=/; max-age=31536000; SameSite=Lax`;
+      }
+      if (typeof updated.highContrast === "boolean") {
+        localStorage.setItem(CONTRAST_STORAGE_KEY, String(updated.highContrast));
+        document.cookie = `nalar_high_contrast=${updated.highContrast}; path=/; max-age=31536000; SameSite=Lax`;
+      }
+      if (typeof updated.reducedMotion === "boolean") {
+        localStorage.setItem(MOTION_STORAGE_KEY, String(updated.reducedMotion));
+      }
+      if (updated.fontScale) {
+        localStorage.setItem(FONT_STORAGE_KEY, updated.fontScale);
+      }
+      window.dispatchEvent(new Event(PREFERENCES_EVENT));
+    }
 
     setIsSaving(true);
     try {
@@ -132,11 +196,10 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
           {/* Theme Selector */}
           <div className="space-y-2">
             <label className="font-bold text-text block">Tema Tampilan</label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {[
                 { id: "light", label: "Terang" },
                 { id: "dark", label: "Gelap" },
-                { id: "contrast", label: "Kontras Tinggi" },
               ].map((t) => (
                 <button
                   key={t.id}
@@ -177,6 +240,31 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* High Contrast Toggle (Slide Button) */}
+          <div className="flex items-center justify-between p-3 rounded-xl bg-surface border border-border">
+            <div className="space-y-0.5 max-w-[260px]">
+              <span className="font-bold text-text block">Mode Kontras Tinggi</span>
+              <span className="text-[11px] text-text-muted block">
+                Pertegas garis batas dan kontras warna teks untuk visibilitas maksimal
+              </span>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={preferences.highContrast}
+              onClick={() => updatePreference({ highContrast: !preferences.highContrast })}
+              className={`w-11 h-6 rounded-full transition-colors relative flex items-center p-0.5 ${
+                preferences.highContrast ? "bg-accent" : "bg-border"
+              }`}
+            >
+              <span
+                className={`w-5 h-5 rounded-full bg-surface-raised shadow-xs transform transition-transform ${
+                  preferences.highContrast ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </button>
           </div>
 
           {/* Reduced Motion Toggle */}

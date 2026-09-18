@@ -84,6 +84,7 @@ CREATE TABLE "learner_devices" (
 CREATE TABLE "learner_preferences" (
 	"learner_device_id" uuid PRIMARY KEY NOT NULL,
 	"theme" text DEFAULT 'light' NOT NULL,
+	"high_contrast" boolean DEFAULT false NOT NULL,
 	"font_scale" text DEFAULT 'normal' NOT NULL,
 	"reduced_motion" boolean DEFAULT false NOT NULL,
 	"nai_visible" boolean DEFAULT true NOT NULL,
@@ -181,9 +182,23 @@ CREATE TABLE "users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"email" text,
 	"display_name" text,
+	"email_verified_at" timestamp with time zone,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"deleted_at" timestamp with time zone,
 	CONSTRAINT "users_email_unique" UNIQUE("email")
+);
+--> statement-breakpoint
+CREATE TABLE "verification_tokens" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"email" text NOT NULL,
+	"token" text NOT NULL,
+	"display_name" text,
+	"mode" text DEFAULT 'login' NOT NULL,
+	"target_learner_device_id" uuid,
+	"expires_at" timestamp with time zone NOT NULL,
+	"consumed_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "verification_tokens_token_unique" UNIQUE("token")
 );
 --> statement-breakpoint
 ALTER TABLE "ai_interactions" ADD CONSTRAINT "ai_interactions_learner_device_id_learner_devices_id_fk" FOREIGN KEY ("learner_device_id") REFERENCES "public"."learner_devices"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

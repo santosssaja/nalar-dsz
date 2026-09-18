@@ -53,12 +53,12 @@ const LAB_FUNCTIONS: LabFunction[] = [
   {
     id: "sqrt",
     name: "Fungsi Akar Kuadrat",
-    formulaKatex: "f(x) = 2\\sqrt{x}",
-    derivativeKatex: "f'(x) = \\frac{1}{\\sqrt{x}}",
-    fn: (x) => 2 * Math.sqrt(Math.max(0, x)),
-    dfn: (x) => (x <= 0.05 ? 10 : 1 / Math.sqrt(x)),
+    formulaKatex: "f(x) = \\sqrt{x}",
+    derivativeKatex: "f'(x) = \\frac{1}{2\\sqrt{x}}",
+    fn: (x) => Math.sqrt(Math.max(0, x)),
+    dfn: (x) => (x <= 0.05 ? 5 : 1 / (2 * Math.sqrt(x))),
     xRange: [0, 4.5],
-    yRange: [0, 5],
+    yRange: [-0.5, 3],
     defaultX: 1,
   },
 ];
@@ -149,8 +149,10 @@ export default function NalarLabPage() {
         <h1 className="text-3xl sm:text-4xl font-bold text-text tracking-tight">
           Nalar Lab: Laboratorium Turunan Interaktif
         </h1>
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Eksplorasi visual tanpa batas untuk memahami bagaimana kemiringan garis singgung berubah di setiap titik, serta melihat bagaimana kurva turunan $f&apos;(x)$ merekam laju perubahan tersebut.
+        <p className="text-sm text-text-muted max-w-2xl leading-relaxed flex flex-wrap items-center gap-1">
+          <span>Eksplorasi visual tanpa batas untuk memahami bagaimana kemiringan garis singgung berubah di setiap titik, serta melihat bagaimana kurva turunan</span>
+          <MathRenderer inline content="$f'(x)$" />
+          <span>merekam laju perubahan tersebut.</span>
         </p>
       </div>
 
@@ -175,8 +177,8 @@ export default function NalarLabPage() {
               }`}
             >
               <span className="text-xs font-bold block">{f.name}</span>
-              <span className="text-xs text-text-muted mt-0.5 block font-mono">
-                {f.formulaKatex}
+              <span className="text-xs text-text-muted mt-1 block">
+                <MathRenderer inline content={`$${f.formulaKatex}$`} />
               </span>
             </button>
           ))}
@@ -192,19 +194,19 @@ export default function NalarLabPage() {
               <span className="font-bold text-text">Kanvas Visualisasi</span>
               <span className="text-text-muted">•</span>
               <span className="font-mono text-accent">
-                <MathRenderer content={`$${activeFunc.formulaKatex}$`} />
+                <MathRenderer inline content={`$${activeFunc.formulaKatex}$`} />
               </span>
             </div>
 
             <div className="flex items-center gap-3 font-mono text-[11px] text-text-muted">
               <span className="flex items-center gap-1">
                 <span className="w-2.5 h-2.5 rounded-full bg-text inline-block" />
-                <span>$f(x)$</span>
+                <MathRenderer inline content="$f(x)$" />
               </span>
               {showDerivativeCurve && (
                 <span className="flex items-center gap-1">
                   <span className="w-2.5 h-2.5 rounded-full bg-accent inline-block" />
-                  <span>$f&apos;(x)$</span>
+                  <MathRenderer inline content="$f'(x)$" />
                 </span>
               )}
             </div>
@@ -296,9 +298,11 @@ export default function NalarLabPage() {
           {/* Slider for Point x0 */}
           <div className="space-y-2 pt-2">
             <div className="flex items-center justify-between text-xs">
-              <label htmlFor="lab-x-slider" className="font-semibold text-text">
-                Posisikan Titik Singgung ($x_0$):{" "}
-                <span className="font-mono text-accent font-bold text-sm">
+              <label htmlFor="lab-x-slider" className="font-semibold text-text flex items-center gap-1">
+                <span>Posisikan Titik Singgung (</span>
+                <MathRenderer inline content="$x_0$" />
+                <span>):</span>
+                <span className="font-mono text-accent font-bold text-sm ml-1">
                   {x0.toFixed(2)}
                 </span>
               </label>
@@ -329,6 +333,13 @@ export default function NalarLabPage() {
 
             <div className="space-y-3 text-xs">
               <div className="p-3 rounded-xl bg-surface border border-border flex items-center justify-between">
+                <span className="text-text-muted">Rumus Turunan:</span>
+                <span className="text-accent font-semibold text-xs">
+                  <MathRenderer inline content={`$${activeFunc.derivativeKatex}$`} />
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-surface border border-border flex items-center justify-between">
                 <span className="text-text-muted">Koordinat Titik:</span>
                 <span className="font-mono font-bold text-text">
                   ({x0.toFixed(2)}, {y0.toFixed(2)})
@@ -336,7 +347,11 @@ export default function NalarLabPage() {
               </div>
 
               <div className="p-3 rounded-xl bg-accent-muted border border-accent/30 flex items-center justify-between">
-                <span className="text-accent font-semibold">Kemiringan $f&apos;(x_0)$:</span>
+                <span className="text-accent font-semibold flex items-center gap-1">
+                  <span>Kemiringan</span>
+                  <MathRenderer inline content="$f'(x_0)$" />
+                  <span>:</span>
+                </span>
                 <span className="font-mono font-bold text-accent text-base">
                   {slope.toFixed(3)}
                 </span>
@@ -356,7 +371,10 @@ export default function NalarLabPage() {
             {/* Toggle Controls */}
             <div className="space-y-2 pt-2 border-t border-border text-xs">
               <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-text">Tampilkan Kurva $f&apos;(x)$</span>
+                <span className="text-text flex items-center gap-1">
+                  <span>Tampilkan Kurva</span>
+                  <MathRenderer inline content="$f'(x)$" />
+                </span>
                 <input
                   type="checkbox"
                   checked={showDerivativeCurve}
@@ -366,7 +384,11 @@ export default function NalarLabPage() {
               </label>
 
               <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-text">Tampilkan Garis Secant ($h$)</span>
+                <span className="text-text flex items-center gap-1">
+                  <span>Tampilkan Garis Secant (</span>
+                  <MathRenderer inline content="$h$" />
+                  <span>)</span>
+                </span>
                 <input
                   type="checkbox"
                   checked={showSecant}
@@ -377,8 +399,12 @@ export default function NalarLabPage() {
 
               {showSecant && (
                 <div className="pt-2 space-y-1">
-                  <div className="flex justify-between text-[11px] text-text-muted">
-                    <span>Jarak $h$:</span>
+                  <div className="flex justify-between text-[11px] text-text-muted items-center">
+                    <span className="flex items-center gap-1">
+                      <span>Jarak</span>
+                      <MathRenderer inline content="$h$" />
+                      <span>:</span>
+                    </span>
                     <span className="font-mono font-bold">{h.toFixed(2)}</span>
                   </div>
                   <input

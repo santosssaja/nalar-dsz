@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { PreferencesModal } from "@/components/ui/preferences-modal";
 import { AuthModal } from "@/components/ui/auth-modal";
 
 export function NavHeader() {
+  const pathname = usePathname();
   const [isPrefOpen, setIsPrefOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authStatus, setAuthStatus] = useState<{
@@ -15,6 +17,11 @@ export function NavHeader() {
     actorKind: "guest",
     user: null,
   });
+
+  const isDomainsActive = pathname === "/domains" || pathname.startsWith("/domains/");
+  const isModulesActive = pathname.startsWith("/modules") || pathname.startsWith("/learn");
+  const isLabActive = pathname === "/lab" || pathname.startsWith("/lab/");
+  const isAuthActive = pathname === "/auth" || pathname.startsWith("/auth/");
 
   const checkAuth = async () => {
     try {
@@ -56,24 +63,39 @@ export function NavHeader() {
           </div>
 
           {/* Navigation & Controls */}
-          <nav className="flex items-center gap-2 sm:gap-4 text-xs font-medium" aria-label="Navigasi Utama">
+          <nav className="flex items-center gap-1.5 sm:gap-3 text-xs font-medium" aria-label="Navigasi Utama">
             <Link
               href="/domains"
-              className="text-text-muted hover:text-text px-2.5 py-1.5 rounded-lg transition-colors"
+              aria-current={isDomainsActive ? "page" : undefined}
+              className={`px-3 py-1.5 rounded-lg transition-all ${
+                isDomainsActive
+                  ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
+                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+              }`}
             >
               Kurikulum
             </Link>
 
             <Link
               href="/modules/turunan"
-              className="hidden sm:inline-block text-text-muted hover:text-text px-2.5 py-1.5 rounded-lg transition-colors"
+              aria-current={isModulesActive ? "page" : undefined}
+              className={`hidden sm:inline-block px-3 py-1.5 rounded-lg transition-all ${
+                isModulesActive
+                  ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
+                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+              }`}
             >
               Kalkulus Turunan
             </Link>
 
             <Link
               href="/lab"
-              className="text-accent font-semibold hover:opacity-80 px-2.5 py-1.5 rounded-lg transition-opacity flex items-center gap-1"
+              aria-current={isLabActive ? "page" : undefined}
+              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                isLabActive
+                  ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
+                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+              }`}
             >
               <span>🔬</span>
               <span className="hidden sm:inline">Nalar Lab</span>
@@ -83,8 +105,13 @@ export function NavHeader() {
             <button
               type="button"
               onClick={() => setIsPrefOpen(true)}
+              aria-expanded={isPrefOpen}
               aria-label="Buka pengaturan aksesibilitas dan preferensi tampilan"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border bg-surface hover:bg-surface-overlay text-text transition-colors shadow-2xs"
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-colors shadow-2xs ${
+                isPrefOpen
+                  ? "border-accent/40 bg-accent-muted text-accent font-semibold"
+                  : "border-border bg-surface hover:bg-surface-overlay text-text"
+              }`}
             >
               <span className="text-sm">⚙️</span>
               <span className="hidden sm:inline">Aksesibilitas</span>
@@ -111,7 +138,11 @@ export function NavHeader() {
                   type="button"
                   onClick={() => setIsAuthOpen(true)}
                   aria-label="Masuk atau sinkronkan akun dari mode tamu"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold bg-surface hover:bg-surface-overlay text-text border border-border transition-colors"
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                    isAuthActive || isAuthOpen
+                      ? "bg-accent-muted text-accent border border-accent/40 shadow-xs"
+                      : "bg-surface hover:bg-surface-overlay text-text border border-border"
+                  }`}
                 >
                   <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                   <span>Mode Tamu</span>

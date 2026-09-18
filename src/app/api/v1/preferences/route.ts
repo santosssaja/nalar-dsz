@@ -10,6 +10,7 @@ export const dynamic = "force-dynamic";
 
 const UpdatePreferencesSchema = z.object({
   theme: z.enum(["light", "dark", "contrast"]).optional(),
+  highContrast: z.boolean().optional(),
   fontScale: z.enum(["small", "normal", "large"]).optional(),
   reducedMotion: z.boolean().optional(),
   naiVisible: z.boolean().optional(),

@@ -17,8 +17,22 @@ export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").unique(),
   displayName: text("display_name"),
+  emailVerifiedAt: timestamp("email_verified_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
+});
+
+// 1b. Verification Tokens (Magic Link Email Verification)
+export const verificationTokens = pgTable("verification_tokens", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull(),
+  token: text("token").notNull().unique(),
+  displayName: text("display_name"),
+  mode: text("mode").default("login").notNull(), // "login" | "register"
+  targetLearnerDeviceId: uuid("target_learner_device_id"),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  consumedAt: timestamp("consumed_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 // 2. Learner Devices (Guest & Member Devices)
@@ -36,6 +50,7 @@ export const learnerPreferences = pgTable("learner_preferences", {
     .primaryKey()
     .references(() => learnerDevices.id, { onDelete: "cascade" }),
   theme: text("theme").default("light").notNull(),
+  highContrast: boolean("high_contrast").default(false).notNull(),
   fontScale: text("font_scale").default("normal").notNull(),
   reducedMotion: boolean("reduced_motion").default(false).notNull(),
   naiVisible: boolean("nai_visible").default(true).notNull(),

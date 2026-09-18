@@ -13,17 +13,19 @@ describe("Preferences API (/api/v1/preferences)", () => {
     const json = await res.json();
     expect(json.data).toBeDefined();
     expect(json.data.theme).toBeDefined();
+    expect(typeof json.data.highContrast).toBe("boolean");
     expect(json.data.fontScale).toBeDefined();
     expect(typeof json.data.reducedMotion).toBe("boolean");
     expect(typeof json.data.naiVisible).toBe("boolean");
   });
 
-  it("PATCH /api/v1/preferences updates theme and font scale", async () => {
+  it("PATCH /api/v1/preferences updates theme, highContrast, and font scale", async () => {
     const req = new NextRequest("http://localhost:3000/api/v1/preferences", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         theme: "dark",
+        highContrast: true,
         fontScale: "large",
         reducedMotion: true,
       }),
@@ -34,6 +36,7 @@ describe("Preferences API (/api/v1/preferences)", () => {
 
     const json = await res.json();
     expect(json.data.theme).toBe("dark");
+    expect(json.data.highContrast).toBe(true);
     expect(json.data.fontScale).toBe("large");
     expect(json.data.reducedMotion).toBe(true);
   });

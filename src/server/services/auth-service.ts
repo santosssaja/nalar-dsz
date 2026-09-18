@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { randomUUID, randomBytes } from "crypto";
 import { eq, and, ne } from "drizzle-orm";
 import {
   getDb,
@@ -7,7 +7,9 @@ import {
   learnerDevices,
   conceptProgress,
   learnerPreferences,
+  verificationTokens,
 } from "@/server/db";
+import { sendVerificationEmail } from "./email-service";
 
 export interface ClaimDeviceResult {
   claimedDeviceId: string;
@@ -86,6 +88,16 @@ export async function claimDevice(
 
   if (!device) {
     throw new Error(`Device dengan ID ${learnerDeviceId} tidak ditemukan.`);
+  }
+
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+  if (!user) {
+    throw new Error(`User dengan ID ${userId} tidak ditemukan.`);
   }
 
   if (device.userId === userId) {
@@ -213,5 +225,163 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
     email: user.email ?? "",
     displayName: user.displayName,
     createdAt: user.createdAt,
+  };
+}
+
+export interface RequestVerificationResult {
+  success: boolean;
+  email: string;
+  mode: "login" | "register";
+  devVerificationUrl?: string;
+  message: string;
+}
+
+export interface VerifyTokenResult {
+  user: UserProfile;
+  sessionUserId: string;
+  claimResult?: ClaimDeviceResult;
+}
+
+export async function requestEmailVerification(
+  email: string,
+  mode: "login" | "register" = "login",
+  displayName?: string,
+  currentLearnerDeviceId?: string,
+  origin?: string
+): Promise<RequestVerificationResult> {
+  await ensureDbInitialized();
+  const db = getDb();
+  const normalizedEmail = email.trim().toLowerCase();
+
+  const [existingUser] = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, normalizedEmail))
+    .limit(1);
+
+  if (mode === "login" && !existingUser) {
+    throw new Error(
+      "Alamat email belum terdaftar. Silakan pilih tab 'Daftar' untuk membuat akun baru."
+    );
+  }
+
+  // Generate secure token
+  const token = randomBytes(32).toString("hex");
+  const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
+
+  await db.insert(verificationTokens).values({
+    id: randomUUID(),
+    email: normalizedEmail,
+    token,
+    displayName: displayName?.trim() || existingUser?.displayName || null,
+    mode,
+    targetLearnerDeviceId: currentLearnerDeviceId || null,
+    expiresAt,
+    createdAt: new Date(),
+  });
+
+  const baseUrl = origin || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const verificationUrl = `${baseUrl}/auth/verify?token=${token}`;
+
+  const sendResult = await sendVerificationEmail({
+    toEmail: normalizedEmail,
+    verificationUrl,
+    displayName: displayName?.trim() || existingUser?.displayName || undefined,
+    mode,
+  });
+
+  return {
+    success: true,
+    email: normalizedEmail,
+    mode,
+    devVerificationUrl: sendResult.devVerificationUrl,
+    message: `Tautan verifikasi telah dikirim ke ${normalizedEmail}. Silakan periksa kotak masuk atau folder spam email Anda.`,
+  };
+}
+
+export async function verifyEmailToken(
+  token: string,
+  currentLearnerDeviceId?: string
+): Promise<VerifyTokenResult> {
+  await ensureDbInitialized();
+  const db = getDb();
+
+  const [tokenRecord] = await db
+    .select()
+    .from(verificationTokens)
+    .where(eq(verificationTokens.token, token))
+    .limit(1);
+
+  if (!tokenRecord) {
+    throw new Error("Tautan verifikasi tidak valid atau tidak ditemukan.");
+  }
+
+  if (tokenRecord.consumedAt) {
+    throw new Error("Tautan verifikasi ini sudah pernah digunakan sebelumnya.");
+  }
+
+  if (tokenRecord.expiresAt < new Date()) {
+    throw new Error("Tautan verifikasi telah kedaluwarsa (berlaku 15 menit). Silakan minta tautan baru.");
+  }
+
+  // Mark token consumed
+  await db
+    .update(verificationTokens)
+    .set({ consumedAt: new Date() })
+    .where(eq(verificationTokens.id, tokenRecord.id));
+
+  // Find or create user
+  const normalizedEmail = tokenRecord.email.toLowerCase();
+  let [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, normalizedEmail))
+    .limit(1);
+
+  if (!user) {
+    const generatedName =
+      tokenRecord.displayName || normalizedEmail.split("@")[0] || "Pelajar";
+    const [inserted] = await db
+      .insert(users)
+      .values({
+        id: randomUUID(),
+        email: normalizedEmail,
+        displayName: generatedName,
+        emailVerifiedAt: new Date(),
+        createdAt: new Date(),
+      })
+      .returning();
+    user = inserted;
+  } else {
+    // Update verified at and displayName if provided
+    await db
+      .update(users)
+      .set({
+        emailVerifiedAt: new Date(),
+        displayName: tokenRecord.displayName || user.displayName,
+      })
+      .where(eq(users.id, user.id));
+  }
+
+  // Claim device
+  const deviceIdToClaim = currentLearnerDeviceId || tokenRecord.targetLearnerDeviceId;
+  let claimResult: ClaimDeviceResult | undefined;
+  if (deviceIdToClaim) {
+    try {
+      claimResult = await claimDevice(user.id, deviceIdToClaim);
+    } catch (err) {
+      console.warn("Could not claim device during token verification:", err);
+    }
+  }
+
+  return {
+    user: {
+      id: user.id,
+      email: user.email ?? normalizedEmail,
+      displayName: user.displayName,
+      createdAt: user.createdAt,
+    },
+    sessionUserId: user.id,
+    claimResult,
   };
 }

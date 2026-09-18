@@ -34,6 +34,7 @@ Setelah itu, baca dokumen berdasarkan jenis pekerjaan:
 | [delivery-plan.md](./delivery-plan.md) | Tahapan delivery dan definition of done |
 | [execution-guide.md](./execution-guide.md) | Protokol kerja, aturan asumsi, dan handoff agent |
 | [project-state.md](./project-state.md) | Kondisi repository saat ini dan pekerjaan berikutnya |
+| [laporan-perbedaan-konsep-implementasi.md](./laporan-perbedaan-konsep-implementasi.md) | Analisis keselarasan dan perbedaan dokumen konsep dengan implementasi |
 | [decisions.md](./decisions.md) | Keputusan yang terkunci, usulan, dan cara mengubahnya |
 
 ## Istilah inti

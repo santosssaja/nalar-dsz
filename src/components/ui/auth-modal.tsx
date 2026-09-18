@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -9,11 +10,16 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
+  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [sentResult, setSentResult] = useState<{
+    email: string;
+    mode: "login" | "register";
+    devVerificationUrl?: string;
+  } | null>(null);
   const [currentUser, setCurrentUser] = useState<{
     email: string;
     displayName: string | null;
@@ -37,11 +43,11 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
     if (isOpen) {
       fetchAuthStatus();
       setErrorMessage(null);
-      setSuccessMessage(null);
+      setSentResult(null);
     }
   }, [isOpen]);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) {
       setErrorMessage("Silakan masukkan alamat email yang valid.");
@@ -50,39 +56,31 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
 
     setIsLoading(true);
     setErrorMessage(null);
-    setSuccessMessage(null);
 
     try {
-      const res = await fetch("/api/v1/auth/login", {
+      const res = await fetch("/api/v1/auth/request-verification", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: email.trim(),
-          displayName: displayName.trim() || undefined,
+          mode: activeTab,
+          displayName: activeTab === "register" ? displayName.trim() || undefined : undefined,
         }),
       });
 
       const json = await res.json();
+
       if (res.ok && json.data) {
-        const user = json.data.user;
-        const mergedCount = json.data.claimResult?.conceptsMerged ?? 0;
-        setSuccessMessage(
-          `Berhasil masuk sebagai ${user.displayName || user.email}! ${
-            mergedCount > 0
-              ? `${mergedCount} progres konsep telah digabungkan ke akunmu.`
-              : "Progres belajarmu telah disinkronkan."
-          }`
-        );
-        setCurrentUser(user);
-        onAuthChange?.();
-        setTimeout(() => {
-          onClose();
-        }, 1200);
+        setSentResult({
+          email: json.data.email,
+          mode: json.data.mode,
+          devVerificationUrl: json.data.devVerificationUrl,
+        });
       } else {
-        setErrorMessage(json.error?.message ?? "Gagal memproses login.");
+        setErrorMessage(json.error?.message ?? "Gagal mengirimkan tautan verifikasi.");
       }
     } catch {
-      setErrorMessage("Terjadi gangguan koneksi server saat login.");
+      setErrorMessage("Terjadi gangguan koneksi server saat mengirim email.");
     } finally {
       setIsLoading(false);
     }
@@ -93,11 +91,11 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
     try {
       await fetch("/api/v1/auth/logout", { method: "POST" });
       setCurrentUser(null);
-      setSuccessMessage("Berhasil keluar. Sesi kembali ke Mode Tamu.");
+      setSentResult(null);
       onAuthChange?.();
       setTimeout(() => {
         onClose();
-      }, 1000);
+      }, 800);
     } catch {
       setErrorMessage("Gagal keluar dari sesi.");
     } finally {
@@ -115,6 +113,7 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
     >
       <div className="w-full max-w-md rounded-2xl bg-surface-raised border border-border p-6 space-y-6 shadow-xl animate-in fade-in zoom-in-95 duration-150">
+        {/* Header */}
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
             <span className="text-xl">{currentUser ? "👤" : "🔑"}</span>
@@ -125,7 +124,7 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
               <p className="text-xs text-text-muted">
                 {currentUser
                   ? "Kelola sesi dan sinkronisasi perangkat"
-                  : "Sinkronkan progres belajarmu tanpa paywall"}
+                  : "Verifikasi sekali klik via Google Gmail"}
               </p>
             </div>
           </div>
@@ -141,18 +140,13 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
         </div>
 
         {errorMessage && (
-          <div className="p-3 rounded-lg bg-danger-muted border border-danger/20 text-danger text-xs">
+          <div className="p-3 rounded-lg bg-danger-muted border border-danger/20 text-danger text-xs leading-relaxed">
             {errorMessage}
           </div>
         )}
 
-        {successMessage && (
-          <div className="p-3 rounded-lg bg-success-muted border border-success/20 text-success text-xs">
-            {successMessage}
-          </div>
-        )}
-
         {currentUser ? (
+          /* Logged In View */
           <div className="space-y-4 text-xs">
             <div className="p-4 rounded-xl bg-surface border border-border space-y-2">
               <div className="flex items-center gap-3">
@@ -163,10 +157,10 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
                   <h4 className="font-bold text-sm text-text">
                     {currentUser.displayName || "Pelajar Nalar"}
                   </h4>
-                  <span className="text-text-muted">{currentUser.email}</span>
+                  <span className="text-text-muted font-mono">{currentUser.email}</span>
                 </div>
               </div>
-              <div className="pt-2 border-t border-border-subtle flex items-center gap-1.5 text-accent font-medium">
+              <div className="pt-2 border-t border-border flex items-center gap-1.5 text-accent font-medium">
                 <span>✓</span>
                 <span>Perangkat ini telah terhubung & tersinkronisasi</span>
               </div>
@@ -191,64 +185,162 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
               </button>
             </div>
           </div>
-        ) : (
-          <form onSubmit={handleLogin} className="space-y-4 text-xs">
-            <div className="p-3.5 rounded-xl bg-accent-muted border border-accent/20 space-y-1">
-              <span className="font-bold text-accent flex items-center gap-1">
-                🔒 Tanpa Kehilangan Progres Tamu
-              </span>
-              <p className="text-text-muted leading-relaxed">
-                Seluruh penguasaan konsep, rekaman latihan, dan review yang telah kamu selesaikan saat mode tamu akan otomatis digabungkan ke akunmu.
+        ) : sentResult ? (
+          /* Email Sent View */
+          <div className="space-y-5 text-center py-2 animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-14 h-14 rounded-2xl bg-accent-muted border border-accent/30 text-accent mx-auto flex items-center justify-center text-3xl">
+              📬
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-base font-bold text-text">Tautan Masuk Terkirim!</h3>
+              <p className="text-xs text-text-muted leading-relaxed">
+                Kami telah mengirimkan tautan verifikasi sekali klik ke:
+              </p>
+              <p className="text-xs font-mono font-bold text-accent bg-surface px-3 py-1.5 rounded-lg border border-border inline-block">
+                {sentResult.email}
+              </p>
+              <p className="text-[11px] text-text-muted">
+                Buka email Anda dan klik tombol verifikasi untuk langsung masuk tanpa kata sandi.
               </p>
             </div>
 
-            <div className="space-y-1">
-              <label htmlFor="auth-email" className="font-bold text-text block">
-                Alamat Email
-              </label>
-              <input
-                id="auth-email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="nama@contoh.com"
-                className="w-full p-2.5 rounded-lg bg-surface border border-border text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent text-xs"
-              />
-            </div>
+            {/* Dev Fallback button */}
+            {sentResult.devVerificationUrl && (
+              <div className="p-3 rounded-xl bg-surface border border-accent/40 text-left space-y-1.5 text-xs">
+                <div className="flex items-center gap-1 font-bold text-accent text-[11px]">
+                  <span>⚡</span>
+                  <span>Mode Pengujian (Klik Langsung):</span>
+                </div>
+                <a
+                  href={sentResult.devVerificationUrl}
+                  className="block p-2 rounded-lg bg-accent text-surface-raised text-center font-semibold text-xs hover:bg-accent-hover transition-colors"
+                >
+                  Verifikasi Sekali Klik Sekarang →
+                </a>
+              </div>
+            )}
 
-            <div className="space-y-1">
-              <label htmlFor="auth-name" className="font-bold text-text block">
-                Nama Panggilan (Opsional)
-              </label>
-              <input
-                id="auth-name"
-                type="text"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="misal: Budi"
-                className="w-full p-2.5 rounded-lg bg-surface border border-border text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent text-xs"
-              />
-            </div>
-
-            <div className="flex items-center justify-between pt-3 border-t border-border">
+            <div className="pt-3 border-t border-border flex items-center justify-between text-xs">
               <button
                 type="button"
-                onClick={onClose}
-                className="px-4 py-2 rounded-lg font-medium text-text-muted hover:text-text transition-colors"
+                onClick={() => setSentResult(null)}
+                className="text-text-muted hover:text-text transition-colors"
               >
-                Tetap Mode Tamu
+                ← Ganti Email
               </button>
-
               <button
-                type="submit"
+                type="button"
+                onClick={handleSubmit}
                 disabled={isLoading}
-                className="px-5 py-2.5 rounded-lg font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-xs flex items-center gap-2"
+                className="font-semibold text-accent hover:underline"
               >
-                {isLoading ? "Menghubungkan..." : "Masuk / Buat Akun →"}
+                {isLoading ? "Mengirim..." : "Kirim Ulang"}
               </button>
             </div>
-          </form>
+          </div>
+        ) : (
+          /* Tab Switcher & Forms */
+          <div className="space-y-4 text-xs">
+            {/* Tab Switcher */}
+            <div className="grid grid-cols-2 p-1 bg-surface rounded-xl border border-border">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("login");
+                  setErrorMessage(null);
+                }}
+                className={`py-2 text-xs font-bold rounded-lg transition-all ${
+                  activeTab === "login"
+                    ? "bg-surface-raised text-accent shadow-xs border border-border"
+                    : "text-text-muted hover:text-text"
+                }`}
+              >
+                Masuk (Login)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("register");
+                  setErrorMessage(null);
+                }}
+                className={`py-2 text-xs font-bold rounded-lg transition-all ${
+                  activeTab === "register"
+                    ? "bg-surface-raised text-accent shadow-xs border border-border"
+                    : "text-text-muted hover:text-text"
+                }`}
+              >
+                Daftar (Register)
+              </button>
+            </div>
+
+            <div className="p-3 rounded-xl bg-accent-muted border border-accent/20 space-y-1">
+              <span className="font-bold text-accent flex items-center gap-1">
+                🔒 Tanpa Kehilangan Progres Tamu
+              </span>
+              <p className="text-text-muted leading-relaxed text-[11px]">
+                {activeTab === "login"
+                  ? "Tautan masuk sekali klik akan dikirim ke Gmail Anda. Tidak perlu mengingat kata sandi."
+                  : "Daftar dengan email Anda untuk mengamankan dan menyinkronkan seluruh kemajuan konsepmu."}
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-3">
+              {activeTab === "register" && (
+                <div className="space-y-1">
+                  <label htmlFor="modal-auth-name" className="font-bold text-text block">
+                    Nama Lengkap / Panggilan
+                  </label>
+                  <input
+                    id="modal-auth-name"
+                    type="text"
+                    required
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="misal: Budi Santoso"
+                    className="w-full p-2.5 rounded-lg bg-surface border border-border text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent text-xs"
+                  />
+                </div>
+              )}
+
+              <div className="space-y-1">
+                <label htmlFor="modal-auth-email" className="font-bold text-text block">
+                  Alamat Email (Gmail)
+                </label>
+                <input
+                  id="modal-auth-email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="nama@gmail.com"
+                  className="w-full p-2.5 rounded-lg bg-surface border border-border text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent text-xs"
+                />
+              </div>
+
+              <div className="flex items-center justify-between pt-3 border-t border-border">
+                <Link
+                  href="/auth"
+                  onClick={onClose}
+                  className="text-[11px] text-text-muted hover:text-accent underline"
+                >
+                  Buka Halaman Penuh ↗
+                </Link>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-5 py-2.5 rounded-lg font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-xs flex items-center gap-2"
+                >
+                  {isLoading
+                    ? "Mengirimkan Tautan..."
+                    : activeTab === "login"
+                    ? "Kirim Tautan Masuk →"
+                    : "Daftar & Verifikasi →"}
+                </button>
+              </div>
+            </form>
+          </div>
         )}
       </div>
     </div>

@@ -55,8 +55,20 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error) {
-    console.error("Error claiming device:", error);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("Error claiming device:", err);
+    if (err?.message?.includes("tidak ditemukan")) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "NOT_FOUND",
+            message: err.message,
+          },
+        },
+        { status: 404 }
+      );
+    }
     return NextResponse.json(
       {
         error: {
