@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Network, FlaskConical, Settings } from "lucide-react";
 import { PreferencesModal } from "@/components/ui/preferences-modal";
 import { AuthModal } from "@/components/ui/auth-modal";
 
@@ -18,8 +19,12 @@ export function NavHeader() {
     user: null,
   });
 
-  const isDomainsActive = pathname === "/domains" || pathname.startsWith("/domains/");
-  const isModulesActive = pathname.startsWith("/modules") || pathname.startsWith("/learn");
+  const isCurriculumActive =
+    pathname === "/domains" ||
+    pathname.startsWith("/domains/") ||
+    pathname.startsWith("/modules") ||
+    pathname.startsWith("/learn");
+  const isGraphActive = pathname === "/graph" || pathname.startsWith("/graph/");
   const isLabActive = pathname === "/lab" || pathname.startsWith("/lab/");
   const isAuthActive = pathname === "/auth" || pathname.startsWith("/auth/");
 
@@ -66,9 +71,9 @@ export function NavHeader() {
           <nav className="flex items-center gap-1.5 sm:gap-3 text-xs font-medium" aria-label="Navigasi Utama">
             <Link
               href="/domains"
-              aria-current={isDomainsActive ? "page" : undefined}
+              aria-current={isCurriculumActive ? "page" : undefined}
               className={`px-3 py-1.5 rounded-lg transition-all ${
-                isDomainsActive
+                isCurriculumActive
                   ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
                   : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
               }`}
@@ -77,15 +82,16 @@ export function NavHeader() {
             </Link>
 
             <Link
-              href="/modules/turunan"
-              aria-current={isModulesActive ? "page" : undefined}
-              className={`hidden sm:inline-block px-3 py-1.5 rounded-lg transition-all ${
-                isModulesActive
+              href="/graph"
+              aria-current={isGraphActive ? "page" : undefined}
+              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                isGraphActive
                   ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
                   : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
               }`}
             >
-              Kalkulus Turunan
+              <Network className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Peta Konsep</span>
             </Link>
 
             <Link
@@ -97,7 +103,7 @@ export function NavHeader() {
                   : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
               }`}
             >
-              <span>🔬</span>
+              <FlaskConical className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Nalar Lab</span>
             </Link>
 
@@ -113,7 +119,7 @@ export function NavHeader() {
                   : "border-border bg-surface hover:bg-surface-overlay text-text"
               }`}
             >
-              <span className="text-sm">⚙️</span>
+              <Settings className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Aksesibilitas</span>
             </button>
 

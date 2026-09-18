@@ -1,5 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
+import { Check } from "lucide-react";
 import { getModuleBySlug, getConcepts } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
 import {
@@ -114,7 +115,7 @@ export default async function ModuleOverviewPage({
               className="flex items-center gap-3 p-3 rounded-lg bg-surface border border-border text-xs"
             >
               <span className="w-5 h-5 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold">
-                ✓
+                <Check className="w-3 h-3" />
               </span>
               <div>
                 <span className="font-semibold text-text block">{prereq.title}</span>

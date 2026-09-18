@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
+import { User, KeyRound, X, Mail, ShieldCheck, Check } from "lucide-react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,6 +12,7 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -103,9 +106,13 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
     }
   };
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  return (
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -116,7 +123,11 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
-            <span className="text-xl">{currentUser ? "👤" : "🔑"}</span>
+            {currentUser ? (
+              <User className="w-5 h-5 text-accent" />
+            ) : (
+              <KeyRound className="w-5 h-5 text-accent" />
+            )}
             <div>
               <h3 id="auth-modal-title" className="text-base font-bold text-text">
                 {currentUser ? "Akun Nalar" : "Masuk atau Buat Akun"}
@@ -135,7 +146,7 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
             aria-label="Tutup jendela akun"
             className="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text hover:bg-surface border border-transparent hover:border-border transition-colors text-sm font-bold"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -161,7 +172,7 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
                 </div>
               </div>
               <div className="pt-2 border-t border-border flex items-center gap-1.5 text-accent font-medium">
-                <span>✓</span>
+                <Check className="w-3.5 h-3.5" />
                 <span>Perangkat ini telah terhubung & tersinkronisasi</span>
               </div>
             </div>
@@ -188,8 +199,8 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
         ) : sentResult ? (
           /* Email Sent View */
           <div className="space-y-5 text-center py-2 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-14 h-14 rounded-2xl bg-accent-muted border border-accent/30 text-accent mx-auto flex items-center justify-center text-3xl">
-              📬
+            <div className="w-14 h-14 rounded-2xl bg-accent-muted border border-accent/30 text-accent mx-auto flex items-center justify-center">
+              <Mail className="w-7 h-7 text-accent" />
             </div>
 
             <div className="space-y-2">
@@ -208,8 +219,7 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
             {/* Dev Fallback button */}
             {sentResult.devVerificationUrl && (
               <div className="p-3 rounded-xl bg-surface border border-accent/40 text-left space-y-1.5 text-xs">
-                <div className="flex items-center gap-1 font-bold text-accent text-[11px]">
-                  <span>⚡</span>
+                <div className="flex items-center gap-1.5 font-bold text-accent text-[11px]">
                   <span>Mode Pengujian (Klik Langsung):</span>
                 </div>
                 <a
@@ -275,8 +285,9 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
             </div>
 
             <div className="p-3 rounded-xl bg-accent-muted border border-accent/20 space-y-1">
-              <span className="font-bold text-accent flex items-center gap-1">
-                🔒 Tanpa Kehilangan Progres Tamu
+              <span className="font-bold text-accent flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Tanpa Kehilangan Progres Tamu</span>
               </span>
               <p className="text-text-muted leading-relaxed text-[11px]">
                 {activeTab === "login"
@@ -343,6 +354,7 @@ export function AuthModal({ isOpen, onClose, onAuthChange }: AuthModalProps) {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

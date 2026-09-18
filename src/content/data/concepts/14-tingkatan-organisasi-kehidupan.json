@@ -1,0 +1,193 @@
+{
+  "id": "30000000-0000-4000-8000-000000000032",
+  "moduleId": "20000000-0000-4000-8000-000000000005",
+  "slug": "tingkatan-organisasi-kehidupan",
+  "title": "Tingkatan Organisasi Kehidupan: Dari Molekul hingga Biosfer",
+  "summary": "Menjelajahi arsitektur kehidupan berjenjang: konsep sifat emergen (emergent properties), hierarki struktur dari skala seluler hingga biosfer bumi.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Mengurutkan tingkatan hierarki organisasi kehidupan dari skala terkecil hingga terbesar",
+    "Memahami konsep sifat emergen (emergent properties): sifat baru yang muncul pada setiap kenaikan tingkatan organisasi",
+    "Menghubungkan biologi seluler dengan biologi ekologi dan biosfer secara holistik"
+  ],
+  "prerequisites": ["karakteristik-kehidupan", "atom"],
+  "misconceptions": [
+    {
+      "code": "REDUCTIONIST_FALLACY",
+      "label": "Menganggap organisme hidup hanyalah kumpulan acak senyawa kimia tanpa sifat emergen",
+      "remediation": "Meskipun tersusun dari atom kimia yang sama, kehidupan melahirkan sifat baru (emergent properties) yang tidak dimiliki oleh masing-masing atom penyusunnya saat terpisah."
+    },
+    {
+      "code": "CONFUSING_POPULATION_AND_COMMUNITY",
+      "label": "Menyamakan populasi dengan komunitas dalam ekologi",
+      "remediation": "Populasi adalah kumpulan individu dari SATU spesies yang sama di suatu area, sedangkan Komunitas adalah kumpulan DARI BERBAGAI spesies berbeda yang hidup bersama."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-0000000000c1",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Tumpukan Batu Bata vs Istana Megah",
+      "instruction": "Pikirkan bagaimana komponen sederhana yang tersusun rapi melahirkan keajaiban baru.",
+      "content": "Jika kamu menumpuk satu juta batu bata secara acak di tanah, kamu hanya mendapatkan puing reruntuhan yang tidak berguna.\nNamun jika batu bata yang sama disusun dengan arsitektur yang teratur, kamu mendapatkan istana megah dengan ruangan, jendela, dan atap pelindung panas.\n\nDalam biologi, fenomena ini disebut **Sifat Emergen (*Emergent Properties*)**:\nPada setiap kenaikan tingkatan organisasi, muncul sifat-sifat baru yang sama sekali tidak dimiliki oleh bagian-bagian penyusunnya saat berdiri sendiri.\n\nSebuah molekul fosfolipid dan protein tidaklah hidup. Namun ketika tersusun membentuk **sel**, muncullah fenomena kehidupan!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi batu bata acak vs istana megah untuk menjelaskan konsep sifat emergen dalam biologi.",
+        "screenReaderNote": "Materi pengantar menguraikan konsep emergent properties sebagai fondasi hierarki biologi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000c9",
+      "kind": "explore",
+      "sortOrder": 2,
+      "title": "Eksplorasi Interaktif: Menjelajahi Skala Zoom Kehidupan",
+      "instruction": "Geser skala zoom dari molekul DNA hingga ekosistem planet untuk mengamati properti unik yang muncul di tiap tingkatan.",
+      "content": "Mari jelajahi bagaimana alam menyusun materi dari skala sub-mikroskopis hingga skala global!\n\nPerhatikan:\n- Di tingkat 1 (molekul), materi masih berupa senyawa kimia mati.\n- Di tingkat 2 (sel), kehidupan pertama kali lahir dengan batas membran dan metabolisme mandiri.\n- Di tingkat 3 ke atas, spesialisasi jaringan dan organ memungkinkan organisme bergerak, berpikir, dan bereproduksi.\n\nCobalah geser skala tingkatan di bawah ini untuk melihat contoh dan sifat kemunculannya (*emergent properties*)!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Playground interaktif hierarki skala organisasi kehidupan dari molekul hingga biosfer.",
+        "screenReaderNote": "Gunakan slider skala untuk berpindah tingkatan organisasi kehidupan dan mendengar sifat emergen tiap tingkatan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000c2",
+      "kind": "predict",
+      "sortOrder": 3,
+      "title": "Prediksi: Di Manakah Titik Awal Kehidupan Muncul?",
+      "instruction": "Pilihlah prediksimu mengenai tingkatan organisasi terkecil yang dapat menjalankan seluruh fungsi kehidupan secara mandiri.",
+      "content": "Perhatikan tingkatan berikut: **Atom $\\to$ Molekul $\\to$ Organel $\\to$ Sel**.\n\nPada tingkatan manakah kriteria 'kehidupan mandiri' pertama kali lahir secara utuh?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Ingat pilar pertama ciri makhluk hidup: organisasi seluler.",
+        "concept": "Organel seperti mitokondria atau ribosom tidak dapat hidup sendiri jika dikeluarkan dari sel.",
+        "strategy": "Sel adalah unit struktural dan fungsional terkecil kehidupan (seperti pada bakteri atau amoeba).",
+        "solution": "Tingkat Sel adalah unit terkecil yang dapat hidup mandiri."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-sel-mandiri",
+            "label": "Tingkat Sel — sel adalah unit struktural dan fungsional terkecil yang dapat hidup secara mandiri",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Teori Sel menyatakan bahwa sel adalah unit dasar kehidupan: satu sel bakteri sudah merupakan organisme hidup lengkap."
+          },
+          {
+            "id": "opt-organel-hidup",
+            "label": "Tingkat Organel — karena organel seperti mitokondria sudah memiliki fungsi spesifik",
+            "isCorrect": false,
+            "feedback": "Organel memang memiliki fungsi, tetapi organel tidak dapat bertahan hidup atau bereproduksi secara mandiri tanpa kelengkapan seluruh sitoplasma sel."
+          },
+          {
+            "id": "opt-molekul-dna",
+            "label": "Tingkat Molekul — karena molekul DNA membawa instruksi genetik",
+            "isCorrect": false,
+            "misconceptionCode": "REDUCTIONIST_FALLACY",
+            "feedback": "Molekul DNA hanyalah senyawa kimia polimer asam nukleat; DNA membutuhkan mesin seluler untuk diekspresikan menjadi kehidupan."
+          }
+        ],
+        "feedbackCorrect": "Prediksi tepat! Kamu telah mengenali sel sebagai ambang batas lahirnya kehidupan biologis."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Tingkatan organisasi terkecil yang memenuhi kriteria kehidupan mandiri.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi mengenai unit terkecil kehidupan (sel vs organel vs molekul)."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000c3",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Hierarki Spektrum Organisasi Kehidupan",
+      "instruction": "Pelajari tangga eskalasi struktur kehidupan dari mikro ke makro.",
+      "content": "Kehidupan di Bumi tertata rapi dalam hierarki spektakuler:\n\n1. **Molekul**: Senyawa biomolekul (lipid, protein, karbohidrat, DNA).\n2. **Organel**: Kompartemen fungsional di dalam sel (nukleus, kloroplas).\n3. **Sel**: Unit terkecil kehidupan (*contoh: sel saraf neuron*).\n4. **Jaringan**: Kumpulan sel sejenis dengan fungsi sama (*contoh: jaringan saraf*).\n5. **Organ**: Gabungan beberapa jaringan membentuk struktur fungsional (*contoh: otak*).\n6. **Sistem Organ**: Kerja sama antarmacam organ (*contoh: sistem saraf pusat*).\n7. **Organisme**: Individu makhluk hidup utuh tunggal (*contoh: seorang manusia*).\n8. **Populasi**: Kumpulan individu sejenis (satu spesies) di area tertentu (*contoh: sekawanan gajah di hutan Sumatra*).\n9. **Komunitas**: Seluruh populasi dari berbagai spesies yang hidup berdampingan (*contoh: populasi gajah, harimau, pohon jati di hutan*).\n10. **Ekosistem & Biosfer**: Interaksi komunitas dengan lingkungan abiotik (tanah, air, iklim) hingga ke seluruh lapisan biosfer Bumi!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Hierarki 10 tingkatan organisasi kehidupan dari molekul, organel, sel, jaringan, organ, sistem organ, organisme, populasi, komunitas, hingga biosfer.",
+        "screenReaderNote": "Materi konsep menjelaskan tingkatan organisasi kehidupan dari skala mikroskopis hingga ekosfer planet."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000c4",
+      "kind": "predict",
+      "sortOrder": 5,
+      "title": "Tantangan Klasifikasi: Sekawanan 50 Ekor Zebra di Savana",
+      "instruction": "Tentukan tingkatan organisasi kehidupan yang tepat untuk skenario berikut.",
+      "content": "Di sebuah padang savana Serengeti, seorang peneliti mengamati sekelompok yang terdiri dari $50\\text{ ekor zebra}$ (*Equus quagga*) yang hidup dan bermigrasi bersama.\n\nKelompok $50\\text{ ekor zebra}$ satu spesies ini berada pada tingkatan organisasi kehidupan apakah?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Perhatikan bahwa semua anggota kelompok adalah individu dari satu spesies yang sama (zebra).",
+        "concept": "Kumpulan individu satu spesies di habitat yang sama disebut Populasi.",
+        "strategy": "Jika melibatkan singa, rumput, dan zebra bersama-sama, barulah disebut Komunitas.",
+        "solution": "Populasi, karena hanya terdiri dari satu spesies zebra."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-populasi",
+            "label": "Populasi — kumpulan individu dari satu spesies yang sama dalam satu habitat",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Karena hanya terdiri dari satu spesies zebra, kelompok tersebut berada pada tingkat Populasi."
+          },
+          {
+            "id": "opt-komunitas",
+            "label": "Komunitas — karena jumlah zebranya banyak dan hidup berdampingan",
+            "isCorrect": false,
+            "misconceptionCode": "CONFUSING_POPULATION_AND_COMMUNITY",
+            "feedback": "Hati-hati: Komunitas harus melibatkan berbagai spesies berbeda (seperti zebra bersama pohon akasia dan singa). Sekelompok zebra saja disebut Populasi."
+          },
+          {
+            "id": "opt-organisme",
+            "label": "Organisme — mewakili satu bentuk makhluk hidup",
+            "isCorrect": false,
+            "feedback": "Organisme merujuk pada SATU individu ekor zebra tunggal, bukan kelompok 50 ekor zebra."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Pemahaman klasifikasi ekologimu sangat presisi."
+      },
+      "accessibility": {
+        "altText": "Soal tantangan klasifikasi pilihan ganda tingkat organisasi 50 ekor zebra di padang rumput.",
+        "screenReaderNote": "Pilih opsi jawaban yang tepat antara populasi, komunitas, atau organisme."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000c5",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Sifat Emergen Menjadikan Kehidupan Lebih Besar dari Sekadar Kumpulan Atom?",
+      "instruction": "Tuliskan penalaranmu mengenai batas reduksionisme dalam sains biologi.",
+      "content": "Seorang fisikawan materialis berujar: *'Manusia tidak lebih dari sekadar 7 oktiliun atom karbon, hidrogen, dan oksigen yang bergerak mengikuti hukum mekanika kuantum.'*.\n\nJelaskan mengapa pandangan reduksionis sempit tersebut mengabaikan konsep **Sifat Emergen (*Emergent Properties*)** dalam biologi! Bagaimana susunan hierarki bertingkat (dari molekul $\\to$ sel $\\to$ jaringan $\\to$ organ) melahirkan fungsi kompleks seperti detak jantung, penglihatan, dan kesadaran berpikir yang mustahil ditemukan pada atom karbon tunggal?",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa konsep emergent properties melahirkan fenomena kehidupan melampaui reduksionisme atomik.",
+        "screenReaderNote": "Area input teks untuk mengetikkan analisis sifat emergen dalam sistem biologis."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-tingkatan-organisasi-kehidupan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-tingkat-emergen",
+        "name": "Definisi Sifat Emergen (Emergent Properties)",
+        "description": "Menjelaskan bahwa interaksi antarbagian yang terorganisir melahirkan karakteristik baru yang tidak ada pada komponen individual",
+        "weight": 1
+      },
+      {
+        "id": "crit-tingkat-hierarki",
+        "name": "Organisasi Bertingkat (Sel, Jaringan, Organ)",
+        "description": "Menyebutkan contoh konkret bagaimana sel terspesialisasi membentuk jaringan dan organ fungsional seperti otak atau jantung",
+        "weight": 1
+      },
+      {
+        "id": "crit-tingkat-holistik",
+        "name": "Perspektif Holistik vs Reduksionis",
+        "description": "Menyimpulkan bahwa memahami kehidupan membutuhkan perspektif sistemik holistik selain analisis partikel kimiawi",
+        "weight": 1
+      }
+    ]
+  }
+}

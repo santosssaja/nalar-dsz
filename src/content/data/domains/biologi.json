@@ -1,0 +1,8 @@
+{
+  "id": "10000000-0000-4000-8000-000000000004",
+  "slug": "biologi",
+  "title": "Biologi",
+  "summary": "Sains kehidupan: karakteristik organisme, organisasi seluler, genetika, dan ekosistem.",
+  "sortOrder": 4,
+  "moduleSlugs": ["biologi-dasar"]
+}

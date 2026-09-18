@@ -1,0 +1,176 @@
+{
+  "id": "30000000-0000-4000-8000-000000000021",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "materi-dan-sifatnya",
+  "title": "Materi dan Sifatnya: Partikel, Wujud, dan Perubahan",
+  "summary": "Memahami zat penyusun alam semesta: susunan partikel pada wujud padat, cair, dan gas, serta membedakan perubahan fisika dari reaksi kimia.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Membedakan karakteristik mikroskopis partikel zat padat, cair, dan gas",
+    "Membedakan perubahan fisika (reversibel tanpa zat baru) dari perubahan kimia (menghasilkan zat baru)",
+    "Memahami Hukum Kekekalan Massa Lavoisier dalam reaksi tertutup"
+  ],
+  "prerequisites": ["pengukuran-dan-besaran"],
+  "misconceptions": [
+    {
+      "code": "MASS_DISAPPEARS_IN_BURNING",
+      "label": "Mengira massa hilang dan lenyap saat benda terbakar menjadi abu",
+      "remediation": "Sesuai Hukum Lavoisier, massa tidak pernah hilang: sebagian besar massa kayu yang terbakar lepas ke udara menjadi gas karbon dioksida dan uap air yang tak kasat mata."
+    },
+    {
+      "code": "DISSOLVING_IS_CHEMICAL_REACTION",
+      "label": "Menganggap pelarutan gula atau garam dalam air adalah perubahan kimia zat baru",
+      "remediation": "Pelarutan adalah perubahan fisika: molekul gula hanya berbaur di sela molekul air tanpa mengubah identitas kimianya (dapat dipisahkan kembali dengan penguapan air)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000081",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Es Meleleh vs Kayu Terbakar Menjadi Abu",
+      "instruction": "Amati dua jenis perubahan materi yang sangat berbeda ini.",
+      "content": "Bayangkan dua peristiwa di dapur:\n1. Sebongkah es batu diletakkan di piring. Es tersebut meleleh menjadi air cair. Jika air dimasukkan kembali ke pembeku, ia kembali menjadi es padat yang sama persis (**Perubahan Fisika**).\n2. Sepotong korek api dinyalakan. Kayu berubah menjadi arang hitam, asap, dan gas panas. Kamu tidak akan pernah bisa membalikkan abu dan asap tersebut kembali menjadi kayu korek api semula (**Perubahan Kimia**).\n\nKimia adalah sains yang mempelajari komposisi, struktur, sifat partikel materi, dan bagaimana materi bertransformasi!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Perbandingan melelehnya es batu sebagai perubahan fisika reversibel dengan pembakaran kayu sebagai perubahan kimia ireversibel.",
+        "screenReaderNote": "Materi pengantar membedakan perubahan fisika (wujud berubah, identitas molekul tetap) dengan perubahan kimia (ikatan berubah menghasilkan zat baru)."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000089",
+      "kind": "explore",
+      "sortOrder": 2,
+      "title": "Eksplorasi Interaktif: Simulasi Kinetik Wujud Zat",
+      "instruction": "Ubah suhu wadah dari beku hingga mendidih untuk mengamati kompetisi energi gerak partikel melawan gaya tarik antarmolekul.",
+      "content": "Sebelum memahami hukum kekekalan materi, mari amati bagaimana partikel zat tersusun dan bergerak pada tiga wujud dasar:\n\n1. **Padat (Solid)**: Energi kinetik rendah membuat partikel terkunci rapat bergetar pada kisi kristal.\n2. **Cair (Liquid)**: Suhu meningkat memberi energi pada partikel untuk meluncur bebas saling bergesekan.\n3. **Gas**: Energi panas mengatasi seluruh gaya tarik, partikel saling menjauh dengan kecepatan tinggi memenuhi wadah.\n\nCobalah ubah suhu slider di bawah ini dan perhatikan bagaimana volume dan susunan partikel berubah!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Playground interaktif simulasi partikel wujud zat padat, cair, dan gas dengan pengatur suhu termal.",
+        "screenReaderNote": "Gunakan slider suhu untuk mengamati transisi wujud zat dari padat ke cair ke gas."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000082",
+      "kind": "predict",
+      "sortOrder": 3,
+      "title": "Prediksi: Menimbang Lilin dalam Toples Kaca Tertutup",
+      "instruction": "Pilihlah prediksimu mengenai massa sistem reaksi dalam ruang tertutup.",
+      "content": "Sebuah lilin dinyalakan di dalam toples kaca kedap udara yang tertutup rapat di atas timbangan digital presisi. Lilin perlahan memendek dan akhirnya padam karena kehabisan oksigen.\n\nApakah angka timbangan digital sebelum lilin dinyalakan dan setelah lilin padam akan berkurang, bertambah, atau tetap sama persis?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Perhatikan bahwa toples tertutup rapat kedap udara sehingga tidak ada satu partikel pun yang bisa keluar atau masuk.",
+        "concept": "Hukum Kekekalan Massa (Lavoisier): massa total zat sebelum dan sesudah reaksi dalam sistem tertutup selalu sama.",
+        "strategy": "Meskipun lilin memendek, uap lilin berubah menjadi gas karbon dioksida dan uap air yang masih terperangkap di dalam toples.",
+        "solution": "Massa total tetap sama persis karena semua gas hasil pembakaran tetap berada di dalam toples tertutup."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-massa-tetap",
+            "label": "Tetap sama persis — massa lilin yang hilang berubah menjadi gas yang tetap tertampung di dalam toples (Hukum Lavoisier)",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Hukum Kekekalan Massa menyatakan bahwa atom tidak dapat diciptakan atau dimusnahkan, hanya disusun ulang menjadi zat lain."
+          },
+          {
+            "id": "opt-massa-berkurang",
+            "label": "Berkurang — karena lilin telah terbakar habis menjadi energi panas dan cahaya",
+            "isCorrect": false,
+            "misconceptionCode": "MASS_DISAPPEARS_IN_BURNING",
+            "feedback": "Hati-hati: lilin tidak lenyap menjadi energi murni tanpa sisa. Sebagian besar massanya berubah menjadi gas CO₂ dan uap H₂O yang memiliki massa nyata di dalam toples."
+          }
+        ],
+        "feedbackCorrect": "Prediksi tepat! Kamu telah memahami prinsip dasar kekekalan massa materi."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Menentukan massa lilin yang terbakar di dalam toples kaca tertutup rapat.",
+        "screenReaderNote": "Pilih salah satu dari dua opsi mengenai kekekalan massa pada sistem reaksi tertutup."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000083",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Teori Kinetik Partikel: Padat, Cair, dan Gas",
+      "instruction": "Pelajari tarian partikel di balik wujud zat.",
+      "content": "Semua materi tersusun dari partikel-partikel kecil yang selalu bergerak:\n1. **Padat**: Partikel tersusun rapat teratur dalam kisi kristal, hanya bergetar di tempatnya. Bentuk dan volume tetap.\n2. **Cair**: Partikel saling berdekatan namun bebas meluncur satu sama lain. Bentuk mengikuti wadah, volume tetap.\n3. **Gas**: Partikel terpisah sangat jauh dan melesat cepat ke segala arah secara acak. Bentuk dan volume berubah memenuhi seluruh ruang wadah.\n\n**Hukum Kekekalan Massa (Antoine Lavoisier, 1789)**:\nDalam reaksi kimia apa pun:\n$$\\Sigma m_{\\text{reaktan}} = \\Sigma m_{\\text{produk}}$$\nJumlah massa zat sebelum bereaksi selalu sama persis dengan jumlah massa zat hasil reaksi.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram susunan partikel rapat pada zat padat, partikel mengalir pada zat cair, dan partikel bebas berjauhan pada gas.",
+        "screenReaderNote": "Materi konsep menjelaskan teori kinetik partikel tiga wujud zat dan rumus kekekalan massa Lavoisier."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000084",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Massa Gas Oksigen yang Bereaksi",
+      "instruction": "Terapkan Hukum Kekekalan Massa Lavoisier.",
+      "content": "Sebanyak $12\\text{ gram}$ karbon ($C$) dibakar sempurna dengan gas oksigen ($O_2$) menghasilkan tepat $44\\text{ gram}$ gas karbon dioksida ($CO_2$):\n$$\\text{Karbon} + \\text{Oksigen} \\longrightarrow \\text{Karbon Dioksida}$$\n$$12\\text{ g} + m_{\\text{oksigen}} = 44\\text{ g}$$\n\nBerapakah massa gas oksigen yang telah bereaksi (dalam satuan gram)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan prinsip kekekalan massa: Massa sebelum bereaksi = Massa sesudah bereaksi.",
+        "concept": "12 + massa oksigen = 44.",
+        "strategy": "Kurangkan massa produk (44) dengan massa karbon (12).",
+        "solution": "Massa oksigen = 44 - 12 = 32 gram."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 32,
+        "tolerance": 0.01,
+        "units": "gram",
+        "feedbackCorrect": "Benar sekali! Sebanyak 32 gram gas oksigen bereaksi dengan 12 gram karbon menghasilkan 44 gram CO₂.",
+        "misconceptions": [
+          {
+            "code": "MASS_DISAPPEARS_IN_BURNING",
+            "triggerValue": 56,
+            "feedback": "Angka 56 didapat jika kamu menjumlahkan 44 + 12. Ingat bahwa 44 gram adalah produk akhir hasil penggabungan karbon dan oksigen."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung massa oksigen 44 dikurangi 12 sama dengan 32 gram.",
+        "screenReaderNote": "Ketikkan angka nilai massa oksigen yang bereaksi dalam satuan gram."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000085",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Pelarutan Gula Adalah Perubahan Fisika Bukan Kimia?",
+      "instruction": "Tuliskan penalaranmu dengan meninjau struktur partikel molekul gula sebelum dan sesudah dilarutkan.",
+      "content": "Ketika satu sendok gula pasir diaduk ke dalam segelas air hangat, butiran gula perlahan tidak terlihat lagi dan air terasa manis. Seorang anak berpendapat: *'Gula telah musnah dan berubah menjadi zat baru bernama air manis!'*.\n\nJelaskan kepada anak tersebut mengapa pelarutan gula adalah **perubahan fisika**, bukan reaksi kimia! Uraikan apa yang sebenarnya terjadi pada molekul gula di sela molekul air, dan bagaimana kita dapat membuktikan bahwa gula tersebut belum musnah.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa pelarutan gula merupakan perubahan fisika.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan proses pelarutan pada skala partikel."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-materi-dan-sifatnya",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-materi-partikel",
+        "name": "Interaksi Partikel di Sela Pelarut",
+        "description": "Menjelaskan bahwa molekul gula hanya menyebar di antara sela molekul air tanpa ikatan kimia internalnya rusak",
+        "weight": 1
+      },
+      {
+        "id": "crit-materi-identitas",
+        "name": "Identitas Kimia yang Tidak Berubah",
+        "description": "Menegaskan bahwa tidak ada zat kimia baru yang tercipta sehingga rasa manis tetap ada",
+        "weight": 1
+      },
+      {
+        "id": "crit-materi-reversibel",
+        "name": "Sifat Reversibel (Pemisahan Fisika)",
+        "description": "Menyebutkan bahwa gula dapat diperoleh kembali jika air diuapkan (kristalisasi)",
+        "weight": 1
+      }
+    ]
+  }
+}

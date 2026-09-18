@@ -50,3 +50,72 @@ describe("POST /api/v1/ai/explain-feedback", () => {
     expect(res.status).toBe(400);
   });
 });
+
+describe("AI Engine Endpoints (Providers, Tutor, Teach Mode)", () => {
+  it("GET /api/v1/ai/providers returns provider catalog with Gemma as default", async () => {
+    const { GET: providersHandler } = await import("@/app/api/v1/ai/providers/route");
+    const res = await providersHandler();
+    expect(res.status).toBe(200);
+
+    const json = await res.json();
+    expect(json.data.defaultProvider).toBe("gemma");
+    expect(json.data.providers.length).toBeGreaterThanOrEqual(5);
+
+    const ids = json.data.providers.map((p: { id: string }) => p.id);
+    expect(ids).toContain("gemma");
+    expect(ids).toContain("google");
+    expect(ids).toContain("openai");
+    expect(ids).toContain("anthropic");
+    expect(ids).toContain("curated");
+  });
+
+  it("POST /api/v1/ai/tutor provides Socratic guidance for learners", async () => {
+    const { POST: tutorHandler } = await import("@/app/api/v1/ai/tutor/route");
+    const payload = {
+      conceptSlug: "definisi-turunan",
+      userQuestion: "Mengapa h harus mendekati nol bukannya tepat nol?",
+      provider: "gemma",
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/tutor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const res = await tutorHandler(req);
+    expect(res.status).toBe(200);
+
+    const json = await res.json();
+    expect(json.data).toBeDefined();
+    expect(json.data.answer).toBeDefined();
+    expect(json.data.answer.length).toBeGreaterThan(10);
+  });
+
+  it("POST /api/v1/ai/teach evaluates learner teaching Nai in Teach Mode", async () => {
+    const { POST: teachHandler } = await import("@/app/api/v1/ai/teach/route");
+    const payload = {
+      conceptSlug: "definisi-turunan",
+      naiQuestion: "Nai masih bingung, bedanya kemiringan rata-rata dan turunan sesaat itu apa ya kak?",
+      userTeachingExplanation:
+        "Kemiringan rata-rata itu menghubungkan dua titik berjarak h pada kurva. Kalau turunan sesaat, jarak h kita buat mendekati limit nol sehingga hanya menyentuh tepat di satu titik garis singgung kurva.",
+      provider: "gemma",
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/teach", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const res = await teachHandler(req);
+    expect(res.status).toBe(200);
+
+    const json = await res.json();
+    expect(json.data).toBeDefined();
+    expect(json.data.evaluation).toBeDefined();
+    expect(json.data.evaluation.score).toBeGreaterThanOrEqual(60);
+    expect(json.data.evaluation.naiResponse).toBeDefined();
+  });
+});
+

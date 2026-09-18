@@ -1,0 +1,179 @@
+{
+  "id": "30000000-0000-4000-8000-000000000005",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "operasi-aritmetika",
+  "title": "Operasi Aritmetika: Translasi, Skalasi, dan Partisi",
+  "summary": "Melihat empat operasi dasar secara geometris: penjumlahan dan pengurangan sebagai translasi posisi di garis bilangan, serta perkalian dan pembagian sebagai penskalaan dan partisi adil.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami penjumlahan dan pengurangan sebagai pergeseran (translasi) posisi di garis bilangan",
+    "Memahami mengapa pengurangan bilangan negatif setara dengan penambahan: a - (-b) = a + b",
+    "Memahami perkalian sebagai penskalaan dimensi (scaling) atau pembentukan luas area berulang"
+  ],
+  "prerequisites": ["bilangan"],
+  "misconceptions": [
+    {
+      "code": "SUBTRACT_NEGATIVE_CONFUSION",
+      "label": "Mengira pengurangan dengan bilangan negatif selalu menghasilkan angka yang lebih kecil",
+      "remediation": "Mengurangkan kuantitas negatif sama seperti menghapus beban atau utang, yang menyebabkan posisi bergeser ke kanan (bertambah): a - (-b) = a + b."
+    },
+    {
+      "code": "MULTIPLICATION_ALWAYS_INCREASES",
+      "label": "Menganggap perkalian selalu membuat hasil menjadi lebih besar dari faktor aslinya",
+      "remediation": "Perkalian adalah penskalaan. Jika faktor pengali kurang dari 1 (misalnya 10 × 0.5), hasilnya justru mengecil menjadi 5."
+    },
+    {
+      "code": "SIGN_RULES_MEMORIZATION_WITHOUT_INTUITION",
+      "label": "Menghafal rumus tanda minus tanpa mengerti logika gerak fisik di garis bilangan",
+      "remediation": "Bayangkan berjalan di garis bilangan: tanda minus pertama berarti membalik badan menghadap arah kiri, dan melangkah mundur ke belakang membuatmu bergerak ke kanan."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000031",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Berjalan di Jembatan Garis Bilangan",
+      "instruction": "Bayangkan operasi hitung sebagai gerakan fisik berjalan maju dan mundur.",
+      "content": "Bayangkan kamu berdiri di atas garis bilangan di posisi $0$:\n- Menghadap ke kanan adalah arah positif ($+$).\n- Menghadap ke kiri adalah arah negatif ($-$).\n- Melangkah maju berarti menambah ($+$).\n- Melangkah mundur berarti mengurangi ($-$).\n\nSekarang renungkan gerakan ini:\nKamu **membalikkan badan menghadap ke arah kiri (negatif)**, lalu kamu **melangkah mundur sebanyak $4$ langkah**.\nKe arah manakah tubuhmu bergerak secara fisik? Ke kanan! Kamu berakhir di angka $+4$!\nInilah rahasia intuitif di balik aturan aljabar:\n$$0 - (-4) = +4$$",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi berjalan di jembatan garis bilangan: menghadap ke kiri lalu melangkah mundur menghasilkan pergerakan ke kanan.",
+        "screenReaderNote": "Materi pengantar memberikan intuisi geometris gerak fisik untuk menjelaskan mengapa mengurangi bilangan negatif menghasilkan nilai positif."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000032",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Posisi Setelah Pergeseran",
+      "instruction": "Pilihlah prediksimu berdasarkan logika pergeseran garis bilangan.",
+      "content": "Seorang penjelajah gua mula-mula berada pada posisi ketinggian $-5\\text{ meter}$ di bawah mulut gua.\nIa kemudian memanjat tangga naik setinggi $8\\text{ meter}$ (operasi: $-5 + 8$).\n\nDi posisi ketinggian berapakah ia berada sekarang?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Mulai dari posisi -5, lalu geser ke kanan (ke atas) sejauh 8 langkah.",
+        "concept": "Penjumlahan positif menggeser posisi ke arah kanan/atas di garis bilangan.",
+        "strategy": "5 langkah pertama membawa penjelajah dari -5 ke titik acuan 0. Sisa 3 langkah membawanya ke atas titik 0.",
+        "solution": "-5 + 8 = +3 meter di atas mulut gua."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-plus-3",
+            "label": "+3 meter — naik 5 meter mencapai mulut gua (titik 0), lalu 3 meter lagi ke atas",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Dari -5 bergeser ke kanan sejauh 8 langkah berakhir di titik +3."
+          },
+          {
+            "id": "opt-minus-13",
+            "label": "-13 meter — kedua angka dijumlahkan menjadi lebih dalam ke bawah tanah",
+            "isCorrect": false,
+            "misconceptionCode": "SIGN_RULES_MEMORIZATION_WITHOUT_INTUITION",
+            "feedback": "Hati-hati: penjelajah memanjat naik (menambah +8), bukan turun semakin dalam (-8)."
+          },
+          {
+            "id": "opt-minus-3",
+            "label": "-3 meter — karena dimulai dari angka negatif maka hasilnya tetap negatif",
+            "isCorrect": false,
+            "feedback": "Perhatikan bahwa langkah naik (8 meter) lebih besar daripada kedalaman awal (5 meter), sehingga posisi akhir pasti melampaui angka nol."
+          }
+        ],
+        "feedbackCorrect": "Keren! Penalaran pergeseran posisimu di garis bilangan sangat tepat."
+      },
+      "accessibility": {
+        "altText": "Soal prediksi pilihan ganda: Posisi penjelajah setelah naik 8 meter dari kedalaman minus 5 meter.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi untuk menentukan posisi ketinggian akhir penjelajah."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000033",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Perkalian sebagai Luas Area dan Penskalaan (Scaling)",
+      "instruction": "Pelajari dua wajah perkalian: penjumlahan berulang dan peregangan skala.",
+      "content": "Perkalian dapat dipahami melalui dua perspektif yang kuat:\n\n1. **Area / Dimensi Geometris**:\nOperasi $3 \\times 4$ melambangkan persegi panjang dengan panjang $4$ dan lebar $3$. Luas totalnya adalah $12$ kotak satuan.\n\n2. **Penskalaan (Scaling Factor)**:\nPerkalian meregangkan atau menyusutkan suatu garis:\n- Mengalikan dengan bilangan $> 1$ (misal $6 \\times 2 = 12$) **meregangkan** ukuran menjadi $2$ kali lebih panjang.\n- Mengalikan dengan bilangan antara $0$ dan $1$ (misal $6 \\times 0.5 = 3$) **menyusutkan** ukuran menjadi setengahnya.\n- Mengalikan dengan tanda negatif (misal $6 \\times (-1) = -6$) **memutarbalikkan arah** garis sebesar $180^\\circ$ pada garis bilangan!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi konsep perkalian sebagai luas persegi panjang dan sebagai faktor pengubah skala panjang garis.",
+        "screenReaderNote": "Materi konsep menjelaskan perkalian sebagai luas area dan penskalaan dimensi (meregangkan, menyusutkan, atau membalik arah)."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000034",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Tantangan Operasi Berarah: Mengurangi Kuantitas Negatif",
+      "instruction": "Hitunglah hasil operasi aritmetika bertanda berikut.",
+      "content": "Sebuah kapal penelitian berada di posisi $-12\\text{ meter}$ di bawah permukaan laut. Kapten kapal memerintahkan untuk mengurangi beban ballast sehingga kedalamannya berkurang sebesar $-7\\text{ meter}$ (dihitung sebagai: $-12 - (-7)$).\n\nBerapakah posisi kedalaman kapal sekarang?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Operasi yang harus dihitung adalah -12 - (-7).",
+        "concept": "Ingat bahwa mengurangkan bilangan negatif setara dengan menjumlahkan: a - (-b) = a + b.",
+        "strategy": "Ubah bentuk -12 - (-7) menjadi -12 + 7. Dari -12, geser ke kanan sejauh 7 langkah di garis bilangan.",
+        "solution": "-12 - (-7) = -12 + 7 = -5 meter."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": -5,
+        "tolerance": 0.01,
+        "units": "meter",
+        "feedbackCorrect": "Benar sekali! Posisi kapal sekarang berada di kedalaman -5 meter.",
+        "misconceptions": [
+          {
+            "code": "SUBTRACT_NEGATIVE_CONFUSION",
+            "triggerValue": -19,
+            "feedback": "Angka -19 terjadi jika kamu menghitung -12 - 7. Ingat: mengurangi angka negatif (-(-7)) sama artinya dengan menambah (+7), sehingga kapal bergerak naik menuju permukaan."
+          },
+          {
+            "code": "SIGN_RULES_MEMORIZATION_WITHOUT_INTUITION",
+            "triggerValue": 5,
+            "feedback": "Posisi kapal masih berada di bawah permukaan laut (di sebelah kiri nol), sehingga nilainya tetap bertanda negatif: -5 meter."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung minus 12 dikurangi minus 7 pada kedalaman kapal selam.",
+        "screenReaderNote": "Ketikkan angka kedalaman akhir dalam meter pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000035",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Mengapa Mengurang Negatif Sama dengan Menambah?",
+      "instruction": "Tuliskan penalaran logismu menggunakan analogi kehidupan nyata (seperti penghapusan utang, arah jalan, atau suhu).",
+      "content": "Banyak pelajar menghafal aturan *'minus ketemu minus jadi plus'* tanpa mengerti mengapa aturan itu benar secara logika.\n\nBagaimana kamu menjelaskan kepada seseorang mengapa $a - (-b) = a + b$? Berikan analogi konkret (misalnya analogi keuangan/utang atau gerakan melangkah berbalik arah di garis bilangan) yang membuktikan kebenaran penalaran tersebut!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan konseptual mengapa pengurangan bilangan negatif setara dengan penambahan.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan penalaran matematika dengan kata-kata sendiri."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-operasi-aritmetika",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-operasi-arah",
+        "name": "Pembalikan Arah / Translasi Garis",
+        "description": "Menjelaskan perubahan orientasi arah gerakan di garis bilangan saat menghadapi tanda pengurangan",
+        "weight": 1
+      },
+      {
+        "id": "crit-operasi-utang",
+        "name": "Analogi Logis Nyata",
+        "description": "Menggunakan contoh konkret yang sahih seperti penghapusan beban utang atau gerak mundur berbalik badan",
+        "weight": 1
+      },
+      {
+        "id": "crit-operasi-hasil",
+        "name": "Konsistensi Hasil Penambahan",
+        "description": "Menyimpulkan dengan tepat mengapa hasil akhirnya setara dengan pertambahan nilai positif a + b",
+        "weight": 1
+      }
+    ]
+  }
+}

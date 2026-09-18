@@ -1,0 +1,8 @@
+{
+  "id": "10000000-0000-4000-8000-000000000002",
+  "slug": "fisika",
+  "title": "Fisika",
+  "summary": "Hukum fundamental alam semesta: pengukuran, gerak, gaya, energi, dan gelombang.",
+  "sortOrder": 2,
+  "moduleSlugs": ["fisika-mekanika"]
+}

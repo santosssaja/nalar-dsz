@@ -1,0 +1,179 @@
+{
+  "id": "30000000-0000-4000-8000-000000000006",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "pecahan-dan-desimal",
+  "title": "Pecahan dan Desimal: Bagian Utuh, Kesetaraan, dan Kontinum",
+  "summary": "Menjelajahi ruang kontinu di antara bilangan bulat: memahami pecahan sebagai bagian terhadap keseluruhan (part-whole), konsep pecahan senilai (ekivalensi), dan representasi desimal berbasis sepuluh.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami pecahan a/b sebagai rasio pembagian merata dari satu satuan utuh",
+    "Menyadari bahwa penyebut yang semakin besar menghasilkan ukuran bagian yang semakin kecil",
+    "Menghubungkan pecahan senilai dengan representasi desimal pada garis bilangan kontinu (misal 1/4 = 0.25)"
+  ],
+  "prerequisites": ["bilangan", "operasi-aritmetika"],
+  "misconceptions": [
+    {
+      "code": "LARGER_DENOMINATOR_LARGER_VALUE",
+      "label": "Menganggap pecahan dengan penyebut lebih besar bernilai lebih besar (misal 1/8 > 1/4)",
+      "remediation": "Penyebut menyatakan berapa banyak potongan yang dibuat dari satu benda utuh. Semakin banyak bagian yang dipotong, masing-masing potongan justru berukuran semakin kecil: 1/8 < 1/4."
+    },
+    {
+      "code": "LONGER_DECIMAL_LARGER_VALUE",
+      "label": "Mengira bilangan desimal dengan digit lebih panjang selalu lebih besar (misal 0.25 > 0.3)",
+      "remediation": "Bandingkan nilai tempat mulai dari angka persepuluhan tepat di belakang koma: 0.3 memiliki 3 persepuluhan (setara dengan 0.30), sedangkan 0.25 hanya memiliki 2 persepuluhan. Jadi 0.3 > 0.25."
+    },
+    {
+      "code": "INDEPENDENT_NUMERATOR_DENOMINATOR",
+      "label": "Memperlakukan pembilang dan penyebut sebagai bilangan terpisah tanpa hubungan pembagian rasio",
+      "remediation": "Pecahan adalah satu kesatuan nilai rasio pembagian tunggal: garis pecahan melambangkan operasi pembagian antara pembilang dengan penyebut."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000041",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Berbagi Piza: Banyak Potongan vs Ukuran Potong",
+      "instruction": "Amati hubungan terbalik antara jumlah orang yang berbagi dengan ukuran yang didapat.",
+      "content": "Bayangkan dua pesta ulang tahun dengan piza berukuran sama besar:\n- Di Meja Pertama, $1$ piza dipotong menjadi $4$ bagian sama rata untuk $4$ orang. Setiap orang mendapat sepotong piza berukuran $\\frac{1}{4}$.\n- Di Meja Kedua, $1$ piza dipotong menjadi $8$ bagian sama rata untuk $8$ orang. Setiap orang mendapat sepotong piza berukuran $\\frac{1}{8}$.\n\nSiapakah yang mendapat sepotong piza lebih besar? Tentu orang di Meja Pertama!\nDalam pecahan $\\frac{a}{b}$, angka bawah (**penyebut**) bertindak sebagai *pemotong*. Semakin besar angka pembaginya, ukuran setiap bagian justru **semakin kecil**!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi membagi satu piza utuh menjadi 4 potong besar dibandingkan dengan 8 potong kecil.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan pecahan sebagai bagian utuh (part-whole) dan hubungan terbalik nilai pecahan terhadap besarnya penyebut."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000042",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Mana yang Lebih Besar, 0.3 atau 0.25?",
+      "instruction": "Pilihlah prediksimu berdasarkan konsep nilai tempat desimal pada garis bilangan.",
+      "content": "Dua alat ukur laboratorium mengukur panjang kawat halus:\n- Alat A menunjukkan angka $0.3\\text{ cm}$\n- Alat B menunjukkan angka $0.25\\text{ cm}$\n\nManakah ukuran kawat yang lebih panjang (berada di posisi nilai yang lebih besar di garis bilangan)?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Samakan jumlah digit di belakang koma untuk membandingkan nilainya secara adil.",
+        "concept": "Angka 0.3 memiliki 3 persepuluhan, yang setara dengan 30 perseratusan (0.30).",
+        "strategy": "Bandingkan 0.30 dengan 0.25: manakah yang bernilai lebih banyak?",
+        "solution": "0.3 (atau 0.30) lebih besar daripada 0.25 karena memiliki nilai persepuluhan lebih tinggi (3 > 2)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-03-besar",
+            "label": "0.3 lebih besar daripada 0.25 — karena 0.3 setara dengan 0.30 (30 perseratusan vs 25 perseratusan)",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! 0.3 memiliki 3 persepuluhan sedangkan 0.25 hanya 2 persepuluhan. Maka 0.3 > 0.25."
+          },
+          {
+            "id": "opt-025-besar",
+            "label": "0.25 lebih besar daripada 0.3 — karena angka 25 lebih besar daripada angka 3",
+            "isCorrect": false,
+            "misconceptionCode": "LONGER_DECIMAL_LARGER_VALUE",
+            "feedback": "Hati-hati: pada bilangan desimal, nilai ditentukan oleh posisi tempat (persepuluhan, perseratusan). Angka 3 pada 0.3 berada di tempat persepuluhan (0.30), sedangkan angka 2 pada 0.25 hanya 2 persepuluhan."
+          },
+          {
+            "id": "opt-desimal-sama",
+            "label": "Kedua bilangan bernilai sama persis",
+            "isCorrect": false,
+            "feedback": "Keduanya berbeda nilai: 0.30 memiliki kelebihan 0.05 dibandingkan 0.25."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Pemahaman nilai tempat desimalmu sudah sangat mantap."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Membandingkan bilangan desimal 0.3 dengan 0.25.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi jawaban untuk menentukan bilangan desimal yang bernilai lebih besar."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000043",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Pecahan Senilai dan Sistem Desimal Berbasis Sepuluh",
+      "instruction": "Pelajari jembatan emas yang menghubungkan pecahan dan desimal.",
+      "content": "Sistem bilangan kita menggunakan basis sepuluh ($10$). Angka di belakang koma desimal memiliki nilai tempat pecahan berurutan:\n- Kolom ke-1 di belakang koma: **Persepuluhan** ($\\frac{1}{10} = 0.1$)\n- Kolom ke-2 di belakang koma: **Perseratusan** ($\\frac{1}{100} = 0.01$)\n- Kolom ke-3 di belakang koma: **Perseribuan** ($\\frac{1}{1000} = 0.001$)\n\n**Pecahan Senilai (Ekivalen)**:\nKita dapat mengubah pecahan biasa menjadi pecahan desimal dengan mengalikan pembilang dan penyebut dengan faktor yang sama sehingga penyebutnya menjadi kelipatan sepuluh:\n$$\\frac{1}{4} = \\frac{1 \\times 25}{4 \\times 25} = \\frac{25}{100} = 0.25$$\n$$\\frac{1}{2} = \\frac{1 \\times 50}{2 \\times 50} = \\frac{50}{100} = 0.50 = 0.5$$\n$$\\frac{3}{4} = \\frac{3 \\times 25}{4 \\times 25} = \\frac{75}{100} = 0.75$$\n\nSemua pecahan dan desimal ini menempati satu titik lokasi yang pasti di sela-sela angka $0$ dan $1$ pada garis bilangan kontinu!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Penjelasan rumus konversi pecahan biasa seperempat menjadi desimal 0.25 melalui pengalian pembilang dan penyebut dengan angka 25.",
+        "screenReaderNote": "Materi konsep menghubungkan pecahan senilai dengan nilai tempat desimal berbasis sepuluh pada garis bilangan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000044",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Latihan: Mengubah Pecahan Menjadi Desimal",
+      "instruction": "Hitunglah nilai desimal dari pecahan tiga per delapan (3/8).",
+      "content": "Ubahlah pecahan biasa $\\frac{3}{8}$ ke dalam representasi desimal tepatnya.\n\n*(Petunjuk: Kamu bisa membagi 3 dengan 8, atau mengalikan pembilang dan penyebut dengan 125 agar penyebutnya menjadi 1000: $8 \\times 125 = 1000$)*.\n\nBerapakah nilai desimalnya?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Kamu diminta mencari nilai desimal dari 3/8.",
+        "concept": "Gunakan bentuk pecahan senilai dengan penyebut 1000: 3/8 = (3 × 125) / (8 × 125).",
+        "strategy": "Hitung 3 × 125 = 375. Maka 375 / 1000 = 0.375.",
+        "solution": "3/8 = 0.375."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 0.375,
+        "tolerance": 0.001,
+        "units": "",
+        "feedbackCorrect": "Sempurna! 3/8 sama persis dengan 0.375 (375 perseribuan).",
+        "misconceptions": [
+          {
+            "code": "INDEPENDENT_NUMERATOR_DENOMINATOR",
+            "triggerValue": 3.8,
+            "feedback": "Jangan menggabungkan angka 3 dan 8 langsung dengan koma. Pecahan 3/8 berarti 3 dibagi 8, yang nilainya kurang dari 1."
+          },
+          {
+            "code": "LONGER_DECIMAL_LARGER_VALUE",
+            "triggerValue": 0.38,
+            "feedback": "Periksa hasil pembagianmu secara teliti: 3 dibagi 8 menghasilkan 0.375 tepat, bukan 0.38."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung nilai desimal dari 3 dibagi 8.",
+        "screenReaderNote": "Ketikkan angka desimal hasil konversi 3 per 8 pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000045",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Mengapa 1/4 Lebih Besar daripada 1/8?",
+      "instruction": "Tuliskan penalaranmu dengan kata-kata sendiri untuk menjelaskan prinsip pembagian bagian-utuh (part-whole).",
+      "content": "Seorang anak kecil bersikeras: *'Angka 8 itu kan dua kali lipat lebih besar dari angka 4, jadi pasti sepotong kue berukuran $\\frac{1}{8}$ lebih banyak dan lebih mengenyangkan daripada $\\frac{1}{4}$!'.*\n\nBagaimana kamu menjelaskan kepada anak tersebut mengapa $\\frac{1}{4}$ justru bernilai dua kali lipat lebih besar daripada $\\frac{1}{8}$? Jelaskan fungsi pembilang dan penyebut dalam pembagian satu kue utuh yang sama!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa seperempat lebih besar dari seperdelapan meskipun 8 lebih besar dari 4.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai pembagian kue utuh dan peran penyebut."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-pecahan-dan-desimal",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-pecahan-partisi",
+        "name": "Partisi Satu Satuan Utuh",
+        "description": "Menjelaskan bahwa kue atau benda yang dibagi memiliki ukuran utuh yang sama persis",
+        "weight": 1
+      },
+      {
+        "id": "crit-pecahan-penyebut",
+        "name": "Peran Pemotong Penyebut",
+        "description": "Menjelaskan bahwa semakin banyak potongan yang dibuat (8 vs 4), ukuran setiap bagian semakin mengecil",
+        "weight": 1
+      },
+      {
+        "id": "crit-pecahan-kesetaraan",
+        "name": "Ekivalensi Ukuran Pecahan",
+        "description": "Menyebutkan bahwa dua potong 1/8 setara dengan satu potong 1/4 (atau dalam desimal: 0.25 vs 0.125)",
+        "weight": 1
+      }
+    ]
+  }
+}

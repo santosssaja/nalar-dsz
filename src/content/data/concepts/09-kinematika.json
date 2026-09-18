@@ -1,0 +1,163 @@
+{
+  "id": "30000000-0000-4000-8000-000000000013",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "kinematika",
+  "title": "Kinematika: Posisi, Kecepatan, dan Percepatan",
+  "summary": "Menganalisis bagaimana benda bergerak: membedakan jarak dan perpindahan, laju dan kecepatan, serta memahami percepatan sebagai laju perubahan terhadap waktu.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan jarak skalar dari perpindahan vektor",
+    "Menghubungkan kecepatan sesaat dengan turunan kemiringan grafik posisi terhadap waktu (v = ds/dt)",
+    "Memahami percepatan sebagai laju perubahan vektor kecepatan (a = dv/dt)"
+  ],
+  "prerequisites": ["vektor"],
+  "misconceptions": [
+    {
+      "code": "CONFUSING_DISTANCE_AND_DISPLACEMENT",
+      "label": "Menyamakan panjang lintasan tempuh (jarak) dengan perpindahan posisi",
+      "remediation": "Jarak adalah total panjang lintasan yang dilewati (skalar), sedangkan perpindahan adalah selisih vektor posisi lurus dari titik awal ke titik akhir (Δx = x₂ - x₁)."
+    },
+    {
+      "code": "ZERO_VELOCITY_MEANS_ZERO_ACCELERATION",
+      "label": "Mengira jika kecepatan suatu benda sesaat bernilai nol, percepatannya pasti nol juga",
+      "remediation": "Ketika bola dilempar ke atas dan mencapai puncak tertinggi, kecepatannya berhenti sesaat (v = 0), namun percepatan gravitasi bumi tetap bekerja menariknya ke bawah (a = -9.8 m/s²)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000071",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Berlari Mengelilingi Lintasan Stadion",
+      "instruction": "Pikirkan paradoks pelari yang menempuh ratusan meter namun tidak berpindah sama sekali.",
+      "content": "Seorang atlet berlari satu putaran penuh mengelilingi trek atletik stadion sejauh $400\\text{ meter}$ dan berhenti tepat di garis start semula.\n\nSecara biologis dan jarak tempuh, kakinya telah melangkah sejauh **$400\\text{ meter}$ (Jarak / Skalar)**.\nNamun dalam fisika, posisi akhirnya sama persis dengan posisi awalnya. Selisih posisinya adalah $\\Delta x = 0$.\nMaka **Perpindahan (Vektor)** atlet tersebut adalah tepat **$0\\text{ meter}$**!\n\nInilah perbedaan fundamental pertama dalam kinematika: Jarak menghitung jejak langkah, sedangkan Perpindahan hanya peduli selisih garis lurus dari titik awal ke titik akhir.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi pelari lintasan stadion mengelilingi 400 meter kembali ke titik start dengan perpindahan nol meter.",
+        "screenReaderNote": "Materi pengantar membedakan konsep skalar jarak lintasan dengan konsep vektor perpindahan posisi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000072",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Bola di Titik Tertinggi Lemparan",
+      "instruction": "Pilihlah prediksimu mengenai percepatan benda saat kecepatannya berhenti sesaat di puncak udara.",
+      "content": "Sebuah bola kriket dilempar lurus ke atas. Tepat di titik puncak tertinggi sebelum berbalik arah jatuh ke bawah, bola berhenti sekejap ($v = 0\\text{ m/s}$).\n\nBerapakah percepatan yang dialami bola tepat pada detik tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Ingat bahwa gaya gravitasi bumi terus menarik bola ke bawah di setiap detik.",
+        "concept": "Percepatan adalah laju perubahan kecepatan: apakah kecepatan bola sedang berubah arah dari naik menjadi turun?",
+        "strategy": "Jika percepatannya nol saat bola diam, bola akan melayang selamanya di udara dan tidak pernah jatuh.",
+        "solution": "Percepatan bola tetap bernilai sekitar 9.8 m/s² ke arah bawah karena gaya gravitasi tidak pernah berhenti bekerja."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-gravitasi-tetap",
+            "label": "Tetap bernilai sekitar 9.8 m/s² ke arah bawah akibat gravitasi bumi",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Meskipun kecepatannya sesaat bernilai nol, laju perubahan kecepatannya tetap ada (dv/dt = -g), itulah mengapa bola segera bergerak turun kembali."
+          },
+          {
+            "id": "opt-nol-karena-diam",
+            "label": "Tepat 0 m/s² karena bola sedang berhenti diam dan tidak bergerak",
+            "isCorrect": false,
+            "misconceptionCode": "ZERO_VELOCITY_MEANS_ZERO_ACCELERATION",
+            "feedback": "Hati-hati: v = 0 tidak berarti a = 0. Jika percepatannya nol, bola akan mengambang selamanya di udara tanpa pernah jatuh kembali!"
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Pemahamanmu mengenai perbedaan kecepatan dan percepatan sangat tajam."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Menentukan percepatan bola saat berhenti di puncak ketinggian lemparan.",
+        "screenReaderNote": "Pilih salah satu dari dua opsi mengenai percepatan gravitasi pada titik tertinggi lemparan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000073",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Hubungan Kalkulus Kinematika: Posisi, Kecepatan, dan Percepatan",
+      "instruction": "Pelajari bagaimana turunan kalkulus menyatukan seluruh rumus gerak fisika.",
+      "content": "Kinematika adalah aplikasi langsung dari konsep turunan kalkulus:\n\n1. **Kecepatan Sesaat ($v$)** adalah turunan pertama posisi terhadap waktu:\n$$v(t) = \\frac{ds}{dt} = \\lim_{\\Delta t \\to 0} \\frac{\\Delta s}{\\Delta t}$$\nSecara grafis, kecepatan adalah **kemiringan garis singgung pada kurva posisi-waktu ($s-t$)**.\n\n2. **Percepatan Sesaat ($a$)** adalah turunan pertama kecepatan terhadap waktu (atau turunan kedua posisi):\n$$a(t) = \\frac{dv}{dt} = \\frac{d^2s}{dt^2}$$\nSecara grafis, percepatan adalah **kemiringan garis singgung pada kurva kecepatan-waktu ($v-t$)**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus turunan kinematika v sama dengan ds per dt dan a sama dengan dv per dt.",
+        "screenReaderNote": "Materi konsep menghubungkan fisika kinematika dengan turunan kalkulus sebagai laju perubahan posisi dan kecepatan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000074",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Latihan: Menghitung Percepatan Rata-rata Mobil Listrik",
+      "instruction": "Hitunglah nilai percepatan mobil dari data perubahan kecepatan.",
+      "content": "Sebuah mobil listrik berakselerasi dari keadaan diam ($v_1 = 0\\text{ m/s}$) hingga mencapai kecepatan $v_2 = 30\\text{ m/s}$ dalam waktu $\\Delta t = 6\\text{ sekon}$.\n\nBerdasarkan rumus percepatan rata-rata $a = \\frac{\\Delta v}{\\Delta t}$, berapakah percepatan rata-rata mobil tersebut dalam satuan $\\text{m/s}^2$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus percepatan: perubahan kecepatan dibagi selang waktu.",
+        "concept": "Δv = v₂ - v₁ = 30 - 0 = 30 m/s. Interval waktu Δt = 6 s.",
+        "strategy": "Bagilah 30 dengan 6.",
+        "solution": "a = 30 / 6 = 5 m/s²."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 5,
+        "tolerance": 0.01,
+        "units": "m/s²",
+        "feedbackCorrect": "Benar! Percepatan rata-rata mobil adalah 5 m/s² (kecepatannya bertambah 5 m/s di setiap detik).",
+        "misconceptions": [
+          {
+            "code": "CONFUSING_DISTANCE_AND_DISPLACEMENT",
+            "triggerValue": 180,
+            "feedback": "Angka 180 didapat jika kamu mengalikan 30 dengan 6. Percepatan adalah laju perubahan (dibagi waktu), bukan perkalian."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung percepatan dari kecepatan 30 m per s dalam 6 sekon.",
+        "screenReaderNote": "Ketikkan angka nilai percepatan dalam satuan m/s²."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000075",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Mengapa Mobil Berkecepatan Konstan di Tikungan Tetap Mengalami Percepatan?",
+      "instruction": "Tuliskan penjelasan konseptualmu mengenai sifat vektor dari kecepatan dan percepatan.",
+      "content": "Sebuah mobil melintasi bundaran tikungan melingkar dengan jarum spidometer terkunci stabil pada angka $50\\text{ km/jam}$.\nPengemudi berkata: *'Kecepatanku konstan tidak berubah, jadi percepatanku pasti nol!'*.\n\nJelaskan mengapa pernyataan pengemudi tersebut salah menurut hukum fisika vektor! Uraikan perbedaan antara laju (skalar) dan kecepatan (vektor), serta bagaimana perubahan arah menghasilkan percepatan sentripetal.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa mobil dengan kelajuan konstan di tikungan tetap mengalami percepatan vektor.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan peran arah vektor dalam percepatan gerak melingkar."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-kinematika",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-kinem-vektor",
+        "name": "Kecepatan sebagai Besaran Vektor",
+        "description": "Menjelaskan bahwa kecepatan memiliki arah sehingga perubahan arah tetap merupakan perubahan kecepatan",
+        "weight": 1
+      },
+      {
+        "id": "crit-kinem-arah",
+        "name": "Percepatan Akibat Perubahan Arah",
+        "description": "Menyebutkan bahwa percepatan (a = dv/dt) terjadi baik karena perubahan besar laju maupun perubahan orientasi arah",
+        "weight": 1
+      },
+      {
+        "id": "crit-kinem-sentripetal",
+        "name": "Arah Percepatan Menuju Pusat (Sentripetal)",
+        "description": "Menjelaskan arah percepatan pada gerak melingkar membelok menuju pusat lingkaran (percepatan sentripetal)",
+        "weight": 1
+      }
+    ]
+  }
+}

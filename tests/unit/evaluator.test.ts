@@ -44,3 +44,38 @@ describe("Deterministic Step Evaluator", () => {
     expect(randomWrong.misconceptionCodes).toHaveLength(0);
   });
 });
+
+describe("Markdown and KaTeX Parsing Engine", () => {
+  it("should parse bold markdown without leaving raw asterisks", async () => {
+    const { parseMarkdownAndMath } = await import("@/components/ui/katex-math");
+    const input = "Ini adalah **perubahan kontinu** dan **perubahan diskrit**.";
+    const html = parseMarkdownAndMath(input);
+
+    expect(html).toContain("<strong>perubahan kontinu</strong>");
+    expect(html).toContain("<strong>perubahan diskrit</strong>");
+    expect(html).not.toContain("**");
+  });
+
+  it("should parse lists, italic, code, and preserve KaTeX math without interference", async () => {
+    const { parseMarkdownAndMath } = await import("@/components/ui/katex-math");
+    const input = `Dua besaran:
+- Besaran **vektor**: memiliki *arah* dan nilai
+- Notasi rumus: \`f'(x)\`
+
+Formula:
+$$v = \\frac{ds}{dt}$$
+
+Perhitungan: $2 * 3 = 6$`;
+
+    const html = parseMarkdownAndMath(input);
+
+    expect(html).toContain("<strong>vektor</strong>");
+    expect(html).toContain("<em>arah</em>");
+    expect(html).toContain("<ul class=");
+    expect(html).toContain("<li>");
+    expect(html).toContain("<code");
+    expect(html).toContain("katex");
+    expect(html).not.toContain("**vektor**");
+  });
+});
+

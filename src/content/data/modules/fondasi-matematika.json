@@ -1,0 +1,32 @@
+{
+  "id": "20000000-0000-4000-8000-000000000002",
+  "domainId": "10000000-0000-4000-8000-000000000001",
+  "domainSlug": "matematika",
+  "slug": "fondasi-matematika",
+  "title": "Fondasi Matematika: Bilangan, Operasi, dan Pecahan",
+  "summary": "Membangun penalaran numerik intuitif: memahami besaran dan arah pada garis bilangan, geometri operasi aritmetika, serta representasi bagian-utuh pecahan dan desimal.",
+  "estimatedMinutes": 180,
+  "prerequisites": [],
+  "conceptSlugs": ["bilangan", "operasi-aritmetika", "pecahan-dan-desimal"],
+  "learningPath": {
+    "slug": "jalur-fondasi-matematika",
+    "title": "Jalur Utama Penalaran Fondasi Matematika",
+    "nodes": [
+      {
+        "conceptSlug": "bilangan",
+        "sortOrder": 1,
+        "required": true
+      },
+      {
+        "conceptSlug": "operasi-aritmetika",
+        "sortOrder": 2,
+        "required": true
+      },
+      {
+        "conceptSlug": "pecahan-dan-desimal",
+        "sortOrder": 3,
+        "required": true
+      }
+    ]
+  }
+}

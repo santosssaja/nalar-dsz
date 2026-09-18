@@ -1,0 +1,38 @@
+{
+  "id": "20000000-0000-4000-8000-000000000004",
+  "domainId": "10000000-0000-4000-8000-000000000003",
+  "domainSlug": "kimia",
+  "slug": "kimia-dasar",
+  "title": "Kimia: Struktur Materi dan Atom",
+  "summary": "Menjelajahi zat penyusun alam semesta: wujud materi, perbedaan unsur senyawa campuran, dan arsitektur partikel subatomik.",
+  "estimatedMinutes": 200,
+  "prerequisites": [
+    {
+      "slug": "fondasi-matematika",
+      "title": "Fondasi Matematika",
+      "required": true
+    }
+  ],
+  "conceptSlugs": ["materi-dan-sifatnya", "unsur-dan-senyawa", "atom"],
+  "learningPath": {
+    "slug": "jalur-kimia-dasar",
+    "title": "Jalur Utama Kimia Dasar",
+    "nodes": [
+      {
+        "conceptSlug": "materi-dan-sifatnya",
+        "sortOrder": 1,
+        "required": true
+      },
+      {
+        "conceptSlug": "unsur-dan-senyawa",
+        "sortOrder": 2,
+        "required": true
+      },
+      {
+        "conceptSlug": "atom",
+        "sortOrder": 3,
+        "required": true
+      }
+    ]
+  }
+}

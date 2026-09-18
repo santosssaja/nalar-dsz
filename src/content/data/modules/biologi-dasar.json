@@ -1,0 +1,27 @@
+{
+  "id": "20000000-0000-4000-8000-000000000005",
+  "domainId": "10000000-0000-4000-8000-000000000004",
+  "domainSlug": "biologi",
+  "slug": "biologi-dasar",
+  "title": "Biologi: Organisasi dan Ciri Kehidupan",
+  "summary": "Memahami fenomena hidup: kriteria entitas biologis, homeostasis, serta hierarki struktur dari skala molekuler hingga biosfer.",
+  "estimatedMinutes": 180,
+  "prerequisites": [],
+  "conceptSlugs": ["karakteristik-kehidupan", "tingkatan-organisasi-kehidupan"],
+  "learningPath": {
+    "slug": "jalur-biologi-dasar",
+    "title": "Jalur Utama Biologi Dasar",
+    "nodes": [
+      {
+        "conceptSlug": "karakteristik-kehidupan",
+        "sortOrder": 1,
+        "required": true
+      },
+      {
+        "conceptSlug": "tingkatan-organisasi-kehidupan",
+        "sortOrder": 2,
+        "required": true
+      }
+    ]
+  }
+}

@@ -41,7 +41,7 @@ export async function ensureDbInitialized(): Promise<void> {
   if (initPromise) return initPromise;
 
   initPromise = (async () => {
-    getDb(); // ensure pgliteInstance is instantiated
+    getDb(); // ensure cachedDb is instantiated
     if (pgliteInstance) {
       try {
         const fs = await import("fs");
@@ -51,14 +51,20 @@ export async function ensureDbInitialized(): Promise<void> {
           const sqlContent = fs.readFileSync(migrationPath, "utf-8");
           const cleanSql = sqlContent.replace(/--> statement-breakpoint/g, ";");
           await pgliteInstance.exec(cleanSql);
-
-          const { seedCuratedContent } = await import("./seed");
-          await seedCuratedContent(cachedDb!);
         }
       } catch (err) {
         console.error("Failed to initialize database schema:", err);
         initPromise = null;
         throw err;
+      }
+    }
+
+    if (cachedDb) {
+      try {
+        const { seedCuratedContent } = await import("./seed");
+        await seedCuratedContent(cachedDb);
+      } catch (err) {
+        console.warn("Curated content seed notice:", err);
       }
     }
   })();

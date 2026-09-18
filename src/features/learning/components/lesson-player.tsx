@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { GraduationCap } from "lucide-react";
 import { ConceptContent, StepContent } from "@/content/schema";
 import { ConceptMasterySnapshot } from "@/server/services/mastery-engine";
 import { MathRenderer } from "@/components/ui/katex-math";
@@ -9,6 +10,8 @@ import { StepExplore } from "./step-explore";
 import { StepPractice } from "./step-practice";
 import { StepExplain } from "./step-explain";
 import { LessonSummary } from "./lesson-summary";
+import { NaiTutorDrawer } from "./nai-tutor-drawer";
+import { TeachModeModal } from "./teach-mode-modal";
 import { EvaluationResult } from "@/server/services/evaluator";
 import {
   queueOutboxEvent,
@@ -37,6 +40,7 @@ export function LessonPlayer({
   const [isFinished, setIsFinished] = useState(false);
   const [isOffline, setIsOffline] = useState(false);
   const [pendingSyncCount, setPendingSyncCount] = useState(0);
+  const [isTeachModeOpen, setIsTeachModeOpen] = useState(false);
 
   const currentStep: StepContent = steps[currentStepIndex];
   const isCurrentCompleted = completedStepIds.includes(currentStep?.id);
@@ -88,6 +92,13 @@ export function LessonPlayer({
     }
   }, []);
 
+  // Automatically reset scroll to top on every step transition and completion
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [currentStepIndex, isFinished]);
+
   const handleStepSubmit = async (
     response: Record<string, unknown>,
     usedHintsCount = 0
@@ -115,7 +126,7 @@ export function LessonPlayer({
       if (res.ok && json.data) {
         const { evaluation, progress } = json.data;
 
-        if (evaluation.status === "correct") {
+        if (evaluation.status === "correct" || currentStep.kind === "predict") {
           if (!completedStepIds.includes(currentStep.id)) {
             setCompletedStepIds((prev) => [...prev, currentStep.id]);
           }
@@ -188,25 +199,36 @@ export function LessonPlayer({
   );
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-4 sm:space-y-5">
       {/* Top Navigation & Stepper */}
-      <div className="flex items-center justify-between gap-4 pb-4 border-b border-border">
-        <div>
+      <div className="flex items-center justify-between gap-3 pb-3 border-b border-border">
+        <div className="min-w-0">
           <a
             href={`/modules/${moduleSlug}`}
             className="text-xs text-text-muted hover:text-text transition-colors flex items-center gap-1"
           >
             ← Keluar ke Modul
           </a>
-          <h2 className="text-base font-bold text-text mt-0.5">{concept.title}</h2>
+          <h2 className="text-sm sm:text-base font-bold text-text truncate mt-0.5">{concept.title}</h2>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2.5 shrink-0">
+          {/* Teach Mode trigger */}
+          <button
+            type="button"
+            onClick={() => setIsTeachModeOpen(true)}
+            className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-surface border border-border hover:border-accent hover:bg-surface-raised text-text transition-all flex items-center gap-1.5 shadow-2xs"
+            title="Uji pemahamanmu dengan mengajarkan konsep ini kepada Nai"
+          >
+            <GraduationCap className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Ajari Nai</span>
+          </button>
+
           {/* Offline indicator */}
           {isOffline && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>Offline {pendingSyncCount > 0 ? `(${pendingSyncCount} tertunda)` : ""}</span>
+              <span className="hidden sm:inline">Offline {pendingSyncCount > 0 ? `(${pendingSyncCount})` : ""}</span>
             </div>
           )}
 
@@ -215,7 +237,7 @@ export function LessonPlayer({
               Langkah {currentStepIndex + 1} dari {steps.length}
             </span>
             <div
-              className="w-28 sm:w-40 h-2 rounded-full bg-surface border border-border mt-1 overflow-hidden"
+              className="w-24 sm:w-36 h-1.5 rounded-full bg-surface border border-border mt-1 overflow-hidden"
               role="progressbar"
               aria-valuenow={progressPercentage}
               aria-valuemin={0}
@@ -237,16 +259,16 @@ export function LessonPlayer({
           step={currentStep}
           isCompleted={isCurrentCompleted}
           onSubmit={async (resp, hintsCount) => {
-            const result = await handleStepSubmit(resp, hintsCount);
-            if (result?.status === "correct") {
-              handleNextStep();
-            }
+            await handleStepSubmit(resp, hintsCount);
           }}
+          onNext={handleNextStep}
+          onPrevious={handlePreviousStep}
           isSubmitting={isSubmitting}
         />
       ) : currentStep.kind === "explore" ? (
         <StepExplore
           step={currentStep}
+          conceptSlug={concept.slug}
           isCompleted={isCurrentCompleted}
           onCompleted={handleNextStep}
         />
@@ -267,29 +289,32 @@ export function LessonPlayer({
         />
       ) : (
         /* encounter, understand, retrieve, etc. */
-        <div className="p-6 rounded-xl bg-surface-raised border border-border space-y-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent capitalize">
+        <div className="p-4 sm:p-5 rounded-xl bg-surface-raised border border-border space-y-4">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent-muted text-accent capitalize">
               <span>{currentStep.kind}</span>
               <span>•</span>
               <span>Langkah {currentStep.sortOrder}</span>
             </div>
-            <h3 className="text-xl font-bold text-text">{currentStep.title}</h3>
-            <p className="text-sm font-medium text-text-muted">
-              {currentStep.instruction}
-            </p>
+            <h3 className="text-lg sm:text-xl font-bold text-text">{currentStep.title}</h3>
+            <MathRenderer
+              content={currentStep.instruction}
+              inline
+              as="p"
+              className="text-xs sm:text-sm font-medium text-text-muted"
+            />
           </div>
 
-          <div className="text-sm text-text border-t border-border-subtle pt-4">
+          <div className="text-sm text-text border-t border-border-subtle pt-3 leading-relaxed">
             <MathRenderer content={currentStep.content} />
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+          <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
             <button
               type="button"
               onClick={handlePreviousStep}
               disabled={currentStepIndex === 0}
-              className="px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="px-3.5 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               ← Langkah Sebelumnya
             </button>
@@ -297,13 +322,27 @@ export function LessonPlayer({
             <button
               type="button"
               onClick={handleNextStep}
-              className="px-6 py-2.5 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
+              className="px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
             >
               Lanjutkan →
             </button>
           </div>
         </div>
       )}
+
+      {/* Teach Mode Modal */}
+      <TeachModeModal
+        concept={concept}
+        isOpen={isTeachModeOpen}
+        onClose={() => setIsTeachModeOpen(false)}
+      />
+
+      {/* Floating AI Socratic Tutor Nai */}
+      <NaiTutorDrawer
+        conceptSlug={concept.slug}
+        stepId={currentStep?.id}
+        stepTitle={currentStep?.title}
+      />
     </div>
   );
 }

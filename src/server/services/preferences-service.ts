@@ -2,10 +2,21 @@ import { eq } from "drizzle-orm";
 import { getDb, ensureDbInitialized, learnerPreferences } from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
 
+export type ThemePreference = "light" | "dark" | "contrast";
+export type FontSizeScale = "small" | "normal" | "large";
+
+export interface PreferencesPayload {
+  theme?: ThemePreference;
+  highContrast?: boolean;
+  fontScale?: FontSizeScale;
+  reducedMotion?: boolean;
+  naiVisible?: boolean;
+}
+
 export interface UserPreferences {
-  theme: "light" | "dark" | "contrast";
+  theme: ThemePreference;
   highContrast: boolean;
-  fontScale: "small" | "normal" | "large";
+  fontScale: FontSizeScale;
   reducedMotion: boolean;
   naiVisible: boolean;
   updatedAt: Date;

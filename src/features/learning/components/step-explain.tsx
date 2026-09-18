@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { CheckCircle, Lightbulb, Bot, Circle } from "lucide-react";
 import { StepContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { ExplainEvaluationOutput } from "@/server/services/explain-evaluator";
@@ -22,6 +23,14 @@ export function StepExplain({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [evaluation, setEvaluation] = useState<ExplainEvaluationOutput | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const feedbackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (evaluation && feedbackRef.current) {
+      feedbackRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [evaluation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,25 +69,30 @@ export function StepExplain({
   };
 
   return (
-    <div className="p-6 rounded-xl bg-surface-raised border border-border space-y-6 shadow-sm">
+    <div className="p-4 sm:p-5 rounded-xl bg-surface-raised border border-border space-y-4 shadow-sm">
       {/* Header */}
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent capitalize">
+      <div className="space-y-1.5">
+        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent-muted text-accent capitalize">
           <span>Jelaskan Kembali (Explain)</span>
           <span>•</span>
           <span>Langkah {step.sortOrder}</span>
         </div>
-        <h3 className="text-xl font-bold text-text">{step.title}</h3>
-        <p className="text-sm font-medium text-text-muted">{step.instruction}</p>
+        <h3 className="text-lg sm:text-xl font-bold text-text">{step.title}</h3>
+        <MathRenderer
+          content={step.instruction}
+          inline
+          as="p"
+          className="text-xs sm:text-sm font-medium text-text-muted"
+        />
       </div>
 
       {/* Prompt / Context */}
-      <div className="text-sm text-text border-t border-border-subtle pt-4">
+      <div className="text-sm text-text border-t border-border-subtle pt-3 leading-relaxed">
         <MathRenderer content={step.content} />
       </div>
 
       {/* Rubric Criteria Preview */}
-      <div className="p-4 rounded-lg bg-surface border border-border space-y-2">
+      <div className="p-3.5 rounded-lg bg-surface border border-border space-y-1.5">
         <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted">
           Kriteria Evaluasi Nai
         </h4>
@@ -90,7 +104,7 @@ export function StepExplain({
       </div>
 
       {/* Form Input */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3.5">
         <div>
           <label
             htmlFor="explain-input"
@@ -100,7 +114,7 @@ export function StepExplain({
           </label>
           <textarea
             id="explain-input"
-            rows={5}
+            rows={4}
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
             disabled={isSubmitting || (evaluation?.passed ?? false)}
@@ -122,7 +136,8 @@ export function StepExplain({
         {/* Feedback Section */}
         {evaluation && (
           <div
-            className={`p-5 rounded-xl border space-y-4 ${
+            ref={feedbackRef}
+            className={`p-4 sm:p-5 rounded-xl border space-y-3.5 ${
               evaluation.passed
                 ? "bg-success-muted border-success/30 text-success-fg"
                 : "bg-surface border-border text-text"
@@ -130,9 +145,11 @@ export function StepExplain({
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-lg">
-                  {evaluation.passed ? "✓" : "💡"}
-                </span>
+                {evaluation.passed ? (
+                  <CheckCircle className="w-5 h-5 text-success" />
+                ) : (
+                  <Lightbulb className="w-5 h-5 text-warning" />
+                )}
                 <span className="font-bold text-sm">
                   {evaluation.passed
                     ? "Pemahaman Terverifikasi!"
@@ -146,8 +163,9 @@ export function StepExplain({
 
             {/* Nai Guidance Box */}
             <div className="p-3 rounded-lg bg-surface/80 border border-border-subtle text-xs leading-relaxed space-y-1">
-              <span className="font-semibold text-accent flex items-center gap-1">
-                🤖 Ulasan Nai:
+              <span className="font-semibold text-accent flex items-center gap-1.5">
+                <Bot className="w-4 h-4 text-accent" />
+                <span>Ulasan Nai:</span>
               </span>
               <p className="text-text">{evaluation.naiGuidance}</p>
             </div>
@@ -163,12 +181,12 @@ export function StepExplain({
                     key={c.criterionId}
                     className="flex items-start gap-2 text-xs"
                   >
-                    <span
-                      className={`mt-0.5 font-bold ${
-                        c.passed ? "text-success" : "text-amber-500"
-                      }`}
-                    >
-                      {c.passed ? "✓" : "○"}
+                    <span className="mt-0.5">
+                      {c.passed ? (
+                        <CheckCircle className="w-3.5 h-3.5 text-success shrink-0" />
+                      ) : (
+                        <Circle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                      )}
                     </span>
                     <div>
                       <span className="font-medium text-text">{c.name}: </span>

@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { getConceptBySlug } from "@/content/loader";
+import { getConceptBySlug, getModuleForConcept } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
 import { getLearnerConceptProgress } from "@/server/services/learning-service";
 import { LessonPlayer } from "@/features/learning/components/lesson-player";
@@ -21,13 +21,15 @@ export default async function LearnConceptPage({
 
   const actor = await resolveActor();
   const progress = await getLearnerConceptProgress(actor, concept.id);
+  const parentModule = getModuleForConcept(concept.slug);
+  const moduleSlug = parentModule?.slug ?? "turunan";
 
   return (
     <div className="py-2">
       <LessonPlayer
         concept={concept}
         initialProgress={progress}
-        moduleSlug="turunan"
+        moduleSlug={moduleSlug}
       />
     </div>
   );

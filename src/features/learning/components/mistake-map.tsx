@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { CheckCircle, Target, Lightbulb } from "lucide-react";
 import { MistakeSummaryItem } from "@/server/services/learning-service";
 
 interface MistakeMapProps {
@@ -11,8 +12,8 @@ export function MistakeMap({ mistakes }: MistakeMapProps) {
   if (mistakes.length === 0) {
     return (
       <div className="p-5 rounded-xl bg-surface-raised border border-border text-center space-y-2">
-        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-success-muted text-success text-lg">
-          ✓
+        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-success-muted text-success">
+          <CheckCircle className="w-5 h-5" />
         </div>
         <h4 className="text-sm font-bold text-text">Pola Pemikiran Bersih</h4>
         <p className="text-xs text-text-muted max-w-sm mx-auto">
@@ -27,7 +28,7 @@ export function MistakeMap({ mistakes }: MistakeMapProps) {
       <div className="flex items-center justify-between">
         <div>
           <h4 className="text-sm font-bold text-text flex items-center gap-2">
-            <span>🎯</span>
+            <Target className="w-4 h-4 text-accent" />
             <span>Peta Miskonsepsi & Panduan Remedial</span>
           </h4>
           <p className="text-xs text-text-muted">
@@ -58,8 +59,9 @@ export function MistakeMap({ mistakes }: MistakeMapProps) {
             </div>
 
             <div className="p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/15 text-xs text-text space-y-1">
-              <span className="font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                💡 Cara Meluruskan:
+              <span className="font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                <Lightbulb className="w-3.5 h-3.5 shrink-0" />
+                <span>Cara Meluruskan:</span>
               </span>
               <p className="text-text-muted leading-relaxed">{m.remediation}</p>
             </div>

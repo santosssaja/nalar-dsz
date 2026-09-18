@@ -1,9 +1,13 @@
 import type { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  poweredByHeader: false,
-  serverExternalPackages: ["@electric-sql/pglite", "postgres", "zod", "katex"],
+export default (phase: string): NextConfig => {
+  const isDev = phase === PHASE_DEVELOPMENT_SERVER;
+
+  return {
+    reactStrictMode: true,
+    poweredByHeader: false,
+    serverExternalPackages: ["@electric-sql/pglite", "postgres", "zod", "katex"],
+    distDir: process.env.NEXT_DIST_DIR || (isDev ? ".next-dev" : ".next"),
+  };
 };
-
-export default nextConfig;

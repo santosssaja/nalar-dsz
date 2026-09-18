@@ -1,0 +1,163 @@
+{
+  "id": "30000000-0000-4000-8000-000000000022",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "unsur-dan-senyawa",
+  "title": "Unsur dan Senyawa: Zat Tunggal, Ikatan, dan Campuran",
+  "summary": "Memahami taksonomi zat kimia: membedakan unsur sebagai zat murni satu jenis atom, senyawa berikatan kimiawi tetap, dan campuran yang dapat dipisahkan secara fisik.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan zat tunggal (unsur dan senyawa) dari campuran homogen dan heterogen",
+    "Memahami bahwa senyawa memiliki sifat kimia yang sama sekali baru dan berbeda dari unsur pembentuknya",
+    "Memahami Hukum Perbandingan Tetap Proust dalam pembentukan senyawa kimia"
+  ],
+  "prerequisites": ["materi-dan-sifatnya"],
+  "misconceptions": [
+    {
+      "code": "COMPOUND_INHERITS_ELEMENT_PROPERTIES",
+      "label": "Mengira senyawa selalu mewarisi sifat bahaya atau wujud dari unsur-unsur penyusunnya",
+      "remediation": "Ketika unsur berikatan secara kimiawi membentuk senyawa, sifat asli unsur lenyap dan tercipta zat dengan karakteristik kimia yang sama sekali baru."
+    },
+    {
+      "code": "CONFUSING_MIXTURE_AND_COMPOUND",
+      "label": "Menyamakan larutan campuran homogen dengan senyawa kimia",
+      "remediation": "Campuran mempertahankan sifat masing-masing komponennya dan rasio perbandingannya sembarang, sedangkan senyawa memiliki perbandingan massa atom yang pasti dan tetap."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000091",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Gas Mudah Meledak + Gas Pembakar = Air Pembasmi Api",
+      "instruction": "Amati keajaiban transformasi kimiawi yang menghasilkan zat dengan sifat berlawanan total.",
+      "content": "Pertimbangkan fakta kimiawi yang mencengangkan ini:\n- Gas **Hidrogen ($H_2$)** adalah bahan bakar roket yang sangat mudah meledak jika terkena percikan api.\n- Gas **Oksigen ($O_2$)** adalah gas pemicu pembakaran yang membuat api berkobar hebat.\n\nNamun ketika kedua gas berbahaya ini berikatan secara kimia membentuk molekul **Air ($H_2O$)**, sifat eksplosifnya lenyap total! Air justru menjadi cairan tenang yang digunakan untuk memadamkan api.\n\nInilah esensi **Senyawa**: zat baru yang sifatnya bukan sekadar 'rata-rata' dari unsur penyusunnya!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi gas hidrogen mudah terbakar dan oksigen pembakar bersatu membentuk molekul air H2O yang memadamkan api.",
+        "screenReaderNote": "Materi pengantar menguraikan konsep senyawa sebagai zat baru yang sifat kimianya terlepas dari sifat unsur asalnya."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000092",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Logam Natrium Meledak + Gas Klorin Beracun = Garam Dapur?",
+      "instruction": "Pilihlah prediksimu mengenai sifat zat baru hasil pembentukan senyawa garam dapur (NaCl).",
+      "content": "Logam **Natrium ($Na$)** bereaksi meledak dahsyat jika terkena setetes air, dan gas **Klorin ($Cl_2$)** adalah gas kuning beracun yang mematikan paru-paru.\n\nJika kedua unsur ekstrem ini bereaksi membentuk kristal senyawa garam dapur (**$NaCl$**), apakah garam tersebut aman dimakan oleh manusia?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Pikirkan garam dapur yang kamu makan setiap hari bersama makanan lezat.",
+        "concept": "Reaksi pembentukan ikatan ionik mengubah atom Na dan Cl menjadi ion stabil Na+ dan Cl-.",
+        "strategy": "Sifat beracun logam Na dan gas Cl2 tidak diwariskan ke dalam kristal senyawa NaCl.",
+        "solution": "Garam dapur sangat aman dan justru merupakan mineral vital yang dibutuhkan oleh tubuh manusia."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-nacl-aman",
+            "label": "Sangat aman dan dapat dimakan — ikatan ionik menghasilkan senyawa baru dengan sifat biologis yang stabil",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Senyawa NaCl adalah garam dapur yang esensial bagi tubuh kita, membuktikan bahwa sifat unsur asal berubah total saat membentuk senyawa."
+          },
+          {
+            "id": "opt-nacl-beracun",
+            "label": "Tetap beracun dan mematikan karena mengandung klorin dan natrium berbahaya",
+            "isCorrect": false,
+            "misconceptionCode": "COMPOUND_INHERITS_ELEMENT_PROPERTIES",
+            "feedback": "Hati-hati: itu adalah miskonsepsi umum! Senyawa kimia tidak mewarisi bahaya unsur asalnya karena elektron valensinya telah membentuk ikatan stabil."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Pemahamanmu mengenai esensi senyawa kimia sangat tepat."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Apakah garam dapur NaCl yang terbuat dari unsur natrium dan klorin aman dimakan.",
+        "screenReaderNote": "Pilih salah satu dari dua opsi mengenai sifat senyawa NaCl dibandingkan unsur pembentuknya."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000093",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Hierarki Zat: Unsur, Senyawa, dan Campuran",
+      "instruction": "Pelajari diagram taksonomi materi dalam ilmu kimia.",
+      "content": "Materi diklasifikasikan menjadi dua keluarga besar:\n\n1. **Zat Tunggal (Murni)**:\n- **Unsur**: Zat paling sederhana yang terdiri dari satu jenis atom saja dan tidak dapat diuraikan lagi secara kimia biasa (misal: Emas $Au$, Besi $Fe$, Oksigen $O_2$).\n- **Senyawa**: Gabungan kimiawi dua atau lebih jenis unsur berbeda dengan perbandingan massa tetap yang terikat kuat (misal: Air $H_2O$, Karbon Dioksida $CO_2$, Garam $NaCl$).\n\n2. **Campuran**:\nGabungan fisik dari dua atau lebih zat tanpa ikatan kimia, dengan perbandingan sembarang dan dapat dipisahkan secara fisika:\n- **Homogen (Larutan)**: Serba sama merata hingga tingkat molekul (misal: udara bersih, air sirup manis).\n- **Heterogen**: Tidak serba sama, batas fasa terlihat jelas (misal: campuran minyak dan air, air kopi tubruk berampas).",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Bagan klasifikasi materi membagi zat tunggal menjadi unsur dan senyawa, serta campuran menjadi homogen dan heterogen.",
+        "screenReaderNote": "Materi konsep menjelaskan hierarki klasifikasi materi berdasarkan komposisi partikel dan ikatan kimia."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000094",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Latihan: Hukum Perbandingan Tetap Proust",
+      "instruction": "Hitunglah massa senyawa yang terbentuk berdasarkan perbandingan massa tetap.",
+      "content": "Menurut Hukum Proust, massa unsur Hidrogen dan Oksigen dalam senyawa air ($H_2O$) selalu memiliki perbandingan massa tetap:\n$$\\text{Massa Hidrogen} : \\text{Massa Oksigen} = 1 : 8$$\n\nJika disediakan $4\\text{ gram}$ gas hidrogen dan direaksikan sempurna dengan $32\\text{ gram}$ gas oksigen (keduanya tepat habis bersisa nol):\n\nBerapakah total massa air ($H_2O$) yang terbentuk (dalam satuan gram)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Periksa apakah perbandingannya tepat 4 : 32 = 1 : 8.",
+        "concept": "Karena kedua zat habis bereaksi, massa air adalah jumlah massa kedua reaktan (Hukum Kekekalan Massa).",
+        "strategy": "Jumlahkan massa hidrogen dan massa oksigen: 4 + 32.",
+        "solution": "Massa air = 4 + 32 = 36 gram."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 36,
+        "tolerance": 0.01,
+        "units": "gram",
+        "feedbackCorrect": "Benar! Sebanyak 36 gram air murni terbentuk dari reaksi 4 gram hidrogen dan 32 gram oksigen.",
+        "misconceptions": [
+          {
+            "code": "CONFUSING_MIXTURE_AND_COMPOUND",
+            "triggerValue": 28,
+            "feedback": "Angka 28 didapat jika kamu mengurangkan 32 - 4. Pembentukan senyawa menjumlahkan massa reaktan menjadi massa produk total: 32 + 4 = 36 gram."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung total massa air dari 4 gram hidrogen ditambah 32 gram oksigen.",
+        "screenReaderNote": "Ketikkan angka nilai massa total air yang terbentuk dalam gram."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000095",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Mengapa Air Laut Adalah Campuran, Namun Air Suling (H₂O) Adalah Senyawa?",
+      "instruction": "Tuliskan perbedaan konseptual antara air laut dan molekul air suling murni.",
+      "content": "Seseorang bertanya: *'Di pantai ada air laut, di laboratorium ada air murni suling (H₂O). Bukankah keduanya sama-sama cairan bening bernama air?'*.\n\nJelaskan perbedaan mendasar mengapa air laut dikelompokkan sebagai **campuran homogen (larutan)** sementara air suling murni dikelompokkan sebagai **senyawa kimia murni**! Uraikan metode pemisahan dan sifat zat penyusunnya.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan perbedaan klasifikasi antara air laut sebagai campuran dan air suling murni sebagai senyawa.",
+        "screenReaderNote": "Area input teks untuk mengetikkan analisis perbedaan senyawa murni vs campuran larutan garam."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-unsur-dan-senyawa",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-senyawa-ikatan",
+        "name": "Ikatan Kimia Tetap pada Air Murni (H₂O)",
+        "description": "Menjelaskan bahwa air suling tersusun hanya dari satu jenis molekul H2O dengan rasio atom hidrogen dan oksigen terikat secara kimiawi",
+        "weight": 1
+      },
+      {
+        "id": "crit-senyawa-campuran",
+        "name": "Komposisi Beragam pada Air Laut",
+        "description": "Menyebutkan bahwa air laut melarutkan garam NaCl dan mineral lain tanpa ikatan kimia baru dan perbandingannya bervariasi",
+        "weight": 1
+      },
+      {
+        "id": "crit-senyawa-pemisahan",
+        "name": "Metode Pemisahan Fisika (Distilasi/Evaporasi)",
+        "description": "Menjelaskan bahwa garam pada air laut dapat dipisahkan secara fisika melalui penguapan air, sedangkan pemecahan H2O memerlukan elektrolisis kimia",
+        "weight": 1
+      }
+    ]
+  }
+}

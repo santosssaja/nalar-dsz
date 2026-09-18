@@ -1,0 +1,38 @@
+{
+  "id": "20000000-0000-4000-8000-000000000003",
+  "domainId": "10000000-0000-4000-8000-000000000002",
+  "domainSlug": "fisika",
+  "slug": "fisika-mekanika",
+  "title": "Fisika: Mekanika Klasik",
+  "summary": "Memahami fondasi gerak dan interaksi benda: ketepatan pengukuran besaran, representasi geometris vektor, dan analisis kinematika perpindahan serta laju perubahan kecepatan.",
+  "estimatedMinutes": 240,
+  "prerequisites": [
+    {
+      "slug": "fondasi-matematika",
+      "title": "Fondasi Matematika",
+      "required": true
+    }
+  ],
+  "conceptSlugs": ["pengukuran-dan-besaran", "vektor", "kinematika"],
+  "learningPath": {
+    "slug": "jalur-fisika-mekanika",
+    "title": "Jalur Utama Mekanika Fisika",
+    "nodes": [
+      {
+        "conceptSlug": "pengukuran-dan-besaran",
+        "sortOrder": 1,
+        "required": true
+      },
+      {
+        "conceptSlug": "vektor",
+        "sortOrder": 2,
+        "required": true
+      },
+      {
+        "conceptSlug": "kinematika",
+        "sortOrder": 3,
+        "required": true
+      }
+    ]
+  }
+}

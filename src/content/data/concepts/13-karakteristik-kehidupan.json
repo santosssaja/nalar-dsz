@@ -1,0 +1,163 @@
+{
+  "id": "30000000-0000-4000-8000-000000000031",
+  "moduleId": "20000000-0000-4000-8000-000000000005",
+  "slug": "karakteristik-kehidupan",
+  "title": "Karakteristik Kehidupan: Ciri Entitas Hidup dan Homeostasis",
+  "summary": "Mendefinisikan apa itu hidup: 7 kriteria biologis organisme hidup, kemampuan mempertahankan keseimbangan internal (homeostasis), dan status biologis virus.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Mengidentifikasi 7 pilar ciri kehidupan biologis (seluler, metabolisme, homeostasis, respons stimulus, tumbuh kembang, reproduksi, adaptasi)",
+    "Memahami prinsip homeostasis sebagai mekanisme mempertahankan stabilitas kondisi internal tubuh",
+    "Menganalisis mengapa suatu entitas seperti virus berada di garis perbatasan antara benda mati dan makhluk hidup"
+  ],
+  "prerequisites": [],
+  "misconceptions": [
+    {
+      "code": "GROWTH_ALONE_MEANS_LIFE",
+      "label": "Mengira segala sesuatu yang bisa bertambah besar ukurannya otomatis merupakan makhluk hidup",
+      "remediation": "Pertumbuhan kristal garam atau pembentukan stalaktit di gua adalah penumpukan materi luar secara fisika murni, bukan pertumbuhan biologis melalui metabolisme internal seluler."
+    },
+    {
+      "code": "HOMEOSTASIS_MEANS_CONSTANT_WITHOUT_EFFORT",
+      "label": "Menganggap homeostasis adalah kondisi statis yang terjadi dengan sendirinya tanpa konsumsi energi",
+      "remediation": "Homeostasis adalah keseimbangan dinamis aktif yang terus-menerus mengonsumsi energi metabolik untuk melawan gangguan lingkungan luar (seperti berkeringat saat panas atau menggigil saat dingin)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-0000000000b1",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Robot Tercanggih vs Bakteri Bersel Tunggal",
+      "instruction": "Renungkan teka-teki biologis mengenai batasan antara mesin mati dan entitas hidup.",
+      "content": "Sebuah robot humanoid tercanggih bertenaga kecerdasan buatan dapat berjalan, berbicara, mengidentifikasi wajah, dan mengisi ulang baterainya sendiri.\nNamun sebuah bakteri bersel tunggal di lumpur got yang tidak memiliki otak, mata, ataupun kabel dinobatkan oleh sains sebagai **makhluk hidup**, sementara robot tersebut hanyalah **benda mati**.\n\nApa sebenarnya yang membedakan kehidupan dari sekadar mesin cerdas?\nBiologi mendefinisikan kehidupan bukan berdasarkan kecerdasan atau pergerakan, melainkan melalui serangkaian **proses biologis terpadu** yang diwariskan dari materi genetik!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Perbandingan robot cerdas bertenaga baterai sebagai benda mati dengan bakteri bersel tunggal sebagai makhluk hidup biologis.",
+        "screenReaderNote": "Materi pengantar mengantarkan kriteria biologis yang membedakan organisme hidup dari mesin artifisial."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000b2",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Kristal Garam yang 'Tumbuh Membesar'",
+      "instruction": "Pilihlah prediksimu mengenai klasifikasi biologis pertumbuhan kristal.",
+      "content": "Jika kamu menggantung seutas benang di dalam toples air garam jenuh, dari hari ke hari kristal garam akan terus menumpuk dan bertambah besar ukurannya seolah-olah sedang 'tumbuh'.\n\nApakah kristal garam yang bertumbuh tersebut dapat diklasifikasikan sebagai makhluk hidup?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Ingat bahwa makhluk hidup harus memenuhi seluruh pilar kehidupan, bukan hanya satu ciri pertumbuhan fisik.",
+        "concept": "Kristal tidak memiliki sel, tidak melakukan metabolisme kimia mandiri, tidak memiliki DNA/RNA, dan tidak merespons rangsang.",
+        "strategy": "Pilihlah jawaban yang membedakan akumulasi fisik eksternal dari pertumbuhan biologis internal.",
+        "solution": "Bukan makhluk hidup karena kristal hanya menumpuk zat kimia luar tanpa organisasi sel dan metabolisme."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-bukan-hidup",
+            "label": "Bukan makhluk hidup — itu hanyalah penumpukan materi luar secara fisika tanpa organisasi seluler dan metabolisme",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Organisme hidup tumbuh dari dalam melalui sintesis molekuler seluler dan metabolisme, bukan sekadar penempelan kristal luar."
+          },
+          {
+            "id": "opt-makhluk-hidup",
+            "label": "Makhluk hidup sederhana karena menunjukkan kemampuan tumbuh kembang seiring berjalannya waktu",
+            "isCorrect": false,
+            "misconceptionCode": "GROWTH_ALONE_MEANS_LIFE",
+            "feedback": "Hati-hati: pertumbuhan saja tidak cukup untuk menyatakan kehidupan. Benda mati seperti stalaktit dan awan badai juga bisa membesar tanpa menjadi makhluk hidup!"
+          }
+        ],
+        "feedbackCorrect": "Prediksi tepat! Kamu telah memisahkan fenomena fisika dari ciri hakiki organisme hidup."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Apakah kristal garam yang bertumbuh membesar termasuk makhluk hidup.",
+        "screenReaderNote": "Pilih salah satu dari dua opsi jawaban mengenai status biologis kristal garam."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000b3",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Tujuh Pilar Kehidupan dan Dinamika Homeostasis",
+      "instruction": "Pelajari kriteria baku biologi dan mekanisme pertahanan kestabilan internal tubuh.",
+      "content": "Sains biologi menetapkan **7 Ciri Utama Makhluk Hidup**:\n1. **Organisasi Seluler**: Tersusun minimal dari satu sel fungsional.\n2. **Metabolisme**: Mengolah energi dan materi melalui reaksi anabolisme dan katabolisme.\n3. **Homeostasis**: Menjaga keseimbangan dinamis kondisi internal tubuh (misal suhu tubuh manusia dijaga stabil sekitar $36.5^\\circ\\text{C} - 37.5^\\circ\\text{C}$ baik saat salju maupun terik).\n4. **Iritabilitas**: Merespons rangsangan dari lingkungan sekitar.\n5. **Pertumbuhan & Perkembangan**: Bertambah ukuran dan mengalami spesialisasi fungsi.\n6. **Reproduksi**: Menghasilkan keturunan secara seksual atau aseksual mewariskan kode genetik DNA/RNA.\n7. **Adaptasi & Evolusi**: Menyesuaikan diri terhadap seleksi alam dari generasi ke generasi.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Bagan 7 karakteristik kehidupan seluler, metabolisme, homeostasis, respons rangsang, pertumbuhan, reproduksi, dan adaptasi.",
+        "screenReaderNote": "Materi konsep menjelaskan 7 pilar karakteristik entitas hidup dan peran vital homeostasis biologis."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000b4",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Latihan: Perkembangbiakan Eksponensial Pembelahan Biner",
+      "instruction": "Hitunglah jumlah populasi bakteri hasil reproduksi aseksual.",
+      "content": "Bakteri *Escherichia coli* berkembang biak dengan cara membelah diri menjadi dua (pembelahan biner) setiap $20\\text{ menit}$.\nPopulasi bakteri setelah $n$ kali pembelahan mengikuti rumus perpangkatan eksponensial:\n$$N = N_0 \\times 2^n$$\n\nJika mula-mula terdapat $1\\text{ sel}$ bakteri ($N_0 = 1$) dan telah membelah diri sebanyak $n = 5$ kali pembelahan:\n\nBerapakah total jumlah sel bakteri yang dihasilkan sekarang?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus N = 1 × 2⁵.",
+        "concept": "Hitung perpangkatan 2 pangkat 5: 2 × 2 × 2 × 2 × 2.",
+        "strategy": "2 × 2 = 4; 4 × 2 = 8; 8 × 2 = 16; 16 × 2 = 32.",
+        "solution": "Jumlah bakteri = 2⁵ = 32 sel."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 32,
+        "tolerance": 0.01,
+        "units": "sel",
+        "feedbackCorrect": "Benar sekali! Sebanyak 32 sel bakteri terbentuk setelah 5 siklus pembelahan biner (2⁵ = 32).",
+        "misconceptions": [
+          {
+            "code": "GROWTH_ALONE_MEANS_LIFE",
+            "triggerValue": 10,
+            "feedback": "Angka 10 didapat jika kamu hanya mengalikan 2 × 5. Pembelahan biner bersifat eksponensial berlipat ganda (2 pangkat 5 = 32), bukan perkalian linier."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung populasi bakteri hasil 2 pangkat 5 pembelahan biner sama dengan 32.",
+        "screenReaderNote": "Ketikkan angka jumlah total sel bakteri hasil pembelahan pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000b5",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Mengapa Virus Dianggap Berada di Garis Batas Hidup dan Mati?",
+      "instruction": "Tuliskan penalaran biologismu mengenai kontroversi status kehidupan virus.",
+      "content": "Para ilmuwan sering menyebut virus (seperti virus Influenza atau SARS-CoV-2) sebagai *'entitas aseluler di ambang batas antara benda mati dan makhluk hidup'*.\n\nJelaskan mengapa virus **bisa dianggap hidup** ketika berada di dalam tubuh inang, dan mengapa virus **dianggap benda mati tak hidup** ketika berada bebas di luar sel inang! Kaitkan dengan pilar organisasi seluler, metabolisme mandiri, dan materi genetik.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan status biologis virus di antara benda mati dan makhluk hidup.",
+        "screenReaderNote": "Area input teks untuk mengetikkan analisis karakteristik virus terhadap kriteria kehidupan."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-karakteristik-kehidupan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-hidup-mati",
+        "name": "Sifat Benda Mati di Luar Inang (Aseluler & Kristalisasi)",
+        "description": "Menjelaskan bahwa virus di luar sel inang tidak memiliki struktur sel, tidak bermetabolisme, dan dapat dikristalkan seperti benda mati",
+        "weight": 1
+      },
+      {
+        "id": "crit-hidup-hidup",
+        "name": "Sifat Makhluk Hidup di Dalam Inang (Replikasi Genetik)",
+        "description": "Menyebutkan bahwa virus membawa materi genetik (DNA/RNA) dan mampu bereplikasi serta berevolusi saat membajak sel inang",
+        "weight": 1
+      },
+      {
+        "id": "crit-hidup-parasit",
+        "name": "Ketergantungan Mutlak Parasit Obligat",
+        "description": "Menyimpulkan bahwa ketiadaan organel metabolisme mandiri membuat virus menjadi parasit intraseluler obligat di tapal batas kehidupan",
+        "weight": 1
+      }
+    ]
+  }
+}

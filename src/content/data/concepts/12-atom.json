@@ -1,0 +1,168 @@
+{
+  "id": "30000000-0000-4000-8000-000000000023",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "atom",
+  "title": "Struktur Atom: Inti, Elektron, dan Model Partikel",
+  "summary": "Melihat ke dalam jantung materi: arsitektur partikel subatomik (proton, neutron, elektron), notasi nomor atom, dan penemuan bahwa atom 99.99% adalah ruang hampa.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami struktur subatomik: proton positif, neutron netral di inti, dan elektron negatif di kulit",
+    "Menentukan jumlah proton, neutron, dan elektron menggunakan notasi nomor atom dan nomor massa",
+    "Memahami penemuan eksperimen Rutherford bahwa sebagian besar volume atom adalah ruang hampa"
+  ],
+  "prerequisites": ["unsur-dan-senyawa"],
+  "misconceptions": [
+    {
+      "code": "ATOM_IS_SOLID_SPHERE",
+      "label": "Mengira atom adalah bola padat pejal seperti kelereng",
+      "remediation": "Eksperimen Rutherford membuktikan bahwa atom hampir seluruhnya adalah ruang hampa: jika inti atom sebesar kelereng di tengah lapangan bola, elektronnya terbang di tribun penonton terjauh."
+    },
+    {
+      "code": "CONFUSING_ATOMIC_NUMBER_WITH_MASS",
+      "label": "Menukar nomor atom (jumlah proton) dengan nomor massa (proton + neutron)",
+      "remediation": "Nomor atom Z adalah jumlah proton yang menentukan identitas unsur, sedangkan nomor massa A adalah total berat inti (proton + neutron)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-0000000000a1",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Eksperimen Lembaran Emas Ernest Rutherford (1911)",
+      "instruction": "Renungkan eksperimen paling mengejutkan dalam sejarah fisika atom.",
+      "content": "Sebelum tahun 1911, ilmuwan mengira atom adalah bola pejal seperti 'roti kismis'.\nErnest Rutherford kemudian menembakkan partikel alfa (inti helium berenergi tinggi) ke selembar kertas emas yang sangat tipis.\n\nJika atom padat pejal, seluruh peluru alfa pasti akan terpental balik.\nNamun hasilnya mengejutkan:\n**Lebih dari $99.9\\%$ peluru alfa menembus lurus lembaran emas tanpa pembelokan sama sekali**, seolah-olah kertas emas itu hampa!\nHanya satu dari $8.000$ peluru yang memantul tajam.\n\nRutherford berujar: *'Hal itu sama mengejutkannya seperti kamu menembakkan peluru meriam ke selembar kertas tisu, dan peluru itu memantul kembali mengenaimu!'*.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Eksperimen hamburan lembaran emas Rutherford menunjukkan sebagian besar partikel alfa menembus lurus dan sebagian kecil terpantul dari inti pejal.",
+        "screenReaderNote": "Materi pengantar mengisahkan eksperimen penemuan inti atom dan bukti bahwa atom didominasi ruang hampa."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000a2",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Apa Kesimpulan Ruang Hampa Rutherford?",
+      "instruction": "Pilihlah prediksimu mengenai model struktur atom yang tepat.",
+      "content": "Berdasarkan kenyataan bahwa hampir seluruh partikel alfa menembus lurus lembaran emas tanpa halangan, kesimpulan apakah yang ditarik oleh Rutherford mengenai struktur sebuah atom?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Jika peluru menembus tanpa menabrak apapun, artinya ruang tersebut kosong.",
+        "concept": "Massa atom terkonsentrasi sangat padat pada satu titik pusat yang sangat kecil (inti atom), dikelilingi ruang kosong luas tempat elektron bergerak.",
+        "strategy": "Pilihlah kesimpulan yang menyatakan dominasi ruang kosong pada volume atom.",
+        "solution": "Sebagian besar volume atom adalah ruang kosong dengan massa terpusat pada inti kecil bermuatan positif."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-hampa-inti",
+            "label": "Sebagian besar volume atom adalah ruang kosong, dengan seluruh massa dan muatan positif terkonsentrasi di inti kecil di pusat",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Model atom nuklir Rutherford membuktikan inti atom sangat padat bermuatan positif di tengah ruang hampa raksasa."
+          },
+          {
+            "id": "opt-pejal-rapat",
+            "label": "Atom adalah bola pejal bermuatan netral yang sangat padat merata",
+            "isCorrect": false,
+            "misconceptionCode": "ATOM_IS_SOLID_SPHERE",
+            "feedback": "Hati-hati: jika atom padat merata, seluruh partikel alfa akan terhalang dan memantul balik, bukannya menembus lurus!"
+          }
+        ],
+        "feedbackCorrect": "Keren! Kamu memahami bagaimana bukti eksperimental mengubah model mental kita tentang struktur materi."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Kesimpulan model atom Rutherford dari eksperimen lembaran emas.",
+        "screenReaderNote": "Pilih salah satu dari dua opsi mengenai interpretasi eksperimen Rutherford."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000a3",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Tritunggal Partikel Subatomik dan Notasi Atom",
+      "instruction": "Pelajari proton, neutron, elektron, dan cara membaca nomor atom.",
+      "content": "Setiap atom tersusun dari tiga partikel subatomik fundamental:\n\n1. **Proton ($p^+$)**: Terletak di dalam inti (*nukleus*), bermuatan positif $+1$.\n2. **Neutron ($n^0$)**: Terletak di dalam inti (*nukleus*), tidak bermuatan (netral), berfungsi merekatkan inti.\n3. **Elektron ($e^-$)**: Mengitari inti dengan kecepatan tinggi, bermuatan negatif $-1$ dengan massa $1.836$ kali lebih ringan dari proton.\n\n**Notasi Standar Lambang Unsur**:\n$$_{Z}^{A}\\text{X}$$\n- **$Z$ (Nomor Atom)**: Jumlah proton di dalam inti (menentukan identitas unsur, pada atom netral $e^- = p^+$).\n- **$A$ (Nomor Massa)**: Total jumlah partikel di dalam inti: $A = \\text{Proton} + \\text{Neutron}$.\n- **Jumlah Neutron**: Dihitung dengan rumus $n = A - Z$.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram partikel subatomik proton neutron di inti dan elektron di kulit atom beserta rumus notasi nomor atom Z dan nomor massa A.",
+        "screenReaderNote": "Materi konsep menjelaskan sifat proton, neutron, elektron, dan rumus mencari neutron n sama dengan A dikurangi Z."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000a4",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Latihan: Menghitung Jumlah Neutron pada Isotop Karbon-14",
+      "instruction": "Gunakan notasi nomor atom dan nomor massa untuk mencari jumlah partikel inti.",
+      "content": "Isotop Karbon-14 yang digunakan para arkeolog untuk penanggalan fosil purba memiliki lambang:\n$$_{6}^{14}\\text{C}$$\n\nBerdasarkan rumus $n = A - Z$, berapakah **jumlah neutron** yang terdapat di dalam inti atom Karbon-14 tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Nomor massa A berada di atas (14), dan nomor atom Z berada di bawah (6).",
+        "concept": "Jumlah neutron adalah selisih antara nomor massa dan nomor atom: n = A - Z.",
+        "strategy": "Kurangkan 14 dengan 6.",
+        "solution": "Neutron = 14 - 6 = 8."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 8,
+        "tolerance": 0.01,
+        "units": "partikel",
+        "feedbackCorrect": "Benar sekali! Inti atom Karbon-14 memiliki 6 proton dan 8 neutron (total nomor massa 14).",
+        "misconceptions": [
+          {
+            "code": "CONFUSING_ATOMIC_NUMBER_WITH_MASS",
+            "triggerValue": 6,
+            "feedback": "Angka 6 adalah jumlah proton (nomor atom Z). Jumlah neutron adalah nomor massa dikurangi nomor atom: 14 - 6 = 8."
+          },
+          {
+            "code": "CONFUSING_ATOMIC_NUMBER_WITH_MASS",
+            "triggerValue": 14,
+            "feedback": "Angka 14 adalah nomor massa total (proton + neutron). Kurangkan 14 dengan 6 proton untuk mendapatkan 8 neutron."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung neutron atom Karbon 14 dengan nomor atom 6: 14 dikurangi 6.",
+        "screenReaderNote": "Ketikkan angka jumlah neutron pada atom Karbon-14 pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-0000000000a5",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Jika Atom Sebagian Besar Ruang Hampa, Mengapa Benda Padat Tidak Bisa Ditembus?",
+      "instruction": "Tuliskan penalaranmu mengenai interaksi gaya elektromagnetik antarelektron pada kulit atom.",
+      "content": "Jika atom tubuh kita dan atom meja kayu $99.99\\%$ adalah ruang hampa, mengapa tangan kita tidak bisa menembus meja saat kita memukulnya?\n\nJelaskan fenomena ini menggunakan konsep muatan listrik partikel subatomik! Mengapa awan elektron di permukaan tangan kita tolak-menolak dengan awan elektron di permukaan meja sehingga menciptakan ilusi 'kepadatan padat'?",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa benda padat tidak saling menembus meskipun atomnya sebagian besar ruang hampa.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan gaya tolak elektrostatik awan elektron."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-atom",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-atom-awan",
+        "name": "Peran Awan Elektron Terluar",
+        "description": "Menjelaskan bahwa bagian terluar dari setiap atom dikelilingi oleh lapisan awan elektron bermuatan negatif",
+        "weight": 1
+      },
+      {
+        "id": "crit-atom-tolak",
+        "name": "Gaya Tolak-Menolak Elektrostatik",
+        "description": "Menyebutkan bahwa muatan sejenis (elektron negatif vs elektron negatif) saling tolak-menolak kuat dengan hukum Coulomb",
+        "weight": 1
+      },
+      {
+        "id": "crit-atom-padat",
+        "name": "Ilusi Sentuhan dan Kepadatan Makroskopis",
+        "description": "Menyimpulkan bahwa sentuhan fisik yang kita rasakan sebenarnya adalah gaya tolak medan elektromagnetik, bukan benturan massa pejal",
+        "weight": 1
+      }
+    ]
+  }
+}

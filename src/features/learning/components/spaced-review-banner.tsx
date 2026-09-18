@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { RotateCcw } from "lucide-react";
 import { DueReviewItem } from "@/server/services/retrieval-service";
 
 interface SpacedReviewBannerProps {
@@ -48,8 +49,10 @@ export function SpacedReviewBanner({
   return (
     <div className="p-4 sm:p-5 rounded-xl bg-accent-muted border border-accent/30 space-y-3">
       <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🔁</span>
+        <div className="flex items-center gap-2.5">
+          <span className="p-1.5 rounded-lg bg-accent/20 flex items-center justify-center">
+            <RotateCcw className="w-4 h-4 text-accent" />
+          </span>
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-accent">
               Spaced Retrieval (Pengulangan Terjadwal)

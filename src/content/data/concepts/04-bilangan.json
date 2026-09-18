@@ -1,0 +1,192 @@
+{
+  "id": "30000000-0000-4000-8000-000000000004",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "bilangan",
+  "title": "Bilangan: Garis, Arah, dan Magnitude",
+  "summary": "Memahami bilangan bukan hanya sebagai hitungan benda terpisah, melainkan sebagai posisi berarah dan besaran jarak relatif terhadap titik acuan pada garis bilangan.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Memahami garis bilangan sebagai kontinum berarah dengan titik acuan nol (origin)",
+    "Membedakan antara magnitude (nilai mutlak/jarak dari nol) dengan arah (tanda positif atau negatif)",
+    "Membandingkan dan mengurutkan bilangan bulat positif dan negatif tanpa terjebak miskonsepsi digit"
+  ],
+  "prerequisites": [],
+  "misconceptions": [
+    {
+      "code": "NEGATIVE_MAGNITUDE_CONFUSION",
+      "label": "Mengira bilangan negatif dengan digit angka lebih besar bernilai lebih tinggi (misal -8 > -3)",
+      "remediation": "Pada garis bilangan horizontal, semakin ke kiri posisi suatu titik, nilainya semakin kecil. Posisi -8 berada jauh lebih ke kiri daripada -3, sehingga -8 < -3."
+    },
+    {
+      "code": "ZERO_IS_NOTHING",
+      "label": "Menganggap angka nol hanya berarti ketiadaan/kosong tanpa peran sebagai posisi acuan",
+      "remediation": "Nol berfungsi sebagai titik acuan penting (origin). Contohnya 0°C adalah titik beku air (bukan berarti tidak ada suhu), dan 0 meter adalah acuan permukaan laut."
+    },
+    {
+      "code": "SIGN_DIRECTION_REVERSAL",
+      "label": "Menukar orientasi arah positif (ke kanan) dan negatif (ke kiri)",
+      "remediation": "Sesuai konvensi garis bilangan baku: arah ke kanan bernilai semakin positif (+), sedangkan arah ke kiri bernilai semakin negatif (-)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000021",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Termometer Dingin dan Kedalaman Laut",
+      "instruction": "Amati bagaimana alam menggunakan angka yang berada di bawah titik nol.",
+      "content": "Bayangkan dua situasi di alam:\n1. Di puncak gunung bersalju saat badai, suhu udara turun melewati titik beku air ($0^\\circ\\text{C}$) hingga mencapai $-15^\\circ\\text{C}$.\n2. Sebuah kapal selam penyelamat menyelam dari permukaan laut ($0\\text{ m}$) menuju dasar palung laut pada kedalaman $-120\\text{ m}$.\n\nPada kedua contoh di atas, angka nol bukan berarti 'hampa' atau 'tidak ada apa-apa'. Angka nol adalah **titik acuan (*origin*)**. Ketika kita melangkah ke arah yang berlawanan dengan arah positif, kita membutuhkan **bilangan negatif** untuk mencatat posisi secara akurat!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi termometer suhu musim dingin di bawah titik beku dan kapal selam di bawah permukaan air laut sebagai analogi titik acuan nol dan bilangan negatif.",
+        "screenReaderNote": "Materi pengantar menjelaskan titik acuan nol dan bagaimana besaran dapat bernilai negatif saat bergerak ke arah berlawanan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000029",
+      "kind": "explore",
+      "sortOrder": 2,
+      "title": "Eksplorasi Interaktif: Garis Bilangan dan Nilai Mutlak",
+      "instruction": "Geser posisi titik A dan B pada garis bilangan untuk membedakan antara jarak mutlak (|x|) dan nilai posisi (kiri vs kanan).",
+      "content": "Sebelum kita membuat aturan baku, mari bermain dengan garis bilangan di bawah ini!\n\nPerhatikan dua hal penting:\n1. **Arah**: Apakah titik berada di sebelah kanan (positif) atau di sebelah kiri (negatif) dari titik nol?\n2. **Magnitude (Jarak)**: Berapa langkah jarak titik tersebut dari titik nol?\n\nCobalah geser titik A ke $-7$ dan titik B ke $-2$. Perhatikan bahwa meskipun titik A berjarak lebih jauh dari nol ($7$ satuan), posisinya berada lebih ke kiri sehingga nilainya **lebih kecil** daripada titik B!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Playground interaktif garis bilangan horizontal dengan slider untuk menggeser titik A dan B serta melihat perbandingan jarak dan nilai secara langsung.",
+        "screenReaderNote": "Gunakan kontrol slider untuk mengubah posisi titik pada garis bilangan dan dengarkan perbandingan nilainya."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000022",
+      "kind": "predict",
+      "sortOrder": 3,
+      "title": "Prediksi: Suhu Manakah yang Lebih Dingin?",
+      "instruction": "Pilihlah prediksimu sebelum memeriksa penjelasan konseptual garis bilangan.",
+      "content": "Stasiun cuaca mencatat suhu di Kota A adalah $-8^\\circ\\text{C}$, sedangkan suhu di Kota B adalah $-3^\\circ\\text{C}$.\n\nManakah pernyataan yang benar mengenai suhu kedua kota tersebut pada garis bilangan?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Ingat bahwa semakin dingin suhunya, posisinya semakin jauh ke bawah atau semakin ke kiri dari angka nol.",
+        "concept": "Pada garis bilangan, nilai yang lebih kecil selalu terletak di sebelah kiri nilai yang lebih besar.",
+        "strategy": "Bandingkan jarak ke titik 0: -8 berada 8 langkah di sebelah kiri nol, sedangkan -3 hanya 3 langkah di sebelah kiri nol.",
+        "solution": "Kota A (-8°C) lebih dingin karena posisinya berada lebih jauh ke kiri pada garis bilangan (-8 < -3)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-a-dingin",
+            "label": "Kota A (-8°C) lebih dingin daripada Kota B (-3°C) karena -8 terletak lebih jauh ke kiri dari nol",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Semakin ke kiri suatu titik di garis bilangan, semakin kecil nilainya. Maka -8°C lebih dingin daripada -3°C."
+          },
+          {
+            "id": "opt-b-dingin",
+            "label": "Kota B (-3°C) lebih dingin karena angka 8 lebih besar daripada 3",
+            "isCorrect": false,
+            "misconceptionCode": "NEGATIVE_MAGNITUDE_CONFUSION",
+            "feedback": "Hati-hati: angka 8 memang lebih besar secara besaran (magnitude), tetapi karena bertanda negatif (-8), letaknya jauh lebih ke kiri sehingga nilainya lebih kecil (lebih dingin)."
+          },
+          {
+            "id": "opt-sama",
+            "label": "Kedua kota memiliki suhu yang sama karena sama-sama bernilai negatif",
+            "isCorrect": false,
+            "feedback": "Bilangan negatif memiliki tingkatan nilai yang berbeda tergantung seberapa jauh jaraknya dari titik nol."
+          }
+        ],
+        "feedbackCorrect": "Bagus sekali! Kamu memahami bagaimana bilangan negatif ditempatkan pada garis bilangan."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Membandingkan suhu Kota A minus 8 derajat Celsius dengan Kota B minus 3 derajat Celsius.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi jawaban untuk menentukan kota mana yang lebih dingin berdasarkan posisi pada garis bilangan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000023",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Garis Bilangan: Arah vs Magnitude (Nilai Mutlak)",
+      "instruction": "Pelajari dua komponen utama dari setiap bilangan: jarak dan arah.",
+      "content": "Setiap bilangan pada garis bilangan memiliki dua sifat mendasar:\n\n1. **Magnitude (Besaran Jarak / Nilai Mutlak)**:\nBerapa jauh titik tersebut dari angka nol ($0$). Dilambangkan dengan simbol nilai mutlak $|x|$. Misalnya:\n$$|-7| = 7 \\quad \\text{dan} \\quad |+7| = 7$$\nKedua angka ini berjarak sama persis ($7$ satuan) dari titik acuan nol.\n\n2. **Arah (Orientasi)**:\nTanda positif ($+$) berarti berada di sebelah kanan nol, sedangkan tanda negatif ($-$) berarti berada di sebelah kiri nol.\n\n**Hukum Perbandingan pada Garis Bilangan**:\nUntuk dua bilangan $a$ dan $b$, jika $a$ berada di sebelah kanan $b$, maka $a > b$.\nKarena $-3$ berada di sebelah kanan $-8$, maka $-3 > -8$!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Penjelasan formal nilai mutlak sebagai jarak dari nol dan tanda positif negatif sebagai arah kiri atau kanan.",
+        "screenReaderNote": "Materi konsep menjelaskan magnitude nilai mutlak |x| sebagai jarak tanpa arah dan tanda plus minus sebagai orientasi arah."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000024",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Rentang Jarak Antara Dua Titik",
+      "instruction": "Hitunglah jarak rentang posisi antara dua nilai suhu di garis bilangan.",
+      "content": "Di sebuah kota gurun, suhu pada tengah malam turun hingga $-6^\\circ\\text{C}$. Pada siang hari berikutnya, suhu naik tajam hingga mencapai $+9^\\circ\\text{C}$.\n\nBerapakah total kenaikan suhu (jarak satuan dari $-6$ ke $+9$ pada garis bilangan)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Kamu diminta menghitung jarak total dari titik -6 ke titik +9.",
+        "concept": "Jarak antara dua titik di garis bilangan dapat dihitung dengan menjumlahkan jarak dari -6 ke 0, lalu dari 0 ke +9.",
+        "strategy": "Jarak dari -6 ke 0 adalah 6 satuan. Jarak dari 0 ke +9 adalah 9 satuan. Jumlahkan keduanya: 6 + 9.",
+        "solution": "Jarak total = 9 - (-6) = 9 + 6 = 15 derajat."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 15,
+        "tolerance": 0.01,
+        "units": "°C",
+        "feedbackCorrect": "Tepat sekali! Rentang kenaikan suhu dari -6°C ke +9°C adalah 15°C.",
+        "misconceptions": [
+          {
+            "code": "NEGATIVE_MAGNITUDE_CONFUSION",
+            "triggerValue": 3,
+            "feedback": "Angka 3 didapat jika kamu hanya mengurangkan 9 - 6. Ingat bahwa -6 berada di bawah nol, sehingga kamu harus melewati 6 derajat untuk sampai ke nol, lalu naik 9 derajat lagi (total 15 derajat)."
+          },
+          {
+            "code": "SIGN_DIRECTION_REVERSAL",
+            "triggerValue": -15,
+            "feedback": "Kenaikan suhu dan jarak fisik selalu bernilai positif. Jarak dari -6 ke +9 adalah +15."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung total rentang kenaikan suhu dari minus 6 derajat Celsius hingga plus 9 derajat Celsius.",
+        "screenReaderNote": "Ketikkan angka numerik rentang kenaikan suhu pada kotak isian yang disediakan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000025",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa -10 Lebih Kecil daripada -2?",
+      "instruction": "Tuliskan penalaranmu dengan kata-kata sendiri menggunakan konsep garis bilangan dan titik acuan nol.",
+      "content": "Temanmu berkata: *'Sepuluh kan jelas-jelas lebih besar dari dua, jadi minus sepuluh harusnya bernilai lebih besar daripada minus dua!'.*\n\nBagaimana kamu menjelaskan letak kesalahan penalaran tersebut kepadanya? Gunakan konsep garis bilangan, posisi relatif terhadap titik nol, serta perbedaan antara jarak (magnitude) dan nilai posisi.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Tantangan Explain It Back meminta peserta didik menguraikan mengapa minus 10 lebih kecil daripada minus 2.",
+        "screenReaderNote": "Ketikkan penjelasanmu di area teks untuk menguji pemahaman konseptual garis bilangan."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-bilangan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-bilangan-garis",
+        "name": "Posisi pada Garis Bilangan (Kiri vs Kanan)",
+        "description": "Menjelaskan bahwa nilai semakin kecil saat bergerak ke arah kiri pada garis bilangan",
+        "weight": 1
+      },
+      {
+        "id": "crit-bilangan-acuan",
+        "name": "Titik Acuan Nol (Origin)",
+        "description": "Menyebutkan posisi titik acuan nol dan arah kebalikan dari bilangan positif",
+        "weight": 1
+      },
+      {
+        "id": "crit-bilangan-magnitude",
+        "name": "Magnitude vs Nilai Relatif",
+        "description": "Menjelaskan perbedaan besaran jarak mutlak (10 langkah) dengan nilai posisi sebenarnya (-10)",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { Compass } from "lucide-react";
 import { RecommendationResult } from "@/server/services/recommendation-engine";
 
 interface RecommendationCardProps {
@@ -44,8 +45,10 @@ export function RecommendationCard({ recommendation }: RecommendationCardProps) 
   return (
     <div className="p-5 rounded-xl bg-surface-raised border border-border space-y-4 shadow-sm">
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🧭</span>
+        <div className="flex items-center gap-2.5">
+          <span className="p-1.5 rounded-lg bg-accent/20 flex items-center justify-center">
+            <Compass className="w-4 h-4 text-accent" />
+          </span>
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">
               Navigasi Adaptif Nalar

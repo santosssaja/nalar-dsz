@@ -3,6 +3,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Check, X } from "lucide-react";
 
 function VerifyContent() {
   const searchParams = useSearchParams();
@@ -100,8 +101,8 @@ function VerifyContent() {
 
         {state === "success" && (
           <div className="space-y-5 py-4 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 rounded-full bg-success-muted text-success border border-success/30 mx-auto flex items-center justify-center text-3xl font-bold shadow-xs">
-              ✓
+            <div className="w-16 h-16 rounded-full bg-success-muted text-success border border-success/30 mx-auto flex items-center justify-center shadow-xs">
+              <Check className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
@@ -134,8 +135,8 @@ function VerifyContent() {
 
         {state === "error" && (
           <div className="space-y-5 py-4 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 rounded-full bg-danger-muted text-danger border border-danger/30 mx-auto flex items-center justify-center text-3xl font-bold">
-              ✕
+            <div className="w-16 h-16 rounded-full bg-danger-muted text-danger border border-danger/30 mx-auto flex items-center justify-center">
+              <X className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">

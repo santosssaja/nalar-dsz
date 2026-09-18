@@ -4,5 +4,5 @@
   "title": "Matematika",
   "summary": "Fondasi numerik, aljabar, geometri, logika, dan kalkulus terapan.",
   "sortOrder": 1,
-  "moduleSlugs": ["turunan"]
+  "moduleSlugs": ["fondasi-matematika", "turunan"]
 }

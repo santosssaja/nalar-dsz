@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { UserPreferences } from "@/server/services/preferences-service";
+import { createPortal } from "react-dom";
+import { Settings, X } from "lucide-react";
+import {
+  PreferencesPayload,
+  FontSizeScale,
+  ThemePreference,
+  UserPreferences,
+} from "@/server/services/preferences-service";
 
 import {
   THEME_STORAGE_KEY,
@@ -159,9 +166,14 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  return (
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -171,7 +183,7 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
       <div className="w-full max-w-md rounded-2xl bg-surface-raised border border-border p-6 space-y-6 shadow-xl animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center gap-2">
-            <span className="text-xl">⚙️</span>
+            <Settings className="w-5 h-5 text-accent" />
             <div>
               <h3 id="pref-modal-title" className="text-base font-bold text-text">
                 Preferensi & Aksesibilitas
@@ -188,7 +200,7 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
             aria-label="Tutup jendela preferensi"
             className="w-8 h-8 rounded-lg flex items-center justify-center text-text-muted hover:text-text hover:bg-surface border border-transparent hover:border-border transition-colors text-sm font-bold"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -332,6 +344,7 @@ export function PreferencesModal({ isOpen, onClose }: PreferencesModalProps) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

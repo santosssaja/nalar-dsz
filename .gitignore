@@ -16,6 +16,7 @@
 
 # next.js
 /.next/
+/.next-dev/
 /out/
 
 # production
@@ -57,3 +58,5 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 .vercel
+
+hii

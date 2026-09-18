@@ -62,7 +62,7 @@ export default function RootLayout({
 
         <NavHeader />
 
-        <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-4 py-8">
+        <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-4 py-4 sm:py-6">
           {children}
         </main>
 

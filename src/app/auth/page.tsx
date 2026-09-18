@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Mail, ShieldCheck, Check, Zap } from "lucide-react";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -118,7 +119,7 @@ export default function AuthPage() {
               </h2>
               <p className="text-xs text-text-muted font-mono">{currentUser.email}</p>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-success-muted text-success mt-2">
-                <span>✓</span>
+                <Check className="w-3.5 h-3.5" />
                 <span>Akun Terverifikasi & Tersinkronkan</span>
               </div>
             </div>
@@ -143,8 +144,8 @@ export default function AuthPage() {
         ) : sentResult ? (
           /* Email Sent Success State */
           <div className="space-y-6 text-center py-2 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 rounded-2xl bg-accent-muted border border-accent/30 text-accent mx-auto flex items-center justify-center text-3xl">
-              📬
+            <div className="w-16 h-16 rounded-2xl bg-accent-muted border border-accent/30 text-accent mx-auto flex items-center justify-center">
+              <Mail className="w-8 h-8 text-accent" />
             </div>
 
             <div className="space-y-2">
@@ -164,7 +165,7 @@ export default function AuthPage() {
             {sentResult.devVerificationUrl && (
               <div className="p-3.5 rounded-xl bg-surface border border-accent/40 text-left space-y-2 text-xs">
                 <div className="flex items-center gap-1.5 font-bold text-accent text-[11px]">
-                  <span>⚡</span>
+                  <Zap className="w-3.5 h-3.5" />
                   <span>Tautan Langsung (Mode Pengujian / Dev):</span>
                 </div>
                 <a
@@ -239,7 +240,7 @@ export default function AuthPage() {
             {/* Info Banner */}
             <div className="p-3.5 rounded-xl bg-accent-muted border border-accent/20 space-y-1 text-xs">
               <span className="font-bold text-accent flex items-center gap-1.5">
-                <span>🔒</span>
+                <ShieldCheck className="w-4 h-4 text-accent" />
                 <span>{activeTab === "login" ? "Masuk Sekali Klik" : "Daftar Tanpa Ribet"}</span>
               </span>
               <p className="text-text-muted leading-relaxed text-[11px]">

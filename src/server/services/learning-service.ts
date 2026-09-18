@@ -1,6 +1,16 @@
 import { eq, and } from "drizzle-orm";
 import { randomUUID } from "crypto";
-import { getDb, ensureDbInitialized, attempts, learningEvidence, conceptProgress, mistakeEvents } from "@/server/db";
+import {
+  getDb,
+  ensureDbInitialized,
+  attempts,
+  learningEvidence,
+  conceptProgress,
+  mistakeEvents,
+  contentVersions,
+  concepts,
+  learningSteps,
+} from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
 import { getStepById, getConceptById } from "@/content/loader";
 import { evaluateStepResponse, EvaluationResult } from "./evaluator";
@@ -162,6 +172,48 @@ export async function submitAttempt(
 
   // Content version placeholder
   const dummyContentVersionId = "00000000-0000-0000-0000-000000000001";
+
+  // Self-healing database check: ensure content version, concept, and step exist in DB
+  try {
+    await db
+      .insert(contentVersions)
+      .values({
+        id: dummyContentVersionId,
+        ownerType: "bundle",
+        ownerId: concept.moduleId,
+        version: 1,
+        payload: {},
+        checksum: "v1-initial",
+      })
+      .onConflictDoNothing();
+
+    await db
+      .insert(concepts)
+      .values({
+        id: concept.id,
+        moduleId: concept.moduleId,
+        slug: concept.slug,
+        title: concept.title,
+        summary: concept.summary,
+        difficulty: concept.difficulty,
+        status: "published",
+      })
+      .onConflictDoNothing();
+
+    await db
+      .insert(learningSteps)
+      .values({
+        id: step.id,
+        conceptId: concept.id,
+        contentVersionId: dummyContentVersionId,
+        kind: step.kind,
+        sortOrder: step.sortOrder,
+        config: step.config ?? {},
+      })
+      .onConflictDoNothing();
+  } catch (seedErr) {
+    console.warn("Self-healing step insertion notice:", seedErr);
+  }
 
   // Insert attempt
   await db.insert(attempts).values({

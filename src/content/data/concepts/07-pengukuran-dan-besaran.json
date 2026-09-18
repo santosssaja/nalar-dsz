@@ -1,0 +1,174 @@
+{
+  "id": "30000000-0000-4000-8000-000000000011",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "pengukuran-dan-besaran",
+  "title": "Pengukuran dan Besaran: Standar, Dimensi, dan Ketidakpastian",
+  "summary": "Fondasi sains empiris: bagaimana kita mengukur alam secara objektif menggunakan satuan standar internasional (SI), analisis dimensi, dan memperhitungkan ketidakpastian alat ukur.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Membedakan besaran pokok dan besaran turunan dalam sistem Satuan Internasional (SI)",
+    "Menggunakan analisis dimensi untuk memverifikasi konsistensi persamaan fisika",
+    "Memahami bahwa setiap pengukuran di dunia nyata selalu memiliki batas ketelitian dan ketidakpastian"
+  ],
+  "prerequisites": ["bilangan"],
+  "misconceptions": [
+    {
+      "code": "CONFUSING_MASS_AND_WEIGHT",
+      "label": "Menyamakan massa dengan berat",
+      "remediation": "Massa adalah ukuran materi yang tetap di manapun berada (kg), sedangkan berat adalah gaya gravitasi yang bekerja pada massa tersebut (Newton, W = mg)."
+    },
+    {
+      "code": "UNIT_CONVERSION_ERROR",
+      "label": "Mengalikan faktor panjang pada besaran luas atau volume (misal mengira 1 m² = 100 cm²)",
+      "remediation": "Karena luas adalah panjang kuadrat, maka 1 m² = (100 cm)² = 10.000 cm²."
+    },
+    {
+      "code": "EXACT_MEASUREMENT_ILLUSION",
+      "label": "Menganggap alat ukur dapat menghasilkan nilai tepat mutlak tanpa batas ketidakpastian",
+      "remediation": "Setiap alat ukur memiliki batas skala terkecil (ketidakpastian), sehingga sains selalu menuliskan nilai beserta rentang toleransinya."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000051",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Jengkal Tangan Raja vs Standar Meter Internasional",
+      "instruction": "Pikirkan kekacauan yang terjadi jika setiap orang mengukur dengan patokan tubuhnya sendiri.",
+      "content": "Pada zaman dahulu, orang mengukur kain dengan panjang langkah kaki atau jengkal tangan raja. Namun tangan setiap orang berbeda ukuran! Perdagangan dan sains mustahil berkembang tanpa **standar acuan yang tidak berubah**.\n\nPada tahun 1960, disepakati Sistem Satuan Internasional (SI):\n- Panjang dalam **meter ($m$)**\n- Massa dalam **kilogram ($kg$)**\n- Waktu dalam **sekon ($s$)**\n\nBesaran fisika didefinisikan sebagai sesuatu yang dapat diukur dan dinyatakan dengan angka serta satuan.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Sejarah penetapan standar satuan internasional SI untuk menggantikan ukuran tubuh manusia.",
+        "screenReaderNote": "Materi pengantar menjelaskan mengapa sains membutuhkan standar satuan baku yang objektif dan reproducible."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000052",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Mengubah Satuan Luas (m² ke cm²)",
+      "instruction": "Pilihlah prediksimu mengenai konversi satuan persegi dua dimensi.",
+      "content": "Jika $1\\text{ meter} = 100\\text{ sentimeter}$, berapakah luas selembar lantai berukuran tepat $1\\text{ m}^2$ jika dinyatakan dalam sentimeter persegi ($\\text{cm}^2$)?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Bayangkan sebuah persegi dengan panjang sisi 1 meter dan lebar 1 meter.",
+        "concept": "Luas persegi adalah sisi dikali sisi: Luas = 100 cm × 100 cm.",
+        "strategy": "Kalikan 100 dengan 100.",
+        "solution": "1 m² = (100 cm) × (100 cm) = 10.000 cm²."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-10000",
+            "label": "10.000 cm² — karena kedua sisinya masing-masing sepanjang 100 cm (100 × 100)",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Dimensi luas mengalikan kedua sumbu, sehingga faktor konversinya dikuadratkan: (100)² = 10.000."
+          },
+          {
+            "id": "opt-100",
+            "label": "100 cm² — langsung mengikuti konversi 1 m = 100 cm",
+            "isCorrect": false,
+            "misconceptionCode": "UNIT_CONVERSION_ERROR",
+            "feedback": "Hati-hati: 100 cm adalah panjang satu garis (1 dimensi). Untuk luas (2 dimensi), panjang 100 cm dikalikan lebar 100 cm = 10.000 cm²."
+          },
+          {
+            "id": "opt-1000",
+            "label": "1.000 cm²",
+            "isCorrect": false,
+            "feedback": "Periksa kembali perkalian 100 dikali 100: menghasilkan angka sepuluh ribu (10.000)."
+          }
+        ],
+        "feedbackCorrect": "Prediksi tepat! Kamu memahami bagaimana dimensi kuadrat mempengaruhi konversi besaran turunan."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Berapa cm persegi dalam 1 meter persegi.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi jawaban untuk konversi 1 meter persegi ke sentimeter persegi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000053",
+      "kind": "understand",
+      "sortOrder": 3,
+      "title": "Besaran Pokok, Besaran Turunan, dan Analisis Dimensi",
+      "instruction": "Pelajari bagaimana seluruh rumus fisika diturunkan dari 7 pilar besaran pokok.",
+      "content": "Di alam semesta, semua kuantitas mekanika dibangun dari tiga dimensi fundamental:\n1. Massa: lambang dimensi $[M]$\n2. Panjang: lambang dimensi $[L]$\n3. Waktu: lambang dimensi $[T]$\n\n**Analisis Dimensi**:\nPersamaan fisika hanya benar jika kedua sisi persamaan memiliki dimensi yang sama (*prinsip homogenitas dimensi*).\nContoh besaran turunan kecepatan:\n$$v = \\frac{\\Delta s}{\\Delta t} \\implies [v] = \\frac{[L]}{[T]} = [L][T]^{-1}$$\nJika kamu menghitung rumus dan mendapatkan dimensi yang tidak cocok, kamu tahu pasti ada kesalahan aljabar sebelum memasukkan angka!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Tabel rumus dimensi mekanika massa M, panjang L, dan waktu T beserta contoh dimensi kecepatan L T pangkat minus 1.",
+        "screenReaderNote": "Materi konsep menjelaskan analisis dimensi sebagai alat verifikasi keabsahan rumus fisika."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000054",
+      "kind": "practice",
+      "sortOrder": 4,
+      "title": "Latihan: Menghitung Massa Jenis Balok (ρ = m / V)",
+      "instruction": "Hitunglah nilai besaran turunan massa jenis.",
+      "content": "Sebuah balok padat memiliki massa $m = 500\\text{ kg}$ dan volume ruang $V = 2\\text{ m}^3$.\n\nBerdasarkan rumus besaran turunan $\\rho = \\frac{m}{V}$, berapakah massa jenis balok tersebut dalam satuan $\\text{kg/m}^3$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus massa jenis: massa dibagi volume.",
+        "concept": "ρ = m / V. Satuan standar massa adalah kg dan volume m³.",
+        "strategy": "Bagilah 500 dengan 2.",
+        "solution": "ρ = 500 / 2 = 250 kg/m³."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 250,
+        "tolerance": 0.01,
+        "units": "kg/m³",
+        "feedbackCorrect": "Benar sekali! Massa jenis balok adalah 250 kg/m³.",
+        "misconceptions": [
+          {
+            "code": "CONFUSING_MASS_AND_WEIGHT",
+            "triggerValue": 1000,
+            "feedback": "Angka 1000 didapat jika kamu mengalikan 500 dengan 2. Massa jenis adalah pembagian (massa per satuan volume), bukan perkalian."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung massa jenis balok dengan massa 500 kg dan volume 2 meter kubik.",
+        "screenReaderNote": "Ketikkan angka nilai massa jenis dalam satuan kg/m³."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000055",
+      "kind": "explain",
+      "sortOrder": 5,
+      "title": "Jelaskan Kembali: Mengapa Satuan dan Ketidakpastian Mutlak Penting?",
+      "instruction": "Tuliskan penalaranmu mengenai peran satuan baku dan keterbatasan alat ukur dalam metode ilmiah.",
+      "content": "Pada tahun 1999, wahana antariksa NASA *Mars Climate Orbiter* senilai ratusan juta dolar hancur di atmosfer Mars hanya karena satu tim insinyur menggunakan satuan Imperial (pound-detik) sementara tim lain menggunakan satuan Metrik (Newton-detik).\n\nJelaskan mengapa dalam sains dan rekayasa, angka tanpa satuan tidak memiliki makna fisik, dan mengapa setiap hasil pengukuran eksperimen harus selalu menyertakan batas ketelitian (ketidakpastian)!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa satuan baku dan ketidakpastian penting dalam sains.",
+        "screenReaderNote": "Ketikkan penjelasan mengenai pentingnya satuan internasional dan ketidakpastian pengukuran pada kolom input teks."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-pengukuran-dan-besaran",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-ukur-satuan",
+        "name": "Peran Satuan Standar Baku (SI)",
+        "description": "Menjelaskan bahwa satuan memberikan makna fisik objektif dan mencegah miskomunikasi fatal",
+        "weight": 1
+      },
+      {
+        "id": "crit-ukur-ketidakpastian",
+        "name": "Batas Ketelitian dan Ketidakpastian",
+        "description": "Menyebutkan bahwa setiap alat ukur memiliki toleransi keterbatasan pengukuran di alam nyata",
+        "weight": 1
+      },
+      {
+        "id": "crit-ukur-konsistensi",
+        "name": "Konsistensi Dimensi dan Komparabilitas",
+        "description": "Menjelaskan pentingnya keselarasan dimensi untuk memastikan hasil eksperimen dapat diuji ulang",
+        "weight": 1
+      }
+    ]
+  }
+}

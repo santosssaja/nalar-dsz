@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000012",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "vektor",
+  "title": "Vektor: Besar, Arah, dan Penguraian Komponen",
+  "summary": "Memahami kuantitas yang memiliki arah: membedakan skalar dari vektor, penjumlahan panah berarah, dan penguraian komponen pada sumbu koordinat kartesius.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan besaran skalar (hanya memiliki nilai) dari besaran vektor (memiliki nilai dan arah)",
+    "Menjumlahkan dua vektor secara geometris dan analitis menggunakan arah koordinat",
+    "Menguraikan vektor ke dalam komponen horizontal dan vertikal menggunakan trigonometri dasar"
+  ],
+  "prerequisites": ["pengukuran-dan-besaran", "operasi-aritmetika"],
+  "misconceptions": [
+    {
+      "code": "SCALAR_ADDITION_ON_VECTORS",
+      "label": "Menjumlahkan besaran vektor seperti menjumlahkan angka skalar biasa tanpa melihat arah",
+      "remediation": "Vektor memiliki arah: dua gaya 4 N dan 3 N yang berlawanan arah menghasilkan resultan selisih 1 N, bukan penjumlahan 7 N."
+    },
+    {
+      "code": "VECTOR_COMPONENTS_SWAPPED",
+      "label": "Menukar komponen horizontal (sumbu X) dengan komponen vertikal (sumbu Y)",
+      "remediation": "Jika sudut θ diapit terhadap sumbu horizontal X, maka komponen mendatar adalah V cos θ dan komponen tegak adalah V sin θ."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000000061",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Perahu Menyeberangi Sungai Berarus Deras",
+      "instruction": "Amati bagaimana dua arah gerakan bersatu membentuk lintasan baru.",
+      "content": "Sebuah perahu bermotor diarahkan lurus ke utara dengan kecepatan $4\\text{ m/s}$ menyeberangi sungai. Namun air sungai mengalir kencang ke arah timur dengan kecepatan $3\\text{ m/s}$.\n\nApakah perahu akan tiba tepat di seberang utara? Tentu tidak! Perahu akan terseret bergerak secara diagonal miring ke timur laut.\n\nDalam fisika, besaran yang memiliki **nilai (besar/magnitude)** dan sekaligus memiliki **arah orientasi** disebut **vektor**. Vektor digambarkan sebagai panah berarah!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi perahu bergerak ke utara tertiup arus sungai ke timur menghasilkan lintasan diagonal timur laut.",
+        "screenReaderNote": "Materi pengantar membedakan besaran skalar dengan besaran vektor menggunakan analogi perahu dan arus air."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000069",
+      "kind": "explore",
+      "sortOrder": 2,
+      "title": "Eksplorasi Interaktif: Laboratorium Vektor 2D",
+      "instruction": "Ubah besar vektor A, B, dan sudut antarentitas untuk melihat langsung pergeseran panjang dan arah resultan R.",
+      "content": "Mari buktikan secara visual mengapa penjumlahan vektor bukan penjumlahan angka skalar biasa!\n\nPerhatikan:\n- Ketika sudut $\\theta = 0^\\circ$ (searah), kedua vektor saling memperkuat hingga mencapai nilai **maksimum**.\n- Ketika sudut $\\theta = 90^\\circ$ (tegak lurus), resultannya dihitung menggunakan teorema **Pythagoras**.\n- Ketika sudut $\\theta = 180^\\circ$ (berlawanan arah), kedua vektor saling melemahkan hingga mencapai nilai **minimum**.\n\nCobalah geser slider sudut $\\theta$ di bawah ini dan perhatikan bagaimana panjang panah hijau $\\vec{R}$ berubah!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Playground interaktif simulasi vektor 2D dengan pengatur besar vektor A, vektor B, dan sudut antara keduanya.",
+        "screenReaderNote": "Ubah slider besar vektor dan sudut untuk mengamati perubahan panjang panah resultan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000062",
+      "kind": "predict",
+      "sortOrder": 3,
+      "title": "Prediksi: Resultan Tarik Tambang Dua Arah",
+      "instruction": "Pilihlah prediksimu mengenai penggabungan dua gaya yang berlawanan arah.",
+      "content": "Dua orang menarik sebuah tali pada satu titik simpul yang sama:\n- Orang A menarik ke arah Timur dengan gaya $4\\text{ Newton}$\n- Orang B menarik ke arah Barat dengan gaya $3\\text{ Newton}$\n\nBerapakah gaya total (resultan vektor gaya) yang dialami simpul tali tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Arah Timur dan Barat berlawanan arah 180 derajat satu sama lain.",
+        "concept": "Karena arahnya berlawanan, vektor yang satu mengurangi efek vektor yang lain.",
+        "strategy": "Kurangkan gaya yang lebih besar dengan gaya yang lebih kecil: 4 - 3.",
+        "solution": "Resultan gaya = 4 N (Timur) - 3 N (Barat) = 1 N ke arah Timur."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-1-timur",
+            "label": "1 Newton ke arah Timur — kedua gaya saling melawan sehingga resultannya adalah selisih keduanya",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Vektor dengan arah berlawanan dijumlahkan dengan memperhitungkan tanda: +4 N + (-3 N) = +1 N (ke Timur)."
+          },
+          {
+            "id": "opt-7-netral",
+            "label": "7 Newton — dijumlahkan langsung karena kedua orang mengeluarkan tenaga (4 + 3)",
+            "isCorrect": false,
+            "misconceptionCode": "SCALAR_ADDITION_ON_VECTORS",
+            "feedback": "Hati-hati: gaya adalah vektor! Karena arahnya berlawanan, gayanya saling mengurangi (meniadakan), bukan saling memperkuat."
+          },
+          {
+            "id": "opt-0-diam",
+            "label": "0 Newton — karena kedua orang saling tarik-menarik",
+            "isCorrect": false,
+            "feedback": "Gaya total hanya nol jika tarikan kedua orang sama besar (misal 4 N dan 4 N)."
+          }
+        ],
+        "feedbackCorrect": "Bagus sekali! Kamu sudah menerapkan logika arah vektor dengan tepat."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Menentukan resultan dua gaya berlawanan 4 Newton ke timur dan 3 Newton ke barat.",
+        "screenReaderNote": "Pilih salah satu dari tiga opsi jawaban untuk menentukan resultan vektor gaya."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000063",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Penguraian Komponen dan Teorema Pythagoras",
+      "instruction": "Pelajari bagaimana vektor diagonal dipecah menjadi komponen sumbu X dan sumbu Y.",
+      "content": "Setiap vektor $\\vec{V}$ pada bidang dua dimensi dapat diuraikan menjadi dua bayangan proyeksi tegak lurus:\n1. **Komponen Horizontal**: $V_x = V \\cos(\\theta)$\n2. **Komponen Vertikal**: $V_y = V \\sin(\\theta)$\n\n**Besar Vektor Resultan Tegak Lurus**:\nJika dua vektor komponen saling tegak lurus ($90^\\circ$), besar resultan totalnya ($R$) dihitung menggunakan teorema Pythagoras:\n$$R = \\sqrt{V_x^2 + V_y^2}$$\nArah sudut kemiringannya ditentukan oleh fungsi tangen: $\\tan(\\theta) = \\frac{V_y}{V_x}$.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus penguraian vektor Vx sama dengan V cos theta, Vy sama dengan V sin theta, dan resultan R sama dengan akar dari Vx kuadrat ditambah Vy kuadrat.",
+        "screenReaderNote": "Materi konsep menjelaskan penguraian komponen ortogonal vektor pada sumbu kartesius menggunakan trigonometri dan Pythagoras."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000064",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Besar Resultan Dua Vektor Tegak Lurus",
+      "instruction": "Gunakan teorema Pythagoras vektor untuk mencari besar total resultan.",
+      "content": "Sebuah drone penyelamat bergerak ke arah timur dengan kecepatan $V_x = 3\\text{ m/s}$ dan secara bersamaan tertiup angin vertikal ke arah utara dengan kecepatan $V_y = 4\\text{ m/s}$.\n\nBerapakah besar kecepatan resultan ($R = \\sqrt{V_x^2 + V_y^2}$) drone tersebut dalam satuan $\\text{m/s}$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus Pythagoras: R = √(Vx² + Vy²).",
+        "concept": "Kuadratkan masing-masing komponen: 3² = 9 dan 4² = 16.",
+        "strategy": "Jumlahkan 9 + 16 = 25, lalu cari nilai akar pangkat duanya: √25.",
+        "solution": "R = √(3² + 4²) = √(9 + 16) = √25 = 5 m/s."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 5,
+        "tolerance": 0.01,
+        "units": "m/s",
+        "feedbackCorrect": "Tepat sekali! Besar resultan vektor adalah 5 m/s (segitiga siku-siku klasik 3-4-5).",
+        "misconceptions": [
+          {
+            "code": "SCALAR_ADDITION_ON_VECTORS",
+            "triggerValue": 7,
+            "feedback": "Angka 7 didapat jika kamu hanya menjumlahkan 3 + 4 secara skalar. Karena kedua arah tegak lurus, kamu harus menggunakan rumus Pythagoras √(3² + 4²) = 5."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung resultan dua vektor tegak lurus 3 dan 4 m per s.",
+        "screenReaderNote": "Ketikkan angka nilai besar resultan kecepatan pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000065",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Dua Vektor 5 N Bisa Menghasilkan Resultan 0 hingga 10 N?",
+      "instruction": "Tuliskan penjelasan konseptualmu mengenai pengaruh sudut arah pada penjumlahan vektor.",
+      "content": "Seorang murid heran mengapa dua buah gaya yang masing-masing bernilai $5\\text{ Newton}$ dapat menghasilkan gaya total bernilai $0\\text{ N}$, $5\\text{ N}$, $7.07\\text{ N}$, atau $10\\text{ N}$ tergantung bagaimana arahnya dipasang.\n\nJelaskan kepada murid tersebut bagaimana **sudut antarentitas vektor** menentukan hasil penjumlahannya, serta berikan contoh kondisi sudut yang menghasilkan nilai minimum ($0\\text{ N}$) dan nilai maksimum ($10\\text{ N}$)!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Aktivitas explain-it-back meminta penjelasan mengapa penjumlahan dua vektor tergantung pada sudut arah di antara keduanya.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual peranan sudut dan arah vektor."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-vektor",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-vektor-arah",
+        "name": "Peran Sudut dan Orientasi Arah",
+        "description": "Menjelaskan bahwa penjumlahan vektor bergantung mutlak pada sudut relatif antara kedua vektor",
+        "weight": 1
+      },
+      {
+        "id": "crit-vektor-ekstrem",
+        "name": "Kondisi Nilai Maksimum dan Minimum",
+        "description": "Menyebutkan bahwa sudut 0 derajat (searah) menghasilkan maksimum 10 N dan sudut 180 derajat (berlawanan) menghasilkan 0 N",
+        "weight": 1
+      },
+      {
+        "id": "crit-vektor-skalar",
+        "name": "Perbedaan Vektor vs Skalar",
+        "description": "Menegaskan bahwa besaran skalar dijumlahkan secara aritmetika biasa sedangkan vektor dijumlahkan secara geometris",
+        "weight": 1
+      }
+    ]
+  }
+}
