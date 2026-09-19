@@ -1,4 +1,4 @@
-# Showcase Proyek Nalar v2 — Platform Pembelajaran STEM Interaktif Terpadu
+# Showcase Proyek Nalar — Platform Pembelajaran STEM Interaktif Terpadu
 
 > **"Belajar bukan hanya sampai bisa menjawab. Belajar sampai tahu mengapa ini bekerja."**
 

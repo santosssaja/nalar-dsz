@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import Link from "next/link";
+import { ZoomIn, ZoomOut, RotateCcw, X, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Move } from "lucide-react";
 import { ConceptGraphData, GraphNode } from "@/content/registry";
 import { MathRenderer } from "@/components/ui/katex-math";
 
@@ -158,27 +159,62 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"graph" | "list">("graph");
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
 
   // Only display concept nodes in graph canvas
   const conceptNodes = useMemo(() => {
     return graphData.nodes.filter((n) => n.type === "concept");
   }, [graphData]);
 
-  // Dynamic ViewBox: Focusing directly into the selected domain with high clarity and generous room
+  // Dynamic ViewBox: Focusing directly into the selected domain with high clarity and generous room + zoom scaling
   const currentViewBox = useMemo(() => {
+    let x = 0;
+    let y = 0;
+    let w = 1400;
+    let h = 890;
+
     switch (selectedDomain) {
       case "matematika":
-        return "35 40 635 390";
+        x = 35;
+        y = 40;
+        w = 635;
+        h = 390;
+        break;
       case "fisika":
-        return "695 40 670 390";
+        x = 695;
+        y = 40;
+        w = 670;
+        h = 390;
+        break;
       case "kimia":
-        return "35 460 635 405";
+        x = 35;
+        y = 460;
+        w = 635;
+        h = 405;
+        break;
       case "biologi":
-        return "695 460 670 405";
+        x = 695;
+        y = 460;
+        w = 670;
+        h = 405;
+        break;
       default:
-        return "0 0 1400 890";
+        x = 0;
+        y = 0;
+        w = 1400;
+        h = 890;
     }
-  }, [selectedDomain]);
+
+    if (zoomLevel !== 1) {
+      const newW = w / zoomLevel;
+      const newH = h / zoomLevel;
+      const newX = x + (w - newW) / 2;
+      const newY = y + (h - newH) / 2;
+      return `${newX} ${newY} ${newW} ${newH}`;
+    }
+
+    return `${x} ${y} ${w} ${h}`;
+  }, [selectedDomain, zoomLevel]);
 
   // Filtered concepts
   const filteredNodes = useMemo(() => {
@@ -213,6 +249,80 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
   // Currently active concept (either hovered or selected) for connection illumination
   const activeSlug = hoveredNode || selectedNode?.slug || null;
 
+  // Zoom control handlers
+  const handleZoomIn = () => setZoomLevel((prev) => Math.min(2.5, +(prev + 0.25).toFixed(2)));
+  const handleZoomOut = () => setZoomLevel((prev) => Math.max(0.75, +(prev - 0.25).toFixed(2)));
+  const handleZoomReset = () => {
+    setZoomLevel(1);
+    scrollContainerRef.current?.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+  };
+
+  // 2D Scroll & drag-to-pan handlers for mobile and desktop
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const isPointerDownRef = useRef(false);
+  const pointerStartRef = useRef({ x: 0, y: 0, scrollLeft: 0, scrollTop: 0 });
+  const hasDraggedRef = useRef(false);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // If clicking a button or link or zoom control, ignore drag
+    if ((e.target as HTMLElement).closest("button, a")) return;
+
+    isPointerDownRef.current = true;
+    hasDraggedRef.current = false;
+    pointerStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      scrollLeft: scrollContainerRef.current?.scrollLeft ?? 0,
+      scrollTop: scrollContainerRef.current?.scrollTop ?? 0,
+    };
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDownRef.current || !scrollContainerRef.current) return;
+
+    const dx = e.clientX - pointerStartRef.current.x;
+    const dy = e.clientY - pointerStartRef.current.y;
+
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+      hasDraggedRef.current = true;
+    }
+
+    scrollContainerRef.current.scrollLeft = pointerStartRef.current.scrollLeft - dx;
+    scrollContainerRef.current.scrollTop = pointerStartRef.current.scrollTop - dy;
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    isPointerDownRef.current = false;
+    try {
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleScrollLeft = () => {
+    scrollContainerRef.current?.scrollBy({ left: -220, behavior: "smooth" });
+  };
+
+  const handleScrollRight = () => {
+    scrollContainerRef.current?.scrollBy({ left: 220, behavior: "smooth" });
+  };
+
+  const handleScrollUp = () => {
+    scrollContainerRef.current?.scrollBy({ top: -180, behavior: "smooth" });
+  };
+
+  const handleScrollDown = () => {
+    scrollContainerRef.current?.scrollBy({ top: 180, behavior: "smooth" });
+  };
+
   return (
     <div className="space-y-6">
       {/* Controls Header */}
@@ -232,6 +342,8 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               onClick={() => {
                 setSelectedDomain(tab.id);
                 setSelectedNode(null);
+                setZoomLevel(1);
+                scrollContainerRef.current?.scrollTo({ left: 0, top: 0, behavior: "smooth" });
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 selectedDomain === tab.id
@@ -281,40 +393,138 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
       </div>
 
       {viewMode === "graph" ? (
-        /* Interactive 2D SVG Graph Canvas */
-        <div className="relative w-full rounded-2xl bg-surface-raised border border-border overflow-hidden p-2">
-          {/* Legend Banner */}
-          <div className="absolute top-4 left-4 z-10 flex flex-wrap items-center gap-3 text-[11px] p-2.5 rounded-xl bg-surface/90 backdrop-blur-md border border-border shadow-xs">
-            <span className="font-semibold text-text">Bidang:</span>
-            <span className="flex items-center gap-1.5 text-text">
-              <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-              Matematika
-            </span>
-            <span className="flex items-center gap-1.5 text-text">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
-              Fisika
-            </span>
-            <span className="flex items-center gap-1.5 text-text">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-              Kimia
-            </span>
-            <span className="flex items-center gap-1.5 text-text">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              Biologi
-            </span>
-            {selectedDomain === "all" && (
-              <span className="flex items-center gap-1.5 text-text-muted">
-                <span className="w-3 border-t-2 border-dashed border-accent"></span>
-                Koneksi Lintas Disiplin
+        <div className="space-y-3">
+          {/* Legend & Navigation Toolbar - Placed cleanly above the canvas so the graph remains 100% unobstructed */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 px-3.5 py-2 rounded-xl bg-surface-raised border border-border text-xs">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="font-semibold text-text">Bidang:</span>
+              <span className="inline-flex items-center gap-1.5 text-text">
+                <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                Matematika
               </span>
-            )}
+              <span className="inline-flex items-center gap-1.5 text-text">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                Fisika
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-text">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                Kimia
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-text">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                Biologi
+              </span>
+              {selectedDomain === "all" && (
+                <span className="inline-flex items-center gap-1.5 text-text-muted">
+                  <span className="w-3 border-t-2 border-dashed border-accent"></span>
+                  Lintas Disiplin
+                </span>
+              )}
+            </div>
+
+            {/* Controls: 2D Pan & Zoom Toolbar */}
+            <div className="flex items-center gap-1 ml-auto">
+              {/* Mobile 2D Directional Pan Buttons */}
+              <div className="flex items-center gap-0.5 md:hidden">
+                <button
+                  type="button"
+                  onClick={handleScrollLeft}
+                  title="Geser ke kiri"
+                  aria-label="Geser ke kiri"
+                  className="p-1 rounded-md text-text-muted hover:text-text hover:bg-surface border border-border/60 transition-colors"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleScrollRight}
+                  title="Geser ke kanan"
+                  aria-label="Geser ke kanan"
+                  className="p-1 rounded-md text-text-muted hover:text-text hover:bg-surface border border-border/60 transition-colors"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleScrollUp}
+                  title="Geser ke atas"
+                  aria-label="Geser ke atas"
+                  className="p-1 rounded-md text-text-muted hover:text-text hover:bg-surface border border-border/60 transition-colors"
+                >
+                  <ChevronUp className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleScrollDown}
+                  title="Geser ke bawah"
+                  aria-label="Geser ke bawah"
+                  className="p-1 rounded-md text-text-muted hover:text-text hover:bg-surface border border-border/60 transition-colors"
+                >
+                  <ChevronDown className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <div className="w-px h-3.5 bg-border mx-0.5 md:hidden" />
+
+              {/* Zoom Controls */}
+              <button
+                type="button"
+                onClick={handleZoomIn}
+                disabled={zoomLevel >= 2.5}
+                title="Perbesar graf"
+                aria-label="Perbesar graf"
+                className="p-1 rounded-md text-text-muted hover:text-text hover:bg-surface border border-border/60 disabled:opacity-40 transition-colors"
+              >
+                <ZoomIn className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-[11px] font-mono font-medium px-1 text-text-muted min-w-[36px] text-center select-none">
+                {Math.round(zoomLevel * 100)}%
+              </span>
+              <button
+                type="button"
+                onClick={handleZoomOut}
+                disabled={zoomLevel <= 0.75}
+                title="Perkecil graf"
+                aria-label="Perkecil graf"
+                className="p-1 rounded-md text-text-muted hover:text-text hover:bg-surface border border-border/60 disabled:opacity-40 transition-colors"
+              >
+                <ZoomOut className="w-3.5 h-3.5" />
+              </button>
+              {zoomLevel !== 1 && (
+                <button
+                  type="button"
+                  onClick={handleZoomReset}
+                  title="Reset ukuran dan posisi graf"
+                  aria-label="Reset ukuran dan posisi graf"
+                  className="p-1 rounded-md text-accent hover:bg-accent/10 border border-accent/40 transition-colors ml-0.5"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </button>
+              )}
+            </div>
           </div>
 
-          <svg
-            viewBox={currentViewBox}
-            className="w-full aspect-[16/10] select-none touch-pan-y"
-            aria-label="Kanvas Graf Konsep Pengetahuan STEM Nalar"
-          >
+          {/* Interactive 2D SVG Graph Canvas */}
+          <div className="relative w-full rounded-2xl bg-surface-raised border border-border overflow-hidden p-1 sm:p-2">
+            {/* 2D pan wrapper on mobile with active pointer-drag and native touch scroll */}
+            <div
+              ref={scrollContainerRef}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              className="w-full h-[400px] sm:h-[480px] md:h-auto overflow-x-auto overflow-y-auto scrollbar-thin cursor-grab active:cursor-grabbing select-none overscroll-contain"
+              style={{
+                WebkitOverflowScrolling: "touch",
+                touchAction: "none",
+              }}
+            >
+              <div className="w-[880px] md:w-full shrink-0">
+                <svg
+                  viewBox={currentViewBox}
+                  className="w-full aspect-[16/10] block pointer-events-auto"
+                  aria-label="Kanvas Graf Konsep Pengetahuan STEM Nalar"
+                >
             <defs>
               <marker
                 id="arrowhead-prereq"
@@ -516,7 +726,10 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               return (
                 <g
                   key={node.id}
-                  onClick={() => setSelectedNode(node)}
+                  onClick={() => {
+                    if (hasDraggedRef.current) return;
+                    setSelectedNode(node);
+                  }}
                   onMouseEnter={() => setHoveredNode(node.slug)}
                   onMouseLeave={() => setHoveredNode(null)}
                   className="cursor-pointer outline-none group"
@@ -623,38 +836,48 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               );
             })}
           </svg>
+              </div>
+            </div>
+          </div>
 
-          {/* Selected Node Details Modal / Drawer */}
+          {/* Selected Node Details: Positioned cleanly below the canvas in natural flow - NEVER covering any nodes */}
           {selectedNode && (
-            <div className="p-5 rounded-xl bg-surface border border-accent/40 shadow-lg mt-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in">
-              <div className="space-y-1.5 flex-1">
+            <div
+              role="region"
+              aria-label={`Detail konsep ${selectedNode.title}`}
+              className="p-4 sm:p-5 rounded-2xl bg-surface-raised border border-accent/40 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4 animate-in fade-in duration-200"
+            >
+              <div className="space-y-1 sm:space-y-1.5 flex-1 pr-4 sm:pr-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-accent/10 text-accent">
+                  <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-accent/10 text-accent">
                     {selectedNode.domainSlug}
                   </span>
-                  <span className="text-xs text-text-muted">
+                  <span className="text-[11px] sm:text-xs text-text-muted">
                     {selectedNode.stepCount} Langkah Belajar • Tingkat: {selectedNode.difficulty}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-text">{selectedNode.title}</h3>
+                <h3 className="text-base sm:text-lg font-bold text-text">{selectedNode.title}</h3>
                 <p className="text-xs text-text-muted max-w-2xl leading-relaxed">
                   {selectedNode.summary}
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto shrink-0 pt-2 sm:pt-0 border-t border-border/60 sm:border-0 justify-end">
                 <Link
                   href={`/learn/${selectedNode.slug}`}
-                  className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
+                  className="flex-1 sm:flex-initial text-center px-4 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
                 >
                   Mulai Pelajari Konsep →
                 </Link>
                 <button
                   type="button"
                   onClick={() => setSelectedNode(null)}
-                  className="px-3 py-2.5 rounded-lg text-xs font-medium border border-border hover:bg-surface-raised text-text-muted"
+                  title="Tutup detail konsep"
+                  aria-label="Tutup detail konsep"
+                  className="px-3 py-2.5 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text-muted flex items-center justify-center gap-1"
                 >
-                  Tutup
+                  <X className="w-4 h-4" />
+                  <span>Tutup</span>
                 </button>
               </div>
             </div>

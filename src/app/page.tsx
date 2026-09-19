@@ -24,7 +24,7 @@ export default function HomePage() {
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Nalar v2 • Platform Pembelajaran STEM Terpadu</span>
+            <span>Nalar • Platform Pembelajaran STEM Terpadu</span>
           </span>
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-surface-raised border border-border text-text-muted">
             Tersedia Langsung • Tanpa Wajib Login
