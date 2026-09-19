@@ -1,3 +1,4 @@
+import nextPlugin from "@next/eslint-plugin-next";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
@@ -11,11 +12,22 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: [".next/**", ".next-dev/**", "node_modules/**", "drizzle/**", "coverage/**", "*.config.js", "*.config.mjs"],
+    ignores: [
+      ".next/**",
+      ".next-dev/**",
+      "node_modules/**",
+      "drizzle/**",
+      "coverage/**",
+    ],
   },
   ...compat.extends("next/core-web-vitals"),
   {
+    plugins: {
+      "@next/next": nextPlugin,
+    },
     rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
       "@next/next/no-html-link-for-pages": "off",
     },
   },
