@@ -11,6 +11,8 @@ export function NavHeader() {
   const pathname = usePathname();
   const [isPrefOpen, setIsPrefOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [authStatus, setAuthStatus] = useState<{
     actorKind: "guest" | "member";
     user: { email: string; displayName: string | null } | null;
@@ -49,9 +51,56 @@ export function NavHeader() {
     checkAuth();
   }, []);
 
+  // Smart Auto-Hide: Hide when scrolling down, show when scrolling up
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDiff = currentScrollY - lastScrollY;
+
+      // Always show at the top of the page
+      if (currentScrollY <= 20) {
+        setIsVisible(true);
+        setIsScrolled(false);
+      } else {
+        setIsScrolled(true);
+        // Only trigger hide/show if threshold exceeded (prevents micro-jitter)
+        if (Math.abs(scrollDiff) > 8) {
+          if (scrollDiff > 0) {
+            // Scrolling down -> hide header to maximize learning focus
+            setIsVisible(false);
+          } else {
+            // Scrolling up -> reveal header for instant navigation
+            setIsVisible(true);
+          }
+        }
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
-      <header className="border-b border-border bg-surface-raised relative z-30">
+      <header
+        onFocusCapture={() => setIsVisible(true)}
+        className={`border-b border-border bg-surface-raised sticky top-0 z-30 transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
+          isVisible || isPrefOpen || isAuthOpen ? "translate-y-0" : "-translate-y-full"
+        } ${isScrolled ? "shadow-xs" : ""}`}
+      >
         <div className="max-w-6xl mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-3">
           {/* Brand Logo & Tagline */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
