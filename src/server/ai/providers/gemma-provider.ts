@@ -7,6 +7,7 @@ import {
   AiTeachContext,
   AiTeachEvaluation,
   AiChatChunk,
+  AiTeachChunk,
 } from "../types";
 import {
   NAI_SOCRATIC_SYSTEM_PROMPT,
@@ -262,5 +263,35 @@ export class GemmaProvider implements IAiProvider {
     }
 
     return this.fallback.evaluateTeachMode(context, options);
+  }
+
+  async *evaluateTeachModeStream(
+    context: AiTeachContext,
+    options?: AiChatOptions
+  ): AsyncIterable<AiTeachChunk> {
+    yield {
+      type: "thought",
+      content: "Nai sedang menelaah dan mencerna konsep yang diajarkan...",
+    };
+
+    const evaluation = await this.evaluateTeachMode(context, options);
+    const words = evaluation.naiResponse.split(/(\s+)/);
+    for (const w of words) {
+      if (w) {
+        yield { type: "nai_response", content: w };
+        await new Promise((r) => setTimeout(r, 15));
+      }
+    }
+
+    yield {
+      type: "evaluation",
+      evaluation,
+    };
+
+    yield {
+      type: "done",
+      provider: "gemma",
+      model: this.getModelName(options),
+    };
   }
 }

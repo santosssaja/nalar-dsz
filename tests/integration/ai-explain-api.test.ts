@@ -157,5 +157,44 @@ describe("AI Engine Endpoints (Providers, Tutor, Teach Mode)", () => {
     expect(json.data.evaluation.score).toBeGreaterThanOrEqual(60);
     expect(json.data.evaluation.naiResponse).toBeDefined();
   });
+
+  it("POST /api/v1/ai/teach supports real-time streaming with thought, nai_response, and evaluation chunks", async () => {
+    const { POST: teachHandler } = await import("@/app/api/v1/ai/teach/route");
+    const payload = {
+      conceptSlug: "definisi-turunan",
+      naiQuestion: "Nai masih bingung, bedanya kemiringan rata-rata dan turunan sesaat itu apa ya kak?",
+      userTeachingExplanation:
+        "Kemiringan rata-rata itu menghubungkan dua titik berjarak h pada kurva karena garis secant.",
+      provider: "curated",
+      stream: true,
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/teach", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const res = await teachHandler(req);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/event-stream");
+
+    const reader = res.body?.getReader();
+    expect(reader).toBeDefined();
+
+    const decoder = new TextDecoder();
+    let streamText = "";
+    while (true) {
+      const { done, value } = await reader!.read();
+      if (done) break;
+      streamText += decoder.decode(value);
+    }
+
+    expect(streamText).toContain("data: ");
+    expect(streamText).toContain('"type":"thought"');
+    expect(streamText).toContain('"type":"nai_response"');
+    expect(streamText).toContain('"type":"evaluation"');
+    expect(streamText).toContain('"type":"done"');
+  });
 });
 

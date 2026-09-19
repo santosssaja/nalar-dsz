@@ -57,6 +57,14 @@ export interface AiChatChunk {
   model?: string;
 }
 
+export interface AiTeachChunk {
+  type: "thought" | "nai_response" | "evaluation" | "done" | "error";
+  content?: string;
+  evaluation?: AiTeachEvaluation;
+  provider?: AiProviderName;
+  model?: string;
+}
+
 export interface IAiProvider {
   readonly name: AiProviderName;
   chat(messages: AiMessage[], options?: AiChatOptions): Promise<AiChatResponse>;
@@ -66,4 +74,8 @@ export interface IAiProvider {
     options?: AiChatOptions
   ): AsyncIterable<AiChatChunk>;
   evaluateTeachMode(context: AiTeachContext, options?: AiChatOptions): Promise<AiTeachEvaluation>;
+  evaluateTeachModeStream?(
+    context: AiTeachContext,
+    options?: AiChatOptions
+  ): AsyncIterable<AiTeachChunk>;
 }

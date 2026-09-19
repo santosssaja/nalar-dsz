@@ -13,6 +13,7 @@ const TeachRequestSchema = z.object({
   model: z.string().optional(),
   apiKey: z.string().optional(),
   endpoint: z.string().optional(),
+  stream: z.boolean().optional().default(false),
 });
 
 export async function POST(req: NextRequest) {
@@ -28,7 +29,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { conceptSlug, naiQuestion, userTeachingExplanation, provider, model, apiKey, endpoint } = parsed.data;
+    const {
+      conceptSlug,
+      naiQuestion,
+      userTeachingExplanation,
+      provider,
+      model,
+      apiKey,
+      endpoint,
+      stream: requestStream,
+    } = parsed.data;
+
+    const isStreamRequested = requestStream || req.headers.get("accept")?.includes("text/event-stream");
 
     const concept = getConceptBySlug(conceptSlug);
     if (!concept) {
@@ -48,6 +60,58 @@ export async function POST(req: NextRequest) {
     };
 
     const ai = getAiProvider(provider as AiProviderName);
+
+    // Streaming mode (SSE)
+    if (isStreamRequested) {
+      const encoder = new TextEncoder();
+      const readableStream = new ReadableStream({
+        async start(controller) {
+          try {
+            const stream = ai.evaluateTeachModeStream
+              ? ai.evaluateTeachModeStream(context, { model, apiKey, endpoint })
+              : (async function* () {
+                  yield {
+                    type: "thought" as const,
+                    content: "Nai sedang menyimak penjelasan Guru...",
+                  };
+                  const evaluation = await ai.evaluateTeachMode(context, { model, apiKey, endpoint });
+                  const words = evaluation.naiResponse.split(/(\s+)/);
+                  for (const w of words) {
+                    if (w) {
+                      yield { type: "nai_response" as const, content: w };
+                      await new Promise((r) => setTimeout(r, 15));
+                    }
+                  }
+                  yield { type: "evaluation" as const, evaluation };
+                  yield { type: "done" as const, provider: ai.name };
+                })();
+
+            for await (const chunk of stream) {
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify(chunk)}\n\n`));
+            }
+            controller.close();
+          } catch (err) {
+            console.error("Stream error in AI Teach route:", err);
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({ type: "error", content: "Terjadi gangguan saat streaming evaluasi." })}\n\n`
+              )
+            );
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(readableStream, {
+        headers: {
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "Cache-Control": "no-cache, no-transform",
+          "Connection": "keep-alive",
+        },
+      });
+    }
+
+    // Static JSON mode
     const evaluation = await ai.evaluateTeachMode(context, {
       model,
       apiKey,
