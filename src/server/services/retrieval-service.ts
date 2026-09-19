@@ -3,9 +3,12 @@ import { randomUUID } from "crypto";
 import {
   getDb,
   ensureDbInitialized,
+  withTransaction,
   reviewQueue,
   conceptProgress,
   learningEvidence,
+  concepts,
+  type DbClient,
 } from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
 import { getConceptById } from "@/content/loader";
@@ -23,14 +26,12 @@ export interface DueReviewItem {
 
 const INTERVAL_LADDER = [1, 3, 7, 14, 30];
 
-export async function scheduleOrUpdateReview(
+async function upsertReviewQueue(
+  db: DbClient,
   learnerDeviceId: string,
   conceptId: string,
   isSuccess = true
 ): Promise<void> {
-  await ensureDbInitialized();
-  const db = getDb();
-
   const [existing] = await db
     .select()
     .from(reviewQueue)
@@ -85,6 +86,16 @@ export async function scheduleOrUpdateReview(
     .where(eq(reviewQueue.id, existing.id));
 }
 
+export async function scheduleOrUpdateReview(
+  learnerDeviceId: string,
+  conceptId: string,
+  isSuccess = true
+): Promise<void> {
+  await ensureDbInitialized();
+  const db = getDb();
+  await upsertReviewQueue(db, learnerDeviceId, conceptId, isSuccess);
+}
+
 export async function getDueReviews(actor: Actor): Promise<DueReviewItem[]> {
   await ensureDbInitialized();
   const db = getDb();
@@ -130,94 +141,119 @@ export async function completeReview(
   intervalDays: number;
 }> {
   await ensureDbInitialized();
-  const db = getDb();
 
   const isSuccess = performance !== "again";
-  const retentionDelta = performance === "easy" ? 25 : performance === "good" ? 18 : 5;
+  const retentionDelta =
+    performance === "easy" ? 25 : performance === "good" ? 18 : 0;
 
-  // 1. Fetch current concept progress
-  const [currentProgress] = await db
-    .select()
-    .from(conceptProgress)
-    .where(
-      and(
-        eq(conceptProgress.learnerDeviceId, actor.learnerDeviceId),
-        eq(conceptProgress.conceptId, conceptId)
-      )
-    )
-    .limit(1);
-
-  const initialSnapshot: ConceptMasterySnapshot = currentProgress
-    ? {
-        understanding: currentProgress.understanding,
-        practice: currentProgress.practice,
-        application: currentProgress.application,
-        transfer: currentProgress.transfer,
-        explanation: currentProgress.explanation,
-        retention: currentProgress.retention,
-        status: currentProgress.status as ConceptMasterySnapshot["status"],
-      }
-    : {
-        understanding: 0,
-        practice: 0,
-        application: 0,
-        transfer: 0,
-        explanation: 0,
-        retention: 0,
-        status: "learning",
-      };
-
-  const updatedSnapshot = applyMasteryUpdate(
-    initialSnapshot,
-    "retention",
-    retentionDelta
-  );
-
-  // 2. Persist progress
-  if (currentProgress) {
-    await db
-      .update(conceptProgress)
-      .set({
-        retention: updatedSnapshot.retention,
-        status: updatedSnapshot.status,
-        updatedAt: new Date(),
-      })
+  return withTransaction(async (tx) => {
+    // 1. Fetch current concept progress
+    const [currentProgress] = await tx
+      .select()
+      .from(conceptProgress)
       .where(
         and(
           eq(conceptProgress.learnerDeviceId, actor.learnerDeviceId),
           eq(conceptProgress.conceptId, conceptId)
         )
-      );
-  }
-
-  // 3. Log evidence
-  await db.insert(learningEvidence).values({
-    attemptId: null,
-    learnerDeviceId: actor.learnerDeviceId,
-    conceptId,
-    dimension: "retention",
-    score: retentionDelta,
-    source: "retrieve",
-    observedAt: new Date(),
-  });
-
-  // 4. Update review queue
-  await scheduleOrUpdateReview(actor.learnerDeviceId, conceptId, isSuccess);
-
-  const [updatedQueue] = await db
-    .select()
-    .from(reviewQueue)
-    .where(
-      and(
-        eq(reviewQueue.learnerDeviceId, actor.learnerDeviceId),
-        eq(reviewQueue.conceptId, conceptId)
       )
-    )
-    .limit(1);
+      .limit(1);
 
-  return {
-    updatedSnapshot,
-    nextDueAt: updatedQueue ? updatedQueue.dueAt : new Date(),
-    intervalDays: updatedQueue ? updatedQueue.intervalDays : 1,
-  };
+    const initialSnapshot: ConceptMasterySnapshot = currentProgress
+      ? {
+          understanding: currentProgress.understanding,
+          practice: currentProgress.practice,
+          application: currentProgress.application,
+          transfer: currentProgress.transfer,
+          explanation: currentProgress.explanation,
+          retention: currentProgress.retention,
+          status: currentProgress.status as ConceptMasterySnapshot["status"],
+        }
+      : {
+          understanding: 0,
+          practice: 0,
+          application: 0,
+          transfer: 0,
+          explanation: 0,
+          retention: 0,
+          status: "unstarted",
+        };
+
+    const updatedSnapshot = applyMasteryUpdate(
+      initialSnapshot,
+      "retention",
+      retentionDelta
+    );
+
+    const conceptRef = getConceptById(conceptId);
+
+    // 2. Ensure the concept exists before linking progress
+    if (conceptRef) {
+      await tx
+        .insert(concepts)
+        .values({
+          id: conceptRef.id,
+          moduleId: conceptRef.moduleId,
+          slug: conceptRef.slug,
+          title: conceptRef.title,
+          summary: conceptRef.summary,
+          difficulty: conceptRef.difficulty,
+          status: "published",
+        })
+        .onConflictDoNothing();
+    }
+
+    // 3. Upsert progress (creates the row when it does not exist yet)
+    const progressValues = {
+      learnerDeviceId: actor.learnerDeviceId,
+      conceptId,
+      understanding: updatedSnapshot.understanding,
+      practice: updatedSnapshot.practice,
+      application: updatedSnapshot.application,
+      transfer: updatedSnapshot.transfer,
+      explanation: updatedSnapshot.explanation,
+      retention: updatedSnapshot.retention,
+      status: updatedSnapshot.status,
+      updatedAt: new Date(),
+    };
+
+    await tx
+      .insert(conceptProgress)
+      .values(progressValues)
+      .onConflictDoUpdate({
+        target: [conceptProgress.learnerDeviceId, conceptProgress.conceptId],
+        set: progressValues,
+      });
+
+    // 4. Log evidence
+    await tx.insert(learningEvidence).values({
+      attemptId: null,
+      learnerDeviceId: actor.learnerDeviceId,
+      conceptId,
+      dimension: "retention",
+      score: retentionDelta,
+      source: "retrieve",
+      observedAt: new Date(),
+    });
+
+    // 5. Update review queue within the same transaction
+    await upsertReviewQueue(tx, actor.learnerDeviceId, conceptId, isSuccess);
+
+    const [updatedQueue] = await tx
+      .select()
+      .from(reviewQueue)
+      .where(
+        and(
+          eq(reviewQueue.learnerDeviceId, actor.learnerDeviceId),
+          eq(reviewQueue.conceptId, conceptId)
+        )
+      )
+      .limit(1);
+
+    return {
+      updatedSnapshot,
+      nextDueAt: updatedQueue ? updatedQueue.dueAt : new Date(),
+      intervalDays: updatedQueue ? updatedQueue.intervalDays : 1,
+    };
+  });
 }

@@ -3,6 +3,7 @@ import { randomUUID } from "crypto";
 import {
   getDb,
   ensureDbInitialized,
+  withTransaction,
   attempts,
   learningEvidence,
   conceptProgress,
@@ -13,6 +14,8 @@ import {
 } from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
 import { getStepById, getConceptById, getConcepts } from "@/content/loader";
+import { contentVersionOfStep } from "@/content/versioning";
+import { notFound } from "@/lib/errors";
 import { evaluateStepResponse, EvaluationResult } from "./evaluator";
 import {
   getDimensionForStep,
@@ -36,7 +39,6 @@ export interface NextActionOutput {
 export interface SubmitAttemptInput {
   actor: Actor;
   stepId: string;
-  contentVersion?: number;
   idempotencyKey: string;
   response: Record<string, unknown>;
   usedHintsCount?: number;
@@ -60,7 +62,7 @@ export async function submitAttempt(
   const db = getDb();
   const { actor, stepId, idempotencyKey, response, usedHintsCount = 0 } = input;
 
-  // 1. Idempotency Check: return existing attempt if key matches
+  // 1. Idempotency Check: return existing attempt if key matches (fast path)
   const [existingAttempt] = await db
     .select()
     .from(attempts)
@@ -83,111 +85,48 @@ export async function submitAttempt(
   // 2. Load step and concept
   const stepInfo = getStepById(stepId);
   if (!stepInfo) {
-    throw new Error(`Step dengan ID ${stepId} tidak ditemukan.`);
+    throw notFound("Step yang diminta tidak ditemukan.");
   }
   const { concept, step } = stepInfo;
+  const version = contentVersionOfStep(step);
 
-  // 3. Evaluate response deterministically
-  const evaluation = evaluateStepResponse(step, response);
-  const isCorrect = evaluation.status === "correct";
-
-  // 4. Calculate Mastery updates
-  const dimension = getDimensionForStep(step.kind);
-  const delta = computeMasteryDelta(dimension, isCorrect, usedHintsCount);
-
-  // Fetch current progress
-  const [currentProgress] = await db
-    .select()
-    .from(conceptProgress)
-    .where(
-      and(
-        eq(conceptProgress.learnerDeviceId, actor.learnerDeviceId),
-        eq(conceptProgress.conceptId, concept.id)
+  const outputResult = await withTransaction(async (tx) => {
+    // Idempotency re-check inside the transaction to close concurrent races
+    const [duplicateAttempt] = await tx
+      .select()
+      .from(attempts)
+      .where(
+        and(
+          eq(attempts.learnerDeviceId, actor.learnerDeviceId),
+          eq(attempts.idempotencyKey, idempotencyKey)
+        )
       )
-    )
-    .limit(1);
+      .limit(1);
 
-  const initialSnapshot: ConceptMasterySnapshot = currentProgress
-    ? {
-        understanding: currentProgress.understanding,
-        practice: currentProgress.practice,
-        application: currentProgress.application,
-        transfer: currentProgress.transfer,
-        explanation: currentProgress.explanation,
-        retention: currentProgress.retention,
-        status: currentProgress.status as ConceptMasterySnapshot["status"],
-      }
-    : {
-        understanding: 0,
-        practice: 0,
-        application: 0,
-        transfer: 0,
-        explanation: 0,
-        retention: 0,
-        status: "unstarted",
+    if (duplicateAttempt) {
+      const duplicateResult = duplicateAttempt.result as SubmitAttemptOutput;
+      return {
+        ...duplicateResult,
+        attemptId: duplicateAttempt.id,
       };
+    }
 
-  const newSnapshot = applyMasteryUpdate(initialSnapshot, dimension, delta);
-
-  // 5. Database writes
-  const attemptId = randomUUID();
-
-  const activeMisconception = evaluation.misconceptionCodes.length > 0
-    ? concept.misconceptions.find((m) => m.code === evaluation.misconceptionCodes[0])
-    : undefined;
-
-  const nextAction: NextActionOutput = isCorrect
-    ? { type: "continue", reasonCode: "STEP_COMPLETED" }
-    : evaluation.misconceptionCodes.length > 0
-    ? {
-        type: "remedial",
-        reasonCode: "MISCONCEPTION_ACTIVE",
-        remedialInfo: activeMisconception
-          ? {
-              code: activeMisconception.code,
-              label: activeMisconception.label,
-              remediation: activeMisconception.remediation,
-            }
-          : undefined,
-      }
-    : { type: "hint", reasonCode: "RETRY_WITH_HINT" };
-
-  const outputResult: SubmitAttemptOutput = {
-    attemptId,
-    evaluation,
-    progress: {
-      conceptId: concept.id,
-      dimensions: {
-        understanding: newSnapshot.understanding,
-        practice: newSnapshot.practice,
-        application: newSnapshot.application,
-        transfer: newSnapshot.transfer,
-        explanation: newSnapshot.explanation,
-        retention: newSnapshot.retention,
-      },
-      status: newSnapshot.status,
-    },
-    nextAction,
-  };
-
-  // Content version placeholder
-  const dummyContentVersionId = "00000000-0000-0000-0000-000000000001";
-
-  // Self-healing database check: ensure content version, concept, and step exist in DB
-  try {
-    await db
+    // 3. Ensure immutable content rows exist. The version id is derived
+    // deterministically from the step content checksum, so identical content
+    // maps to the same row and changed content creates a new version row.
+    await tx
       .insert(contentVersions)
       .values({
-        id: dummyContentVersionId,
-        ownerType: "bundle",
-        ownerId: concept.moduleId,
+        id: version.id,
+        ownerType: "step",
+        ownerId: step.id,
         version: 1,
-        payload: {},
-        checksum: "v1-initial",
+        payload: version.payload,
+        checksum: version.checksum,
       })
       .onConflictDoNothing();
 
-    await db
+    await tx
       .insert(concepts)
       .values({
         id: concept.id,
@@ -200,66 +139,156 @@ export async function submitAttempt(
       })
       .onConflictDoNothing();
 
-    await db
+    await tx
       .insert(learningSteps)
       .values({
         id: step.id,
         conceptId: concept.id,
-        contentVersionId: dummyContentVersionId,
+        contentVersionId: version.id,
         kind: step.kind,
         sortOrder: step.sortOrder,
         config: step.config ?? {},
       })
-      .onConflictDoNothing();
-  } catch (seedErr) {
-    console.warn("Self-healing step insertion notice:", seedErr);
-  }
+      .onConflictDoUpdate({
+        target: learningSteps.id,
+        set: {
+          contentVersionId: version.id,
+          config: step.config ?? {},
+        },
+      });
 
-  // Insert attempt
-  await db.insert(attempts).values({
-    id: attemptId,
-    learnerDeviceId: actor.learnerDeviceId,
-    learningStepId: step.id,
-    contentVersionId: dummyContentVersionId,
-    idempotencyKey,
-    response,
-    result: outputResult,
-    submittedAt: new Date(),
-  });
+    // 4. Evaluate response and compute mastery updates inside the transaction
+    const evaluation = evaluateStepResponse(step, response);
+    const isCorrect = evaluation.status === "correct";
+    const dimension = getDimensionForStep(step.kind);
+    const delta = computeMasteryDelta(dimension, isCorrect, usedHintsCount);
 
-  // Insert learning evidence
-  await db.insert(learningEvidence).values({
-    attemptId,
-    learnerDeviceId: actor.learnerDeviceId,
-    conceptId: concept.id,
-    dimension,
-    score: delta,
-    source: step.kind,
-    observedAt: new Date(),
-  });
-
-  // Upsert concept progress
-  if (currentProgress) {
-    await db
-      .update(conceptProgress)
-      .set({
-        understanding: newSnapshot.understanding,
-        practice: newSnapshot.practice,
-        application: newSnapshot.application,
-        transfer: newSnapshot.transfer,
-        explanation: newSnapshot.explanation,
-        retention: newSnapshot.retention,
-        status: newSnapshot.status,
-        updatedAt: new Date(),
-      })
+    const [currentProgress] = await tx
+      .select()
+      .from(conceptProgress)
       .where(
         and(
           eq(conceptProgress.learnerDeviceId, actor.learnerDeviceId),
           eq(conceptProgress.conceptId, concept.id)
         )
-      );
-  } else {
-    await db.insert(conceptProgress).values({
+      )
+      .limit(1);
+
+    const initialSnapshot: ConceptMasterySnapshot = currentProgress
+      ? {
+          understanding: currentProgress.understanding,
+          practice: currentProgress.practice,
+          application: currentProgress.application,
+          transfer: currentProgress.transfer,
+          explanation: currentProgress.explanation,
+          retention: currentProgress.retention,
+          status: currentProgress.status as ConceptMasterySnapshot["status"],
+        }
+      : {
+          understanding: 0,
+          practice: 0,
+          application: 0,
+          transfer: 0,
+          explanation: 0,
+          retention: 0,
+          status: "unstarted",
+        };
+
+    const newSnapshot = applyMasteryUpdate(initialSnapshot, dimension, delta);
+
+    const activeMisconception =
+      evaluation.misconceptionCodes.length > 0
+        ? concept.misconceptions.find(
+            (m) => m.code === evaluation.misconceptionCodes[0]
+          )
+        : undefined;
+
+    const nextAction: NextActionOutput = isCorrect
+      ? { type: "continue", reasonCode: "STEP_COMPLETED" }
+      : evaluation.misconceptionCodes.length > 0
+      ? {
+          type: "remedial",
+          reasonCode: "MISCONCEPTION_ACTIVE",
+          remedialInfo: activeMisconception
+            ? {
+                code: activeMisconception.code,
+                label: activeMisconception.label,
+                remediation: activeMisconception.remediation,
+              }
+            : undefined,
+        }
+      : { type: "hint", reasonCode: "RETRY_WITH_HINT" };
+
+    const attemptId = randomUUID();
+
+    const attemptResult: SubmitAttemptOutput = {
+      attemptId,
+      evaluation,
+      progress: {
+        conceptId: concept.id,
+        dimensions: {
+          understanding: newSnapshot.understanding,
+          practice: newSnapshot.practice,
+          application: newSnapshot.application,
+          transfer: newSnapshot.transfer,
+          explanation: newSnapshot.explanation,
+          retention: newSnapshot.retention,
+        },
+        status: newSnapshot.status,
+      },
+      nextAction,
+    };
+
+    // 5. Insert attempt with unique-index conflict guard. If a concurrent
+    // request already inserted this idempotency key, return its cached result.
+    await tx
+      .insert(attempts)
+      .values({
+        id: attemptId,
+        learnerDeviceId: actor.learnerDeviceId,
+        learningStepId: step.id,
+        contentVersionId: version.id,
+        idempotencyKey,
+        response,
+        result: attemptResult,
+        submittedAt: new Date(),
+      })
+      .onConflictDoNothing();
+
+    const [attemptRow] = await tx
+      .select()
+      .from(attempts)
+      .where(
+        and(
+          eq(attempts.learnerDeviceId, actor.learnerDeviceId),
+          eq(attempts.idempotencyKey, idempotencyKey)
+        )
+      )
+      .limit(1);
+
+    if (!attemptRow || attemptRow.id !== attemptId) {
+      const winnerResult = attemptRow?.result as SubmitAttemptOutput | undefined;
+      return winnerResult
+        ? {
+            ...winnerResult,
+            attemptId: attemptRow.id,
+          }
+        : attemptResult;
+    }
+
+    // 6. Insert learning evidence
+    await tx.insert(learningEvidence).values({
+      attemptId,
+      learnerDeviceId: actor.learnerDeviceId,
+      conceptId: concept.id,
+      dimension,
+      score: delta,
+      source: step.kind,
+      observedAt: new Date(),
+    });
+
+    // 7. Upsert concept progress
+    const progressValues = {
       learnerDeviceId: actor.learnerDeviceId,
       conceptId: concept.id,
       understanding: newSnapshot.understanding,
@@ -270,24 +299,38 @@ export async function submitAttempt(
       retention: newSnapshot.retention,
       status: newSnapshot.status,
       updatedAt: new Date(),
-    });
-  }
+    };
 
-  // Insert mistake events if any misconception detected
-  if (evaluation.misconceptionCodes.length > 0) {
-    for (const code of evaluation.misconceptionCodes) {
-      await db.insert(mistakeEvents).values({
-        attemptId,
-        conceptId: concept.id,
-        misconceptionCode: code,
-        confidence: 1.0,
+    await tx
+      .insert(conceptProgress)
+      .values(progressValues)
+      .onConflictDoUpdate({
+        target: [conceptProgress.learnerDeviceId, conceptProgress.conceptId],
+        set: progressValues,
       });
-    }
-  }
 
-  // Spaced review scheduling
+    // 8. Insert mistake events if any misconception detected
+    if (evaluation.misconceptionCodes.length > 0) {
+      for (const code of evaluation.misconceptionCodes) {
+        await tx.insert(mistakeEvents).values({
+          attemptId,
+          conceptId: concept.id,
+          misconceptionCode: code,
+          confidence: 1.0,
+        });
+      }
+    }
+
+    return attemptResult;
+  });
+
+  // 9. Spaced review scheduling (auxiliary, best-effort, runs after commit)
   try {
-    await scheduleOrUpdateReview(actor.learnerDeviceId, concept.id, isCorrect);
+    await scheduleOrUpdateReview(
+      actor.learnerDeviceId,
+      concept.id,
+      outputResult.evaluation.status === "correct"
+    );
   } catch (err) {
     console.error("Failed to schedule review:", err);
   }

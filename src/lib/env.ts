@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const COOKIE_SECRET_DEV_DEFAULT = "default_secret_key_for_nalar_development_only";
+
 const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
@@ -8,7 +10,7 @@ const envSchema = z.object({
   COOKIE_SECRET: z
     .string()
     .min(16, "COOKIE_SECRET must be at least 16 characters")
-    .default("default_secret_key_for_nalar_development_only"),
+    .default(COOKIE_SECRET_DEV_DEFAULT),
   AI_PROVIDER: z
     .enum(["none", "mock", "gemini", "openai", "gemma", "google", "anthropic", "curated"])
     .optional(),
@@ -35,6 +37,15 @@ function parseEnv(): Env {
   const result = envSchema.safeParse(process.env);
   if (!result.success) {
     console.error("Invalid environment variables:", result.error.format());
+    throw new Error("Invalid environment variables");
+  }
+  if (
+    result.data.NODE_ENV === "production" &&
+    result.data.COOKIE_SECRET === COOKIE_SECRET_DEV_DEFAULT
+  ) {
+    console.error(
+      "COOKIE_SECRET must be set explicitly in production (default dev secret detected)."
+    );
     throw new Error("Invalid environment variables");
   }
   return result.data;

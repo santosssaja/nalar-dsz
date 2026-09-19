@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { resolveActor, SESSION_USER_COOKIE } from "@/server/auth/actor-resolver";
+import { createSessionToken, sessionCookieOptions } from "@/server/auth/session";
 import { verifyEmailToken } from "@/server/services/auth-service";
 
 export const dynamic = "force-dynamic";
@@ -36,13 +37,11 @@ export async function GET(request: NextRequest) {
       }
 
       const response = NextResponse.redirect(redirectUrl);
-      response.cookies.set(SESSION_USER_COOKIE, result.sessionUserId, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 365,
-        path: "/",
-      });
+      response.cookies.set(
+        SESSION_USER_COOKIE,
+        createSessionToken(result.sessionUserId),
+        sessionCookieOptions()
+      );
 
       return response;
     }
@@ -55,13 +54,11 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    response.cookies.set(SESSION_USER_COOKIE, result.sessionUserId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 365,
-      path: "/",
-    });
+    response.cookies.set(
+      SESSION_USER_COOKIE,
+      createSessionToken(result.sessionUserId),
+      sessionCookieOptions()
+    );
 
     return response;
   } catch (error: unknown) {

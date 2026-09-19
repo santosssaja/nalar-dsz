@@ -2,6 +2,7 @@ import { createHash, randomUUID } from "crypto";
 import { cookies, headers } from "next/headers";
 import { eq } from "drizzle-orm";
 import { getDb, ensureDbInitialized, users, learnerDevices, learnerPreferences } from "@/server/db";
+import { verifySessionToken } from "./session";
 
 export type Actor =
   | { kind: "guest"; deviceId: string; learnerDeviceId: string }
@@ -19,7 +20,7 @@ export async function resolveActor(): Promise<Actor> {
   await ensureDbInitialized();
   const db = getDb();
   let deviceKey: string | undefined;
-  let sessionUserId: string | undefined;
+  let sessionToken: string | undefined;
 
   try {
     const cookieStore = await cookies();
@@ -27,8 +28,8 @@ export async function resolveActor(): Promise<Actor> {
     deviceKey =
       headerStore.get("x-device-key") ||
       cookieStore.get(DEVICE_KEY_COOKIE)?.value;
-    sessionUserId =
-      headerStore.get("x-user-id") ||
+    sessionToken =
+      headerStore.get("x-session-token") ||
       cookieStore.get(SESSION_USER_COOKIE)?.value;
   } catch {
     // Fallback when called outside active Next.js request scope (e.g. tests or build)
@@ -51,6 +52,15 @@ export async function resolveActor(): Promise<Actor> {
   }
 
   const keyHash = hashDeviceKey(deviceKey);
+
+  // Verify HMAC-signed session token before trusting the claimed user identity
+  let sessionUserId: string | undefined;
+  if (sessionToken) {
+    const payload = verifySessionToken(sessionToken);
+    if (payload) {
+      sessionUserId = payload.userId;
+    }
+  }
 
   // Validate sessionUserId against users table to prevent FK constraint violations
   let validSessionUserId: string | undefined;

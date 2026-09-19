@@ -8,33 +8,46 @@ import {
   learningSteps,
 } from "./schema";
 import { getDomains, getModules, getConcepts } from "@/content/loader";
-
-export const DEFAULT_CONTENT_VERSION_ID = "00000000-0000-0000-0000-000000000001";
+import { contentVersionOfStep } from "@/content/versioning";
 
 export async function seedCuratedContent(db: DbClient): Promise<void> {
-  // Check if content version is already seeded to avoid redundant inserts
-  const existing = await db
-    .select({ id: contentVersions.id })
-    .from(contentVersions)
-    .where(eq(contentVersions.id, DEFAULT_CONTENT_VERSION_ID))
-    .limit(1);
+  const allConcepts = getConcepts();
+  const firstStep = allConcepts.find((c) => c.steps.length > 0)?.steps[0];
+  const firstVersionId = firstStep ? contentVersionOfStep(firstStep).id : null;
 
-  if (existing.length > 0) {
-    return;
+  // Guard: if curated step content versions already exist, skip redundant inserts
+  if (firstVersionId) {
+    const existing = await db
+      .select({ id: contentVersions.id })
+      .from(contentVersions)
+      .where(eq(contentVersions.id, firstVersionId))
+      .limit(1);
+
+    if (existing.length > 0) {
+      return;
+    }
   }
 
-  // 1. Seed Content Version
-  await db
-    .insert(contentVersions)
-    .values({
-      id: DEFAULT_CONTENT_VERSION_ID,
-      ownerType: "bundle",
-      ownerId: "20000000-0000-4000-8000-000000000001",
-      version: 1,
-      payload: {},
-      checksum: "v1-initial",
+  // 1. Seed immutable per-step content versions (deterministic ids derived from content)
+  const contentVersionRows = allConcepts.flatMap((concept) =>
+    concept.steps.map((step) => {
+      const version = contentVersionOfStep(step);
+      return {
+        id: version.id,
+        ownerType: "step" as const,
+        ownerId: step.id,
+        version: 1,
+        payload: version.payload,
+        checksum: version.checksum,
+      };
     })
-    .onConflictDoNothing();
+  );
+  if (contentVersionRows.length > 0) {
+    await db
+      .insert(contentVersions)
+      .values(contentVersionRows)
+      .onConflictDoNothing();
+  }
 
   // 2. Batch Seed Domains
   const domainRows = getDomains().map((domain) => ({
@@ -62,8 +75,7 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     await db.insert(modules).values(moduleRows).onConflictDoNothing();
   }
 
-  // 4. Batch Seed Concepts and Steps
-  const allConcepts = getConcepts();
+  // 4. Batch Seed Concepts
   const conceptRows = allConcepts.map((concept) => ({
     id: concept.id,
     moduleId: concept.moduleId,
@@ -77,17 +89,31 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     await db.insert(concepts).values(conceptRows).onConflictDoNothing();
   }
 
+  // 5. Seed Learning Steps linked to their real content version
   const stepRows = allConcepts.flatMap((concept) =>
     concept.steps.map((step) => ({
       id: step.id,
       conceptId: concept.id,
-      contentVersionId: DEFAULT_CONTENT_VERSION_ID,
+      contentVersionId: contentVersionOfStep(step).id,
       kind: step.kind,
       sortOrder: step.sortOrder,
-      config: step.config,
+      config: step.config ?? {},
     }))
   );
   if (stepRows.length > 0) {
-    await db.insert(learningSteps).values(stepRows).onConflictDoNothing();
+    for (const row of stepRows) {
+      await db
+        .insert(learningSteps)
+        .values(row)
+        .onConflictDoUpdate({
+          target: learningSteps.id,
+          set: {
+            contentVersionId: row.contentVersionId,
+            kind: row.kind,
+            sortOrder: row.sortOrder,
+            config: row.config,
+          },
+        });
+    }
   }
 }

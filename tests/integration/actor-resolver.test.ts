@@ -1,5 +1,19 @@
 import { describe, it, expect, vi } from "vitest";
+import { randomUUID } from "crypto";
 import { hashDeviceKey, resolveActor } from "@/server/auth/actor-resolver";
+import { createSessionToken } from "@/server/auth/session";
+import { ensureDbInitialized, getDb, users } from "@/server/db";
+
+type CookieStoreLike = Awaited<ReturnType<typeof import("next/headers")["cookies"]>>;
+
+function cookieStore(
+  get: (name: string) => { value: string } | undefined
+): CookieStoreLike {
+  return {
+    get,
+    set: () => {},
+  } as unknown as CookieStoreLike;
+}
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn().mockResolvedValue({
@@ -30,22 +44,64 @@ describe("Actor & Device Resolver", () => {
     expect(actor.deviceId).toBeDefined();
   });
 
-  it("should safely handle stale or non-existent session user cookie without foreign key crash", async () => {
+  it("should safely handle a signed session token for a non-existent user without foreign key crash", async () => {
     const { cookies } = await import("next/headers");
     const nonExistentUserId = "4d4a9794-891a-44fe-9355-e6c579fb8384";
-    vi.mocked(cookies).mockResolvedValueOnce({
-      get: vi.fn().mockImplementation((name: string) => {
-        if (name === "nalar_session_user_id") return { value: nonExistentUserId };
-        return undefined;
-      }),
-      set: vi.fn(),
-    } as any);
+    const forgedButSignedToken = createSessionToken(nonExistentUserId);
+    vi.mocked(cookies).mockResolvedValueOnce(
+      cookieStore((name: string) =>
+        name === "nalar_session_user_id"
+          ? { value: forgedButSignedToken }
+          : undefined
+      )
+    );
 
     // Should resolve safely as a guest without throwing Postgres 23503 foreign key violation
     const actor = await resolveActor();
     expect(actor).toBeDefined();
     expect(actor.kind).toBe("guest");
     expect(actor.learnerDeviceId).toBeDefined();
+  });
+
+  it("should treat a tampered or invalid session token as a guest", async () => {
+    const { cookies } = await import("next/headers");
+    vi.mocked(cookies).mockResolvedValueOnce(
+      cookieStore((name: string) =>
+        name === "nalar_session_user_id"
+          ? { value: "originally-valid-token.but.tampered-signature-000000000000000" }
+          : undefined
+      )
+    );
+
+    const actor = await resolveActor();
+    expect(actor).toBeDefined();
+    expect(actor.kind).toBe("guest");
+    expect(actor.learnerDeviceId).toBeDefined();
+  });
+
+  it("should resolve a member actor from a valid signed session token", async () => {
+    await ensureDbInitialized();
+    const db = getDb();
+    const userId = randomUUID();
+    await db.insert(users).values({
+      id: userId,
+      email: `member-${randomUUID()}@example.com`,
+      createdAt: new Date(),
+    });
+
+    const token = createSessionToken(userId);
+    const { cookies } = await import("next/headers");
+    vi.mocked(cookies).mockResolvedValueOnce(
+      cookieStore((name: string) =>
+        name === "nalar_session_user_id" ? { value: token } : undefined
+      )
+    );
+
+    const actor = await resolveActor();
+    expect(actor.kind).toBe("member");
+    if (actor.kind === "member") {
+      expect(actor.userId).toBe(userId);
+    }
   });
 
   it("should safely handle concurrent resolveActor calls with identical device key without duplicate key collision", async () => {

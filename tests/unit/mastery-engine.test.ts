@@ -27,6 +27,16 @@ describe("Deterministic Mastery Engine", () => {
     expect(penaltyReward).toBeGreaterThanOrEqual(8);
   });
 
+  it("should ignore negative or excessive hint counts (anti-farming guard)", () => {
+    const zeroHint = computeMasteryDelta("understanding", true, 0);
+    const negativeHints = computeMasteryDelta("understanding", true, -100);
+    const excessiveHints = computeMasteryDelta("understanding", true, 99);
+
+    // Negative hint values must be clamped identically to using zero hints
+    expect(negativeHints).toBe(zeroHint);
+    expect(excessiveHints).toBe(computeMasteryDelta("understanding", true, 3));
+  });
+
   it("should clamp mastery values strictly within 0 and 100", () => {
     const initial: ConceptMasterySnapshot = {
       understanding: 90,

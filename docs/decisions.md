@@ -57,6 +57,20 @@ Dokumen ini menyimpan keputusan implementasi yang perlu dipertahankan lintas tug
 **Pertanyaan:** Vendor hosting, database, auth, AI, KV, analytics, dan error tracking belum diputuskan.  
 **Batas sementara:** Jangan menambahkan dependency vendor atau membuat akun/proyek eksternal tanpa instruksi pengguna. Sediakan abstraction tipis hanya jika ada implementasi yang membutuhkan boundary tersebut.
 
+## D-009 — Session member memakai token HMAC bertanda tangan
+
+**Status:** Locked  
+**Keputusan:** Cookie session member (`nalar_session_user_id`) berisi token `payload.signature` (HMAC-SHA256 dengan `COOKIE_SECRET`, berisi userId + expiry), bukan raw user id. Header `x-user-id` tidak lagi dipercaya; klien dapat memakai header `x-session-token`. Token invalid/malformed/tampered/expired ditolak dan di-resolve sebagai guest. `claim-device` hanya dapat dilakukan oleh actor member terautentikasi (body `userId` dihapus — mencegah linkage lintas identity).  
+**Konsekuensi:** Session tidak bisa spoof; `COOKIE_SECRET` wajib eksplisit di production. Semua mutation learning tetap bekerja untuk guest (D-001).  
+**Rujukan:** D-001, D-002, FR-10, product rule "jangan mengekspos data pengguna lintas identity".
+
+## D-010 — Content version per-step deterministik dari checksum konten
+
+**Status:** Locked  
+**Keputusan:** Setiap learning step menerima baris `content_versions` immutable dengan id yang diturunkan deterministik (UUID v5 dari sha256 canonical JSON step), payload snapshot penuh, dan checksum. `learning_steps.contentVersionId` dan `attempts.contentVersionId` menunjuk ke row nyata tersebut; dummy version dan self-healing insert dihapus. Perubahan konten menghasilkan id version baru.  
+**Konsekuensi:** Evaluasi attempt historis tetap mengacu konten yang benar (D-002); migration data lama perlu re-seed dan relink step.  
+**Rujukan:** D-002, database schema.
+
 ## Cara menambah atau mengubah keputusan
 
 Setiap decision baru berisi ID unik, status, keputusan/pertanyaan, konsekuensi, rujukan requirement, dan pemicu review bila statusnya Open. Jangan mengedit decision Locked untuk mengubah substansinya; tambahkan decision baru yang secara eksplisit menggantikan ID lama dan jelaskan alasan perubahan.

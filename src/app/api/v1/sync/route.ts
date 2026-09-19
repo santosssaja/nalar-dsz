@@ -5,6 +5,8 @@ import {
   submitAttempt,
   getAllLearnerProgress,
 } from "@/server/services/learning-service";
+import { NalarError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -68,7 +70,6 @@ export async function POST(request: NextRequest) {
           await submitAttempt({
             actor,
             stepId: event.payload.stepId,
-            contentVersion: event.payload.contentVersion,
             idempotencyKey: event.eventId,
             response: event.payload.response,
             usedHintsCount: event.payload.usedHintsCount,
@@ -81,11 +82,18 @@ export async function POST(request: NextRequest) {
           });
         }
       } catch (err: unknown) {
-        const errorMsg = err instanceof Error ? err.message : "Gagal memproses event.";
-        rejected.push({
-          eventId: event.eventId,
-          reason: errorMsg,
-        });
+        if (err instanceof NalarError && err.expose) {
+          rejected.push({
+            eventId: event.eventId,
+            reason: err.message,
+          });
+        } else {
+          logger.error("Failed to process sync event", err);
+          rejected.push({
+            eventId: event.eventId,
+            reason: "Gagal memproses event.",
+          });
+        }
       }
     }
 

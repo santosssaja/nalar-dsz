@@ -1,10 +1,17 @@
-import { drizzle as drizzlePostgres } from "drizzle-orm/postgres-js";
+import { drizzle as drizzlePostgres, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { drizzle as drizzlePglite } from "drizzle-orm/pglite";
 import postgres from "postgres";
 import { PGlite } from "@electric-sql/pglite";
 import * as schema from "./schema";
 
 export type DbClient = ReturnType<typeof drizzlePostgres<typeof schema>> | ReturnType<typeof drizzlePglite<typeof schema>>;
+
+export async function withTransaction<T>(
+  fn: (tx: DbClient) => Promise<T>
+): Promise<T> {
+  const db = getDb() as PostgresJsDatabase<typeof schema>;
+  return db.transaction(async (tx) => fn(tx as unknown as DbClient));
+}
 
 const globalForDb = globalThis as unknown as {
   cachedDb?: DbClient;

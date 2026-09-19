@@ -45,10 +45,14 @@ export function computeMasteryDelta(
   isCorrect: boolean,
   usedHintsCount = 0
 ): number {
+  const clampedHintCount = Math.max(
+    0,
+    Math.min(Math.floor(Number(usedHintsCount) || 0), 3)
+  );
   if (isCorrect) {
     // Reward based on autonomy (fewer hints used = higher evidence score)
     const baseReward = dimension === "understanding" ? 25 : 20;
-    const penalty = Math.min(usedHintsCount * 4, 12);
+    const penalty = Math.min(clampedHintCount * 4, 12);
     return Math.max(baseReward - penalty, 8);
   } else {
     // Non-punitive: minimal deduction only for practice repetition, never below zero

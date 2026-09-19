@@ -18,9 +18,17 @@ export async function GET() {
       getMistakeSummaryForLearner(actor),
     ]);
 
+    const dueConceptIds = new Set(reviewsDue.map((review) => review.conceptId));
+    const progressWithReviewStatus = progress.map((item) => {
+      const hasDueReview =
+        dueConceptIds.has(item.conceptId) &&
+        (item.status === "practiced" || item.status === "mastered");
+      return hasDueReview ? { ...item, status: "review_due" as const } : item;
+    });
+
     return NextResponse.json({
       data: {
-        progress,
+        progress: progressWithReviewStatus,
         reviewsDue,
         mistakes,
       },

@@ -3,14 +3,22 @@ import { z } from "zod";
 import { resolveActor } from "@/server/auth/actor-resolver";
 import { submitAttempt } from "@/server/services/learning-service";
 import { logger } from "@/lib/logger";
+import { NalarError } from "@/lib/errors";
 
 export const dynamic = "force-dynamic";
 
 const submitAttemptSchema = z.object({
   stepId: z.string().uuid("stepId harus berupa UUID"),
-  contentVersion: z.number().default(1),
   response: z.record(z.unknown()),
-  usedHintsCount: z.number().default(0),
+  usedHintsCount: z
+    .number({
+      required_error: "usedHintsCount harus disertakan.",
+      invalid_type_error: "usedHintsCount harus berupa angka.",
+    })
+    .int("usedHintsCount harus bilangan bulat.")
+    .min(0, "usedHintsCount tidak boleh negatif.")
+    .max(3, "usedHintsCount maksimal 3.")
+    .default(0),
 });
 
 export async function POST(request: NextRequest) {
@@ -64,7 +72,6 @@ export async function POST(request: NextRequest) {
     const result = await submitAttempt({
       actor,
       stepId: parsed.data.stepId,
-      contentVersion: parsed.data.contentVersion,
       idempotencyKey,
       response: parsed.data.response,
       usedHintsCount: parsed.data.usedHintsCount,
@@ -74,12 +81,23 @@ export async function POST(request: NextRequest) {
       data: result,
     });
   } catch (error) {
+    if (error instanceof NalarError && error.expose) {
+      return NextResponse.json(
+        {
+          error: {
+            code: error.code,
+            message: error.message,
+          },
+        },
+        { status: error.status }
+      );
+    }
     logger.error("Error submitting attempt", error);
     return NextResponse.json(
       {
         error: {
           code: "INTERNAL_ERROR",
-          message: error instanceof Error ? error.message : "Terjadi kesalahan internal.",
+          message: "Terjadi kesalahan internal.",
         },
       },
       { status: 500 }

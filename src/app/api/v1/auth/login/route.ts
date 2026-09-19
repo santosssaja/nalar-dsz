@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { resolveActor, SESSION_USER_COOKIE } from "@/server/auth/actor-resolver";
+import { createSessionToken, sessionCookieOptions } from "@/server/auth/session";
 import { loginOrRegisterMember } from "@/server/services/auth-service";
 
 export const dynamic = "force-dynamic";
@@ -57,14 +58,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Set session cookie
-    response.cookies.set(SESSION_USER_COOKIE, user.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 365, // 1 year
-      path: "/",
-    });
+    // Set signed session token cookie
+    response.cookies.set(
+      SESSION_USER_COOKIE,
+      createSessionToken(user.id),
+      sessionCookieOptions()
+    );
 
     return response;
   } catch (error) {
