@@ -7,6 +7,8 @@ import {
   AiTeachContext,
   AiTeachEvaluation,
   AiChatChunk,
+  AiPredictContext,
+  AiPredictAnalysis,
 } from "../types";
 import {
   NAI_SOCRATIC_SYSTEM_PROMPT,
@@ -185,5 +187,12 @@ export class OpenAiProvider implements IAiProvider {
     }
 
     return this.fallback.evaluateTeachMode(context, options);
+  }
+
+  async evaluatePrediction(
+    context: AiPredictContext,
+    options?: AiChatOptions
+  ): Promise<AiPredictAnalysis> {
+    return this.fallback.evaluatePrediction(context, options);
   }
 }

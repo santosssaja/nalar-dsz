@@ -8,12 +8,16 @@ import {
   AiTeachEvaluation,
   AiChatChunk,
   AiTeachChunk,
+  AiPredictContext,
+  AiPredictAnalysis,
 } from "../types";
 import {
   NAI_SOCRATIC_SYSTEM_PROMPT,
   NAI_TEACH_MODE_SYSTEM_PROMPT,
+  NAI_PREDICT_SYSTEM_PROMPT,
   buildSocraticPrompt,
   buildTeachPrompt,
+  buildPredictPrompt,
 } from "../prompts";
 import { CuratedLocalProvider } from "./curated-provider";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -293,5 +297,54 @@ export class GemmaProvider implements IAiProvider {
       provider: "gemma",
       model: this.getModelName(options),
     };
+  }
+
+  async evaluatePrediction(
+    context: AiPredictContext,
+    options?: AiChatOptions
+  ): Promise<AiPredictAnalysis> {
+    const apiKey = this.getApiKey(options);
+    const localEndpoint = this.getLocalEndpoint(options);
+
+    if (apiKey || localEndpoint) {
+      try {
+        const messages: AiMessage[] = [
+          { role: "system", content: NAI_PREDICT_SYSTEM_PROMPT },
+          { role: "user", content: buildPredictPrompt(context) },
+        ];
+        const res = await this.chat(messages, options);
+
+        // Try parsing JSON response from LLM
+        const jsonMatch = res.text.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          return {
+            hypothesisEvaluation: String(
+              parsed.hypothesisEvaluation ||
+                (context.isCorrect
+                  ? "Hipotesismu tepat dan selaras dengan prinsip konsep ini."
+                  : "Hipotesismu menarik, namun fenomena aslinya memiliki karakteristik berbeda.")
+            ),
+            cognitiveAnalysis: String(
+              parsed.cognitiveAnalysis ||
+                "Penalaranmu menunjukkan proses berpikir aktif dalam memprediksi variabel sebelum pembuktian."
+            ),
+            conceptualNudge: String(
+              parsed.conceptualNudge ||
+                "Perhatikan pembuktian dan visualisasi di langkah berikutnya untuk menguji intuisimu!"
+            ),
+            misconceptionAlert: parsed.misconceptionAlert
+              ? String(parsed.misconceptionAlert)
+              : undefined,
+            provider: "gemma",
+            model: this.getModelName(options),
+          };
+        }
+      } catch (err) {
+        console.warn("Gemma evaluatePrediction fallback triggered:", err);
+      }
+    }
+
+    return this.fallback.evaluatePrediction(context, options);
   }
 }

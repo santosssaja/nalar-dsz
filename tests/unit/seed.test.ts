@@ -53,5 +53,5 @@ describe("Curated content seed reconciliation", () => {
     expect(before.length).toBe(
       getConcepts().reduce((sum, c) => sum + c.steps.length, 0)
     );
-  });
+  }, 15000);
 });

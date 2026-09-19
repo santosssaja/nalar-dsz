@@ -8,6 +8,8 @@ import {
   AiTeachEvaluation,
   AiChatChunk,
   AiTeachChunk,
+  AiPredictContext,
+  AiPredictAnalysis,
 } from "../types";
 
 export class CuratedLocalProvider implements IAiProvider {
@@ -187,6 +189,56 @@ export class CuratedLocalProvider implements IAiProvider {
       type: "done",
       provider: "curated",
       model: "curated-teach-engine",
+    };
+  }
+
+  async evaluatePrediction(
+    context: AiPredictContext,
+    _options?: AiChatOptions
+  ): Promise<AiPredictAnalysis> {
+    const isCorrect = context.isCorrect;
+    const confidenceText =
+      context.confidence === "high"
+        ? "tinggi"
+        : context.confidence === "medium"
+        ? "cukup yakin"
+        : "ragu-ragu (eksploratif)";
+
+    let hypothesisEval = "";
+    if (isCorrect) {
+      hypothesisEval = `Hipotesismu tepat! Pilihanmu "${context.selectedOptionLabel}" selaras dengan prinsip dasar konsep ini.`;
+    } else {
+      hypothesisEval = `Hipotesismu memilih "${context.selectedOptionLabel}". Ini adalah tebakan ilmiah yang wajar, namun fenomena aslinya memiliki karakteristik yang mengejutkan.`;
+    }
+
+    let cognitive = "";
+    if (context.reasoning && context.reasoning.trim().length > 0) {
+      cognitive = `Nai mengamati alur intuisimu: "${context.reasoning.trim()}". Dengan tingkat keyakinan ${confidenceText}, caramu memikirkan sebab-akibat menunjukkan proses belajar yang aktif. ${
+        isCorrect
+          ? "Penalaran yang kamu gunakan berhasil menangkap variabel penentu secara tepat."
+          : "Terkadang intuisi awal kita mengasumsikan hubungan linier sederhana, padahal ada faktor kuadratik, pergeseran sudut, atau hukum konservasi yang bekerja di balik layar."
+      }`;
+    } else {
+      cognitive = `Kamu memilih opsi ini dengan tingkat keyakinan ${confidenceText}. Mengajukan prediksi sebelum melihat pembuktian adalah inti dari metode Active Before Passive!`;
+    }
+
+    let misconceptionAlert: string | undefined;
+    if (!isCorrect && context.misconceptions && context.misconceptions.length > 0) {
+      const topMisc = context.misconceptions[0];
+      misconceptionAlert = `Pijakan Nalar: ${topMisc.remediation}`;
+    }
+
+    const conceptualNudge = isCorrect
+      ? "Pada langkah eksplorasi berikutnya, amati bagaimana formula dan visualisasinya membuktikan ketepatan intuisimu!"
+      : "Pada langkah eksplorasi berikutnya, perhatikan secara cermat variabel mana yang berubah lebih drastis daripada perkiraan awal!";
+
+    return {
+      hypothesisEvaluation: hypothesisEval,
+      cognitiveAnalysis: cognitive,
+      conceptualNudge,
+      misconceptionAlert,
+      provider: "curated",
+      model: "curated-predict-engine",
     };
   }
 }

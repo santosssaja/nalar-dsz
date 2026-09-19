@@ -196,5 +196,48 @@ describe("AI Engine Endpoints (Providers, Tutor, Teach Mode)", () => {
     expect(streamText).toContain('"type":"evaluation"');
     expect(streamText).toContain('"type":"done"');
   });
+
+  it("POST /api/v1/ai/predict evaluates learner hypothesis and reasoning", async () => {
+    const { POST: predictHandler } = await import("@/app/api/v1/ai/predict/route");
+    const payload = {
+      conceptSlug: "gerak-melingkar",
+      stepId: "40000000-0000-4000-8000-000000002302",
+      selectedOptionId: "opt-4-times",
+      confidence: "high",
+      reasoning: "Karena percepatan sentripetal berbanding lurus dengan kuadrat kecepatan v^2/r",
+      provider: "curated",
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const res = await predictHandler(req);
+    expect(res.status).toBe(200);
+
+    const json = await res.json();
+    expect(json.data).toBeDefined();
+    expect(json.data.hypothesisEvaluation).toBeDefined();
+    expect(json.data.cognitiveAnalysis).toContain("kuadrat");
+    expect(json.data.conceptualNudge).toBeDefined();
+  });
+
+  it("POST /api/v1/ai/predict returns 400 validation error on invalid payload", async () => {
+    const { POST: predictHandler } = await import("@/app/api/v1/ai/predict/route");
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        conceptSlug: "gerak-melingkar",
+        stepId: "invalid-uuid",
+      }),
+    });
+
+    const res = await predictHandler(req);
+    expect(res.status).toBe(400);
+  });
 });
+
 

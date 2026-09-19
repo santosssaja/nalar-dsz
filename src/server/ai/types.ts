@@ -65,6 +65,30 @@ export interface AiTeachChunk {
   model?: string;
 }
 
+export interface AiPredictContext {
+  conceptSlug: string;
+  conceptTitle: string;
+  stepTitle: string;
+  stepInstruction: string;
+  stepContent: string;
+  selectedOptionId: string;
+  selectedOptionLabel: string;
+  isCorrect: boolean;
+  confidence: "low" | "medium" | "high";
+  reasoning?: string;
+  misconceptions?: Array<{ code: string; label: string; remediation: string }>;
+  explanationFeedback?: string;
+}
+
+export interface AiPredictAnalysis {
+  hypothesisEvaluation: string;
+  cognitiveAnalysis: string;
+  conceptualNudge: string;
+  misconceptionAlert?: string;
+  provider?: AiProviderName;
+  model?: string;
+}
+
 export interface IAiProvider {
   readonly name: AiProviderName;
   chat(messages: AiMessage[], options?: AiChatOptions): Promise<AiChatResponse>;
@@ -78,4 +102,8 @@ export interface IAiProvider {
     context: AiTeachContext,
     options?: AiChatOptions
   ): AsyncIterable<AiTeachChunk>;
+  evaluatePrediction?(
+    context: AiPredictContext,
+    options?: AiChatOptions
+  ): Promise<AiPredictAnalysis>;
 }

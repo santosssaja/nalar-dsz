@@ -6,12 +6,20 @@ import { StepContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { ExplainEvaluationOutput } from "@/server/services/explain-evaluator";
 
+export interface StepExplainSavedState {
+  explanation?: string;
+  evaluation?: ExplainEvaluationOutput | null;
+}
+
 interface StepExplainProps {
   step: StepContent;
   conceptSlug: string;
   rubricCriteria?: Array<{ id: string; name: string; description: string }>;
   isCompleted: boolean;
+  savedState?: StepExplainSavedState;
+  onSaveState?: (state: StepExplainSavedState) => void;
   onCompleted: () => void;
+  onPrevious?: () => void;
 }
 
 export function StepExplain({
@@ -19,11 +27,16 @@ export function StepExplain({
   conceptSlug,
   rubricCriteria,
   isCompleted,
+  savedState,
+  onSaveState,
   onCompleted,
+  onPrevious,
 }: StepExplainProps) {
-  const [explanation, setExplanation] = useState("");
+  const [explanation, setExplanation] = useState(savedState?.explanation ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [evaluation, setEvaluation] = useState<ExplainEvaluationOutput | null>(null);
+  const [evaluation, setEvaluation] = useState<ExplainEvaluationOutput | null>(
+    savedState?.evaluation ?? null
+  );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const feedbackRef = useRef<HTMLDivElement>(null);
@@ -33,6 +46,28 @@ export function StepExplain({
       feedbackRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, [evaluation]);
+
+  const onSaveStateRef = useRef(onSaveState);
+  useEffect(() => {
+    onSaveStateRef.current = onSaveState;
+  });
+
+  const currentStateRef = useRef<StepExplainSavedState>({
+    explanation,
+    evaluation,
+  });
+
+  useEffect(() => {
+    currentStateRef.current = { explanation, evaluation };
+  }, [explanation, evaluation]);
+
+  useEffect(() => {
+    return () => {
+      if (currentStateRef.current) {
+        onSaveStateRef.current?.(currentStateRef.current);
+      }
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -214,8 +249,16 @@ export function StepExplain({
         )}
 
         {/* Actions */}
-        <div className="flex items-center justify-between pt-2">
-          {evaluation && !evaluation.passed ? (
+        <div className="flex items-center justify-between pt-2 gap-3">
+          {onPrevious ? (
+            <button
+              type="button"
+              onClick={onPrevious}
+              className="px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text transition-colors"
+            >
+              ← Langkah Sebelumnya
+            </button>
+          ) : evaluation && !evaluation.passed ? (
             <button
               type="button"
               onClick={() => setEvaluation(null)}
@@ -227,30 +270,42 @@ export function StepExplain({
             <div />
           )}
 
-          {evaluation?.passed || isCompleted ? (
-            <button
-              type="button"
-              onClick={onCompleted}
-              className="px-6 py-2.5 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
-            >
-              Lanjutkan →
-            </button>
-          ) : (
-            <button
-              type="submit"
-              disabled={isSubmitting || explanation.trim().length < 10}
-              className="px-6 py-2.5 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm flex items-center gap-2"
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Mengevaluasi...
-                </>
-              ) : (
-                "Evaluasi dengan Nai"
-              )}
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {evaluation && !evaluation.passed && onPrevious && (
+              <button
+                type="button"
+                onClick={() => setEvaluation(null)}
+                className="px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text transition-colors"
+              >
+                Ubah & Coba Lagi
+              </button>
+            )}
+
+            {evaluation?.passed || isCompleted ? (
+              <button
+                type="button"
+                onClick={onCompleted}
+                className="px-6 py-2.5 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
+              >
+                Lanjutkan →
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={isSubmitting || explanation.trim().length < 10}
+                className="px-6 py-2.5 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm flex items-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Mengevaluasi...
+                  </>
+                ) : (
+                  "Evaluasi dengan Nai"
+                )}
+              </button>
+            )}
+          </div>
         </div>
       </form>
     </div>

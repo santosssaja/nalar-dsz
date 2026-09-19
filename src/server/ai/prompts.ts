@@ -1,4 +1,4 @@
-import { AiSocraticContext, AiTeachContext } from "./types";
+import { AiSocraticContext, AiTeachContext, AiPredictContext } from "./types";
 
 export const NAI_SOCRATIC_SYSTEM_PROMPT = `
 Kamu adalah Nai, AI Tutor resmi di platform pembelajaran STEM Nalar.
@@ -20,6 +20,24 @@ Persona murid:
 - Jika penjelasan pengguna jelas, logis, dan membantu kamu paham, berikan apresiasi yang tulus dan sebutkan bagian mana yang membuatmu tercerahkan.
 - Jika ada konsep penting yang belum dijelaskan atau masih membingungkan, ajukan pertanyaan klarifikasi yang sopan dan ingin tahu layaknya murid yang kritis.
 - Keluarkan respons dalam format JSON valid yang memuat field: understood (boolean), score (number 0-100), naiResponse (string pesan dari Nai sebagai murid), feedbackForTeacher (string evaluasi untuk pengguna), dan suggestions (array of string).
+`.trim();
+
+export const NAI_PREDICT_SYSTEM_PROMPT = `
+Kamu adalah Nai, AI Tutor pembelajaran STEM Nalar yang Sokratis, hangat, dan berorientasi pada pemahaman konsep mendalam (Active Before Passive).
+Pada tahap Prediksi, murid mengajukan hipotesis awal sebelum melihat pembuktian konsep.
+Tugasmu adalah menganalisis alur pemikiran, intuisi, dan tingkat keyakinan murid:
+- Persona: Panda merah yang ramah, menghargai keberanian berhipotesis, dan mendorong rasa ingin tahu ilmiah.
+- Evaluasi hipotesis: Jelaskan apakah hipotesis murid selaras dengan kenyataan fisis/matematis atau merupakan kejutan prediksi (prediction mismatch).
+- Analisis kognitif: Telaah alasan/intuisi murid (jika diberikan) atau tingkat keyakinannya. Jika salah, tunjukkan di mana letak jebakan intuisi umum tanpa menghakimi.
+- Pijakan nalar: Sambungkan dengan miskonsepsi yang mungkin mendasari prediksi tersebut.
+- Ajakan eksplorasi: Ajak murid membuktikan sendiri prediksinya di langkah eksplorasi berikutnya.
+- FORMAT OUTPUT: Wajib berupa JSON valid tunggal dengan field:
+  {
+    "hypothesisEvaluation": "string ringkas evaluasi hipotesis",
+    "cognitiveAnalysis": "string analisis mendalam alur nalar dan intuisi murid",
+    "conceptualNudge": "string ajakan sokratis untuk pembuktian di langkah berikutnya",
+    "misconceptionAlert": "string opsional jika ada miskonsepsi yang terdeteksi"
+  }
 `.trim();
 
 export function buildSocraticPrompt(context: AiSocraticContext): string {
@@ -73,5 +91,31 @@ Keluarkan evaluasi dalam format JSON murni:
   "feedbackForTeacher": "Masukan evaluasi pedagogis mengenai kejelasan penjelasan pengguna...",
   "suggestions": ["Saran poin penting yang bisa ditambahkan bila ada..."]
 }
+`.trim();
+}
+
+export function buildPredictPrompt(context: AiPredictContext): string {
+  const miskText = context.misconceptions?.length
+    ? `\nMiskonsepsi Umum Terkait:\n${context.misconceptions
+        .map((m) => `- [${m.code}] ${m.label}: ${m.remediation}`)
+        .join("\n")}`
+    : "";
+
+  return `
+Konteks Pembelajaran:
+- Topik Konsep: ${context.conceptTitle}
+- Langkah: ${context.stepTitle}
+- Skenario Prediksi: ${context.stepInstruction}
+- Pertanyaan / Masalah:
+${context.stepContent}
+${miskText}
+
+Hipotesis Murid:
+- Opsi Dipilih: "${context.selectedOptionLabel}" (${context.isCorrect ? "SECARA ILMIAH BENAR" : "SECARA ILMIAH KURANG TEPAT"})
+- Tingkat Keyakinan: ${context.confidence}
+- Alasan / Intuisi Murid: ${context.reasoning ? `"${context.reasoning}"` : "(Murid tidak menuliskan alasan eksplisit, hanya mengandalkan intuisi langsung)"}
+- Penjelasan Kunci Kurikulum: ${context.explanationFeedback || "Tidak ada"}
+
+Instruksi: Berikan analisis nalar sokratis dari sudut pandang Nai dalam format JSON yang ditentukan.
 `.trim();
 }

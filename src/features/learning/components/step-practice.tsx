@@ -1,30 +1,43 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle, AlertCircle } from "lucide-react";
+import { CheckCircle, AlertCircle, RotateCcw } from "lucide-react";
 import { StepContent, NumericEvaluationSchema } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { HintDrawer } from "./hint-drawer";
 import { EvaluationResult } from "@/server/services/evaluator";
 
+export interface StepPracticeSavedState {
+  inputValue?: string;
+  evaluationResult?: EvaluationResult | null;
+}
+
 interface StepPracticeProps {
   step: StepContent;
   isCompleted: boolean;
+  savedState?: StepPracticeSavedState;
+  onSaveState?: (state: StepPracticeSavedState) => void;
   onSubmit: (response: Record<string, unknown>, usedHintsCount: number) => Promise<EvaluationResult | null>;
   isSubmitting: boolean;
   onNext: () => void;
+  onPrevious?: () => void;
 }
 
 export function StepPractice({
   step,
   isCompleted,
+  savedState,
+  onSaveState,
   onSubmit,
   isSubmitting,
   onNext,
+  onPrevious,
 }: StepPracticeProps) {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>(savedState?.inputValue ?? "");
   const [usedHintsCount, setUsedHintsCount] = useState<number>(0);
-  const [evaluationResult, setEvaluationResult] = useState<EvaluationResult | null>(null);
+  const [evaluationResult, setEvaluationResult] = useState<EvaluationResult | null>(
+    savedState?.evaluationResult ?? null
+  );
 
   const feedbackRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +46,28 @@ export function StepPractice({
       feedbackRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, [evaluationResult]);
+
+  const onSaveStateRef = useRef(onSaveState);
+  useEffect(() => {
+    onSaveStateRef.current = onSaveState;
+  });
+
+  const currentStateRef = useRef<StepPracticeSavedState>({
+    inputValue,
+    evaluationResult,
+  });
+
+  useEffect(() => {
+    currentStateRef.current = { inputValue, evaluationResult };
+  }, [inputValue, evaluationResult]);
+
+  useEffect(() => {
+    return () => {
+      if (currentStateRef.current) {
+        onSaveStateRef.current?.(currentStateRef.current);
+      }
+    };
+  }, []);
 
   const evaluation =
     step.evaluation?.type === "numeric"
@@ -141,11 +176,37 @@ export function StepPractice({
                 <span>{evaluationResult.misconceptionCodes.join(", ")}</span>
               </div>
             )}
+
+            {!isSuccess && (
+              <div className="mt-3 pt-2.5 border-t border-danger/20 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEvaluationResult(null);
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-surface border border-danger/40 hover:bg-surface-raised text-danger transition-colors flex items-center gap-1.5 shadow-2xs"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Coba Hitung Lagi</span>
+                </button>
+              </div>
+            )}
           </div>
         )}
 
-        {isSuccess && (
-          <div className="pt-2">
+        {isSuccess ? (
+          <div className="pt-2 flex items-center justify-between gap-3">
+            {onPrevious ? (
+              <button
+                type="button"
+                onClick={onPrevious}
+                className="px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text transition-colors"
+              >
+                ← Langkah Sebelumnya
+              </button>
+            ) : (
+              <div />
+            )}
             <button
               type="button"
               onClick={onNext}
@@ -154,7 +215,18 @@ export function StepPractice({
               Lanjutkan ke Langkah Berikutnya →
             </button>
           </div>
-        )}
+        ) : onPrevious ? (
+          <div className="pt-2 flex justify-start">
+            <button
+              type="button"
+              onClick={onPrevious}
+              disabled={isSubmitting}
+              className="px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text transition-colors disabled:opacity-50"
+            >
+              ← Langkah Sebelumnya
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {!isSuccess && (

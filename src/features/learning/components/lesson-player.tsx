@@ -33,7 +33,28 @@ export function LessonPlayer({
 }: LessonPlayerProps) {
   const steps = concept.steps;
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [completedStepIds, setCompletedStepIds] = useState<string[]>([]);
+  const [completedStepIds, setCompletedStepIds] = useState<string[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem(`nalar_completed_steps_${concept.id}`);
+        return stored ? JSON.parse(stored) : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  });
+  const [stepStates, setStepStates] = useState<Record<string, any>>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem(`nalar_step_states_${concept.id}`);
+        return stored ? JSON.parse(stored) : {};
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [masterySnapshot, setMasterySnapshot] = useState<ConceptMasterySnapshot | null>(
     initialProgress
@@ -42,6 +63,47 @@ export function LessonPlayer({
   const [isOffline, setIsOffline] = useState(false);
   const [pendingSyncCount, setPendingSyncCount] = useState(0);
   const [isTeachModeOpen, setIsTeachModeOpen] = useState(false);
+
+  // Sync completedStepIds to sessionStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.setItem(
+          `nalar_completed_steps_${concept.id}`,
+          JSON.stringify(completedStepIds)
+        );
+      } catch {
+        // Ignore storage errors
+      }
+    }
+  }, [completedStepIds, concept.id]);
+
+  const handleSaveStepState = React.useCallback(
+    (stepId: string, state: any) => {
+      setStepStates((prev) => {
+        const prevStep = prev[stepId] || {};
+        let changed = false;
+        for (const k in state) {
+          if (state[k] !== prevStep[k]) {
+            changed = true;
+            break;
+          }
+        }
+        if (!changed) return prev;
+
+        const next = { ...prev, [stepId]: { ...prevStep, ...state } };
+        if (typeof window !== "undefined") {
+          try {
+            sessionStorage.setItem(`nalar_step_states_${concept.id}`, JSON.stringify(next));
+          } catch {
+            // Ignore storage errors
+          }
+        }
+        return next;
+      });
+    },
+    [concept.id]
+  );
 
   const currentStep: StepContent = steps[currentStepIndex];
   const isCurrentCompleted = completedStepIds.includes(currentStep?.id);
@@ -60,6 +122,10 @@ export function LessonPlayer({
       stepIdempotencyKeys.set(stepId, key);
     }
     return key;
+  };
+
+  const rotateIdempotencyKey = (stepId: string) => {
+    stepIdempotencyKeys.delete(stepId);
   };
 
   // Check online status & check outbox on mount
@@ -125,6 +191,8 @@ export function LessonPlayer({
 
       const json = await res.json();
       if (res.ok && json.data) {
+        // Rotate idempotency key so retrying this step generates a new attempt
+        rotateIdempotencyKey(currentStep.id);
         const { evaluation, progress } = json.data;
 
         if (evaluation.status === "correct" || currentStep.kind === "predict") {
@@ -258,7 +326,10 @@ export function LessonPlayer({
       {currentStep.kind === "predict" ? (
         <StepPredict
           step={currentStep}
+          conceptSlug={concept.slug}
           isCompleted={isCurrentCompleted}
+          savedState={stepStates[currentStep.id]}
+          onSaveState={(state) => handleSaveStepState(currentStep.id, state)}
           onSubmit={async (resp, hintsCount) => {
             await handleStepSubmit(resp, hintsCount);
           }}
@@ -272,14 +343,18 @@ export function LessonPlayer({
           conceptSlug={concept.slug}
           isCompleted={isCurrentCompleted}
           onCompleted={handleNextStep}
+          onPrevious={handlePreviousStep}
         />
       ) : currentStep.kind === "practice" ? (
         <StepPractice
           step={currentStep}
           isCompleted={isCurrentCompleted}
+          savedState={stepStates[currentStep.id]}
+          onSaveState={(state) => handleSaveStepState(currentStep.id, state)}
           onSubmit={handleStepSubmit}
           isSubmitting={isSubmitting}
           onNext={handleNextStep}
+          onPrevious={handlePreviousStep}
         />
       ) : currentStep.kind === "explain" ? (
         <StepExplain
@@ -287,7 +362,10 @@ export function LessonPlayer({
           conceptSlug={concept.slug}
           rubricCriteria={concept.rubric?.criteria}
           isCompleted={isCurrentCompleted}
+          savedState={stepStates[currentStep.id]}
+          onSaveState={(state) => handleSaveStepState(currentStep.id, state)}
           onCompleted={handleNextStep}
+          onPrevious={handlePreviousStep}
         />
       ) : (
         /* encounter, understand, retrieve, etc. */

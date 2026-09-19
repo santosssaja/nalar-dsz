@@ -23,6 +23,7 @@ interface StepExploreProps {
   conceptSlug?: string;
   isCompleted: boolean;
   onCompleted: () => void;
+  onPrevious?: () => void;
 }
 
 export function StepExplore({
@@ -30,6 +31,7 @@ export function StepExplore({
   conceptSlug = "",
   isCompleted,
   onCompleted,
+  onPrevious,
 }: StepExploreProps) {
   // Dynamically choose interactive playground
   const renderPlayground = () => {
@@ -111,7 +113,18 @@ export function StepExplore({
       {renderPlayground()}
 
       {/* Navigation */}
-      <div className="pt-2 flex justify-end">
+      <div className="pt-2 flex items-center justify-between gap-3">
+        {onPrevious ? (
+          <button
+            type="button"
+            onClick={onPrevious}
+            className="px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-surface text-text transition-colors"
+          >
+            ← Langkah Sebelumnya
+          </button>
+        ) : (
+          <div />
+        )}
         <button
           type="button"
           onClick={onCompleted}
