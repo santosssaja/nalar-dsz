@@ -61,7 +61,7 @@ function VerifyContent() {
         setCountdown((c) => {
           if (c <= 1) {
             clearInterval(timer);
-            router.push("/modules/turunan");
+            router.push("/dashboard");
             return 0;
           }
           return c - 1;

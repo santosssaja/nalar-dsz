@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 import { NavHeader } from "@/components/layout/nav-header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
@@ -68,22 +67,9 @@ export default function RootLayout({
         </main>
 
         <footer className="border-t border-border py-6 text-xs text-text-muted bg-surface-raised">
-          <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p>© {new Date().getFullYear()} Nalar — Akses terbuka, tanpa hambatan login.</p>
-            <div className="flex items-center gap-4">
-              <Link href="/lab" className="hover:underline text-accent">
-                Nalar Lab
-              </Link>
-              <span>•</span>
-              <Link href="/observability" className="hover:underline">
-                Observabilitas & Audit
-              </Link>
-              <span>•</span>
-              <a href="/api/health" className="hover:underline" target="_blank" rel="noopener noreferrer">
-                Status Sistem
-              </a>
-              <span>•</span>
-              <span>Aksesibilitas WCAG 2.2 AA</span>
+          <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} Nalar — Platform Pembelajaran STEM Berbasis Pemahaman &amp; Intuisi.</p>
+            <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-3 gap-y-1 text-text-muted">
             </div>
           </div>
         </footer>

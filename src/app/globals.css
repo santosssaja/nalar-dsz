@@ -6,6 +6,35 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  /* Thin, refined scrollbar adhering to Nalar design tokens */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  /* WebKit scrollbar styling for Chrome, Edge, Safari, and Brave */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-text-subtle);
+  }
+
   body {
     background-color: var(--color-surface);
     color: var(--color-text);
@@ -20,6 +49,11 @@
   :focus-visible {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
+  }
+
+  /* Prevent duplicate text selection and copy from KaTeX MathML elements */
+  .katex-mathml {
+    user-select: none;
   }
 
   /* Accessible skip link */

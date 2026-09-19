@@ -2,7 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Layers } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+} from "lucide-react";
 import { LAB_STATIONS } from "../data/lab-stations";
 import type { LabStationId } from "../types";
 
@@ -44,7 +49,6 @@ interface LabViewProps {
 }
 
 export function LabView({ initialStationId }: LabViewProps) {
-  // Default to the first station in LAB_STATIONS (top-left on grid: number-line)
   const defaultStationId = LAB_STATIONS[0].id;
   const [activeStationId, setActiveStationId] = useState<LabStationId>(
     initialStationId && PLAYGROUND_COMPONENTS[initialStationId]
@@ -55,96 +59,140 @@ export function LabView({ initialStationId }: LabViewProps) {
   const currentStation =
     LAB_STATIONS.find((s) => s.id === activeStationId) ?? LAB_STATIONS[0];
 
+  const CurrentIcon = currentStation.icon;
+
   const ActivePlaygroundComponent =
     PLAYGROUND_COMPONENTS[activeStationId] ?? PLAYGROUND_COMPONENTS[defaultStationId];
 
+  const currentIndex = LAB_STATIONS.findIndex((s) => s.id === activeStationId);
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setActiveStationId(LAB_STATIONS[currentIndex - 1].id);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < LAB_STATIONS.length - 1) {
+      setActiveStationId(LAB_STATIONS[currentIndex + 1].id);
+    }
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Station Navigation Selector Grid */}
-      <section aria-label="Pilihan Stasiun Laboratorium" className="space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-accent" />
-            <span>Pilih Stasiun Eksperimen:</span>
-          </span>
-          <span className="text-xs text-text-muted font-mono">
-            {LAB_STATIONS.findIndex((s) => s.id === activeStationId) + 1} / {LAB_STATIONS.length}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
-          {LAB_STATIONS.map((station) => {
-            const isActive = station.id === activeStationId;
-            const Icon = station.icon;
-            return (
-              <button
-                key={station.id}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setActiveStationId(station.id)}
-                className={`p-3 rounded-xl border text-left transition-all flex flex-col justify-between gap-2.5 group ${
-                  isActive
-                    ? "bg-accent-muted/40 border-accent shadow-xs ring-1 ring-accent/40"
-                    : "bg-surface-raised border-border hover:bg-surface hover:border-border-strong"
-                }`}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <span
-                    className={`p-1.5 rounded-lg ${
-                      isActive ? "bg-accent/20 text-accent" : "bg-surface text-text-muted"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </span>
-                  <span
-                    className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${station.badgeColor}`}
-                  >
-                    {station.domainSlug}
-                  </span>
-                </div>
-
-                <div>
-                  <h3
-                    className={`text-xs font-bold leading-snug ${
-                      isActive ? "text-text" : "text-text-muted group-hover:text-text"
-                    }`}
-                  >
-                    {station.title}
-                  </h3>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Station Overview & Link to Module */}
+    <div className="space-y-4">
+      {/* Unified Single-Row Station Control Bar */}
       <section
-        aria-label="Ringkasan Stasiun Aktif"
-        className="p-4 rounded-xl bg-surface-raised border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+        aria-label="Navigasi Stasiun Laboratorium"
+        className="p-3 sm:p-3.5 rounded-2xl bg-surface-raised border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs"
       >
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-sm text-text">{currentStation.title}</span>
-            <span className="text-xs text-text-muted">•</span>
-            <span className="text-xs text-accent font-semibold">{currentStation.domain}</span>
+        {/* Left: Station Icon + Dropdown Select + Domain Badge */}
+        <div className="flex items-center gap-2.5 flex-1 min-w-0">
+          <span className="p-2 rounded-xl bg-accent-muted text-accent shrink-0">
+            <CurrentIcon className="w-5 h-5" />
+          </span>
+
+          <div className="relative flex-1 sm:max-w-md">
+            <label htmlFor="lab-station-select" className="sr-only">
+              Pilih Stasiun Eksperimen
+            </label>
+            <select
+              id="lab-station-select"
+              value={activeStationId}
+              onChange={(e) => setActiveStationId(e.target.value as LabStationId)}
+              className="w-full appearance-none bg-surface border border-border rounded-xl pl-3 pr-8 py-2 text-xs sm:text-sm font-semibold text-text cursor-pointer hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent shadow-2xs transition-colors"
+            >
+              <optgroup label="Fondasi Matematika &amp; Kalkulus">
+                {LAB_STATIONS.filter((s) => s.domainSlug === "matematika").map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.title}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Fisika Mekanika">
+                {LAB_STATIONS.filter((s) => s.domainSlug === "fisika").map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.title}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Kimia Dasar">
+                {LAB_STATIONS.filter((s) => s.domainSlug === "kimia").map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.title}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Biologi Dasar">
+                {LAB_STATIONS.filter((s) => s.domainSlug === "biologi").map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.title}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+            <ChevronDown className="w-4 h-4 text-text-muted absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
-          <p className="text-xs text-text-muted max-w-2xl leading-relaxed">
-            {currentStation.description}
-          </p>
+
+          <span
+            className={`hidden md:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-lg border shrink-0 ${currentStation.badgeColor}`}
+          >
+            {currentStation.domain}
+          </span>
         </div>
 
-        <Link
-          href={`/modules/${currentStation.moduleSlug}`}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-surface border border-border hover:border-accent text-text hover:bg-surface-raised transition-all shrink-0 shadow-2xs self-start sm:self-auto"
-        >
-          <span>Buka {currentStation.moduleTitle}</span>
-          <ArrowRight className="w-3.5 h-3.5 text-accent" />
-        </Link>
+        {/* Right: Sequential Prev/Next Buttons + Module Link */}
+        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0">
+          <div className="flex items-center gap-1 border border-border rounded-xl p-1 bg-surface">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={currentIndex <= 0}
+              className="p-1.5 rounded-lg hover:bg-surface-raised text-text disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+              title="Stasiun Sebelumnya"
+              aria-label="Stasiun Sebelumnya"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="font-mono text-text-muted text-xs px-2 whitespace-nowrap select-none">
+              {currentIndex + 1} / {LAB_STATIONS.length}
+            </span>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={currentIndex >= LAB_STATIONS.length - 1}
+              className="p-1.5 rounded-lg hover:bg-surface-raised text-text disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+              title="Stasiun Berikutnya"
+              aria-label="Stasiun Berikutnya"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          <Link
+            href={`/modules/${currentStation.moduleSlug}`}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-surface border border-border hover:border-accent text-text hover:bg-surface-raised transition-all shrink-0 shadow-2xs"
+            title={`Pelajari konsep teori di ${currentStation.moduleTitle}`}
+          >
+            <span className="hidden sm:inline">Buka Modul</span>
+            <span className="sm:hidden">Modul</span>
+            <ArrowRight className="w-3.5 h-3.5 text-accent" />
+          </Link>
+        </div>
       </section>
 
-      {/* Active Station Interactive Content */}
-      <section aria-label={`Eksperimen ${currentStation.title}`} className="pt-2">
+      {/* Brief Station Description Banner */}
+      <section
+        aria-label="Penjelasan Eksperimen"
+        className="px-4 py-3 rounded-xl bg-surface border border-border text-xs text-text-muted flex items-start sm:items-center justify-between gap-2 shadow-2xs"
+      >
+        <p className="leading-relaxed">
+          <strong className="text-text font-semibold">{currentStation.title}:</strong>{" "}
+          {currentStation.description}
+        </p>
+      </section>
+
+      {/* Active Station Interactive Simulation */}
+      <section aria-label={`Eksperimen ${currentStation.title}`} className="pt-1">
         <ActivePlaygroundComponent />
       </section>
     </div>

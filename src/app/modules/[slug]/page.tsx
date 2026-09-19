@@ -109,25 +109,49 @@ export default async function ModuleOverviewPage({
 
       {/* Prerequisites Checklist */}
       <div className="p-6 rounded-2xl bg-surface-raised border border-border space-y-3">
-        <h2 className="text-base font-bold text-text">Prasyarat Modul:</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          {mod.prerequisites.map((prereq) => (
-            <div
-              key={prereq.slug}
-              className="flex items-center gap-3 p-3 rounded-lg bg-surface border border-border text-xs"
-            >
-              <span className="w-5 h-5 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold">
-                <Check className="w-3 h-3" />
-              </span>
-              <div>
-                <span className="font-semibold text-text block">{prereq.title}</span>
-                <span className="text-text-muted text-[11px]">
-                  {prereq.required ? "Prasyarat Wajib" : "Prasyarat Tambahan"}
-                </span>
-              </div>
-            </div>
-          ))}
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-bold text-text">Prasyarat Modul:</h2>
+          {mod.prerequisites.length === 0 && (
+            <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-success-muted text-success border border-success/30">
+              Tanpa Prasyarat Khusus
+            </span>
+          )}
         </div>
+
+        {mod.prerequisites.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            {mod.prerequisites.map((prereq) => (
+              <div
+                key={prereq.slug}
+                className="flex items-center gap-3 p-3 rounded-lg bg-surface border border-border text-xs"
+              >
+                <span className="w-5 h-5 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold">
+                  <Check className="w-3 h-3" />
+                </span>
+                <div>
+                  <span className="font-semibold text-text block">{prereq.title}</span>
+                  <span className="text-text-muted text-[11px]">
+                    {prereq.required ? "Prasyarat Wajib" : "Prasyarat Tambahan"}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="p-4 rounded-xl bg-surface border border-border-subtle flex items-start gap-3 text-xs">
+            <span className="p-1 rounded-lg bg-success-muted text-success shrink-0 mt-0.5">
+              <Check className="w-4 h-4" />
+            </span>
+            <div className="space-y-0.5">
+              <p className="font-semibold text-text">
+                Tidak ada prasyarat khusus untuk modul ini.
+              </p>
+              <p className="text-text-muted text-[11px] leading-relaxed">
+                Modul ini dirancang sebagai titik awal fondasi pembelajaran. Kamu dapat langsung memulai materi tanpa perlu menuntaskan modul lain terlebih dahulu.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Learning Path Sequence */}

@@ -1,5 +1,5 @@
 import { Actor } from "@/server/auth/actor-resolver";
-import { getModuleBySlug, getConceptBySlug, getConceptById } from "@/content/loader";
+import { getModuleBySlug, getConceptBySlug, getConceptById, getModules } from "@/content/loader";
 import { getAllLearnerProgress, getMistakeSummaryForLearner } from "./learning-service";
 import { getDueReviews } from "./retrieval-service";
 
@@ -129,3 +129,78 @@ export async function getNextRecommendation(
     reasonText: `Selamat! Kamu telah menyelesaikan seluruh konsep inti pada modul ${moduleContent.title}.`,
   };
 }
+
+export async function getGlobalLearnerRecommendation(
+  actor: Actor
+): Promise<RecommendationResult> {
+  // 1. Spaced Retrieval Due across any concept
+  const dueReviews = await getDueReviews(actor);
+  if (dueReviews.length > 0) {
+    const firstDue = dueReviews[0];
+    return {
+      targetType: "review",
+      targetId: firstDue.conceptId,
+      targetSlug: firstDue.conceptSlug,
+      targetTitle: firstDue.conceptTitle,
+      priority: 1,
+      reasonCode: "RETRIEVAL_DUE",
+      reasonText: `Waktunya mengulang konsep '${firstDue.conceptTitle}' untuk memperkuat retensi memori jangka panjang.`,
+    };
+  }
+
+  // 2. Active Misconception Remedial
+  const mistakes = await getMistakeSummaryForLearner(actor);
+  const progressList = await getAllLearnerProgress(actor);
+  const progressMap = new Map(progressList.map((p) => [p.conceptSlug, p]));
+
+  for (const m of mistakes) {
+    const concept = getConceptById(m.conceptId);
+    if (!concept) continue;
+    const prog = progressMap.get(concept.slug);
+    if (!prog || prog.status !== "mastered") {
+      return {
+        targetType: "concept",
+        targetId: concept.id,
+        targetSlug: concept.slug,
+        targetTitle: concept.title,
+        priority: 2,
+        reasonCode: "MISCONCEPTION_REMEDIAL",
+        reasonText: `Ada miskonsepsi yang perlu diperbaiki pada '${concept.title}': ${m.label}. Remedial: ${m.remediation}`,
+      };
+    }
+  }
+
+  // 3. Next Path Node across modules in logical sequence
+  const allModules = getModules();
+  for (const mod of allModules) {
+    for (const node of mod.learningPath.nodes) {
+      const concept = getConceptBySlug(node.conceptSlug);
+      if (!concept) continue;
+
+      const prog = progressMap.get(concept.slug);
+      if (!prog || prog.status === "unstarted" || prog.status === "learning") {
+        return {
+          targetType: "concept",
+          targetId: concept.id,
+          targetSlug: concept.slug,
+          targetTitle: concept.title,
+          priority: 3,
+          reasonCode: "NEXT_PATH_NODE",
+          reasonText: `Lanjutkan eksplorasi modul ${mod.title} pada konsep '${concept.title}'.`,
+        };
+      }
+    }
+  }
+
+  // 4. All modules completed
+  return {
+    targetType: "module",
+    targetId: allModules[0]?.id ?? "completed",
+    targetSlug: allModules[0]?.slug ?? "fondasi-matematika",
+    targetTitle: "Semua Modul Tuntas",
+    priority: 4,
+    reasonCode: "PATH_COMPLETED",
+    reasonText: "Selamat! Kamu telah menuntaskan seluruh materi konsep kurikulum STEM Nalar.",
+  };
+}
+

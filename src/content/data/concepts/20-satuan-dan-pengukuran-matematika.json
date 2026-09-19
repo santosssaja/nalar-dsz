@@ -30,7 +30,7 @@
       "sortOrder": 1,
       "title": "Bencana Wahana Antariksa Mars 1999",
       "instruction": "Amati akibat fatal ketika angka diperlakukan tanpa satuan yang jelas.",
-      "content": "Pada tahun $1999$, wahana antariksa NASA senilai $\\$125\\text{ juta}$ (*Mars Climate Orbiter*) hancur berkeping-keping saat mendekati atmosfer planet Mars.\n\nPenyebabnya bukan mesin rusak, melainkan **kesalahan konversi satuan**:\n- Tim insinyur Lockheed Martin menggunakan satuan imperial Amerika (**pound-force detik**).\n- Tim navigasi NASA mengira data tersebut bersatuan metrik standar internasional (**newton detik**).\n\nKarena $1\\text{ lbf} \\approx 4.45\\text{ N}$, wahana menerima dorongan $4.45$ kali lebih kuat dari perhitungan seharusnya, menukik terlalu rendah, dan terbakar di atmosfer.\n\nAngka tanpa satuan dalam sains dan matematika adalah resep bencana!",
+      "content": "Pada tahun 1999, wahana antariksa NASA senilai 125 juta dolar AS (*Mars Climate Orbiter*) hancur berkeping-keping saat mendekati atmosfer planet Mars.\n\nPenyebabnya bukan mesin rusak, melainkan **kesalahan konversi satuan**:\n- Tim insinyur Lockheed Martin menggunakan satuan imperial Amerika (**pound-force detik**).\n- Tim navigasi NASA mengira data tersebut bersatuan metrik standar internasional (**newton detik**).\n\nKarena $1\\text{ lbf} \\approx 4.45\\text{ N}$, wahana menerima dorongan $4.45$ kali lebih kuat dari perhitungan seharusnya, menukik terlalu rendah, dan terbakar di atmosfer.\n\nAngka tanpa satuan dalam sains dan matematika adalah resep bencana!",
       "estimatedMinutes": 3,
       "accessibility": {
         "altText": "Ilustrasi kegagalan wahana antariksa Mars Climate Orbiter akibat perbedaan satuan newton dan pound.",

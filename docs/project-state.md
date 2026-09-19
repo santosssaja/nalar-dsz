@@ -28,11 +28,13 @@
   12. *Biologi:* Skala Ukuran Hayati dari Nanometer ke Biosfer
   13. *Biologi:* Komparasi Sitologi Sel Prokariotik, Hewan, & Tumbuhan
   14. *Biologi:* Daur Bioenergetika Fotosintesis Kloroplas & Respirasi Mitokondria (ATP)
+  *(Switcher stasiun lab dirancang ultra-ringkas 1 baris ramping ~48px: ikon stasiun aktif, dropdown select native terkelompok per domain STEM, tombol navigasi sekuensial Prev/Next berindikator nomor, dan tautan modul kurikulum terkait).*
 - **Concept Graph 2D Interaktif (`/graph`):** Visualisasi SVG interaktif jejaring konsep 4 domain dengan 47 node konsep, modul, prasyarat, filter pencarian live, dan jalinan lintas disiplin (knowledge mesh connections).
 - **Mode Guru (Teach Mode):** Dilengkapi pertanyaan pemantik Sokratis Nai yang unik untuk setiap konsep di seluruh modul.
 - **Showcase & Halaman Beranda Interaktif:** Beranda (`/`) diperbarui secara komprehensif menampilkan metrik 47 konsep, gerbang langsung ke 14 stasiun Nalar Lab, pratinjau Concept Graph 2D, pemaparan tutor Sokratis Nai, kurikulum 4 domain, dan prinsip pedagogis Active Before Passive.
-- **Dokumentasi Showcase & Naskah Produksi Video:** Tersedia dokumen profil komprehensif (`docs/nalar-showcase.md`) serta naskah storyboard/voiceover per adegan (`docs/showcase-video-script.md`) untuk pembuatan video showcase 2.5 menit dan format ringkas 60 detik.
-- **Verifikasi Kualitas:** 24 test suite (82 tests) lulus 100%, TypeScript typecheck lulus 100% (`tsc --noEmit`), zero syntax/lint error, zero-emoji UI design dengan Lucide icons.
+- **Dashboard Pemahaman Belajar Terintegrasi (`/dashboard`):** Pusat kendali kemajuan belajar pelajar yang menyatukan 4 kartu metrik utama (konsep terkuasai, sedang berjalan, uji retensi jatuh tempo, dan skor rata-rata), rekomendasi adaptif langkah terbaik lintas modul (`getGlobalLearnerRecommendation`), kemajuan terperinci pada 5 modul STEM, profil analisis 6 dimensi penguasaan Nalar (`understanding`, `practice`, `application`, `transfer`, `explanation`, `retention`), peta miskonsepsi aktif dengan arahan pembenahan logika, serta akses cepat ke Nalar Lab dan Graf Konsep.
+- **Penanganan Galat & Rute Belum Terpetakan (`not-found.tsx` & `error.tsx`):** Halaman 404 kustom yang tenang dan terarah secara pedagogis (Galat 404: Koordinat Belum Terpetakan) dilengkapi tombol navigasi cepat (Dashboard, Graf Konsep, Beranda, tombol Kembali), gerbang Nalar Lab, serta tautan langsung ke 5 modul kurikulum STEM; didukung error boundary `error.tsx` yang aman (tanpa mengekspos detail raw DB / secret).
+- **Verifikasi Kualitas:** 26 test suite (88 tests) lulus 100%, TypeScript typecheck lulus 100% (`tsc --noEmit`), zero syntax/lint error, zero-emoji UI design dengan Lucide icons.
 
 ## Target implementasi berikutnya
 

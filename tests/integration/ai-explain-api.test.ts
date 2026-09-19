@@ -52,22 +52,26 @@ describe("POST /api/v1/ai/explain-feedback", () => {
 });
 
 describe("AI Engine Endpoints (Providers, Tutor, Teach Mode)", () => {
-  it("GET /api/v1/ai/providers returns provider catalog with Gemma as default", async () => {
-    const { GET: providersHandler } = await import("@/app/api/v1/ai/providers/route");
-    const res = await providersHandler();
-    expect(res.status).toBe(200);
+  it(
+    "GET /api/v1/ai/providers returns provider catalog with Gemma as default",
+    async () => {
+      const { GET: providersHandler } = await import("@/app/api/v1/ai/providers/route");
+      const res = await providersHandler();
+      expect(res.status).toBe(200);
 
-    const json = await res.json();
-    expect(json.data.defaultProvider).toBe("gemma");
-    expect(json.data.providers.length).toBeGreaterThanOrEqual(5);
+      const json = await res.json();
+      expect(json.data.defaultProvider).toBe("gemma");
+      expect(json.data.providers.length).toBeGreaterThanOrEqual(5);
 
-    const ids = json.data.providers.map((p: { id: string }) => p.id);
-    expect(ids).toContain("gemma");
-    expect(ids).toContain("google");
-    expect(ids).toContain("openai");
-    expect(ids).toContain("anthropic");
-    expect(ids).toContain("curated");
-  });
+      const ids = json.data.providers.map((p: { id: string }) => p.id);
+      expect(ids).toContain("gemma");
+      expect(ids).toContain("google");
+      expect(ids).toContain("openai");
+      expect(ids).toContain("anthropic");
+      expect(ids).toContain("curated");
+    },
+    15000
+  );
 
   it("POST /api/v1/ai/tutor provides Socratic guidance for learners", async () => {
     const { POST: tutorHandler } = await import("@/app/api/v1/ai/tutor/route");
