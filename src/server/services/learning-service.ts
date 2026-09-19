@@ -161,7 +161,10 @@ export async function submitAttempt(
     const evaluation = evaluateStepResponse(step, response);
     const isCorrect = evaluation.status === "correct";
     const dimension = getDimensionForStep(step.kind);
-    const delta = computeMasteryDelta(dimension, isCorrect, usedHintsCount);
+    const delta =
+      evaluation.status === "undetermined"
+        ? 0
+        : computeMasteryDelta(dimension, isCorrect, usedHintsCount);
 
     const [currentProgress] = await tx
       .select()

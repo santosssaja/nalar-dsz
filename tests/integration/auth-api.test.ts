@@ -210,4 +210,30 @@ describe("Auth & Device Claiming API", () => {
     const json = await res.json();
     expect(json.error.code).toBe("USER_NOT_FOUND");
   });
+
+  it("POST /api/v1/auth/request-verification rate limits repeated requests for the same email", async () => {
+    const { POST: requestVerificationHandler } = await import(
+      "@/app/api/v1/auth/request-verification/route"
+    );
+
+    const email = `rate-limit-${randomUUID()}@example.com`;
+    const makeRequest = () =>
+      new NextRequest("http://localhost:3000/api/v1/auth/request-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, mode: "register" }),
+      });
+
+    // First 3 verification requests are allowed within the window
+    for (let i = 0; i < 3; i++) {
+      const res = await requestVerificationHandler(makeRequest());
+      expect(res.status).toBe(200);
+    }
+
+    // The 4th request within the window is rejected
+    const blockedRes = await requestVerificationHandler(makeRequest());
+    expect(blockedRes.status).toBe(429);
+    const blockedJson = await blockedRes.json();
+    expect(blockedJson.error.code).toBe("RATE_LIMIT_EXCEEDED");
+  });
 });

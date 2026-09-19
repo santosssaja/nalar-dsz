@@ -188,13 +188,31 @@ markedInstance.use({
   ],
 });
 
+export function normalizeMathDelimiters(text: string): string {
+  if (!text || (!text.includes("\\(") && !text.includes("\\["))) return text;
+
+  // Split by code blocks (```...```) and inline codespans (`...`)
+  // to avoid altering code samples
+  const parts = text.split(/(```[\s\S]*?```|`[^`\n]*?`)/g);
+  return parts
+    .map((part, index) => {
+      // Odd indices are code blocks or inline codespans
+      if (index % 2 === 1) return part;
+      return part
+        .replace(/\\\[([\s\S]+?)\\\]/g, (_, math) => `$$${math}$$`)
+        .replace(/\\\(([\s\S]+?)\\\)/g, (_, math) => `$${math}$`);
+    })
+    .join("");
+}
+
 export function parseMarkdownAndMath(content: string, inline = false): string {
   if (!content) return "";
   try {
+    const normalized = normalizeMathDelimiters(content);
     if (inline) {
-      return markedInstance.parseInline(content, { async: false }) as string;
+      return markedInstance.parseInline(normalized, { async: false }) as string;
     }
-    return markedInstance.parse(content, { async: false }) as string;
+    return markedInstance.parse(normalized, { async: false }) as string;
   } catch (err) {
     console.error("Markdown parsing error:", err);
     return escapeHtml(content);

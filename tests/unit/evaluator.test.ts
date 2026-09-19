@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { evaluateStepResponse } from "@/server/services/evaluator";
 import { getStepById } from "@/content/loader";
+import { StepEvaluation } from "@/content/schema";
 
 describe("Deterministic Step Evaluator", () => {
   it("should evaluate choice question correctly", () => {
@@ -42,6 +43,31 @@ describe("Deterministic Step Evaluator", () => {
     const randomWrong = evaluateStepResponse(stepInfo.step, { value: 100 });
     expect(randomWrong.status).toBe("incorrect");
     expect(randomWrong.misconceptionCodes).toHaveLength(0);
+  });
+
+  it("should never auto-pass a step without curated evaluation (fail-closed)", () => {
+    // Explain step in definisi-turunan has no `evaluation` config
+    const stepInfo = getStepById("40000000-0000-4000-8000-000000000013")!;
+    expect(stepInfo).toBeDefined();
+    expect(stepInfo.step.evaluation).toBeUndefined();
+
+    const result = evaluateStepResponse(stepInfo.step, { answer: "jawaban apa pun" });
+    expect(result.status).toBe("undetermined");
+  });
+
+  it("should never auto-pass a rubric-based step (fail-closed)", () => {
+    const stepInfo = getStepById("40000000-0000-4000-8000-000000000012")!;
+    const rubricStep = {
+      ...stepInfo.step,
+      evaluation: {
+        type: "rubric",
+        rubricId: "rubric-turunan",
+        passingThreshold: 70,
+      } as StepEvaluation,
+    };
+
+    const result = evaluateStepResponse(rubricStep, { answer: "penjelasan apa pun" });
+    expect(result.status).toBe("undetermined");
   });
 });
 

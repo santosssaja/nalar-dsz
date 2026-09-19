@@ -1,5 +1,5 @@
 import { randomUUID, randomBytes } from "crypto";
-import { eq, and, ne } from "drizzle-orm";
+import { eq, and, ne, gt, count } from "drizzle-orm";
 import {
   getDb,
   ensureDbInitialized,
@@ -10,6 +10,10 @@ import {
   verificationTokens,
 } from "@/server/db";
 import { sendVerificationEmail } from "./email-service";
+import { NalarError } from "@/lib/errors";
+
+const VERIFICATION_RATE_LIMIT_REQUESTS = 3;
+const VERIFICATION_RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 
 export interface ClaimDeviceResult {
   claimedDeviceId: string;
@@ -253,6 +257,27 @@ export async function requestEmailVerification(
   const db = getDb();
   const normalizedEmail = email.trim().toLowerCase();
 
+  const [recentTokens] = await db
+    .select({ count: count() })
+    .from(verificationTokens)
+    .where(
+      and(
+        eq(verificationTokens.email, normalizedEmail),
+        gt(
+          verificationTokens.createdAt,
+          new Date(Date.now() - VERIFICATION_RATE_LIMIT_WINDOW_MS)
+        )
+      )
+    );
+
+  if (recentTokens.count >= VERIFICATION_RATE_LIMIT_REQUESTS) {
+    throw new NalarError(
+      "RATE_LIMIT_EXCEEDED",
+      "Terlalu banyak permintaan tautan verifikasi. Silakan tunggu beberapa saat sebelum mencoba lagi.",
+      429
+    );
+  }
+
   const [existingUser] = await db
     .select()
     .from(users)
@@ -260,8 +285,10 @@ export async function requestEmailVerification(
     .limit(1);
 
   if (mode === "login" && !existingUser) {
-    throw new Error(
-      "Alamat email belum terdaftar. Silakan pilih tab 'Daftar' untuk membuat akun baru."
+    throw new NalarError(
+      "USER_NOT_FOUND",
+      "Alamat email belum terdaftar. Silakan pilih tab 'Daftar' untuk membuat akun baru.",
+      404
     );
   }
 
@@ -313,15 +340,27 @@ export async function verifyEmailToken(
     .limit(1);
 
   if (!tokenRecord) {
-    throw new Error("Tautan verifikasi tidak valid atau tidak ditemukan.");
+    throw new NalarError(
+      "TOKEN_INVALID",
+      "Tautan verifikasi tidak valid atau tidak ditemukan.",
+      400
+    );
   }
 
   if (tokenRecord.consumedAt) {
-    throw new Error("Tautan verifikasi ini sudah pernah digunakan sebelumnya.");
+    throw new NalarError(
+      "TOKEN_ALREADY_USED",
+      "Tautan verifikasi ini sudah pernah digunakan sebelumnya.",
+      400
+    );
   }
 
   if (tokenRecord.expiresAt < new Date()) {
-    throw new Error("Tautan verifikasi telah kedaluwarsa (berlaku 15 menit). Silakan minta tautan baru.");
+    throw new NalarError(
+      "TOKEN_EXPIRED",
+      "Tautan verifikasi telah kedaluwarsa (berlaku 15 menit). Silakan minta tautan baru.",
+      400
+    );
   }
 
   // Mark token consumed

@@ -93,6 +93,25 @@ describe("Submit Attempt & Mastery Integration", () => {
     );
   });
 
+  it("must not grant mastery for steps without curated evaluation (anti-farming)", async () => {
+    const actor = await createTestActor();
+    // Explain step in Defnisi Turunan has no `evaluation` config
+    const stepId = "40000000-0000-4000-8000-000000000013";
+    const idempotencyKey = randomUUID();
+
+    const output = await submitAttempt({
+      actor,
+      stepId,
+      idempotencyKey,
+      response: { answer: "jawaban asal untuk menguji farming" },
+      usedHintsCount: 0,
+    });
+
+    expect(output.evaluation.status).toBe("undetermined");
+    expect(output.progress.status).toBe("unstarted");
+    expect(output.progress.dimensions.explanation).toBe(0);
+  });
+
   it("should persist attempts against a deterministic content version derived from the step content", async () => {
     const actor = await createTestActor();
     const stepInfo = getStepById("40000000-0000-4000-8000-000000000012");

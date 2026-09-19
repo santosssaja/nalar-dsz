@@ -1,11 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
 import { publishConceptContent } from "@/server/services/content-publish-pipeline";
+import { publishIsAuthorized } from "@/server/services/content-publish-gate";
 import { ConceptContentSchema } from "@/content/schema";
+import { logger } from "@/lib/logger";
+import { env } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
+    if (
+      !publishIsAuthorized(
+        {
+          secret: env.CONTENT_PUBLISH_SECRET,
+          isProduction: env.NODE_ENV === "production",
+        },
+        request.headers.get("authorization")
+      )
+    ) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "FORBIDDEN",
+            message: "Anda tidak memiliki izin untuk mempublikasikan konten.",
+          },
+        },
+        { status: 403 }
+      );
+    }
+
     const rawBody = await request.json();
     const parsed = ConceptContentSchema.safeParse(rawBody);
 
@@ -28,12 +51,12 @@ export async function POST(request: NextRequest) {
       data: result,
     });
   } catch (error) {
-    console.error("Error publishing content:", error);
+    logger.error("Error publishing content:", error);
     return NextResponse.json(
       {
         error: {
           code: "INTERNAL_ERROR",
-          message: error instanceof Error ? error.message : "Gagal mempublikasikan konten versi baru.",
+          message: "Terjadi kesalahan internal.",
         },
       },
       { status: 500 }

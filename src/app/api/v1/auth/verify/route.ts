@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { resolveActor, SESSION_USER_COOKIE } from "@/server/auth/actor-resolver";
 import { createSessionToken, sessionCookieOptions } from "@/server/auth/session";
 import { verifyEmailToken } from "@/server/services/auth-service";
+import { NalarError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -62,25 +64,32 @@ export async function GET(request: NextRequest) {
 
     return response;
   } catch (error: unknown) {
-    const err = error as Error;
-    console.error("Error verifying email token:", err);
+    logger.error("Error verifying email token:", error);
+
+    const isExposed = error instanceof NalarError && error.expose;
+    const code = isExposed ? error.code : "VERIFICATION_FAILED";
+    const message = isExposed
+      ? error.message
+      : "Gagal memverifikasi email. Silakan coba lagi.";
+    const status = isExposed ? error.status : 400;
 
     const acceptHeader = request.headers.get("accept") || "";
     if (acceptHeader.includes("text/html")) {
       const redirectUrl = new URL("/auth/verify", request.nextUrl.origin);
       redirectUrl.searchParams.set("status", "error");
-      redirectUrl.searchParams.set("message", err.message || "Tautan verifikasi tidak valid.");
+      redirectUrl.searchParams.set("code", code);
+      redirectUrl.searchParams.set("message", message);
       return NextResponse.redirect(redirectUrl);
     }
 
     return NextResponse.json(
       {
         error: {
-          code: "VERIFICATION_FAILED",
-          message: err.message || "Gagal memverifikasi token email.",
+          code,
+          message,
         },
       },
-      { status: 400 }
+      { status }
     );
   }
 }

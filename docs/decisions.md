@@ -71,6 +71,27 @@ Dokumen ini menyimpan keputusan implementasi yang perlu dipertahankan lintas tug
 **Konsekuensi:** Evaluasi attempt historis tetap mengacu konten yang benar (D-002); migration data lama perlu re-seed dan relink step.  
 **Rujukan:** D-002, database schema.
 
+## D-011 — Evaluator deterministik fail-closed untuk penilaian mastery
+
+**Status:** Locked  
+**Keputusan:** `evaluateStepResponse` tidak lagi otomatis mengembalikan `correct` untuk step tanpa konfigurasi `evaluation` atau bertipe `rubric`. Keduanya mengembalikan status `undetermined`; di `submitAttempt`, delta mastery untuk status `undetermined` adalah 0 (attempt tetap dicatat, tanpa reward/penalty). Rubric hanya dievaluasi lewat jalur penilaian terkurasi (explain-feedback/AI rubrik) yang sudah ada.  
+**Konsekuensi:** Farming mastery dengan menjawab sembarangan ke step yang tidak terasess via API tertutup; perilaku UI lesson player tidak berubah karena step informational/explain tidak dikirim ke `/attempts`.  
+**Rujukan:** Product rule "jangan menjadikan AI/contoh evaluator tanpa content/rubric terkurasi", FR attempt/evidence.
+
+## D-012 — Gate akses untuk publish konten
+
+**Status:** Locked  
+**Keputusan:** `/api/v1/content/publish` dijaga `publishIsAuthorized` (`src/server/services/content-publish-gate.ts`): jika `CONTENT_PUBLISH_SECRET` diset, `Authorization: Bearer <secret>` wajib di semua environment (perbandingan timing-safe via SHA-256); jika tidak diset, publish hanya terbuka di luar production (dev/test authoring) dan ditolak 403 di production.  
+**Konsekuensi:** Endpoint mutasi publik tidak dapat menulis `content_versions` tanpa otorisasi; alur authoring dev tanpa config tambahan tetap berjalan.  
+**Rujukan:** Product rule keamanan API, D-002, D-010.
+
+## D-013 — Rate limit magic link verifikasi email
+
+**Status:** Locked  
+**Keputusan:** `requestEmailVerification` menolak permintaan ke-4+ dalam jendela 15 menit per email dengan kode `RATE_LIMIT_EXCEEDED` (429), dihitung dari baris `verification_tokens` yang dibuat dalam jendela. Batas tersebut non-per-instance (tervoting dari DB) dan menurun kont bonus verifikasi.  
+**Konsekuensi:** Mengurangi risiko email bombing/abuse endpoint login; tidak memerlukan dependency baru (memanfaatkan tabel yang sudah ada), dan konsisten lintas instance karena dihitung dari database.  
+**Rujukan:** D-009, schema `verification_tokens`.
+
 ## Cara menambah atau mengubah keputusan
 
 Setiap decision baru berisi ID unik, status, keputusan/pertanyaan, konsekuensi, rujukan requirement, dan pemicu review bila statusnya Open. Jangan mengedit decision Locked untuk mengubah substansinya; tambahkan decision baru yang secara eksplisit menggantikan ID lama dan jelaskan alasan perubahan.

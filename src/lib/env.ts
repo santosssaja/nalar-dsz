@@ -11,6 +11,7 @@ const envSchema = z.object({
     .string()
     .min(16, "COOKIE_SECRET must be at least 16 characters")
     .default(COOKIE_SECRET_DEV_DEFAULT),
+  CONTENT_PUBLISH_SECRET: z.string().optional(),
   AI_PROVIDER: z
     .enum(["none", "mock", "gemini", "openai", "gemma", "google", "anthropic", "curated"])
     .optional(),

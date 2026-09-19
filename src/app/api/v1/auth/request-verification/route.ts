@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { resolveActor } from "@/server/auth/actor-resolver";
 import { requestEmailVerification } from "@/server/services/auth-service";
+import { NalarError } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -42,27 +44,25 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       data: result,
     });
-  } catch (error: unknown) {
-    const err = error as Error;
-    console.error("Error requesting email verification:", err);
-
-    if (err.message.includes("belum terdaftar")) {
+  } catch (error) {
+    if (error instanceof NalarError && error.expose) {
       return NextResponse.json(
         {
           error: {
-            code: "USER_NOT_FOUND",
-            message: err.message,
+            code: error.code,
+            message: error.message,
           },
         },
-        { status: 404 }
+        { status: error.status }
       );
     }
 
+    logger.error("Error requesting email verification:", error);
     return NextResponse.json(
       {
         error: {
           code: "INTERNAL_ERROR",
-          message: err.message || "Gagal mengirimkan email verifikasi.",
+          message: "Terjadi kesalahan internal.",
         },
       },
       { status: 500 }

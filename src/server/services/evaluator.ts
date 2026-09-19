@@ -1,7 +1,7 @@
 import { StepContent, StepEvaluation } from "@/content/schema";
 
 export interface EvaluationResult {
-  status: "correct" | "incorrect";
+  status: "correct" | "incorrect" | "undetermined";
   feedback: string;
   misconceptionCodes: string[];
   availableHintLevel: "orientation" | "concept" | "strategy" | "solution";
@@ -13,11 +13,13 @@ export function evaluateStepResponse(
 ): EvaluationResult {
   const evaluation: StepEvaluation | undefined = step.evaluation;
 
-  // Informational or open exploration steps without strict evaluation
+  // Informational or open exploration steps without strict evaluation are
+  // never auto-scored: they must not grant mastery evidence on their own.
   if (!evaluation) {
     return {
-      status: "correct",
-      feedback: "Langkah berhasil diselesaikan.",
+      status: "undetermined",
+      feedback:
+        "Langkah ini tidak memiliki evaluasi terkurasi, sehingga tidak dinilai secara otomatis.",
       misconceptionCodes: [],
       availableHintLevel: "orientation",
     };
@@ -96,10 +98,12 @@ export function evaluateStepResponse(
     };
   }
 
-  // Fallback for rubric / other evaluations
+  // Rubric-based steps require curated judgment and are scored through the
+  // dedicated explain/teach evaluation path, never auto-passed here.
   return {
-    status: "correct",
-    feedback: "Tanggapan diterima.",
+    status: "undetermined",
+    feedback:
+      "Langkah ini dinilai melalui rubrik terkurasi dan tidak dapat dinilai secara otomatis.",
     misconceptionCodes: [],
     availableHintLevel: "orientation",
   };

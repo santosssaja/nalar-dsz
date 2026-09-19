@@ -2,10 +2,29 @@ import { describe, it, expect } from "vitest";
 import { POST as validateHandler } from "@/app/api/v1/content/validate/route";
 import { POST as publishHandler } from "@/app/api/v1/content/publish/route";
 import { GET as versionsHandler } from "@/app/api/v1/content/versions/route";
+import { publishIsAuthorized } from "@/server/services/content-publish-gate";
 import { NextRequest } from "next/server";
 import { randomUUID } from "crypto";
 
 describe("Content Management API", () => {
+  it("publishIsAuthorized gates content publishing by secret and environment", () => {
+    // No secret configured: open only outside production (dev/test authoring)
+    expect(publishIsAuthorized({ isProduction: false }, null)).toBe(true);
+    expect(publishIsAuthorized({ isProduction: true }, null)).toBe(false);
+
+    // Secret configured: bearer token required in every environment
+    expect(
+      publishIsAuthorized({ secret: "s3cret", isProduction: true }, "Bearer s3cret")
+    ).toBe(true);
+    expect(
+      publishIsAuthorized({ secret: "s3cret", isProduction: false }, "Bearer s3cret")
+    ).toBe(true);
+    expect(publishIsAuthorized({ secret: "s3cret", isProduction: true }, null)).toBe(false);
+    expect(
+      publishIsAuthorized({ secret: "s3cret", isProduction: false }, "Bearer wrong")
+    ).toBe(false);
+  });
+
   const sampleConcept = {
     id: randomUUID(),
     moduleId: randomUUID(),

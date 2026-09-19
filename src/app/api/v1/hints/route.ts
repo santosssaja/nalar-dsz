@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getStepHint } from "@/server/services/learning-service";
+import { logger } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -45,11 +46,12 @@ export async function POST(request: NextRequest) {
       data: hint,
     });
   } catch (error) {
+    logger.error("Error processing hint request:", error);
     return NextResponse.json(
       {
         error: {
           code: "INTERNAL_ERROR",
-          message: error instanceof Error ? error.message : "Gagal memproses hint.",
+          message: "Terjadi kesalahan internal.",
         },
       },
       { status: 500 }

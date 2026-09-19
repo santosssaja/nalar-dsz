@@ -51,4 +51,25 @@ describe("parseMarkdownAndMath with marked and KaTeX", () => {
     expect(html).toContain("katex");
     expect(html).not.toMatch(/^<p>/);
   });
+
+  it("renders LaTeX inline delimiters \\( ... \\) as KaTeX math without raw backslashes", () => {
+    const input = "### 2. Kecepatan Sudut (\\(\\omega\\))\nBesaran sudut \\(\\omega = 2\\pi f\\).";
+    const html = parseMarkdownAndMath(input);
+
+    expect(html).toContain("katex");
+    expect(html).toContain("katex-html");
+    expect(html).toContain("ω");
+    expect(html).not.toContain("\\(");
+    expect(html).not.toContain("\\)");
+  });
+
+  it("renders LaTeX display delimiters \\[ ... \\] as KaTeX display math", () => {
+    const input = "Rumus torsi:\n\\[\\vec{\\tau} = \\vec{r} \\times \\vec{F}\\]";
+    const html = parseMarkdownAndMath(input);
+
+    expect(html).toContain("katex");
+    expect(html).toContain("katex-display");
+    expect(html).not.toContain("\\[");
+    expect(html).not.toContain("\\]");
+  });
 });
