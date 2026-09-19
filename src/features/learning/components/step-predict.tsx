@@ -50,8 +50,7 @@ export function StepPredict({
     e.preventDefault();
     if (!selectedOptionId || isSubmitting) return;
 
-    await onSubmit({ selectedOptionId, confidence, reasoning }, usedHintsCount);
-
+    // 1. Optimistic feedback: Prediction evaluation is deterministic and available immediately in step.evaluation
     if (evaluation) {
       const chosen = evaluation.options.find((o) => o.id === selectedOptionId);
       if (chosen) {
@@ -62,6 +61,9 @@ export function StepPredict({
         });
       }
     }
+
+    // 2. Submit attempt in background to record progress and mastery
+    await onSubmit({ selectedOptionId, confidence, reasoning }, usedHintsCount);
   };
 
   return (
@@ -178,6 +180,8 @@ export function StepPredict({
         {submittedFeedback && (
           <div
             ref={feedbackRef}
+            role="status"
+            aria-live="polite"
             className={`p-4 sm:p-5 rounded-xl border text-sm mt-3 leading-relaxed space-y-3 animate-in fade-in ${
               submittedFeedback.status === "correct"
                 ? "border-success/40 bg-success-muted/30 text-text"

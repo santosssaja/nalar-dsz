@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Check } from "lucide-react";
 import { ConceptContent } from "@/content/schema";
 import { ConceptMasterySnapshot } from "@/server/services/mastery-engine";
@@ -18,25 +19,25 @@ export function LessonSummary({
   moduleSlug,
 }: LessonSummaryProps) {
   const dimensions = masterySnapshot ?? {
-    understanding: 80,
-    practice: 75,
-    application: 40,
+    understanding: 0,
+    practice: 0,
+    application: 0,
     transfer: 0,
     explanation: 0,
     retention: 0,
-    status: "practiced",
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-8 rounded-2xl bg-surface-raised border border-border space-y-8 text-center">
-      <div className="space-y-3">
-        <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto">
-          <Check className="w-8 h-8" />
+    <div className="p-6 sm:p-8 rounded-2xl bg-surface-raised border border-border text-center space-y-6 max-w-xl mx-auto shadow-sm">
+      <div className="w-16 h-16 rounded-full bg-success-muted text-success border border-success/30 mx-auto flex items-center justify-center shadow-xs">
+        <Check className="w-8 h-8" />
+      </div>
+
+      <div className="space-y-2">
+        <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-semibold bg-success-muted text-success">
+          <span>Konsep Selesai</span>
         </div>
-        <span className="text-xs font-semibold text-accent uppercase tracking-wider">
-          Konsep Selesai
-        </span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-text">
+        <h2 className="text-xl sm:text-2xl font-bold text-text">
           {concept.title}
         </h2>
         <p className="text-sm text-text-muted max-w-md mx-auto">
@@ -52,18 +53,18 @@ export function LessonSummary({
       </div>
 
       <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a
+        <Link
           href={`/modules/${moduleSlug}`}
           className="w-full sm:w-auto px-6 py-3 rounded-lg text-sm font-medium border border-border hover:bg-surface text-text transition-colors"
         >
           ← Kembali ke Gambaran Modul
-        </a>
-        <a
-          href="/modules/turunan"
+        </Link>
+        <Link
+          href={`/modules/${moduleSlug}`}
           className="w-full sm:w-auto px-6 py-3 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
         >
           Lanjut ke Konsep Berikutnya →
-        </a>
+        </Link>
       </div>
     </div>
   );

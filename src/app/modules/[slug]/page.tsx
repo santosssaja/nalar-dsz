@@ -1,10 +1,11 @@
 import React from "react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
 import { getModuleBySlug, getConcepts } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
 import {
-  getLearnerConceptProgress,
+  getAllLearnerProgress,
   getMistakeSummaryForLearner,
 } from "@/server/services/learning-service";
 import { getNextRecommendation } from "@/server/services/recommendation-engine";
@@ -30,33 +31,34 @@ export default async function ModuleOverviewPage({
   const actor = await resolveActor();
   const allConcepts = getConcepts(slug);
 
-  // Fetch progress, recommendations, due reviews, and mistakes in parallel
-  const [progressList, recommendation, dueReviews, mistakes] = await Promise.all([
-    Promise.all(
-      allConcepts.map(async (c) => {
-        const p = await getLearnerConceptProgress(actor, c.id);
-        return { conceptId: c.id, progress: p };
-      })
-    ),
+  // Fetch progress, recommendations, due reviews, and mistakes in parallel with single consolidated query
+  const [allProgress, recommendation, dueReviews, mistakes] = await Promise.all([
+    getAllLearnerProgress(actor),
     getNextRecommendation(actor, slug),
     getDueReviews(actor),
     getMistakeSummaryForLearner(actor),
   ]);
 
   const progressMap = new Map(
-    progressList.map((item) => [item.conceptId, item.progress])
+    allProgress.map((item) => [
+      item.conceptId,
+      {
+        ...item.dimensions,
+        status: item.status,
+      },
+    ])
   );
 
   return (
     <div className="space-y-10 py-4 max-w-4xl mx-auto">
       {/* Module Header */}
       <div className="space-y-4">
-        <a
+        <Link
           href="/domains"
           className="text-xs font-semibold text-text-muted hover:text-text transition-colors flex items-center gap-1"
         >
           ← Kembali ke Kurikulum
-        </a>
+        </Link>
 
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent">
           <span>Modul Terkurasi</span>
@@ -184,12 +186,12 @@ export default async function ModuleOverviewPage({
                 </div>
 
                 <div className="self-start sm:self-center shrink-0">
-                  <a
+                  <Link
                     href={`/learn/${concept.slug}`}
                     className="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-medium bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
                   >
                     {status === "unstarted" ? "Mulai Konsep →" : "Lanjutkan Belajar →"}
-                  </a>
+                  </Link>
                 </div>
               </div>
             );

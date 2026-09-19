@@ -3,11 +3,12 @@
   "moduleId": "20000000-0000-4000-8000-000000000001",
   "slug": "laju-perubahan",
   "title": "Laju Perubahan Rata-rata",
-  "summary": "Memahami bagaimana dua kuantitas berubah relatif satu sama lain dan bagaimana secant line menggambarkan rata-rata tersebut.",
+  "summary": "Memahami bagaimana dua kuantitas berubah relatif satu sama lain dan bagaimana garis potong (secant line) memodelkan rasio kemiringan rata-rata.",
   "difficulty": "standard",
   "learningObjectives": [
-    "Menghitung laju perubahan rata-rata dari rasio selisih kuantitas Δy / Δx",
-    "Menghubungkan kecepatan rata-rata dengan kemiringan garis potong (secant line)"
+    "Membedakan antara perubahan total (Δy) dengan laju perubahan per satuan interval (Δy / Δx)",
+    "Menghubungkan rasio laju perubahan dengan kemiringan garis potong (secant line) pada grafik fungsi",
+    "Menyadari keterbatasan laju rata-rata dalam menangkap dinamika perubahan seketika (sesaat)"
   ],
   "prerequisites": [
     "perubahan"
@@ -15,18 +16,18 @@
   "misconceptions": [
     {
       "code": "RATE_TIME_UNIT",
-      "label": "Lupa membagi dengan interval waktu Δt",
-      "remediation": "Ingat bahwa kecepatan bukan sekadar jarak tempuh, melainkan rasio jarak tempuh per satuan waktu (Δs / Δt)."
+      "label": "Menyamakan perubahan total dengan laju perubahan (lupa membagi dengan interval Δx atau Δt)",
+      "remediation": "Ingat bahwa kecepatan bukan sekadar total jarak tempuh, melainkan rasio jarak tempuh per satuan waktu (Δs / Δt)."
     },
     {
       "code": "FORGOT_DELTA_X_DIVISION",
-      "label": "Menghitung perubahan total Δy tanpa membaginya dengan interval Δx",
-      "remediation": "Laju perubahan adalah rasio kemiringan: selalu bagi selisih ketinggian (Δy) dengan selisih jarak (Δx)."
+      "label": "Menghitung perubahan total Δy tanpa membaginya dengan selisih interval Δx",
+      "remediation": "Laju perubahan adalah rasio kemiringan: selalu bagi selisih ketinggian (Δy) dengan selisih interval horizontal (Δx)."
     },
     {
       "code": "INVERTED_SLOPE",
       "label": "Menghitung kemiringan terbalik (Δx / Δy alih-alih Δy / Δx)",
-      "remediation": "Kemiringan garis selalu rasio tegak terhadap mendatar: m = Δy / Δx (rise over run)."
+      "remediation": "Kemiringan garis selalu rasio perubahan vertikal terhadap mendatar: m = Δy / Δx (rise over run)."
     }
   ],
   "steps": [
@@ -35,8 +36,8 @@
       "kind": "encounter",
       "sortOrder": 1,
       "title": "Spidometer vs Waktu Tempuh",
-      "instruction": "Pikirkan paradoks speedometer berikut.",
-      "content": "Sebuah mobil menempuh perjalanan Jakarta–Bandung sejauh 140 km dalam waktu tepat 2 jam. Jika kita hitung rata-ratanya:\n\n$$\\text{Kecepatan rata-rata} = \\frac{140\\text{ km}}{2\\text{ jam}} = 70\\text{ km/jam}$$\n\nNamun, apakah jarum spidometer mobil selalu menunjuk tepat pada angka 70 km/jam di setiap lampu merah, gerbang tol, dan tanjakan? Tentu tidak! Di sinilah kita membedakan antara **kecepatan rata-rata** dan **kecepatan sesaat**.",
+      "instruction": "Pikirkan paradoks speedometer mobil berikut.",
+      "content": "Sebuah mobil menempuh perjalanan Jakarta–Bandung sejauh $140\\text{ km}$ dalam waktu tepat $2\\text{ jam}$. Jika kita hitung rata-ratanya:\n\n$$\\text{Kecepatan rata-rata} = \\frac{140\\text{ km}}{2\\text{ jam}} = 70\\text{ km/jam}$$\n\nNamun, apakah jarum spidometer mobil selalu menunjuk tepat pada angka $70\\text{ km/jam}$ di setiap detik perjalanan? Tentu tidak! Ada saat mobil berhenti di lampu merah ($0\\text{ km/jam}$), melaju lambat di tanjakan, dan mengebut di jalan tol bebas hambatan ($110\\text{ km/jam}$).\n\nAngka $70\\text{ km/jam}$ adalah **laju perubahan rata-rata**, bukan apa yang terjadi di setiap saat!",
       "estimatedMinutes": 3,
       "accessibility": {
         "altText": "Analogi perjalanan mobil 140 km dalam 2 jam menghasilkan kecepatan rata-rata 70 km per jam.",
@@ -44,12 +45,74 @@
       }
     },
     {
+      "id": "40000000-0000-4000-8000-000000000026",
+      "kind": "explore",
+      "sortOrder": 2,
+      "title": "Eksplorasi Interaktif: Menggeser Garis Potong (Secant Line)",
+      "instruction": "Amati bagaimana garis potong menghubungkan dua titik pada kurva dan bagaimana kemiringannya mewakili laju rata-rata.",
+      "content": "Pada grafik posisi terhadap waktu $s = f(t)$, garis lurus yang menghubungkan titik awal $A(t_1, s_1)$ dan titik akhir $B(t_2, s_2)$ disebut **secant line** (garis potong kurva).\n\nKemiringan garis lurus ini adalah representasi geometris dari **laju perubahan rata-rata**:\n- Jika kamu memperlebar jarak antara titik $A$ dan $B$, garis potong hanya melihat hasil akhir.\n- Semua lekukan dan fluktuasi kurva diabaikan oleh garis potong.\n\nCoba amati: apa yang terjadi pada garis potong jika interval waktu antara titik $A$ dan $B$ kita buat semakin sempit?",
+      "estimatedMinutes": 3,
+      "config": {
+        "playgroundType": "calculus",
+        "interactiveMode": "secant-slope"
+      },
+      "accessibility": {
+        "altText": "Playground interaktif kurva posisi waktu dengan garis potong secant line yang menghubungkan titik A dan B.",
+        "screenReaderNote": "Manipulasi posisi titik untuk mengamati perubahan kemiringan secant line saat rentang horizontal dipersempit atau diperlebar."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000027",
+      "kind": "predict",
+      "sortOrder": 3,
+      "title": "Prediksi: Laju Pertumbuhan Tanaman Bambu",
+      "instruction": "Pilihlah prediksimu sebelum menghitung rumus kemiringan secara formal.",
+      "content": "Sebuah tunas bambu diamati pertumbuhannya di kebun sains:\n- Pada Hari ke-$2$, tingginya $20\\text{ cm}$.\n- Pada Hari ke-$5$, tingginya telah mencapai $80\\text{ cm}$.\n\nBerapakah laju pertumbuhan rata-rata tanaman bambu tersebut per hari?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Laju pertumbuhan per hari berarti kita mencari pertambahan tinggi dibagi dengan jumlah hari yang berlalu.",
+        "concept": "Laju perubahan rata-rata adalah rasio selisih output (tinggi) terhadap selisih input (hari): m = Δy / Δx.",
+        "strategy": "Hitung Δy = 80 - 20 = 60 cm, dan Δx = 5 - 2 = 3 hari. Lalu bagilah keduanya: 60 / 3.",
+        "solution": "Laju pertumbuhan rata-rata = (80 - 20) / (5 - 2) = 60 / 3 = 20 cm/hari."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-20",
+            "label": "20 cm/hari — diperoleh dari selisih tinggi (80 - 20) dibagi selisih hari (5 - 2) = 60 / 3",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Laju rata-rata adalah rasio perubahan tinggi per selisih hari (60 cm dibagi 3 hari = 20 cm/hari)."
+          },
+          {
+            "id": "opt-60",
+            "label": "60 cm/hari — karena total pertambahan tinggi bambu adalah 80 - 20 = 60 cm",
+            "isCorrect": false,
+            "misconceptionCode": "FORGOT_DELTA_X_DIVISION",
+            "feedback": "Hati-hati: 60 cm adalah pertambahan total (Δy) selama 3 hari, bukan laju rata-rata per hari. Kamu harus membaginya dengan interval hari (3 hari)."
+          },
+          {
+            "id": "opt-kebalik",
+            "label": "0.05 hari/cm — karena membagi interval hari dengan pertambahan tinggi (3 / 60)",
+            "isCorrect": false,
+            "misconceptionCode": "INVERTED_SLOPE",
+            "feedback": "Rumus kemiringan dan laju adalah Δy / Δx (tegak dibagi mendatar), bukan kebalikannya."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Pemahamanmu tentang rasio laju rata-rata sudah sangat akurat."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda: Menghitung laju pertumbuhan bambu dari hari ke-2 (20 cm) ke hari ke-5 (80 cm).",
+        "screenReaderNote": "Pilih opsi jawaban yang benar untuk menghitung laju rata-rata perubahan per hari."
+      }
+    },
+    {
       "id": "40000000-0000-4000-8000-000000000006",
       "kind": "understand",
-      "sortOrder": 2,
+      "sortOrder": 4,
       "title": "Kemiringan Tali Busur (Secant Line)",
-      "instruction": "Pelajari representasi geometris dari laju rata-rata.",
-      "content": "Jika kita menggambar grafik fungsi $y = f(x)$, laju perubahan rata-rata antara titik $A(x_1, f(x_1))$ dan $B(x_2, f(x_2))$ adalah kemiringan garis lurus yang menghubungkan kedua titik tersebut (disebut **secant line** atau garis potong):\n\n$$m_{\\text{sec}} = \\frac{\\Delta y}{\\Delta x} = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}$$\n\nGaris potong ini merata-ratakan semua lekukan kurva di antara titik $A$ dan $B$.",
+      "instruction": "Pelajari representasi geometris dan aljabar dari laju rata-rata.",
+      "content": "Jika kita menggambar grafik fungsi $y = f(x)$, laju perubahan rata-rata antara titik $A(x_1, f(x_1))$ dan $B(x_2, f(x_2))$ adalah kemiringan garis lurus yang menghubungkan kedua titik tersebut (disebut **secant line** atau garis potong):\n\n$$m_{\\text{sec}} = \\frac{\\Delta y}{\\Delta x} = \\frac{f(x_2) - f(x_1)}{x_2 - x_1}$$\n\nPerhatikan dua komponen penting:\n1. **Pembilang ($\\Delta y$)**: Total perubahan vertikal (*rise*).\n2. **Penyebut ($\\Delta x$)**: Lebar interval horizontal (*run*).\n\nGaris potong ini merata-ratakan semua dinamika kurva di antara titik $A$ dan $B$.",
       "estimatedMinutes": 3,
       "accessibility": {
         "altText": "Rumus matematis m secant sama dengan delta y dibagi delta x, atau f(x2) dikurangi f(x1) dibagi x2 dikurangi x1.",
@@ -59,15 +122,15 @@
     {
       "id": "40000000-0000-4000-8000-000000000007",
       "kind": "practice",
-      "sortOrder": 3,
+      "sortOrder": 5,
       "title": "Latihan: Laju Perubahan Rata-rata Fungsi Kuadrat",
       "instruction": "Hitunglah kemiringan secant line pada fungsi f(x) = x².",
-      "content": "Diketahui kurva fungsi $f(x) = x^2$. Kita memilih dua titik pada kurva:\n- Titik $A$ pada saat $x_1 = 1 \\implies f(1) = 1$\n- Titik $B$ pada saat $x_2 = 3 \\implies f(3) = 9$\n\nBerapakah laju perubahan rata-rata $m_{\\text{sec}} = \\frac{f(3) - f(1)}{3 - 1}$ kurva tersebut?",
+      "content": "Diketahui kurva fungsi kuadrat $f(x) = x^2$. Kita memilih dua titik pada kurva tersebut:\n- Titik $A$ pada saat $x_1 = 1 \\implies f(1) = 1^2 = 1$\n- Titik $B$ pada saat $x_2 = 3 \\implies f(3) = 3^2 = 9$\n\nBerapakah laju perubahan rata-rata $m_{\\text{sec}} = \\frac{f(3) - f(1)}{3 - 1}$ kurva tersebut?",
       "estimatedMinutes": 3,
       "hints": {
-        "orientation": "Gunakan rumus kemiringan garis m = Δy / Δx.",
-        "concept": "Δy = f(3) - f(1) = 9 - 1 = 8. Δx = 3 - 1 = 2.",
-        "strategy": "Bagilah Δy dengan Δx (8 dibagi 2).",
+        "orientation": "Gunakan rumus kemiringan garis potong m = Δy / Δx.",
+        "concept": "Hitung pembilang Δy = f(3) - f(1) = 9 - 1 = 8, dan penyebut Δx = 3 - 1 = 2.",
+        "strategy": "Bagilah nilai Δy dengan Δx (8 dibagi 2).",
         "solution": "m = (9 - 1) / (3 - 1) = 8 / 2 = 4."
       },
       "evaluation": {
@@ -75,17 +138,17 @@
         "expectedValue": 4,
         "tolerance": 0.001,
         "units": "",
-        "feedbackCorrect": "Luar biasa! Kemiringan secant line adalah 4.",
+        "feedbackCorrect": "Luar biasa! Kemiringan secant line antara titik (1, 1) dan (3, 9) adalah 4.",
         "misconceptions": [
           {
             "code": "FORGOT_DELTA_X_DIVISION",
             "triggerValue": 8,
-            "feedback": "Kamu baru menghitung Δy (9 - 1 = 8). Jangan lupa membaginya dengan interval Δx (3 - 1 = 2)."
+            "feedback": "Kamu baru menghitung perubahan total Δy (9 - 1 = 8). Jangan lupa membaginya dengan selisih interval Δx (3 - 1 = 2) sehingga menghasilkan 4."
           },
           {
             "code": "INVERTED_SLOPE",
             "triggerValue": 0.25,
-            "feedback": "Kemiringan adalah Δy / Δx, bukan kebalikannya Δx / Δy."
+            "feedback": "Kemiringan adalah Δy / Δx (8 / 2 = 4), bukan kebalikannya Δx / Δy (2 / 8 = 0.25)."
           }
         ]
       },
@@ -93,6 +156,44 @@
         "altText": "Soal latihan numerik menghitung kemiringan secant line antara titik (1, 1) dan (3, 9) pada kurva f(x) = x kuadrat.",
         "screenReaderNote": "Hitung rasio perubahan tegak f(3) - f(1) dibagi perubahan mendatar 3 - 1, lalu masukkan jawaban numerik."
       }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000000028",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Paradoks Spidometer dan Batasan Laju Rata-rata",
+      "instruction": "Tuliskan pemahamanmu mengenai keterbatasan laju perubahan rata-rata dalam memprediksi kondisi seketika.",
+      "content": "Seorang pengemudi menabrak tiang lampu di pinggir jalan. Polisi mencatat kecepatan mobil sesaat saat benturan adalah $100\\text{ km/jam}$. Namun pengemudi membela diri di pengadilan: *'Saya berkendara sejauh 50 km selama 1 jam penuh, jadi kecepatan rata-rata saya hanya 50 km/jam! Mana mungkin saya menabrak dengan kecepatan 100 km/jam?!'*.\n\nBagaimana kamu menjelaskan letak kesalahan pembelaan pengemudi tersebut secara matematis? Jelaskan perbedaan antara laju rata-rata pada garis potong (*secant line*) dengan laju sesaat yang ditunjukkan oleh spidometer.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Tantangan Explain It Back meminta peserta didik membongkar paradoks kecepatan rata-rata vs kecepatan tabrakan sesaat.",
+        "screenReaderNote": "Ketikkan penalaran konseptualmu di area teks untuk menjelaskan mengapa laju rata-rata tidak mewakili kondisi sesaat."
+      }
     }
-  ]
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-laju-perubahan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-laju-rasio",
+        "name": "Rasio Perubahan per Satuan (Δy/Δx)",
+        "description": "Menjelaskan bahwa laju perubahan adalah rasio selisih perpindahan per selisih waktu, bukan hanya perpindahan total",
+        "weight": 1
+      },
+      {
+        "id": "crit-laju-secant",
+        "name": "Kemiringan Garis Potong (Secant Line)",
+        "description": "Menjelaskan bagaimana garis potong merata-ratakan seluruh interval waktu dan mengabaikan fluktuasi di tengah perjalanan",
+        "weight": 1
+      },
+      {
+        "id": "crit-laju-paradoks",
+        "name": "Perbedaan Rata-rata vs Sesaat",
+        "description": "Menjelaskan mengapa kecepatan saat benturan (sesaat) bisa jauh lebih tinggi daripada kecepatan rata-rata seluruh perjalanan",
+        "weight": 1
+      }
+    ]
+  }
 }

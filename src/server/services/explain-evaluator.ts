@@ -82,7 +82,61 @@ export async function evaluateExplanation(
     let passed = false;
     let feedback = "";
 
-    if (crit.id.startsWith("crit-bilangan-garis")) {
+    if (crit.id.startsWith("crit-perubahan-kontinu")) {
+      const matchKeywords = ["kontinu", "diskrit", "mulus", "lompat", "alir", "tangga", "lereng", "celah", "tahap"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 2 || (cleanText.includes("diskrit") && cleanText.includes("kontinu"))) {
+        passed = true;
+        feedback = "Bagus! Kamu membedakan dengan jelas antara lompatan bertahap (diskrit) dan aliran mulus tanpa jeda (kontinu).";
+      } else {
+        feedback = "Jelaskan perbedaan mendasar: diskrit memiliki lompatan/celah terpisah, sedangkan kontinu mengalir mulus tanpa celah.";
+      }
+    } else if (crit.id.startsWith("crit-perubahan-delta")) {
+      const matchKeywords = ["delta", "selisih", "akhir", "awal", "kurang", "arah", "perubahan", "tanda"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 2 || cleanText.includes("delta") || cleanText.includes("selisih")) {
+        passed = true;
+        feedback = "Tepat! Kamu memahami notasi delta sebagai selisih nilai akhir dikurangi nilai awal.";
+      } else {
+        feedback = "Sebutkan makna simbol delta (Δ) sebagai selisih nilai akhir terhadap nilai awal.";
+      }
+    } else if (crit.id.startsWith("crit-perubahan-aplikasi")) {
+      const matchKeywords = ["alam", "roket", "gerak", "kecepatan", "fisika", "waktu", "kalkulus", "nyata", "mulus"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 1 || cleanText.includes("alam") || cleanText.includes("roket") || cleanText.includes("gerak")) {
+        passed = true;
+        feedback = "Hebat! Kamu menghubungkan mengapa model kontinu sangat krusial untuk memahami dinamika gerak nyata di alam.";
+      } else {
+        feedback = "Jelaskan mengapa gerak nyata di alam (seperti roket atau mobil) membutuhkan pemodelan kontinu.";
+      }
+    } else if (crit.id.startsWith("crit-laju-rasio")) {
+      const matchKeywords = ["rasio", "bagi", "satuan", "selisih", "jarak", "waktu", "delta", "per", "kecepatan"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 2 || cleanText.includes("rasio") || cleanText.includes("bagi")) {
+        passed = true;
+        feedback = "Bagus! Kamu menegaskan bahwa laju adalah rasio perbandingan per satuan interval, bukan hanya perubahan total.";
+      } else {
+        feedback = "Tekankan bahwa laju perubahan adalah rasio perubahan vertikal dibagi perubahan horizontal (Δy / Δx).";
+      }
+    } else if (crit.id.startsWith("crit-laju-secant")) {
+      const matchKeywords = ["secant", "potong", "garis", "kurva", "dua titik", "tali busur", "rata-rata", "lurus"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 2 || cleanText.includes("secant") || cleanText.includes("potong")) {
+        passed = true;
+        feedback = "Tepat! Kamu mengidentifikasi secant line sebagai garis potong yang merata-ratakan dinamika kurva.";
+      } else {
+        feedback = "Jelaskan representasi geometris garis potong (secant line) yang menghubungkan dua titik pada kurva.";
+      }
+    } else if (crit.id.startsWith("crit-laju-paradoks")) {
+      const matchKeywords = ["sesaat", "spidometer", "benturan", "tabrak", "fluktuasi", "berhenti", "ngebut", "waktu", "100", "50"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 1 || cleanText.includes("sesaat") || cleanText.includes("spidometer") || cleanText.includes("benturan") || cleanText.includes("tabrak")) {
+        passed = true;
+        feedback = "Sempurna! Kamu membongkar paradoks bahwa kecepatan benturan sesaat bisa jauh melebihi kecepatan rata-rata perjalanan.";
+      } else {
+        feedback = "Jelaskan mengapa kecepatan rata-rata tidak bisa memprediksi kecepatan seketika pada saat benturan terjadi.";
+      }
+    } else if (crit.id.startsWith("crit-bilangan-garis")) {
       const matchKeywords = ["garis", "kiri", "kanan", "arah", "posisi", "mundur"];
       const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
       if (hitCount >= 2 || cleanText.includes("kiri")) {
@@ -396,6 +450,15 @@ export async function evaluateExplanation(
         feedback = "Tepat! Kamu menekankan peran limit saat selisih jarak mendekati nol tanpa membagi nol.";
       } else {
         feedback = "Jelaskan mengapa kita menggunakan limit saat selisih jarak horizontal (h) mendekati nol.";
+      }
+    } else if (crit.id.includes("meaning") || crit.name.toLowerCase().includes("makna")) {
+      const matchKeywords = ["laju", "sesaat", "kemiringan", "kecepatan", "gradien", "perubahan", "f'(x)"];
+      const hitCount = matchKeywords.filter((k) => cleanText.includes(k)).length;
+      if (hitCount >= 1 || cleanText.includes("kemiringan") || cleanText.includes("laju") || cleanText.includes("gradien")) {
+        passed = true;
+        feedback = "Hebat! Kamu memahami makna f'(x) sebagai kemiringan kurva atau laju perubahan sesaat.";
+      } else {
+        feedback = "Jelaskan makna f'(x) sebagai kemiringan garis singgung atau laju perubahan seketika pada titik tersebut.";
       }
     } else {
       // General semantic matching with words from criterion name and description

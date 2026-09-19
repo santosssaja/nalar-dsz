@@ -13,6 +13,7 @@ const TutorRequestSchema = z.object({
   model: z.string().optional(),
   apiKey: z.string().optional(),
   endpoint: z.string().optional(),
+  stream: z.boolean().optional().default(false),
 });
 
 export async function POST(req: NextRequest) {
@@ -28,7 +29,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { conceptSlug, stepId, userQuestion, provider, model, apiKey, endpoint } = parsed.data;
+    const { conceptSlug, stepId, userQuestion, provider, model, apiKey, endpoint, stream: requestStream } = parsed.data;
+    const isStreamRequested = requestStream || req.headers.get("accept")?.includes("text/event-stream");
 
     const concept = getConceptBySlug(conceptSlug);
     if (!concept) {
@@ -52,6 +54,47 @@ export async function POST(req: NextRequest) {
     };
 
     const ai = getAiProvider(provider as AiProviderName);
+
+    // Streaming mode (SSE)
+    if (isStreamRequested) {
+      const encoder = new TextEncoder();
+      const readableStream = new ReadableStream({
+        async start(controller) {
+          try {
+            const stream = ai.socraticGuidanceStream
+              ? ai.socraticGuidanceStream(context, { model, apiKey, endpoint })
+              : (async function* () {
+                  const res = await ai.socraticGuidance(context, { model, apiKey, endpoint });
+                  yield { type: "text" as const, content: res.text };
+                  yield { type: "done" as const, provider: res.provider, model: res.model };
+                })();
+
+            for await (const chunk of stream) {
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify(chunk)}\n\n`));
+            }
+            controller.close();
+          } catch (err) {
+            console.error("Stream error in AI Tutor route:", err);
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({ type: "error", content: "Terjadi gangguan saat streaming jawaban." })}\n\n`
+              )
+            );
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(readableStream, {
+        headers: {
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "Cache-Control": "no-cache, no-transform",
+          "Connection": "keep-alive",
+        },
+      });
+    }
+
+    // Static JSON mode
     const result = await ai.socraticGuidance(context, {
       model,
       apiKey,

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { getDomains, getModules } from "@/content/loader";
 
 export default function DomainsPage() {
@@ -40,7 +41,7 @@ export default function DomainsPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 {domainModules.map((mod) => (
-                  <a
+                  <Link
                     key={mod.id}
                     href={`/modules/${mod.slug}`}
                     className="p-5 rounded-xl border border-border hover:border-accent bg-surface hover:bg-surface-raised transition-all group block space-y-3"
@@ -68,7 +69,7 @@ export default function DomainsPage() {
                         {mod.conceptSlugs.length} Konsep
                       </span>
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Sparkles } from "lucide-react";
+import { MathRenderer } from "@/components/ui/katex-math";
 
 export function CalculusPlayground() {
   const [h, setH] = useState<number>(1.0);
@@ -41,17 +42,21 @@ export function CalculusPlayground() {
   return (
     <div className="space-y-4 p-4 rounded-xl bg-surface border border-border">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
-        <span className="font-semibold text-text">
-          Visualisasi Kurva $f(x) = x^2$ dan Garis Potong (Secant)
+        <span className="font-semibold text-text inline-flex items-center gap-1">
+          <span>Visualisasi Kurva</span>
+          <MathRenderer inline content="$f(x) = x^2$" />
+          <span>dan Garis Potong (Secant)</span>
         </span>
         <div className="flex items-center gap-4 text-text-muted font-mono">
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-accent"></span>
-            Titik $A(1, 1)$
+            <span>Titik</span>
+            <MathRenderer inline content="$A(1, 1)$" />
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-warning"></span>
-            Titik $B({xB.toFixed(2)}, {yB.toFixed(2)})$
+            <span>Titik</span>
+            <MathRenderer inline content={`$B(${xB.toFixed(2)}, ${yB.toFixed(2)})$`} />
           </span>
         </div>
       </div>
@@ -116,14 +121,21 @@ export function CalculusPlayground() {
       <div className="space-y-2 pt-2 border-t border-border-subtle">
         <div className="flex justify-between items-center text-xs">
           <label htmlFor="h-slider" className="font-semibold text-text flex items-center gap-1.5">
-            <span>Ubah Jarak Titik B ($h$):</span>
+            <span className="inline-flex items-center gap-1">
+              <span>Ubah Jarak Titik B (</span>
+              <MathRenderer inline content="$h$" />
+              <span>):</span>
+            </span>
             <span className="font-mono text-accent text-sm font-bold">{h.toFixed(2)}</span>
           </label>
           <span className="text-text-muted flex items-center gap-1">
             {h <= 0.05 ? (
               <>
                 <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
-                <span className="text-accent font-semibold">h mendekati nol (Limit dicapai!)</span>
+                <span className="text-accent font-semibold flex items-center gap-1">
+                  <MathRenderer inline content="$h$" />
+                  <span>mendekati nol (Limit dicapai!)</span>
+                </span>
               </>
             ) : (
               "Tarik slider ke kiri mendekati 0"
@@ -153,15 +165,27 @@ export function CalculusPlayground() {
       {/* Dynamic Data Panel */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3 rounded-lg bg-surface-raised text-xs">
         <div>
-          <span className="text-text-muted block">Selisih Absis ($h = \Delta x$):</span>
+          <span className="text-text-muted flex items-center gap-1">
+            <span>Selisih Absis (</span>
+            <MathRenderer inline content="$h = \Delta x$" />
+            <span>):</span>
+          </span>
           <span className="font-mono font-bold text-text">{h.toFixed(2)}</span>
         </div>
         <div>
-          <span className="text-text-muted block">Kemiringan Secant (m_sec):</span>
+          <span className="text-text-muted flex items-center gap-1">
+            <span>Kemiringan Secant (</span>
+            <MathRenderer inline content="$m_{\text{sec}}$" />
+            <span>):</span>
+          </span>
           <span className="font-mono font-bold text-accent">{slopeSecant.toFixed(3)}</span>
         </div>
         <div>
-          <span className="text-text-muted block">Kemiringan Tangent ($f&apos;(1)$):</span>
+          <span className="text-text-muted flex items-center gap-1">
+            <span>Kemiringan Tangent (</span>
+            <MathRenderer inline content="$f'(1)$" />
+            <span>):</span>
+          </span>
           <span className="font-mono font-bold text-success">{slopeTangent.toFixed(3)}</span>
         </div>
       </div>

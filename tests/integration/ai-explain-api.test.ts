@@ -92,6 +92,42 @@ describe("AI Engine Endpoints (Providers, Tutor, Teach Mode)", () => {
     expect(json.data.answer.length).toBeGreaterThan(10);
   });
 
+  it("POST /api/v1/ai/tutor supports real-time streaming with thought and text chunks", async () => {
+    const { POST: tutorHandler } = await import("@/app/api/v1/ai/tutor/route");
+    const payload = {
+      conceptSlug: "definisi-turunan",
+      userQuestion: "Bagaimana cara kerja limit pada turunan?",
+      provider: "curated",
+      stream: true,
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/tutor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const res = await tutorHandler(req);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/event-stream");
+
+    const reader = res.body?.getReader();
+    expect(reader).toBeDefined();
+
+    const decoder = new TextDecoder();
+    let streamText = "";
+    while (true) {
+      const { done, value } = await reader!.read();
+      if (done) break;
+      streamText += decoder.decode(value);
+    }
+
+    expect(streamText).toContain("data: ");
+    expect(streamText).toContain('"type":"thought"');
+    expect(streamText).toContain('"type":"text"');
+    expect(streamText).toContain('"type":"done"');
+  });
+
   it("POST /api/v1/ai/teach evaluates learner teaching Nai in Teach Mode", async () => {
     const { POST: teachHandler } = await import("@/app/api/v1/ai/teach/route");
     const payload = {

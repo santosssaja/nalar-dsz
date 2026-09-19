@@ -1,6 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  Lightbulb,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+} from "lucide-react";
 import { HintLayer, HintLevel } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 
@@ -10,29 +20,66 @@ interface HintDrawerProps {
   onHintRequested?: (level: HintLevel, count: number) => void;
 }
 
-const HINT_LEVEL_LABELS: Record<HintLevel, { title: string; desc: string }> = {
+const HINT_COOLDOWN_SECONDS = 8;
+
+const HINT_METADATA: Record<
+  HintLevel,
+  { number: number; name: string; title: string; desc: string }
+> = {
   orientation: {
+    number: 1,
+    name: "Orientasi",
     title: "1. Orientasi (Melihat Fakta)",
-    desc: "Membantu menyorot data atau fakta penting dalam permasalahan.",
+    desc: "Menyorot data atau fakta penting dalam permasalahan.",
   },
   concept: {
+    number: 2,
+    name: "Konsep",
     title: "2. Konsep (Pengingat Materi)",
-    desc: "Mengingatkan kembali konsep matematika yang mendasari soal.",
+    desc: "Mengingatkan kembali konsep dasar yang mendasari soal.",
   },
   strategy: {
+    number: 3,
+    name: "Strategi",
     title: "3. Strategi (Arah Langkah)",
-    desc: "Memberi petunjuk jalan keluar tanpa menghitung nilai akhir.",
+    desc: "Petunjuk metode langkah penyelesaian tanpa membocorkan jawaban.",
   },
   solution: {
+    number: 4,
+    name: "Solusi Lengkap",
     title: "4. Solusi Lengkap",
-    desc: "Menjelaskan penyelesaian menyeluruh dari awal hingga akhir.",
+    desc: "Penjelasan matematis menyeluruh dari awal hingga akhir.",
   },
 };
 
-export function HintDrawer({ hints, onHintRequested }: HintDrawerProps) {
+export function HintDrawer({
+  hints,
+  stepId,
+  onHintRequested,
+}: HintDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [unlockedLevels, setUnlockedLevels] = useState<HintLevel[]>([]);
-  const [showSolutionConfirm, setShowSolutionConfirm] = useState(false);
+  const [viewingIndex, setViewingIndex] = useState<number>(0);
+  const [cooldown, setCooldown] = useState<number>(0);
+  const [showSolutionConfirm, setShowSolutionConfirm] = useState<boolean>(false);
+
+  // Reset state when stepId changes
+  useEffect(() => {
+    setUnlockedLevels([]);
+    setViewingIndex(0);
+    setCooldown(0);
+    setShowSolutionConfirm(false);
+    setIsOpen(false);
+  }, [stepId]);
+
+  // Cooldown countdown interval
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const interval = setInterval(() => {
+      setCooldown((prev) => (prev > 1 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [cooldown]);
 
   if (!hints) return null;
 
@@ -43,6 +90,8 @@ export function HintDrawer({ hints, onHintRequested }: HintDrawerProps) {
     hints.solution ? "solution" : null,
   ].filter(Boolean) as HintLevel[];
 
+  if (availableLevels.length === 0) return null;
+
   const handleUnlockNext = (level: HintLevel) => {
     if (level === "solution" && !showSolutionConfirm) {
       setShowSolutionConfirm(true);
@@ -52,109 +101,224 @@ export function HintDrawer({ hints, onHintRequested }: HintDrawerProps) {
     if (!unlockedLevels.includes(level)) {
       const nextUnlocked = [...unlockedLevels, level];
       setUnlockedLevels(nextUnlocked);
+      // Auto-overwrite the displayed view to the newly unlocked hint
+      setViewingIndex(nextUnlocked.length - 1);
       setShowSolutionConfirm(false);
+      setCooldown(HINT_COOLDOWN_SECONDS);
+      setIsOpen(true);
       onHintRequested?.(level, nextUnlocked.length);
     }
   };
 
   const nextToUnlock = availableLevels.find((lvl) => !unlockedLevels.includes(lvl));
+  const currentLevel = unlockedLevels[viewingIndex];
+  const currentHintText = currentLevel ? hints[currentLevel] : null;
+  const currentMeta = currentLevel ? HINT_METADATA[currentLevel] : null;
+
+  // Unopened trigger state when no hints have been unlocked yet
+  if (unlockedLevels.length === 0) {
+    return (
+      <div className="mt-4">
+        <button
+          type="button"
+          onClick={() => {
+            setIsOpen(true);
+            if (availableLevels[0]) {
+              handleUnlockNext(availableLevels[0]);
+            }
+          }}
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-accent/30 bg-accent-muted/40 hover:bg-accent-muted text-accent text-xs font-semibold transition-all shadow-2xs hover:shadow-xs"
+        >
+          <Lightbulb className="w-3.5 h-3.5 text-accent" />
+          <span>Butuh Bantuan? Buka Petunjuk Bertingkat (Adaptive Hints)</span>
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="mt-6 border border-border rounded-xl bg-surface overflow-hidden">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-5 py-3.5 flex items-center justify-between text-left text-sm font-semibold text-text hover:bg-surface-raised transition-colors focus-visible:ring-2 focus-visible:ring-accent"
-        aria-expanded={isOpen}
-      >
-        <span className="flex items-center gap-2">
-          <span className="w-5 h-5 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xs font-bold">
-            ?
+    <div className="mt-4 border border-border rounded-xl bg-surface-raised overflow-hidden shadow-xs">
+      {/* Top Single Header Row */}
+      <div className="px-4 py-2.5 bg-surface border-b border-border flex items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="p-1 rounded-md bg-accent/15 text-accent flex items-center justify-center shrink-0">
+            <Lightbulb className="w-3.5 h-3.5" />
           </span>
-          <span>Butuh Bantuan? (Adaptive Hints)</span>
-        </span>
-        <span className="text-xs text-text-muted font-mono">
-          {unlockedLevels.length} / {availableLevels.length} Terbuka {isOpen ? "▲" : "▼"}
-        </span>
-      </button>
+          <div className="flex items-center gap-1.5 truncate">
+            <span className="font-bold text-text">
+              Petunjuk {viewingIndex + 1}/{unlockedLevels.length}:
+            </span>
+            <span className="text-accent font-semibold truncate">
+              {currentMeta?.name}
+            </span>
+          </div>
+        </div>
 
-      {isOpen && (
-        <div className="p-5 border-t border-border space-y-4 bg-surface-raised">
-          <p className="text-xs text-text-muted leading-relaxed">
-            Hint diatur berlapis dari petunjuk ringan hingga penjelasan lengkap. Menggunakan lebih sedikit hint membuktikan kemandirian belajarmu!
-          </p>
-
-          <div className="space-y-3">
-            {availableLevels.map((lvl) => {
+        {/* Level Pager / Stepper Buttons */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          {/* Level Pills: Allows jumping directly to previously unlocked hints */}
+          <div className="hidden sm:flex items-center gap-1 mr-1">
+            {availableLevels.map((lvl, idx) => {
               const isUnlocked = unlockedLevels.includes(lvl);
-              const meta = HINT_LEVEL_LABELS[lvl];
-              const hintContent = hints[lvl];
-
+              const isViewing = unlockedLevels[viewingIndex] === lvl;
               return (
-                <div
+                <button
                   key={lvl}
-                  className={`p-4 rounded-lg border transition-all ${
-                    isUnlocked
-                      ? "border-accent/30 bg-accent-muted/20"
-                      : "border-border-subtle bg-surface opacity-75"
+                  type="button"
+                  disabled={!isUnlocked}
+                  onClick={() => {
+                    const foundIndex = unlockedLevels.indexOf(lvl);
+                    if (foundIndex !== -1) setViewingIndex(foundIndex);
+                  }}
+                  title={HINT_METADATA[lvl].title}
+                  className={`w-6 h-6 rounded-md text-[11px] font-bold font-mono transition-all flex items-center justify-center ${
+                    isViewing
+                      ? "bg-accent text-surface-raised shadow-xs ring-1 ring-accent"
+                      : isUnlocked
+                      ? "bg-surface-raised border border-border text-text hover:bg-accent-muted hover:text-accent"
+                      : "bg-surface text-text-muted/40 border border-border-subtle cursor-not-allowed"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="font-semibold text-xs text-text">{meta.title}</span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded text-text-muted bg-surface border border-border">
-                      {isUnlocked ? "Terbuka" : "Terkunci"}
-                    </span>
-                  </div>
-
-                  {isUnlocked ? (
-                    <div className="text-xs text-text mt-2 font-normal">
-                      <MathRenderer content={hintContent || ""} />
-                    </div>
-                  ) : (
-                    <p className="text-xs text-text-muted italic">{meta.desc}</p>
-                  )}
-                </div>
+                  {idx + 1}
+                </button>
               );
             })}
           </div>
 
-          {showSolutionConfirm && (
-            <div className="p-4 rounded-lg bg-warning-muted border border-warning/30 space-y-2">
-              <p className="text-xs font-semibold text-text">
-                Buka Solusi Lengkap?
-              </p>
-              <p className="text-xs text-text-muted">
-                Membuka solusi langsung akan mengurangi skor bukti kemandirian pada dimensi practice.
-              </p>
-              <div className="flex gap-2 pt-1">
-                <button
-                  type="button"
-                  onClick={() => handleUnlockNext("solution")}
-                  className="px-3 py-1.5 rounded text-xs font-medium bg-accent text-surface-raised hover:bg-accent-hover"
-                >
-                  Ya, Buka Solusi
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowSolutionConfirm(false)}
-                  className="px-3 py-1.5 rounded text-xs font-medium border border-border hover:bg-surface text-text"
-                >
-                  Batal
-                </button>
-              </div>
-            </div>
-          )}
+          <button
+            type="button"
+            disabled={viewingIndex <= 0}
+            onClick={() => setViewingIndex((prev) => Math.max(0, prev - 1))}
+            aria-label="Lihat hint sebelumnya"
+            title="Lihat hint sebelumnya"
+            className="p-1.5 rounded-lg border border-border bg-surface hover:bg-surface-raised disabled:opacity-40 disabled:hover:bg-surface text-text transition-colors"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+          </button>
 
-          {nextToUnlock && !showSolutionConfirm && (
-            <button
-              type="button"
-              onClick={() => handleUnlockNext(nextToUnlock)}
-              className="w-full py-2.5 px-4 rounded-lg text-xs font-medium bg-surface border border-border hover:bg-surface-overlay text-text transition-colors flex items-center justify-center gap-2"
-            >
-              <span>Buka Petunjuk: {HINT_LEVEL_LABELS[nextToUnlock].title}</span>
-            </button>
-          )}
+          <span className="text-xs font-mono font-bold text-text px-1">
+            {viewingIndex + 1}/{unlockedLevels.length}
+          </span>
+
+          <button
+            type="button"
+            disabled={viewingIndex >= unlockedLevels.length - 1}
+            onClick={() =>
+              setViewingIndex((prev) =>
+                Math.min(unlockedLevels.length - 1, prev + 1)
+              )
+            }
+            aria-label="Lihat hint selanjutnya"
+            title="Lihat hint selanjutnya"
+            className="p-1.5 rounded-lg border border-border bg-surface hover:bg-surface-raised disabled:opacity-40 disabled:hover:bg-surface text-text transition-colors"
+          >
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Sembunyikan isi hint" : "Tampilkan isi hint"}
+            className="p-1.5 rounded-lg border border-border hover:bg-surface text-text-muted hover:text-text transition-colors ml-1"
+          >
+            {isOpen ? (
+              <ChevronUp className="w-3.5 h-3.5" />
+            ) : (
+              <ChevronDown className="w-3.5 h-3.5" />
+            )}
+          </button>
         </div>
+      </div>
+
+      {isOpen && (
+        <>
+          {/* Active Hint Content (Single Container - Replaced dynamically) */}
+          <div
+            role="region"
+            aria-live="polite"
+            aria-label="Isi petunjuk aktif"
+            className="p-4 text-xs text-text leading-relaxed"
+          >
+            {currentHintText ? (
+              <MathRenderer content={currentHintText} />
+            ) : (
+              <span className="text-text-muted italic">Tidak ada konten petunjuk.</span>
+            )}
+          </div>
+
+          {/* Bottom Action / Cooldown / Solution Confirmation Bar */}
+          <div className="px-4 py-2.5 bg-surface border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+            {showSolutionConfirm ? (
+              <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-warning-muted/40 p-2.5 rounded-lg border border-warning/30">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-warning shrink-0" />
+                  <span className="text-[11px] text-text font-medium">
+                    Membuka solusi langsung akan mengurangi skor bukti kemandirian. Yakin?
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleUnlockNext("solution")}
+                    className="px-2.5 py-1 rounded text-xs font-semibold bg-warning text-surface-raised hover:opacity-90"
+                  >
+                    Ya, Buka Solusi
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowSolutionConfirm(false)}
+                    className="px-2.5 py-1 rounded text-xs font-medium border border-border bg-surface hover:bg-surface-raised text-text"
+                  >
+                    Batal
+                  </button>
+                </div>
+              </div>
+            ) : nextToUnlock ? (
+              <>
+                <div className="flex items-center gap-2 text-[11px] text-text-muted">
+                  {cooldown > 0 ? (
+                    <span className="inline-flex items-center gap-1.5 text-accent font-medium">
+                      <Clock className="w-3.5 h-3.5 animate-spin" />
+                      <span>
+                        Pikirkan petunjuk ini ({cooldown}d) sebelum membuka tingkat berikutnya...
+                      </span>
+                    </span>
+                  ) : (
+                    <span>
+                      Tersedia: {HINT_METADATA[nextToUnlock].title}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  disabled={cooldown > 0}
+                  onClick={() => handleUnlockNext(nextToUnlock)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-2xs self-end sm:self-auto disabled:opacity-40 disabled:cursor-not-allowed bg-accent text-surface-raised hover:bg-accent-hover"
+                >
+                  {cooldown > 0 ? (
+                    <>
+                      <Clock className="w-3 h-3" />
+                      <span>Tunggu {cooldown}s</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Buka Hint {unlockedLevels.length + 1}: {HINT_METADATA[nextToUnlock].name}</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </>
+                  )}
+                </button>
+              </>
+            ) : (
+              <div className="w-full flex items-center justify-between text-text-muted text-[11px]">
+                <span className="flex items-center gap-1 text-success font-medium">
+                  <Sparkles className="w-3.5 h-3.5 text-success" />
+                  <span>Seluruh tingkatan petunjuk telah terbuka. Gunakan tombol panah untuk meninjau kembali.</span>
+                </span>
+              </div>
+            )}
+          </div>
+        </>
       )}
     </div>
   );

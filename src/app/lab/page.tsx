@@ -2,7 +2,94 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import {
+  TrendingUp,
+  Ruler,
+  Compass,
+  FlaskConical,
+  Dna,
+  ArrowRight,
+  Sparkles,
+  Layers,
+  LucideIcon,
+} from "lucide-react";
 import { MathRenderer } from "@/components/ui/katex-math";
+import { NumberLinePlayground } from "@/features/learning/components/playgrounds/number-line-playground";
+import { VectorPlayground } from "@/features/learning/components/playgrounds/vector-playground";
+import { MatterPlayground } from "@/features/learning/components/playgrounds/matter-playground";
+import { BiologicalScalePlayground } from "@/features/learning/components/playgrounds/biological-scale-playground";
+
+type LabStationId = "calculus" | "number-line" | "vector" | "matter" | "biology";
+
+interface LabStation {
+  id: LabStationId;
+  title: string;
+  domain: string;
+  domainSlug: string;
+  badgeColor: string;
+  icon: LucideIcon;
+  description: string;
+  moduleSlug: string;
+  moduleTitle: string;
+}
+
+const LAB_STATIONS: LabStation[] = [
+  {
+    id: "calculus",
+    title: "Kalkulus & Turunan",
+    domain: "Matematika Lanjut",
+    domainSlug: "matematika",
+    badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+    icon: TrendingUp,
+    description: "Laboratorium eksplorasi kurva fungsi, garis singgung sesaat, garis potong secant saat h mendekati nol, dan grafik turunan formal f'(x).",
+    moduleSlug: "turunan",
+    moduleTitle: "Modul Turunan & Diferensial",
+  },
+  {
+    id: "number-line",
+    title: "Garis Bilangan Interaktif",
+    domain: "Fondasi Matematika",
+    domainSlug: "matematika",
+    badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+    icon: Ruler,
+    description: "Eksplorasi posisi, titik acuan origin (nol), besaran jarak (magnitude), serta pembuktian logis pengurangan bilangan negatif a - (-b).",
+    moduleSlug: "fondasi-matematika",
+    moduleTitle: "Modul Fondasi Matematika",
+  },
+  {
+    id: "vector",
+    title: "Vektor & Gaya 2D",
+    domain: "Fisika Mekanika",
+    domainSlug: "fisika",
+    badgeColor: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+    icon: Compass,
+    description: "Manipulasi dua vektor gaya/kecepatan, sudut relatif rotasi 0° hingga 180°, hukum kosinus, dan visualisasi geometris resultan.",
+    moduleSlug: "fisika-mekanika",
+    moduleTitle: "Modul Fisika Mekanika",
+  },
+  {
+    id: "matter",
+    title: "Kinetika Partikel & Materi",
+    domain: "Kimia Dasar",
+    domainSlug: "kimia",
+    badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
+    icon: FlaskConical,
+    description: "Simulasi gerakan partikel termal dalam fasa padat, cair, dan gas, pengaruh energi kinetik temperatur Kelvin, serta dinamika materi.",
+    moduleSlug: "kimia-dasar",
+    moduleTitle: "Modul Kimia Dasar",
+  },
+  {
+    id: "biology",
+    title: "Skala Organisasi Hayati",
+    domain: "Biologi Dasar",
+    domainSlug: "biologi",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+    icon: Dna,
+    description: "Eksplorasi hierarki organisasi kehidupan dari skala sub-mikroskopis molekul hingga organisme utuh dan pengamatan sifat emergen.",
+    moduleSlug: "biologi-dasar",
+    moduleTitle: "Modul Biologi Dasar",
+  },
+];
 
 interface LabFunction {
   id: string;
@@ -63,7 +150,7 @@ const LAB_FUNCTIONS: LabFunction[] = [
   },
 ];
 
-export default function NalarLabPage() {
+function CalculusLabView() {
   const [selectedFuncId, setSelectedFuncId] = useState<string>("quadratic");
   const [x0, setX0] = useState<number>(1.0);
   const [showDerivativeCurve, setShowDerivativeCurve] = useState<boolean>(true);
@@ -138,28 +225,11 @@ export default function NalarLabPage() {
   const interpretation = getSlopeInterpretation(slope);
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto py-4">
-      {/* Header */}
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent">
-          <span>Laboratorium Eksperimen</span>
-          <span>•</span>
-          <span>Nalar Lab Kalkulus</span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-text tracking-tight">
-          Nalar Lab: Laboratorium Turunan Interaktif
-        </h1>
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed flex flex-wrap items-center gap-1">
-          <span>Eksplorasi visual tanpa batas untuk memahami bagaimana kemiringan garis singgung berubah di setiap titik, serta melihat bagaimana kurva turunan</span>
-          <MathRenderer inline content="$f'(x)$" />
-          <span>merekam laju perubahan tersebut.</span>
-        </p>
-      </div>
-
+    <div className="space-y-6">
       {/* Function Selection Tabs */}
       <div className="space-y-2">
         <span className="text-xs font-bold uppercase tracking-wider text-text-muted">
-          Pilih Fungsi Eksperimen:
+          Pilih Fungsi Kurva:
         </span>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {LAB_FUNCTIONS.map((f) => (
@@ -198,14 +268,20 @@ export default function NalarLabPage() {
               </span>
             </div>
 
-            <div className="flex items-center gap-3 font-mono text-[11px] text-text-muted">
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-text inline-block" />
+            <div className="flex items-center gap-4 text-text-muted">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2.5 h-0.5 bg-accent inline-block"></span>
+                <span>Kurva</span>
                 <MathRenderer inline content="$f(x)$" />
               </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-2.5 h-0.5 bg-danger inline-block"></span>
+                <span>Garis Singgung</span>
+              </span>
               {showDerivativeCurve && (
-                <span className="flex items-center gap-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-accent inline-block" />
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-0.5 bg-purple-500 border-b border-dashed inline-block"></span>
+                  <span>Turunan</span>
                   <MathRenderer inline content="$f'(x)$" />
                 </span>
               )}
@@ -213,228 +289,394 @@ export default function NalarLabPage() {
           </div>
 
           {/* SVG Viewport */}
-          <div className="w-full aspect-[4/3] bg-surface rounded-xl border border-border relative overflow-hidden flex items-center justify-center select-none">
+          <div className="w-full aspect-[4/3] bg-surface rounded-xl border border-border-subtle overflow-hidden relative flex items-center justify-center">
             <svg
               viewBox="0 0 400 300"
-              className="w-full h-full"
-              aria-label="Kanvas grafik fungsi dan garis singgung interaktif"
+              className="w-full h-full select-none"
+              role="img"
+              aria-label={`Grafik fungsi ${activeFunc.name}`}
             >
+              {/* Grid Lines */}
+              <defs>
+                <pattern
+                  id="lab-grid"
+                  width="20"
+                  height="20"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <path
+                    d="M 20 0 L 0 0 0 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeOpacity="0.04"
+                  />
+                </pattern>
+              </defs>
+              <rect width="400" height="300" fill="url(#lab-grid)" />
+
               {/* Axes */}
-              <line
-                x1={toSvgX(minX)}
-                y1={toSvgY(0)}
-                x2={toSvgX(maxX)}
-                y2={toSvgY(0)}
-                stroke="var(--color-border)"
-                strokeWidth="1.5"
-              />
-              <line
-                x1={toSvgX(0)}
-                y1={toSvgY(minY)}
-                x2={toSvgX(0)}
-                y2={toSvgY(maxY)}
-                stroke="var(--color-border)"
-                strokeWidth="1.5"
-              />
+              {minY <= 0 && maxY >= 0 && (
+                <line
+                  x1="30"
+                  y1={toSvgY(0)}
+                  x2="370"
+                  y2={toSvgY(0)}
+                  stroke="currentColor"
+                  strokeOpacity="0.25"
+                  strokeWidth="1.5"
+                />
+              )}
+              {minX <= 0 && maxX >= 0 && (
+                <line
+                  x1={toSvgX(0)}
+                  y1="30"
+                  x2={toSvgX(0)}
+                  y2="270"
+                  stroke="currentColor"
+                  strokeOpacity="0.25"
+                  strokeWidth="1.5"
+                />
+              )}
 
-              {/* f(x) Curve */}
-              <path
-                d={curvePathD}
-                fill="none"
-                stroke="var(--color-text)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-
-              {/* f'(x) Derivative Curve (Toggleable) */}
+              {/* Derivative curve f'(x) (Dashed Purple) */}
               {showDerivativeCurve && (
                 <path
                   d={derivPathD}
                   fill="none"
-                  stroke="var(--color-accent)"
+                  stroke="#a855f7"
                   strokeWidth="2"
-                  strokeDasharray="4 4"
-                  opacity="0.8"
+                  strokeDasharray="4 3"
+                  strokeOpacity="0.75"
                 />
               )}
 
-              {/* Tangent Line */}
+              {/* Original function curve f(x) (Solid Accent) */}
+              <path
+                d={curvePathD}
+                fill="none"
+                stroke="var(--color-accent)"
+                strokeWidth="2.5"
+              />
+
+              {/* Secant Line (Garis Potong) if toggled */}
+              {showSecant && (
+                <>
+                  <line
+                    x1={ptAx}
+                    y1={ptAy}
+                    x2={toSvgX(xB)}
+                    y2={toSvgY(yB)}
+                    stroke="#f59e0b"
+                    strokeWidth="2"
+                    strokeDasharray="2 2"
+                  />
+                  {/* Point B */}
+                  <circle
+                    cx={toSvgX(xB)}
+                    cy={toSvgY(yB)}
+                    r="5"
+                    fill="#f59e0b"
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                </>
+              )}
+
+              {/* Tangent Line (Red/Danger) */}
               <line
                 x1={toSvgX(tangX1)}
                 y1={toSvgY(tangY1)}
                 x2={toSvgX(tangX2)}
                 y2={toSvgY(tangY2)}
-                stroke="var(--color-success)"
-                strokeWidth="2.5"
+                stroke="#ef4444"
+                strokeWidth="2"
+                strokeOpacity="0.9"
               />
 
-              {/* Secant Line if enabled */}
-              {showSecant && (
-                <line
-                  x1={toSvgX(x0 - 0.5)}
-                  y1={toSvgY(y0 - 0.5 * secantSlope)}
-                  x2={toSvgX(xB + 0.5)}
-                  y2={toSvgY(yB + 0.5 * secantSlope)}
-                  stroke="var(--color-warning)"
-                  strokeWidth="1.5"
-                />
-              )}
-
-              {/* Active Point (x0, y0) */}
-              <circle cx={ptAx} cy={ptAy} r="6" fill="var(--color-success)" />
-
-              {/* Moving Secant Point if enabled */}
-              {showSecant && (
-                <circle
-                  cx={toSvgX(xB)}
-                  cy={toSvgY(yB)}
-                  r="5"
-                  fill="var(--color-warning)"
-                />
-              )}
+              {/* Touch Point A (x0, y0) */}
+              <circle
+                cx={ptAx}
+                cy={ptAy}
+                r="6"
+                fill="#ef4444"
+                stroke="#ffffff"
+                strokeWidth="2"
+                className="drop-shadow-md"
+              />
             </svg>
           </div>
 
-          {/* Slider for Point x0 */}
-          <div className="space-y-2 pt-2">
-            <div className="flex items-center justify-between text-xs">
-              <label htmlFor="lab-x-slider" className="font-semibold text-text flex items-center gap-1">
-                <span>Posisikan Titik Singgung (</span>
-                <MathRenderer inline content="$x_0$" />
-                <span>):</span>
-                <span className="font-mono text-accent font-bold text-sm ml-1">
-                  {x0.toFixed(2)}
-                </span>
-              </label>
-              <span className="text-text-muted">
-                Geser untuk mengamati perubahan kemiringan
-              </span>
-            </div>
-
-            <input
-              id="lab-x-slider"
-              type="range"
-              min={minX + 0.1}
-              max={maxX - 0.1}
-              step={0.05}
-              value={x0}
-              onChange={(e) => setX0(parseFloat(e.target.value))}
-              className="w-full accent-accent cursor-pointer h-2 bg-border rounded-lg"
-              aria-label="Posisi titik singgung x nol"
-            />
-          </div>
-        </div>
-
-        {/* Live Metrics & Inspector Sidebar */}
-        <div className="space-y-4">
-          {/* Real-time Values Card */}
-          <div className="p-5 rounded-2xl bg-surface-raised border border-border space-y-4">
-            <h3 className="text-sm font-bold text-text">Inspektur Titik Singgung</h3>
-
-            <div className="space-y-3 text-xs">
-              <div className="p-3 rounded-xl bg-surface border border-border flex items-center justify-between">
-                <span className="text-text-muted">Rumus Turunan:</span>
-                <span className="text-accent font-semibold text-xs">
-                  <MathRenderer inline content={`$${activeFunc.derivativeKatex}$`} />
-                </span>
-              </div>
-
-              <div className="p-3 rounded-xl bg-surface border border-border flex items-center justify-between">
-                <span className="text-text-muted">Koordinat Titik:</span>
-                <span className="font-mono font-bold text-text">
-                  ({x0.toFixed(2)}, {y0.toFixed(2)})
-                </span>
-              </div>
-
-              <div className="p-3 rounded-xl bg-accent-muted border border-accent/30 flex items-center justify-between">
-                <span className="text-accent font-semibold flex items-center gap-1">
-                  <span>Kemiringan</span>
-                  <MathRenderer inline content="$f'(x_0)$" />
-                  <span>:</span>
-                </span>
-                <span className="font-mono font-bold text-accent text-base">
-                  {slope.toFixed(3)}
-                </span>
-              </div>
-
-              {/* Slope Interpretation Box */}
-              <div className="p-3.5 rounded-xl bg-surface border border-border space-y-1">
-                <span className={`font-bold block ${interpretation.color}`}>
-                  {interpretation.label}
-                </span>
-                <p className="text-text-muted text-[11px] leading-relaxed">
-                  {interpretation.desc}
-                </p>
-              </div>
-            </div>
-
-            {/* Toggle Controls */}
-            <div className="space-y-2 pt-2 border-t border-border text-xs">
-              <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-text flex items-center gap-1">
-                  <span>Tampilkan Kurva</span>
-                  <MathRenderer inline content="$f'(x)$" />
-                </span>
+          {/* Canvas Subtitle & Controls */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 text-xs">
+            <div className="flex items-center gap-4">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={showDerivativeCurve}
                   onChange={(e) => setShowDerivativeCurve(e.target.checked)}
-                  className="rounded text-accent accent-accent w-4 h-4 cursor-pointer"
+                  className="rounded border-border text-accent focus:ring-accent"
                 />
+                <span className="text-text font-medium inline-flex items-center gap-1">
+                  <span>Tampilkan Kurva Turunan</span>
+                  <MathRenderer inline content="$f'(x)$" />
+                </span>
               </label>
 
-              <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-text flex items-center gap-1">
-                  <span>Tampilkan Garis Secant (</span>
-                  <MathRenderer inline content="$h$" />
-                  <span>)</span>
-                </span>
+              <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={showSecant}
                   onChange={(e) => setShowSecant(e.target.checked)}
-                  className="rounded text-accent accent-accent w-4 h-4 cursor-pointer"
+                  className="rounded border-border text-amber-500 focus:ring-amber-500"
                 />
+                <span className="text-text font-medium inline-flex items-center gap-1">
+                  <span>Tampilkan Secant (</span>
+                  <MathRenderer inline content="$h$" />
+                  <span>)</span>
+                </span>
               </label>
+            </div>
 
-              {showSecant && (
-                <div className="pt-2 space-y-1">
-                  <div className="flex justify-between text-[11px] text-text-muted items-center">
-                    <span className="flex items-center gap-1">
-                      <span>Jarak</span>
-                      <MathRenderer inline content="$h$" />
-                      <span>:</span>
-                    </span>
-                    <span className="font-mono font-bold">{h.toFixed(2)}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.05}
-                    max={1.5}
-                    step={0.05}
-                    value={h}
-                    onChange={(e) => setH(parseFloat(e.target.value))}
-                    className="w-full accent-accent cursor-pointer h-1.5 bg-border rounded-lg"
-                  />
-                </div>
-              )}
+            <span className="text-text-muted font-mono text-[11px]">
+              Koordinat: ({x0.toFixed(2)}, {y0.toFixed(2)})
+            </span>
+          </div>
+        </div>
+
+        {/* Sidebar Controls & Real-time Readout */}
+        <div className="space-y-4">
+          {/* Position Slider */}
+          <div className="p-5 rounded-xl bg-surface-raised border border-border space-y-3">
+            <div className="flex items-center justify-between">
+              <label htmlFor="lab-x0" className="text-xs font-bold text-text inline-flex items-center gap-1">
+                <span>Geser Titik</span>
+                <MathRenderer inline content="$x_0$:" />
+              </label>
+              <span className="font-mono text-sm font-bold text-accent bg-accent/10 px-2 py-0.5 rounded">
+                x = {x0.toFixed(2)}
+              </span>
+            </div>
+
+            <input
+              id="lab-x0"
+              type="range"
+              min={minX}
+              max={maxX}
+              step={(maxX - minX) / 100}
+              value={x0}
+              onChange={(e) => setX0(parseFloat(e.target.value))}
+              className="w-full accent-accent cursor-pointer h-2 bg-border rounded-lg"
+            />
+
+            <div className="flex justify-between text-[10px] text-text-muted font-mono">
+              <span>{minX}</span>
+              <span>0</span>
+              <span>{maxX}</span>
             </div>
           </div>
 
-          {/* Quick Return Link */}
-          <div className="p-4 rounded-xl bg-surface border border-border text-xs space-y-2">
-            <span className="font-semibold text-text block">Kembali ke Modul</span>
-            <p className="text-text-muted text-[11px]">
-              Terapkan intuisi yang kamu temukan di Lab ini pada modul pembelajaran interaktif.
-            </p>
-            <Link
-              href="/modules/turunan"
-              className="inline-block font-semibold text-accent hover:underline pt-1"
-            >
-              ← Buka Modul Turunan
-            </Link>
+          {/* Real-time Math Value Cards */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-4 rounded-xl bg-surface-raised border border-border space-y-1">
+              <span className="text-[11px] text-text-muted font-medium flex items-center gap-1">
+                <span>Tinggi Titik</span>
+                <MathRenderer inline content="$f(x_0)$" />
+              </span>
+              <span className="text-xl font-bold font-mono text-text block">
+                {y0.toFixed(3)}
+              </span>
+            </div>
+
+            <div className="p-4 rounded-xl bg-surface-raised border border-border space-y-1">
+              <span className="text-[11px] text-text-muted font-medium flex items-center gap-1">
+                <span>Kemiringan</span>
+                <MathRenderer inline content="$f'(x_0)$" />
+              </span>
+              <span className="text-xl font-bold font-mono text-danger block">
+                {slope.toFixed(3)}
+              </span>
+            </div>
           </div>
+
+          {/* Slope Dynamic Interpretation */}
+          <div className="p-4 rounded-xl bg-surface-raised border border-border space-y-2">
+            <span className="text-xs font-bold text-text block">
+              Analisis Dinamika Sesaat:
+            </span>
+            <div className="p-3 rounded-lg bg-surface border border-border-subtle space-y-1">
+              <span className={`text-xs font-bold ${interpretation.color} block`}>
+                {interpretation.label}
+              </span>
+              <p className="text-[11px] text-text-muted leading-relaxed">
+                {interpretation.desc}
+              </p>
+            </div>
+          </div>
+
+          {/* Secant delta-x slider if enabled */}
+          {showSecant && (
+            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-2 text-xs animate-in fade-in duration-150">
+              <div className="flex justify-between font-bold text-text">
+                <span className="inline-flex items-center gap-1">
+                  <span>Jarak Horizontal (</span>
+                  <MathRenderer inline content="$h$" />
+                  <span>):</span>
+                </span>
+                <span className="font-mono text-amber-600 dark:text-amber-400">
+                  {h.toFixed(2)}
+                </span>
+              </div>
+              <div className="flex justify-between text-[11px] text-text-muted">
+                <span>Kemiringan Secant:</span>
+                <span className="font-mono font-bold text-text">
+                  {secantSlope.toFixed(3)}
+                </span>
+              </div>
+              <input
+                type="range"
+                min={0.05}
+                max={1.5}
+                step={0.05}
+                value={h}
+                onChange={(e) => setH(parseFloat(e.target.value))}
+                className="w-full accent-accent cursor-pointer h-1.5 bg-border rounded-lg"
+              />
+            </div>
+          )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+export default function NalarLabPage() {
+  const [activeStationId, setActiveStationId] = useState<LabStationId>("calculus");
+
+  const currentStation =
+    LAB_STATIONS.find((s) => s.id === activeStationId) ?? LAB_STATIONS[0];
+
+  return (
+    <div className="space-y-8 max-w-5xl mx-auto py-4">
+      {/* Header */}
+      <div className="space-y-2">
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Laboratorium Eksperimen STEM Nalar</span>
+          <span>•</span>
+          <span>5 Wahana Eksplorasi</span>
+        </div>
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-text tracking-tight">
+          Nalar Lab: Ruang Bermain Intuisi Sains & Matematika
+        </h1>
+
+        <p className="text-sm text-text-muted max-w-3xl leading-relaxed">
+          Eksplorasi parameter visual tanpa batas di seluruh domain STEM. Geser tuas, ubah variabel, dan buktikan sendiri bagaimana hukum-hukum fundamental bekerja sebelum atau sesudah kamu mendalami materi kurikulum.
+        </p>
+      </div>
+
+      {/* Station Selector Navigation Tabs */}
+      <div className="space-y-2">
+        <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
+          <Layers className="w-3.5 h-3.5" />
+          <span>Pilih Laboratorium Eksperimen:</span>
+        </span>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+          {LAB_STATIONS.map((station) => {
+            const Icon = station.icon;
+            const isActive = activeStationId === station.id;
+
+            return (
+              <button
+                key={station.id}
+                type="button"
+                onClick={() => setActiveStationId(station.id)}
+                className={`p-3.5 rounded-xl border text-left transition-all flex flex-col justify-between gap-2.5 ${
+                  isActive
+                    ? "bg-surface-raised border-accent text-accent shadow-sm ring-1 ring-accent/30"
+                    : "bg-surface-raised border-border text-text hover:bg-surface hover:border-border-subtle"
+                }`}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <span
+                    className={`p-1.5 rounded-lg ${
+                      isActive ? "bg-accent/20 text-accent" : "bg-surface text-text-muted"
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </span>
+                  <span
+                    className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${station.badgeColor}`}
+                  >
+                    {station.domain}
+                  </span>
+                </div>
+
+                <div>
+                  <h3
+                    className={`text-xs font-bold leading-snug ${
+                      isActive ? "text-text" : "text-text-muted group-hover:text-text"
+                    }`}
+                  >
+                    {station.title}
+                  </h3>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Station Overview & Link to Module */}
+      <div className="p-4 rounded-xl bg-surface-raised border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-sm text-text">{currentStation.title}</span>
+            <span className="text-xs text-text-muted">•</span>
+            <span className="text-xs text-accent font-semibold">{currentStation.domain}</span>
+          </div>
+          <p className="text-xs text-text-muted max-w-2xl leading-relaxed">
+            {currentStation.description}
+          </p>
+        </div>
+
+        <Link
+          href={`/modules/${currentStation.moduleSlug}`}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-surface border border-border hover:border-accent text-text hover:bg-surface-raised transition-all shrink-0 shadow-2xs self-start sm:self-auto"
+        >
+          <span>Buka {currentStation.moduleTitle}</span>
+          <ArrowRight className="w-3.5 h-3.5 text-accent" />
+        </Link>
+      </div>
+
+      {/* Active Station Interactive Content */}
+      <div className="pt-2">
+        {activeStationId === "calculus" && <CalculusLabView />}
+
+        {activeStationId === "number-line" && (
+          <div className="space-y-4">
+            <NumberLinePlayground />
+          </div>
+        )}
+
+        {activeStationId === "vector" && (
+          <div className="space-y-4">
+            <VectorPlayground />
+          </div>
+        )}
+
+        {activeStationId === "matter" && (
+          <div className="space-y-4">
+            <MatterPlayground />
+          </div>
+        )}
+
+        {activeStationId === "biology" && (
+          <div className="space-y-4">
+            <BiologicalScalePlayground />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Bot, X, Lightbulb, HelpCircle, BookOpen, Send } from "lucide-react";
+import { Bot, X, Lightbulb, HelpCircle, BookOpen, Send, Brain, ChevronDown, ChevronUp } from "lucide-react";
 import { MathRenderer } from "@/components/ui/katex-math";
 
 interface NaiTutorDrawerProps {
@@ -15,6 +15,9 @@ interface ChatMessage {
   id: string;
   sender: "user" | "nai";
   text: string;
+  thought?: string;
+  isStreaming?: boolean;
+  isThinking?: boolean;
 }
 
 export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawerProps) {
@@ -56,58 +59,170 @@ export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawe
     }
   }, [messages, isLoading, isOpen]);
 
+  const [expandedThoughts, setExpandedThoughts] = useState<Record<string, boolean>>({});
+
+  const toggleThought = (messageId: string) => {
+    setExpandedThoughts((prev) => ({
+      ...prev,
+      [messageId]: !prev[messageId],
+    }));
+  };
+
   const handleSend = async (questionText?: string) => {
     const q = (questionText || inputQuestion).trim();
     if (!q || isLoading) return;
 
     const userMsgId = `user-${Date.now()}`;
-    const newMsg: ChatMessage = { id: userMsgId, sender: "user", text: q };
-    setMessages((prev) => [...prev, newMsg]);
+    const naiMsgId = `nai-${Date.now()}`;
+
+    setMessages((prev) => [
+      ...prev,
+      { id: userMsgId, sender: "user", text: q },
+      { id: naiMsgId, sender: "nai", text: "", thought: "", isStreaming: true, isThinking: true },
+    ]);
     setInputQuestion("");
     setIsLoading(true);
 
     try {
       const res = await fetch("/api/v1/ai/tutor", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "text/event-stream",
+        },
         body: JSON.stringify({
           conceptSlug,
           stepId,
           userQuestion: q,
+          stream: true,
         }),
       });
 
-      const json = await res.json();
-      if (res.ok && json.data) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: `nai-${Date.now()}`,
-            sender: "nai",
-            text: json.data.answer,
-          },
-        ]);
+      if (!res.ok) {
+        throw new Error("Gagal menghubungi server tutor");
+      }
+
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("text/event-stream") && res.body) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let sseBuffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          sseBuffer += decoder.decode(value, { stream: true });
+          const events = sseBuffer.split("\n\n");
+          sseBuffer = events.pop() || "";
+
+          for (const event of events) {
+            const trimmed = event.trim();
+            if (!trimmed.startsWith("data:")) continue;
+            const dataStr = trimmed.slice(5).trim();
+            if (!dataStr) continue;
+
+            try {
+              const chunk = JSON.parse(dataStr);
+              if (chunk.type === "thought") {
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === naiMsgId
+                      ? {
+                          ...m,
+                          thought: (m.thought || "") + (chunk.content || ""),
+                          isThinking: true,
+                        }
+                      : m
+                  )
+                );
+              } else if (chunk.type === "text") {
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === naiMsgId
+                      ? {
+                          ...m,
+                          text: (m.text || "") + (chunk.content || ""),
+                          isThinking: false,
+                        }
+                      : m
+                  )
+                );
+              } else if (chunk.type === "done") {
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === naiMsgId
+                      ? {
+                          ...m,
+                          isStreaming: false,
+                          isThinking: false,
+                        }
+                      : m
+                  )
+                );
+              } else if (chunk.type === "error") {
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === naiMsgId
+                      ? {
+                          ...m,
+                          text: (m.text ? m.text + "\n\n" : "") + (chunk.content || "Terjadi kesalahan."),
+                          isStreaming: false,
+                          isThinking: false,
+                        }
+                      : m
+                  )
+                );
+              }
+            } catch {
+              // Ignore malformed chunk
+            }
+          }
+        }
       } else {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: `nai-err-${Date.now()}`,
-            sender: "nai",
-            text: "Maaf, Nai sedang kesulitan memproses pesanmu. Tapi jangan menyerah, coba periksa kembali petunjuk di layar ya!",
-          },
-        ]);
+        // Fallback for non-streaming response
+        const json = await res.json();
+        if (json.data?.answer) {
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === naiMsgId
+                ? {
+                    ...m,
+                    text: json.data.answer,
+                    isStreaming: false,
+                    isThinking: false,
+                  }
+                : m
+            )
+          );
+        }
       }
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `nai-err-${Date.now()}`,
-          sender: "nai",
-          text: "Koneksi ke Nai terputus sementara. Kamu tetap bisa membuka petunjuk bergradasi 4-layer di atas!",
-        },
-      ]);
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === naiMsgId
+            ? {
+                ...m,
+                text: "Koneksi ke Nai terputus sementara. Kamu tetap bisa membuka petunjuk bergradasi 4-layer di atas!",
+                isStreaming: false,
+                isThinking: false,
+              }
+            : m
+        )
+      );
     } finally {
       setIsLoading(false);
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === naiMsgId
+            ? {
+                ...m,
+                isStreaming: false,
+                isThinking: false,
+              }
+            : m
+        )
+      );
     }
   };
 
@@ -182,15 +297,88 @@ export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawe
                     className={`max-w-[88%] p-3.5 rounded-2xl leading-relaxed ${
                       msg.sender === "user"
                         ? "bg-accent text-surface-raised rounded-br-2xs"
-                        : "bg-surface border border-border text-text rounded-bl-2xs shadow-2xs"
+                        : "bg-surface border border-border text-text rounded-bl-2xs shadow-2xs w-full sm:w-auto min-w-[220px]"
                     }`}
                   >
-                    <MathRenderer content={msg.text} />
+                    {/* Collapsible Think / Reasoning Box for Nai */}
+                    {msg.sender === "nai" && Boolean(msg.thought || msg.isThinking) && (
+                      <div className="w-full mb-3 rounded-xl border border-border/80 bg-surface-raised/90 overflow-hidden shadow-2xs">
+                        {/* Toggle button: hide / unhide with expand */}
+                        <button
+                          type="button"
+                          onClick={() => toggleThought(msg.id)}
+                          className="w-full px-3 py-2 flex items-center justify-between text-left hover:bg-surface transition-colors gap-2 cursor-pointer select-none"
+                          aria-expanded={expandedThoughts[msg.id] ?? Boolean(msg.isThinking)}
+                          aria-label={
+                            (expandedThoughts[msg.id] ?? Boolean(msg.isThinking))
+                              ? "Sembunyikan proses berpikir Nai"
+                              : "Buka proses berpikir Nai"
+                          }
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <Brain
+                              className={`w-3.5 h-3.5 shrink-0 text-accent ${
+                                msg.isThinking ? "animate-pulse" : ""
+                              }`}
+                            />
+                            <span className="text-[11px] font-semibold text-text-muted truncate">
+                              {msg.isThinking ? "Nai sedang menalar..." : "Proses Berpikir (Reasoning)"}
+                            </span>
+                            {msg.isThinking && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping shrink-0" />
+                            )}
+                          </div>
+
+                          <div className="flex items-center gap-1.5 shrink-0 text-[10px] text-text-muted font-medium">
+                            <span className="hidden sm:inline">
+                              {(expandedThoughts[msg.id] ?? Boolean(msg.isThinking))
+                                ? "Sembunyikan"
+                                : "Buka"}
+                            </span>
+                            {(expandedThoughts[msg.id] ?? Boolean(msg.isThinking)) ? (
+                              <ChevronUp className="w-3.5 h-3.5 text-text-muted" />
+                            ) : (
+                              <ChevronDown className="w-3.5 h-3.5 text-text-muted" />
+                            )}
+                          </div>
+                        </button>
+
+                        {/* Collapsible Content */}
+                        {(expandedThoughts[msg.id] ?? Boolean(msg.isThinking)) && (
+                          <div className="px-3.5 py-2.5 border-t border-border/60 text-[11px] text-text-muted leading-relaxed font-mono bg-surface/50 border-l-2 border-l-accent/60 space-y-1">
+                            {msg.thought ? (
+                              <MathRenderer content={msg.thought} />
+                            ) : (
+                              <span className="italic text-[11px] text-text-muted/70">
+                                Mengidentifikasi konsep dan merumuskan scaffolding pemantik...
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Answer text & streaming cursor */}
+                    {msg.text ? (
+                      <div className="text-xs leading-relaxed">
+                        <MathRenderer content={msg.text} />
+                        {msg.isStreaming && !msg.isThinking && (
+                          <span className="inline-block w-1.5 h-3.5 ml-1 bg-accent animate-pulse align-middle rounded-xs" />
+                        )}
+                      </div>
+                    ) : (
+                      msg.sender === "nai" && !msg.isThinking && (
+                        <div className="flex items-center gap-2 text-xs text-text-muted">
+                          <Bot className="w-3.5 h-3.5 text-accent animate-pulse" />
+                          <span>Menyiapkan petunjuk pemantik...</span>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               ))}
 
-              {isLoading && (
+              {isLoading && messages[messages.length - 1]?.sender === "user" && (
                 <div className="flex items-center gap-2 p-3 rounded-2xl bg-surface border border-border text-xs text-text-muted max-w-[75%] shadow-2xs">
                   <Bot className="w-4 h-4 text-accent animate-pulse" />
                   <span>Nai sedang memikirkan petunjuk pemantik...</span>

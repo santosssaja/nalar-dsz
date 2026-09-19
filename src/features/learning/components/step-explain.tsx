@@ -9,6 +9,7 @@ import { ExplainEvaluationOutput } from "@/server/services/explain-evaluator";
 interface StepExplainProps {
   step: StepContent;
   conceptSlug: string;
+  rubricCriteria?: Array<{ id: string; name: string; description: string }>;
   isCompleted: boolean;
   onCompleted: () => void;
 }
@@ -16,6 +17,7 @@ interface StepExplainProps {
 export function StepExplain({
   step,
   conceptSlug,
+  rubricCriteria,
   isCompleted,
   onCompleted,
 }: StepExplainProps) {
@@ -97,9 +99,19 @@ export function StepExplain({
           Kriteria Evaluasi Nai
         </h4>
         <ul className="text-xs text-text-muted space-y-1 list-disc list-inside">
-          <li>Peralihan garis potong (secant) yang menjadi garis singgung (tangent)</li>
-          <li>Peran limit saat selisih jarak horizontal (h) mendekati nol</li>
-          <li>Makna turunan sebagai kemiringan kurva atau laju perubahan sesaat</li>
+          {rubricCriteria && rubricCriteria.length > 0 ? (
+            rubricCriteria.map((c) => (
+              <li key={c.id}>
+                <span className="font-semibold text-text">{c.name}</span>: {c.description}
+              </li>
+            ))
+          ) : (
+            <>
+              <li>Penalaran konsep utama secara mandiri</li>
+              <li>Kejelasan hubungan sebab-akibat</li>
+              <li>Ketepatan penggunaan istilah sains</li>
+            </>
+          )}
         </ul>
       </div>
 
@@ -128,7 +140,7 @@ export function StepExplain({
         </div>
 
         {errorMessage && (
-          <div className="p-3 rounded-lg bg-danger-muted border border-danger/20 text-danger text-xs">
+          <div role="alert" className="p-3 rounded-lg bg-danger-muted border border-danger/20 text-danger text-xs">
             {errorMessage}
           </div>
         )}
@@ -137,6 +149,8 @@ export function StepExplain({
         {evaluation && (
           <div
             ref={feedbackRef}
+            role="status"
+            aria-live="polite"
             className={`p-4 sm:p-5 rounded-xl border space-y-3.5 ${
               evaluation.passed
                 ? "bg-success-muted border-success/30 text-success-fg"

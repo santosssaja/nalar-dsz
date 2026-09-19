@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 import { ConceptContent, StepContent } from "@/content/schema";
 import { ConceptMasterySnapshot } from "@/server/services/mastery-engine";
@@ -203,12 +204,12 @@ export function LessonPlayer({
       {/* Top Navigation & Stepper */}
       <div className="flex items-center justify-between gap-3 pb-3 border-b border-border">
         <div className="min-w-0">
-          <a
+          <Link
             href={`/modules/${moduleSlug}`}
             className="text-xs text-text-muted hover:text-text transition-colors flex items-center gap-1"
           >
             ← Keluar ke Modul
-          </a>
+          </Link>
           <h2 className="text-sm sm:text-base font-bold text-text truncate mt-0.5">{concept.title}</h2>
         </div>
 
@@ -284,6 +285,7 @@ export function LessonPlayer({
         <StepExplain
           step={currentStep}
           conceptSlug={concept.slug}
+          rubricCriteria={concept.rubric?.criteria}
           isCompleted={isCurrentCompleted}
           onCompleted={handleNextStep}
         />

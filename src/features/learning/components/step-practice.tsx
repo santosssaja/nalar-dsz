@@ -112,6 +112,8 @@ export function StepPractice({
         {evaluationResult && (
           <div
             ref={feedbackRef}
+            role="status"
+            aria-live="polite"
             className={`p-3.5 sm:p-4 rounded-xl border text-sm mt-3 leading-relaxed ${
               isSuccess
                 ? "border-success/30 bg-success-muted text-success"

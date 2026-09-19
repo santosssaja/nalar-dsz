@@ -9,5 +9,8 @@ export default (phase: string): NextConfig => {
     poweredByHeader: false,
     serverExternalPackages: ["@electric-sql/pglite", "postgres", "zod", "katex"],
     distDir: process.env.NEXT_DIST_DIR || (isDev ? ".next-dev" : ".next"),
+    experimental: {
+      optimizePackageImports: ["lucide-react"],
+    },
   };
 };

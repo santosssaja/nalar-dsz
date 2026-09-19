@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { ConceptGraphData, GraphNode, GraphEdge } from "@/content/registry";
 import { MathRenderer } from "@/components/ui/katex-math";
 
@@ -368,12 +369,12 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               </div>
 
               <div className="flex items-center gap-3 shrink-0">
-                <a
+                <Link
                   href={`/learn/${selectedNode.slug}`}
                   className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
                 >
                   Mulai Pelajari Konsep →
-                </a>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setSelectedNode(null)}
@@ -415,12 +416,12 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
                   <span className="text-xs text-text-muted capitalize">
                     Tingkat: {node.difficulty}
                   </span>
-                  <a
+                  <Link
                     href={`/learn/${node.slug}`}
                     className="text-xs font-semibold text-accent hover:underline flex items-center gap-1"
                   >
                     Buka Konsep →
-                  </a>
+                  </Link>
                 </div>
               </div>
             );

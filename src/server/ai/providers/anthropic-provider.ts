@@ -106,6 +106,71 @@ export class AnthropicProvider implements IAiProvider {
     };
   }
 
+  async *socraticGuidanceStream(
+    context: AiSocraticContext,
+    options?: AiChatOptions
+  ): AsyncIterable<AiChatChunk> {
+    const messages: AiMessage[] = [
+      { role: "system", content: NAI_SOCRATIC_SYSTEM_PROMPT },
+      ...(context.recentChatHistory || []),
+      { role: "user", content: buildSocraticPrompt(context) },
+    ];
+
+    const apiKey = this.getApiKey(options);
+    const modelName = this.getModelName(options);
+    const baseURL = this.getEndpoint(options);
+
+    if (apiKey) {
+      try {
+        const client = new Anthropic({ apiKey, baseURL: baseURL || undefined });
+        const systemMsg = messages.find((m) => m.role === "system")?.content;
+        const nonSystemMsgs = messages
+          .filter((m) => m.role !== "system")
+          .map((m) => ({
+            role: m.role as "user" | "assistant",
+            content: m.content,
+          }));
+
+        const stream = client.messages.stream({
+          model: modelName,
+          max_tokens: options?.maxTokens ?? 1024,
+          system: systemMsg,
+          messages: nonSystemMsgs.length > 0 ? nonSystemMsgs : [{ role: "user", content: "Halo" }],
+          temperature: options?.temperature ?? 0.7,
+        });
+
+        async function* readAnthropicStream(): AsyncGenerator<string> {
+          for await (const event of stream) {
+            if (event.type === "content_block_delta") {
+              const delta = event.delta as { type?: string; text?: string; thinking?: string };
+              if (delta.type === "text_delta" && delta.text) {
+                yield delta.text;
+              } else if (delta.type === "thinking_delta" && delta.thinking) {
+                yield `<think>${delta.thinking}</think>`;
+              }
+            }
+          }
+        }
+
+        for await (const chunk of transformThinkTags(readAnthropicStream())) {
+          yield { ...chunk, provider: "anthropic", model: modelName };
+        }
+        yield { type: "done", provider: "anthropic", model: modelName };
+        return;
+      } catch {
+        // Fallback
+      }
+    }
+
+    for await (const chunk of this.fallback.socraticGuidanceStream(context, options)) {
+      yield {
+        ...chunk,
+        provider: "anthropic",
+        model: `${modelName} (offline-curated)`,
+      };
+    }
+  }
+
   async evaluateTeachMode(
     context: AiTeachContext,
     options?: AiChatOptions

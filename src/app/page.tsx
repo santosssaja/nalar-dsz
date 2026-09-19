@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <div className="space-y-16 py-6">
@@ -22,18 +24,18 @@ export default function HomePage() {
         </p>
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
-          <a
+          <Link
             href="/modules/turunan"
             className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium bg-accent text-surface-raised hover:bg-accent-hover transition-colors shadow-sm"
           >
             Mulai Modul Turunan →
-          </a>
-          <a
+          </Link>
+          <Link
             href="/domains"
             className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium bg-surface-raised border border-border hover:bg-surface text-text transition-colors"
           >
             Jelajahi Peta Kurikulum
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -88,12 +90,12 @@ export default function HomePage() {
             </span>
             <h2 className="text-2xl font-bold text-text mt-1">Kalkulus: Turunan</h2>
           </div>
-          <a
+          <Link
             href="/modules/turunan"
             className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:underline self-start sm:self-auto"
           >
             Buka Gambaran Modul →
-          </a>
+          </Link>
         </div>
 
         <p className="text-sm text-text-muted max-w-2xl">
