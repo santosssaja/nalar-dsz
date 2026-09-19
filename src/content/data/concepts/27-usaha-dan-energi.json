@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000027",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "usaha-dan-energi",
+  "title": "Usaha dan Energi: Teorema Usaha-Energi dan Konservasi Energi Mekanik",
+  "summary": "Menyelidiki transfer kapasitas kerja dalam fisika: perumusan usaha skalar melalui perkalian titik gaya dan perpindahan, teorema usaha-energi kinetik, serta kekekalan energi mekanik pada gaya konservatif.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Menghitung usaha mekanik menggunakan perkalian titik vektor (W = F × s × cos θ)",
+    "Menerapkan Teorema Usaha-Energi Kinetik (W_net = ΔEk)",
+    "Menganalisis konservasi energi mekanik (Ek1 + Ep1 = Ek2 + Ep2) pada sistem konservatif"
+  ],
+  "prerequisites": [
+    "gaya",
+    "gerak-lurus",
+    "vektor"
+  ],
+  "misconceptions": [
+    {
+      "code": "CARRYING_LOAD_DOES_WORK",
+      "label": "Menganggap orang yang memikul beban berat dan berjalan datar melakukan usaha fisika yang sangat besar",
+      "remediation": "Dalam fisika, usaha didefinisikan sebagai W = F × s × cos(θ). Saat memikul beban sambil berjalan mendatar, gaya angkat berarah ke atas sedangkan perpindahan berarah horizontal (θ = 90°). Karena cos(90°) = 0, usaha mekanik gravitasi bernilai nol!"
+    },
+    {
+      "code": "ENERGY_IS_CONSUMED",
+      "label": "Mengira energi dapat habis atau hilang ditelan ruang",
+      "remediation": "Hukum Pertama Termodinamika menegaskan bahwa energi tidak dapat diciptakan atau dimusnahkan. Energi mekanik yang 'hilang' karena gesekan sebenarnya terkonversi menjadi energi termal (panas) dan gelombang suara."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002701",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Roller Coaster: Menukik Bebas Tanpa Mesin",
+      "instruction": "Amati bagaimana kereta roller coaster melaju luar biasa kencang setelah ditarik ke puncak pertama.",
+      "content": "Kereta roller coaster hanya ditarik mesin satu kali: saat menaiki bukit pertama yang paling tinggi.\n- Di puncak tertinggi, kereta bergerak sangat lambat, tetapi berada pada elevasi maksimal.\n- Saat menukik curam ke lembah, kereta melesat bagai kilat dengan kecepatan mencekam!\n- Lalu menanjak lagi ke lingkaran loop, melambat di atas, dan kembali melesat di bawah.\n\nTidak ada mesin pendorong selama sisa perjalanan! Gerak ini adalah perwujudan paling murni dari **Konservasi Energi Mekanik**: pertukaran abadi antara **Energi Potensial Gravitasi** (energi ketinggian) dan **Energi Kinetik** (energi kelajuan gerak).",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram roller coaster memperlihatkan pergeseran proporsi energi potensial dan kinetik di puncak dan lembah lintasan.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan konversi energi potensial menjadi energi kinetik pada kereta luncur roller coaster."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002702",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Melipatgandakan Kecepatan Kendaraan",
+      "instruction": "Prediksi pengaruh kenaikan kecepatan terhadap energi kinetik dan jarak pengereman mobil.",
+      "content": "Sebuah mobil melaju dengan kecepatan $v_1 = 30\\text{ km/jam}$ memiliki energi kinetik $E_{k1}$. Mobil membutuhkan jarak $s_1 = 10\\text{ meter}$ untuk berhenti penuh saat rem diinjak mendadak dengan gaya pengereman konstan $F$.\n\nJika pengemudi memacu mobil dengan kecepatan dua kali lipat menjadi $v_2 = 60\\text{ km/jam}$, berapakah jarak pengereman yang dibutuhkan mobil untuk berhenti penuh dengan gaya rem yang sama?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan Teorema Usaha-Energi: Usaha rem W = F × s = ΔEk = (1/2) m v².",
+        "concept": "Energi kinetik sebanding dengan kuadrat kelajuan: Ek ∝ v².",
+        "strategy": "Jika v naik 2 kali lipat, maka Ek naik 2² = 4 kali lipat. Karena gaya rem F tetap, jarak henti s harus 4 kali lebih panjang.",
+        "solution": "Jarak pengereman menjadi 40 meter (4 kali lipat)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-40-meter",
+            "label": "40 meter — karena energi kinetik sebanding dengan v², melipatgandakan kecepatan melipatgandakan energi kinetik dan jarak henti sebesar 4 kali lipat",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Hubungan F × s = (1/2)mv² menunjukkan bahwa laju 2 kali lipat menuntut jarak pengereman 4 kali lipat. Inilah alasan mengapa batas kecepatan kendaraan di jalan raya sangat ketat."
+          },
+          {
+            "id": "opt-20-meter",
+            "label": "20 meter — naik dua kali lipat sebanding dengan peningkatan kelajuan",
+            "isCorrect": false,
+            "explanation": "Energi kinetik tidak linier terhadap kecepatan melainkan kuadratik (v²), sehingga usaha yang dibutuhkan untuk meredam gerak berlipat 4 kali lipat."
+          },
+          {
+            "id": "opt-10-meter",
+            "label": "10 meter — jarak henti tetap karena gaya cengkeram rem sama",
+            "isCorrect": false,
+            "explanation": "Gaya rem yang sama harus melakukan kerja 4 kali lebih besar untuk menyerap energi kinetik mobil yang berkecepatan ganda."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002703",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Pertukaran Energi Potensial dan Kinetik",
+      "instruction": "Uji konservasi energi mekanik pada benda jatuh bebas atau pendulum.",
+      "content": "Amati bagaimana energi mekanik total terjaga utuh:\n- Di titik tertinggi ($h_{\\max}$): $v = 0 \\implies E_k = 0$, seluruh energi berbentuk potensial ($E_m = E_p$).\n- Di tengah perjalanan: $E_p$ berkurang sebanding dengan pertambahan $E_k$.\n- Di permukaan tanah ($h = 0$): $E_p = 0$, seluruh energi terkonversi menjadi energi kinetik ($E_m = E_k$).\n- Total $E_m = E_p + E_k$ selalu konstan di setiap titik!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram batang bertumpuk menunjukkan total energi mekanik konstan saat proporsi energi potensial dan kinetik saling bertukar.",
+        "screenReaderNote": "Materi interaktif menguraikan grafik batang kekekalan energi mekanik Em = Ep + Ek konstan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002704",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Usaha, Teorema Usaha-Energi, dan Konservasi",
+      "instruction": "Kuasai formulasi matematis konsep usaha dan energi.",
+      "content": "### 1. Usaha Mekanik ($W$)\nPerkalian titik antara vektor gaya $\\vec{F}$ dan perpindahan $\\vec{s}$:\n$$W = \\vec{F} \\cdot \\vec{s} = F \\cdot s \\cdot \\cos\\theta \\quad (\\text{Joule})$$\n- $\\theta < 90^\\circ$: Usaha positif (mempercepat benda).\n- $\\theta = 90^\\circ$: Usaha nol (arah gaya tegak lurus arah gerak).\n- $\\theta > 90^\\circ$: Usaha negatif (menghambat/memperlambat gerak).\n\n### 2. Energi Kinetik ($E_k$) & Teorema Usaha-Energi\n$$E_k = \\frac{1}{2} m v^2$$\n**Teorema Usaha-Energi:** Usaha total oleh resultan seluruh gaya yang bekerja pada benda sama dengan perubahan energi kinetiknya:\n$$W_{\\text{net}} = \\Delta E_k = E_{k2} - E_{k1} = \\frac{1}{2}m(v_2^2 - v_1^2)$$\n\n### 3. Energi Potensial Gravitasi ($E_p$)\n$$E_p = m \\cdot g \\cdot h$$\n\n### 4. Hukum Kekekalan Energi Mekanik\nJika hanya gaya konservatif (seperti gravitasi dan pegas) yang bekerja:\n$$E_{m1} = E_{m2} \\iff E_{k1} + E_{p1} = E_{k2} + E_{p2}$$\nKecepatan benda jatuh bebas dari ketinggian $h$ tanpa laju awal:\n$$v = \\sqrt{2gh}$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap W = F s cos theta, teorema W_net = Delta Ek, Ep = mgh, dan kekekalan energi mekanik.",
+        "screenReaderNote": "Halaman merangkum formulasi analitis usaha skalar, teorema usaha energi, energi potensial dan kekekalan energi mekanik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002705",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Kecepatan Buah Kelapa Menyentuh Tanah",
+      "instruction": "Gunakan prinsip kekekalan energi mekanik untuk menghitung kelajuan akhir benda jatuh bebas.",
+      "content": "Sebuah buah kelapa bermassa $m = 2\\text{ kg}$ jatuh bebas dari pohon berketinggian $h = 5\\text{ meter}$ di atas tanah datar.\nDiketahui percepatan gravitasi bumi $g = 10\\text{ m/s}^2$, dan gesekan udara diabaikan.\n\nBerapakah kelajuan buah kelapa ($v$) tepat sesaat sebelum menghantam tanah?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan hukum kekekalan energi mekanik: Ep puncak = Ek dasar.",
+        "concept": "m × g × h = (1/2) × m × v², sehingga v = √(2gh).",
+        "strategy": "Hitung: v = √(2 × 10 × 5) = √100.",
+        "solution": "Kelajuan kelapa saat tiba di tanah adalah 10 m/s."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.2,
+        "expectedValue": 10,
+        "units": "m/s",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002706",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Usaha Gaya Sentripetal Selalu Bernilai Nol?",
+      "instruction": "Jelaskan secara analitis dan fisis mengapa satelit yang mengorbit bumi dalam lintasan lingkaran sempurna tidak pernah bertambah atau berkurang energi kinetiknya oleh tarikan gravitasi.",
+      "content": "Tuliskan penjelasan konseptual mengenai:\n1. Arah gaya sentripetal relatif terhadap arah perpindahan sesaat (tangensial) pada orbit melingkar.\n2. Mengapa nilai $\\cos(90^\\circ) = 0$ berimplikasi bahwa usaha gaya sentripetal $W = 0$.\n3. Hubungkan dengan Teorema Usaha-Energi: apa yang terjadi pada besar kelajuan satelit dalam orbit lingkaran tersebut.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-usaha-dan-energi",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-usaha-dan-energi-arah-tegak-lurus",
+        "name": "Geometri Vektor Tegak Lurus",
+        "description": "Menjelaskan bahwa gaya gravitasi (sentripetal) berarah tegak lurus terhadap arah vektor perpindahan linier tangensial di setiap titik lintasan.",
+        "weight": 1
+      },
+      {
+        "id": "crit-usaha-dan-energi-perkalian-titik-nol",
+        "name": "Perkalian Titik Usaha Nol",
+        "description": "Menerapkan formula perkalian titik W = F s cos(90°) = 0, sehingga gaya sentripetal tidak mentransfer energi mekanik ke partikel.",
+        "weight": 1
+      },
+      {
+        "id": "crit-usaha-dan-energi-implikasi-teorema-energi",
+        "name": "Konsekuensi terhadap Kelajuan Kinetik",
+        "description": "Menyimpulkan bahwa karena W_net = 0, maka ΔEk = 0, sehingga besar kelajuan satelit tetap konstan sepanjang orbit lingkaran.",
+        "weight": 1
+      }
+    ]
+  }
+}

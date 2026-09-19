@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000021",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "gerak-lurus",
+  "title": "Gerak Lurus: GLB, GLBB, dan Hubungan Grafik Kinematika",
+  "summary": "Memahami dinamika gerak 1 dimensi: gerak lurus beraturan (GLB v konstan), gerak lurus berubah beraturan (GLBB a konstan), grafik posisi-waktu dan kecepatan-waktu, serta luas daerah di bawah grafik sebagai perpindahan.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan gerak dengan kecepatan konstan (GLB) dan percepatan konstan (GLBB)",
+    "Menginterpretasikan kemiringan (gradien) grafik s-t sebagai kecepatan dan grafik v-t sebagai percepatan",
+    "Menghitung perpindahan sebagai luas daerah di bawah kurva grafik v-t"
+  ],
+  "prerequisites": ["pengukuran-dan-besaran", "vektor", "kinematika"],
+  "misconceptions": [
+    {
+      "code": "CONFUSING_POSITION_VELOCITY_GRAPH",
+      "label": "Menganggap grafik kecepatan-waktu (v-t) sebagai gambar rute lintasan jalanan nyata",
+      "remediation": "Grafik v-t adalah grafik relasi fungsi matematis antara besaran kecepatan terhadap waktu, bukan peta lintasan fisik jalan yang sedang dilalui kendaraan."
+    },
+    {
+      "code": "DECELERATION_MEANS_NEGATIVE_DIRECTION",
+      "label": "Mengira perlambatan selalu berarti benda sedang bergerak mundur ke arah kiri",
+      "remediation": "Perlambatan berarti arah vektor percepatan berlawanan dengan arah vektor kecepatan. Benda yang bergerak maju ke kanan dengan kecepatan yang berkurang sedang mengalami perlambatan, bukan bergerak mundur."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002101",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Kereta Cepat: Meluncur Konstan vs Mengerem di Stasiun",
+      "instruction": "Amati sensasi tubuh saat kecepatan konstan dibandingkan saat percepatan bekerja.",
+      "content": "Saat kamu menaiki kereta cepat yang melaju lurus di rel dengan kelajuan tetap $300\\text{ km/jam}$:\n- Kamu dapat menuangkan air ke cangkir dengan tenang tanpa tumpah.\n- Kamu tidak merasakan dorongan ke depan atau ke belakang.\n\nNamun, saat masinis menginjak rem untuk berhenti di stasiun:\n- Tubuhmu seketika terdorong ke depan!\n- Air di cangkir bergolak hebat.\n\nMengapa demikian? Karena tubuh kita **tidak peka terhadap kecepatan konstan (GLB)**, namun **sangat peka terhadap perubahan kecepatan atau percepatan (GLBB)**!\nInilah gerak lurus: fondasi seluruh mekanika gerak.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi perbedaan penumpang di dalam kereta cepat saat kecepatan konstan dibandingkan saat pengereman.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan perbedaan sensasi fisik gerak GLB kecepatan konstan dan GLBB perlambatan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002102",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Jarak Tempuh dari Grafik Kecepatan",
+      "instruction": "Tentukan jarak tempuh benda yang melaju dipercepat beraturan.",
+      "content": "Sebuah mobil listrik mulai bergerak dari keadaan diam ($v_0 = 0\\text{ m/s}$) dan dipercepat secara konstan sebesar $a = 2\\text{ m/s}^2$ selama $4\\text{ detik}$.\nKecepatan akhirnya adalah $v = a \\times t = 2 \\times 4 = 8\\text{ m/s}$.\n\nBerapakah jarak total ($s$) yang ditempuh mobil tersebut selama 4 detik?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Gunakan rumus jarak GLBB atau hitung luas segitiga di bawah grafik v-t.",
+        "concept": "Rumus jarak GLBB dari diam: s = (1/2) × a × t².",
+        "strategy": "Hitung: s = 0.5 × 2 × (4²) = 1 × 16.",
+        "solution": "Jarak yang ditempuh adalah 16 meter."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-glbb-16",
+            "label": "16 meter — karena jaraknya adalah luas segitiga grafik v-t: (1/2) × alas (4s) × tinggi (8 m/s) = 16 m",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! s = 1/2 × a × t² = 0.5 × 2 × 16 = 16 m."
+          },
+          {
+            "id": "opt-glbb-32",
+            "label": "32 meter — mengalikan kecepatan akhir langsung dengan waktu: 8 m/s × 4s = 32 m",
+            "isCorrect": false,
+            "misconceptionCode": "CONFUSING_POSITION_VELOCITY_GRAPH",
+            "feedback": "Hati-hati: mobil tidak melaju 8 m/s sejak awal. Mobil mulai dari 0 m/s, sehingga kecepatan rata-ratanya hanya 4 m/s (jarak = 4 × 4 = 16 m)."
+          },
+          {
+            "id": "opt-glbb-8",
+            "label": "8 meter",
+            "isCorrect": false,
+            "feedback": "8 m/s adalah kelajuan akhir, bukan jarak perpindahan."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Kamu memahami bahwa luas segitiga grafik v-t adalah representasi perpindahan GLBB."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi menghitung jarak tempuh GLBB dengan percepatan 2 m/s^2 selama 4 detik.",
+        "screenReaderNote": "Pilih salah satu opsi jawaban untuk menentukan jarak perpindahan GLBB."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002103",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Kinematika & Grafik V-T",
+      "instruction": "Amati lintasan kinematika dan hubungan kecepatan terhadap waktu.",
+      "content": "Perhatikan bahwa dalam gerak lurus 1 dimensi:\n1. Pada **GLB** ($a = 0$), grafik $v-t$ berupa garis datar horizontal. Jarak $s = v \\times t$ adalah luas persegi panjang.\n2. Pada **GLBB** ($a = \\text{konstan}$), grafik $v-t$ membentuk garis miring dengan gradien kemiringan sebesar percepatan $a$.\n3. Luas di bawah kurva $v-t$ selalu sama persis dengan perpindahan total $\\Delta s$!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Eksplorasi konsep luas di bawah grafik kecepatan-waktu.",
+        "screenReaderNote": "Materi panduan menghubungkan geometri luas grafik v-t dengan integral perpindahan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002104",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Tiga Persamaan Emas GLBB",
+      "instruction": "Kuasai ketiga rumus kinematika gerak lurus berubah beraturan.",
+      "content": "Untuk benda yang bergerak lurus dengan percepatan konstan $a$:\n\n1. **Persamaan Kecepatan terhadap Waktu**:\n$$v_t = v_0 + a \\cdot t$$\n\n2. **Persamaan Posisi terhadap Waktu**:\n$$s = v_0 \\cdot t + \\frac{1}{2} a \\cdot t^2$$\n\n3. **Persamaan Bebas Waktu (Hubungan Kecepatan dan Jarak)**:\n$$v_t^2 = v_0^2 + 2 a \\cdot s$$\n\nKetiga rumus ini diturunkan secara langsung dari definisi kalkulus:\n$$v(t) = \\frac{ds}{dt} \\quad \\text{dan} \\quad a(t) = \\frac{dv}{dt}$$\nKetika percepatan $a$ konstan, integral dari $a$ terhadap waktu menghasilkan garis lurus $v(t)$, dan integral dari $v(t)$ menghasilkan parabola posisi $s(t)$!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Tiga rumus dasar GLBB kecepatan vt, jarak s, dan rumus bebas waktu vt kuadrat.",
+        "screenReaderNote": "Materi konsep merangkum ketiga persamaan matematis gerak lurus berubah beraturan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002105",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Jarak Pengereman Mobil",
+      "instruction": "Gunakan persamaan bebas waktu untuk mencari jarak penghentian mobil.",
+      "content": "Sebuah mobil melaju dengan kecepatan awal $v_0 = 20\\text{ m/s}$. Tiba-tiba pengemudi mengerem dengan perlambatan konstan $a = -4\\text{ m/s}^2$ hingga mobil berhenti sempurna ($v_t = 0\\text{ m/s}$).\n\nBerapakah jarak tempuh pengereman mobil ($s$) dari saat rem diinjak hingga mobil berhenti?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus vt² = v0² + 2as dengan vt = 0.",
+        "concept": "0 = 20² + 2(-4)s  ⟹  0 = 400 - 8s.",
+        "strategy": "8s = 400  ⟹  s = 400 / 8.",
+        "solution": "s = 50 meter."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 50,
+        "tolerance": 0.5,
+        "units": "meter",
+        "feedbackCorrect": "Tepat sekali! Jarak pengereman mobil adalah 50 meter (0 = 400 - 8s ⟹ s = 50 m).",
+        "misconceptions": [
+          {
+            "code": "DECELERATION_MEANS_NEGATIVE_DIRECTION",
+            "triggerValue": -50,
+            "feedback": "Jarak perpindahan bernilai positif ke arah depan (+50 m). Tanda minus hanya pada nilai perlambatan percepatan a = -4 m/s²."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung jarak pengereman mobil dari 20 m/s dengan perlambatan 4 m/s kuadrat.",
+        "screenReaderNote": "Ketikkan angka jarak pengereman dalam meter pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002106",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Jarak Mengandung Faktor 1/2?",
+      "instruction": "Tuliskan penalaran geometris mengapa rumus GLBB memiliki pecahan 1/2 at².",
+      "content": "Pada gerak dengan kecepatan tetap (GLB), jarak adalah $s = v \\times t$ tanpa ada angka $\\frac{1}{2}$. Namun pada gerak dipercepat beraturan (GLBB), rumus jarak memuat pecahan setengah: $s = \\frac{1}{2}at^2$.\n\nJelaskan dengan menggunakan bentuk bangun datar pada grafik kecepatan-waktu ($v-t$) mengapa faktor $\\frac{1}{2}$ tersebut muncul secara alami!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan asal-usul faktor setengah pada rumus GLBB menggunakan grafik kecepatan-waktu.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan geometris mengenai rumus jarak GLBB."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-gerak-lurus",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-glbb-geometri",
+        "name": "Representasi Bentuk Segitiga",
+        "description": "Menjelaskan bahwa grafik v-t untuk benda yang dipercepat dari diam membentuk bangun segitiga siku-siku (alas = t, tinggi = v = at)",
+        "weight": 1
+      },
+      {
+        "id": "crit-glbb-luas",
+        "name": "Perhitungan Luas Segitiga",
+        "description": "Membuktikan bahwa luas segitiga adalah 1/2 × alas × tinggi = 1/2 × t × (at) = 1/2 at²",
+        "weight": 1
+      },
+      {
+        "id": "crit-glbb-kecepatan-rata",
+        "name": "Konsep Kecepatan Rata-Rata",
+        "description": "Menjelaskan bahwa kecepatan rata-rata pada percepatan konstan adalah setengah dari kecepatan akhir ((0 + vt)/2 = 1/2 vt)",
+        "weight": 1
+      }
+    ]
+  }
+}

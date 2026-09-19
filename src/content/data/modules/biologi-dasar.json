@@ -3,11 +3,18 @@
   "domainId": "10000000-0000-4000-8000-000000000004",
   "domainSlug": "biologi",
   "slug": "biologi-dasar",
-  "title": "Biologi: Organisasi dan Ciri Kehidupan",
-  "summary": "Memahami fenomena hidup: kriteria entitas biologis, homeostasis, serta hierarki struktur dari skala molekuler hingga biosfer.",
-  "estimatedMinutes": 180,
+  "title": "Biologi: Organisasi Kehidupan, Sel, dan Bioenergetika",
+  "summary": "Memahami fenomena kehidupan dari skala mikroskopis hingga ekologis: kriteria entitas biologis, hierarki biosfer, metode ilmiah empiris, teori dan anatomi sel prokariotik-eukariotik, kimia biomolekul makro, serta daur energi ATP dalam fotosintesis dan respirasi seluler.",
+  "estimatedMinutes": 300,
   "prerequisites": [],
-  "conceptSlugs": ["karakteristik-kehidupan", "tingkatan-organisasi-kehidupan"],
+  "conceptSlugs": [
+    "karakteristik-kehidupan",
+    "tingkatan-organisasi-kehidupan",
+    "metode-ilmiah",
+    "sel",
+    "molekul-biologis",
+    "energi-dalam-sistem-biologis"
+  ],
   "learningPath": {
     "slug": "jalur-biologi-dasar",
     "title": "Jalur Utama Biologi Dasar",
@@ -20,6 +27,26 @@
       {
         "conceptSlug": "tingkatan-organisasi-kehidupan",
         "sortOrder": 2,
+        "required": true
+      },
+      {
+        "conceptSlug": "metode-ilmiah",
+        "sortOrder": 3,
+        "required": true
+      },
+      {
+        "conceptSlug": "sel",
+        "sortOrder": 4,
+        "required": true
+      },
+      {
+        "conceptSlug": "molekul-biologis",
+        "sortOrder": 5,
+        "required": true
+      },
+      {
+        "conceptSlug": "energi-dalam-sistem-biologis",
+        "sortOrder": 6,
         "required": true
       }
     ]

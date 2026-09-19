@@ -3,14 +3,24 @@
   "domainId": "10000000-0000-4000-8000-000000000001",
   "domainSlug": "matematika",
   "slug": "fondasi-matematika",
-  "title": "Fondasi Matematika: Bilangan, Operasi, dan Pecahan",
-  "summary": "Membangun penalaran numerik intuitif: memahami besaran dan arah pada garis bilangan, geometri operasi aritmetika, serta representasi bagian-utuh pecahan dan desimal.",
-  "estimatedMinutes": 180,
+  "title": "Fondasi Matematika: Penalaran Numerik & Struktur Kuantitatif",
+  "summary": "Membangun penalaran numerik intuitif yang kokoh: memahami besaran dan arah garis bilangan, geometri operasi aritmetika, pecahan desimal, rasio proporsional, eksponen pangkat, pola deret, taksiran estimasi, dan dimensi pengukuran fisik.",
+  "estimatedMinutes": 360,
   "prerequisites": [],
-  "conceptSlugs": ["bilangan", "operasi-aritmetika", "pecahan-dan-desimal"],
+  "conceptSlugs": [
+    "bilangan",
+    "operasi-aritmetika",
+    "pecahan-dan-desimal",
+    "rasio-dan-proporsi",
+    "persentase",
+    "pangkat-dan-akar",
+    "urutan-dan-pola",
+    "estimasi",
+    "satuan-dan-pengukuran-matematika"
+  ],
   "learningPath": {
     "slug": "jalur-fondasi-matematika",
-    "title": "Jalur Utama Penalaran Fondasi Matematika",
+    "title": "Jalur Lengkap Penalaran Fondasi Matematika",
     "nodes": [
       {
         "conceptSlug": "bilangan",
@@ -25,6 +35,36 @@
       {
         "conceptSlug": "pecahan-dan-desimal",
         "sortOrder": 3,
+        "required": true
+      },
+      {
+        "conceptSlug": "rasio-dan-proporsi",
+        "sortOrder": 4,
+        "required": true
+      },
+      {
+        "conceptSlug": "persentase",
+        "sortOrder": 5,
+        "required": true
+      },
+      {
+        "conceptSlug": "pangkat-dan-akar",
+        "sortOrder": 6,
+        "required": true
+      },
+      {
+        "conceptSlug": "urutan-dan-pola",
+        "sortOrder": 7,
+        "required": true
+      },
+      {
+        "conceptSlug": "estimasi",
+        "sortOrder": 8,
+        "required": true
+      },
+      {
+        "conceptSlug": "satuan-dan-pengukuran-matematika",
+        "sortOrder": 9,
         "required": true
       }
     ]

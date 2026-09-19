@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000041",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "ikatan-kimia",
+  "title": "Ikatan Kimia: Triade Ikatan Ionik, Kovalen, dan Logam",
+  "summary": "Membedah gaya kohesi pengikat materi di alam semesta: dorongan termodinamika kaidah oktet, transfer elektron (ikatan ion), pemakaian bersama elektron (ikatan kovalen polar/nonpolar), dan model lautan elektron logam.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami dorongan pembentukan ikatan kimia untuk meminimalkan energi potensial sistem",
+    "Membedakan mekanisme transfer elektron (ionik) versus pemakaian bersama pasangan elektron (kovalen)",
+    "Menjelaskan sifat konduktivitas dan kelenturan tempa logam melalui model lautan elektron bebas"
+  ],
+  "prerequisites": [
+    "atom",
+    "sistem-periodik",
+    "ion"
+  ],
+  "misconceptions": [
+    {
+      "code": "BONDS_CONTAIN_PHYSICAL_STICKS",
+      "label": "Membayangkan ikatan kimia adalah batang penyambung fisik nyata antara dua atom",
+      "remediation": "Ikatan kimia bukanlah benda fisik padat, melainkan fenomena keseimbangan dinamis gaya elektrostatik tarik-menarik dan tolak-menolak antar awan elektron dan inti atom pada jarak ikatan optimum energi terendah."
+    },
+    {
+      "code": "COVALENT_MEANS_EQUAL_SHARING_ALWAYS",
+      "label": "Menganggap pasangan elektron dalam semua ikatan kovalen selalu dibagi rata persis di tengah kedua atom",
+      "remediation": "Pembagian elektron yang setara sempurna (kovalen murni/nonpolar) hanya terjadi antar atom sejenis (seperti Cl₂ atau O₂). Jika kedua atom memiliki perbedaan keelektronegatifan (seperti pada H-Cl atau H-O), elektron ikatan akan lebih tertarik ke atom yang lebih rakus elektron, membentuk ikatan kovalen polar dengan kutub muatan parsial (δ⁺ dan δ⁻)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004101",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Mengapa Atom Tidak Betah Sendirian?",
+      "instruction": "Renungkan mengapa di alam semesta atom hampir tidak pernah ditemukan berkeliaran sendirian.",
+      "content": "Kecuali sekelompok kecil atom gas mulia bangsawan yang penyendiri di pojok kanan tabel periodik, **hampir seluruh atom di alam semesta selalu berikatan satu sama lain**:\n- Hidrogen di udara tidak melayang sendirian, melainkan berpasangan erat menjadi $\\text{H}_2$.\n- Oksigen mengikat Hidrogen menjadi air samudra ($\\text{H}_2\\text{O}$).\n- Silikon merangkul Oksigen menjadi butiran pasir pantai ($\\text{SiO}_2$).\n- Besi merapatkan barisan triliunan atomnya menjadi baja kokoh pencakar langit.\n\nMengapa atom-atom ini begitu rakus untuk berikatan?\nKarena alam semesta menyukai **keadaan energi terendah yang paling stabil**!\nBagi sebuah atom, berikatan adalah satu-satunya cara untuk melengkapi kulit elektron terluarnya menyerupai konfigurasi stabil gas mulia: inilah hakikat dari **Ikatan Kimia**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Kurva energi potensial Lennard-Jones memperlihatkan palung energi terendah pada panjang ikatan r0 yang stabil.",
+        "screenReaderNote": "Materi pengantar menguraikan prinsip minimasi energi potensial sebagai pendorong utama pembentukan ikatan kimia."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004102",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Jenis Ikatan Antara Kalium dan Fluorin",
+      "instruction": "Prediksi jenis ikatan yang terbentuk antara logam alkali reaktif dan nonlogam halogen elektronegatif.",
+      "content": "Kalium ($\\text{K}$) adalah logam alkali Golongan 1 dengan elektronegativitas sangat rendah ($0{,}82$).\nFluorin ($\\text{F}$) adalah nonlogam Golongan 17 dengan elektronegativitas tertinggi di alam ($3{,}98$).\nSelisih keelektronegatifan keduanya sangat masif: $\\Delta \\text{EN} = 3{,}98 - 0{,}82 = 3{,}16$.\n\nJenis ikatan kimia apakah yang akan terbentuk saat Kalium bereaksi dengan Fluorin menghasilkan $\\text{KF}$?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Gunakan pedoman selisih elektronegativitas: jika ΔEN > 2.0, terjadi transfer elektron penuh.",
+        "concept": "Kalium sangat mudah melepas 1 elektron, dan Fluorin sangat rakus menyerap 1 elektron.",
+        "strategy": "Terbentuk ion K⁺ dan F⁻ yang saling tarik elektrostatik.",
+        "solution": "Ikatan yang terbentuk adalah ikatan ionik murni."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-ionik",
+            "label": "Ikatan Ionik — karena selisih elektronegativitas yang sangat tinggi memicu transfer elektron penuh dari Kalium ke Fluorin membentuk pasangan ion K⁺ dan F⁻",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Dengan ΔEN = 3,16 (jauh di atas ambang batas 2,0), Fluorin merebut elektron valensi Kalium seutuhnya, menghasilkan ikatan ionik yang sangat kuat."
+          },
+          {
+            "id": "opt-kovalen-nonpolar",
+            "label": "Ikatan Kovalen Nonpolar — kedua atom berbagi elektron secara setara",
+            "isCorrect": false,
+            "explanation": "Kovalen nonpolar hanya terjadi jika selisih elektronegativitas mendekati nol (ΔEN < 0,4)."
+          },
+          {
+            "id": "opt-logam",
+            "label": "Ikatan Logam — karena melibatkan unsur Kalium",
+            "isCorrect": false,
+            "explanation": "Ikatan logam hanya terjadi antar atom logam sejenis, bukan antara logam dengan nonlogam."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004103",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Tiga Paradigma Ikatan Kimia",
+      "instruction": "Bandingkan tiga mekanisme pengikatan materi padat di alam.",
+      "content": "Pelajari perbedaan mendasar triade ikatan kimia:\n1. **Ikatan Ion (Transfer Elektron):**\n   - Logam (donor elektron) + Nonlogam (akseptor elektron).\n   - Sifat: Keras, rapuh, titik leleh sangat tinggi, menghantar listrik hanya saat leleh/larut.\n2. **Ikatan Kovalen (Elektron Bersama):**\n   - Nonlogam + Nonlogam.\n   - Membentuk molekul diskret individual (gas, cair, atau padatan lunak berikatan van der Waals).\n   - Polar (ada dipol $\\text{H}_2\\text{O}$) vs Nonpolar (distribusi merata $\\text{O}_2, \\text{CH}_4$).\n3. **Ikatan Logam (Lautan Elektron Bebas):**\n   - Logam + Logam.\n   - Kation-kation logam berbaris rapi dalam kubangan kabut awan elektron terdelokalisasi yang bebas mengalir ke segala arah.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Bagan perbandingan tiga jenis ikatan: ionik transfer bola elektron, kovalen lingkaran orbital beririsan, dan logam kation terendam kabut elektron.",
+        "screenReaderNote": "Materi interaktif menguraikan perbandingan karakteristik ikatan ionik, kovalen, dan ikatan logam."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004104",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Spektrum Elektronegativitas dan Momen Dipol",
+      "instruction": "Pahami perumusan analitik karakter ionik ikatan dan momen dipol polaritas.",
+      "content": "### 1. Spektrum Kontinu Karakter Ikatan\nBatas antara ikatan kovalen dan ionik bukanlah garis terpisah kaku, melainkan suatu spektrum kontinu yang ditentukan oleh selisih keelektronegatifan ($\\Delta \\text{EN} = |\\text{EN}_A - \\text{EN}_B|$):\n- $\\Delta \\text{EN} < 0{,}4$: **Kovalen Nonpolar murni** (distribusi elektron simetris)\n- $0{,}4 \\le \\Delta \\text{EN} \\le 1{,}9$: **Kovalen Polar** (terjadi polarisasi muatan parsial $\\delta^+ - \\delta^-$)\n- $\\Delta \\text{EN} > 2{,}0$: **Ikatan Ionik** (karakter ionik mendominasi $> 50\\%$)\n\n### 2. Momen Dipol Ikatan (\\(\\mu\\))\nUkuran kuantitatif pemisahan muatan listrik parsial pada ikatan kovalen polar:\n$$\\mu = q \\cdot d$$\nDi mana $q$ adalah besar muatan terpisah (Coulomb) dan $d$ adalah jarak antar inti atom (meter). Satuan umum: Debye (D), $1\\text{ D} \\approx 3{,}336 \\times 10^{-30} \\text{ C}\\cdot\\text{m}$.\n\n### 3. Model Lautan Elektron Drude-Lorentz (Ikatan Logam)\nMenjelaskan fenomena fisis logam:\n- **Konduktor Listrik Unggul:** Aliran bebas elektron terdelokalisasi saat dipasang medan potensial.\n- **Ductile & Malleable (Dapat Ditempa):** Ketika lapisan kation bergeser tertekuk, awan elektron seketika menyesuaikan diri mengalir mengelilingi posisi baru tanpa terjadi tolakan elektrostatik.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Spektrum kontinu perbedaan elektronegativitas dari kovalen murni ke ionik, dan rumus momen dipol mu = q d.",
+        "screenReaderNote": "Halaman merangkum klasifikasi matematis spektrum ikatan Pauling berdasarkan delta EN dan perumusan momen dipol Debye."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004105",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Selisih Elektronegativitas Ikatan C-H",
+      "instruction": "Hitung selisih keelektronegatifan ikatan Karbon-Hidrogen pada molekul metana.",
+      "content": "Pada molekul gas metana ($\\text{CH}_4$), atom Karbon berikatan kovalen dengan atom Hidrogen.\nDiketahui nilai elektronegativitas skala Pauling:\n- Karbon ($\\text{C}$) = $2{,}55$\n- Hidrogen ($\\text{H}$) = $2{,}20$\n\nBerapakah besar selisih keelektronegatifan ($\\Delta \\text{EN}$) antara atom Karbon dan Hidrogen dalam ikatan tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Kurangkan nilai elektronegativitas yang lebih besar dengan yang lebih kecil.",
+        "concept": "ΔEN = EN(C) - EN(H).",
+        "strategy": "Hitung: 2.55 - 2.20.",
+        "solution": "ΔEN = 0.35 (karena < 0.4, ikatan C-H tergolong kovalen nonpolar)."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.02,
+        "expectedValue": 0.35,
+        "units": "",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004106",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Logam Bisa Ditempa Menjadi Lembaran Tipis Sedangkan Kaca Hancur?",
+      "instruction": "Jelaskan keajaiban mekanis ikatan logam dibandingkan kerapuhan padatan kovalen jaringan atau garam kristal.",
+      "content": "Uraikan analisis ilmiah mendalam mengenai:\n1. Mengapa emas dapat ditempa hingga menjadi lembaran kertas daun emas setebal beberapa nanometer (malleability) tanpa pernah pecah.\n2. Bagaimana sifat non-arah (nondirectional) dari model lautan elektron memungkinkan bidang kisi kation bergeser mulus.\n3. Mengapa ikatan kovalen kaku pada kaca silika atau intan justru membuatnya rentan retak getas saat mengalami deformasi plastis.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-ikatan-kimia",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-ikatan-kimia-sifat-lautan-elektron-non-arah",
+        "name": "Ikatan Logam Nondirectional",
+        "description": "Menjelaskan bahwa ikatan logam tidak memiliki sudut ikatan kaku yang terarah, sehingga awan elektron bertindak sebagai pelumas fluida elektrostatik di antara kation.",
+        "weight": 1
+      },
+      {
+        "id": "crit-ikatan-kimia-mekanisme-pergeseran-kisi",
+        "name": "Pergeseran Lapisan Kation Tanpa Retak",
+        "description": "Menerangkan bahwa saat logam dipukul, lapisan kation menggelincir di atas lapisan lain sementara awan elektron bebas seketika mengisi celah menjaga keutuhan ikatan.",
+        "weight": 1
+      },
+      {
+        "id": "crit-ikatan-kimia-kontras-ikatan-terarah-kaca",
+        "name": "Kerapuhan Ikatan Kovalen Kaku Kaca",
+        "description": "Mengontraskan dengan ikatan kovalen pada kaca yang memiliki geometri sudut ikatan spasial yang kaku sehingga pemaksaan pergeseran sudut seketika memutuskan ikatan secara permanen.",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -5,9 +5,17 @@ import Link from "next/link";
 import {
   TrendingUp,
   Ruler,
+  PieChart,
+  Grid,
   Compass,
+  Target,
+  MoveRight,
+  Activity,
+  Atom,
   FlaskConical,
   Dna,
+  BatteryCharging,
+  Eye,
   ArrowRight,
   Sparkles,
   Layers,
@@ -15,11 +23,34 @@ import {
 } from "lucide-react";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { NumberLinePlayground } from "@/features/learning/components/playgrounds/number-line-playground";
+import { FractionRatioPlayground } from "@/features/learning/components/playgrounds/fraction-ratio-playground";
+import { PatternExponentPlayground } from "@/features/learning/components/playgrounds/pattern-exponent-playground";
 import { VectorPlayground } from "@/features/learning/components/playgrounds/vector-playground";
+import { ProjectileMotionPlayground } from "@/features/learning/components/playgrounds/projectile-motion-playground";
+import { NewtonDynamicsPlayground } from "@/features/learning/components/playgrounds/newton-dynamics-playground";
+import { HarmonicOscillationPlayground } from "@/features/learning/components/playgrounds/harmonic-oscillation-playground";
 import { MatterPlayground } from "@/features/learning/components/playgrounds/matter-playground";
+import { PeriodicTableAtomPlayground } from "@/features/learning/components/playgrounds/periodic-table-atom-playground";
+import { ChemicalBondingPlayground } from "@/features/learning/components/playgrounds/chemical-bonding-playground";
 import { BiologicalScalePlayground } from "@/features/learning/components/playgrounds/biological-scale-playground";
+import { CellStructurePlayground } from "@/features/learning/components/playgrounds/cell-structure-playground";
+import { BiologicalEnergyPlayground } from "@/features/learning/components/playgrounds/biological-energy-playground";
 
-type LabStationId = "calculus" | "number-line" | "vector" | "matter" | "biology";
+type LabStationId =
+  | "calculus"
+  | "number-line"
+  | "fraction-ratio"
+  | "pattern-exponent"
+  | "vector"
+  | "projectile"
+  | "newton-dynamics"
+  | "oscillation"
+  | "periodic-atom"
+  | "chemical-bonding"
+  | "matter"
+  | "biology"
+  | "cell-structure"
+  | "biological-energy";
 
 interface LabStation {
   id: LabStationId;
@@ -57,6 +88,28 @@ const LAB_STATIONS: LabStation[] = [
     moduleTitle: "Modul Fondasi Matematika",
   },
   {
+    id: "fraction-ratio",
+    title: "Rasio, Proporsi, & Persen",
+    domain: "Fondasi Matematika",
+    domainSlug: "matematika",
+    badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+    icon: PieChart,
+    description: "Visualisasi invariansi rasio, skala proporsional pengali k, serta perbandingan bagian terhadap keseluruhan dalam diagram lingkaran dan bilah fraksi.",
+    moduleSlug: "fondasi-matematika",
+    moduleTitle: "Modul Fondasi Matematika",
+  },
+  {
+    id: "pattern-exponent",
+    title: "Pola, Pangkat, & Eksponen",
+    domain: "Fondasi Matematika",
+    domainSlug: "matematika",
+    badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30",
+    icon: Grid,
+    description: "Perbandingan tingkat pertumbuhan linier, kuadratik, dan eksponensial b^n serta interpretasi geometris luas bujur sangkar dan akar kuadrat.",
+    moduleSlug: "fondasi-matematika",
+    moduleTitle: "Modul Fondasi Matematika",
+  },
+  {
     id: "vector",
     title: "Vektor & Gaya 2D",
     domain: "Fisika Mekanika",
@@ -68,12 +121,67 @@ const LAB_STATIONS: LabStation[] = [
     moduleTitle: "Modul Fisika Mekanika",
   },
   {
+    id: "projectile",
+    title: "Kinematika Gerak Parabola",
+    domain: "Fisika Mekanika",
+    domainSlug: "fisika",
+    badgeColor: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+    icon: Target,
+    description: "Simulasi lintasan trajektori proyektil 2D di bawah gravitasi, sudut elevasi optimal 45°, waktu terbang, dan pemisahan gerak horizontal-vertikal.",
+    moduleSlug: "fisika-mekanika",
+    moduleTitle: "Modul Fisika Mekanika",
+  },
+  {
+    id: "newton-dynamics",
+    title: "Hukum Newton & Gesekan",
+    domain: "Fisika Mekanika",
+    domainSlug: "fisika",
+    badgeColor: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+    icon: MoveRight,
+    description: "Diagram benda bebas (FBD), ambang gesekan statis maksimum vs kinetik, gaya normal, serta percepatan sistem menurut hukum ΣF = ma.",
+    moduleSlug: "fisika-mekanika",
+    moduleTitle: "Modul Fisika Mekanika",
+  },
+  {
+    id: "oscillation",
+    title: "Osilasi Harmonik & Energi",
+    domain: "Fisika Mekanika",
+    domainSlug: "fisika",
+    badgeColor: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30",
+    icon: Activity,
+    description: "Sistem osilasi pegas dan bandul sederhana, pertukaran kontinu energi potensial pegas Ep dan energi kinetik Ek, serta kekekalan energi mekanik total.",
+    moduleSlug: "fisika-mekanika",
+    moduleTitle: "Modul Fisika Mekanika",
+  },
+  {
+    id: "periodic-atom",
+    title: "Tabel Periodik & Atom Bohr",
+    domain: "Kimia Dasar",
+    domainSlug: "kimia",
+    badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
+    icon: Atom,
+    description: "Model atom Bohr interaktif, konfigurasi susunan elektron kulit K, L, M, elektron valensi, nomor atom Z, dan tren periodik unsur.",
+    moduleSlug: "kimia-dasar",
+    moduleTitle: "Modul Kimia Dasar",
+  },
+  {
+    id: "chemical-bonding",
+    title: "Ikatan Kimia & Geometri VSEPR",
+    domain: "Kimia Dasar",
+    domainSlug: "kimia",
+    badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
+    icon: FlaskConical,
+    description: "Visualisasi ikatan ionik vs kovalen polar/nonpolar, tolakan pasangan elektron bebas (PEB), struktur Lewis, serta bentuk molekul linear, bent, dan tetrahedral.",
+    moduleSlug: "kimia-dasar",
+    moduleTitle: "Modul Kimia Dasar",
+  },
+  {
     id: "matter",
     title: "Kinetika Partikel & Materi",
     domain: "Kimia Dasar",
     domainSlug: "kimia",
     badgeColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
-    icon: FlaskConical,
+    icon: Layers,
     description: "Simulasi gerakan partikel termal dalam fasa padat, cair, dan gas, pengaruh energi kinetik temperatur Kelvin, serta dinamika materi.",
     moduleSlug: "kimia-dasar",
     moduleTitle: "Modul Kimia Dasar",
@@ -86,6 +194,28 @@ const LAB_STATIONS: LabStation[] = [
     badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
     icon: Dna,
     description: "Eksplorasi hierarki organisasi kehidupan dari skala sub-mikroskopis molekul hingga organisme utuh dan pengamatan sifat emergen.",
+    moduleSlug: "biologi-dasar",
+    moduleTitle: "Modul Biologi Dasar",
+  },
+  {
+    id: "cell-structure",
+    title: "Anatomi Sel & Organel",
+    domain: "Biologi Dasar",
+    domainSlug: "biologi",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+    icon: Eye,
+    description: "Inspeksi anatomi mikroskopis komparatif antara sel hewan, sel tumbuhan, dan bakteri prokariotik beserta fungsi homeostasis organel.",
+    moduleSlug: "biologi-dasar",
+    moduleTitle: "Modul Biologi Dasar",
+  },
+  {
+    id: "biological-energy",
+    title: "Energi Hayati & Siklus ATP",
+    domain: "Biologi Dasar",
+    domainSlug: "biologi",
+    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+    icon: BatteryCharging,
+    description: "Siklus termodinamika seluler: fosforilasi ATP ⇌ ADP + Pi, respirasi seluler mitokondria, dan aliran energi biokimiawi.",
     moduleSlug: "biologi-dasar",
     moduleTitle: "Modul Biologi Dasar",
   },
@@ -563,39 +693,42 @@ export default function NalarLabPage() {
           <Sparkles className="w-3.5 h-3.5" />
           <span>Laboratorium Eksperimen STEM Nalar</span>
           <span>•</span>
-          <span>5 Wahana Eksplorasi</span>
+          <span>14 Wahana Eksplorasi Multidisiplin</span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-bold text-text tracking-tight">
-          Nalar Lab: Ruang Bermain Intuisi Sains & Matematika
+          Nalar Lab: Ruang Bermain Intuisi Sains &amp; Matematika
         </h1>
-
         <p className="text-sm text-text-muted max-w-3xl leading-relaxed">
-          Eksplorasi parameter visual tanpa batas di seluruh domain STEM. Geser tuas, ubah variabel, dan buktikan sendiri bagaimana hukum-hukum fundamental bekerja sebelum atau sesudah kamu mendalami materi kurikulum.
+          Manipulasi parameter secara langsung untuk melihat konsep beraksi. Dari garis singgung kalkulus, trajektori proyektil mekanika, kulit elektron atom, hingga siklus respirasi ATP seluler.
         </p>
       </div>
 
-      {/* Station Selector Navigation Tabs */}
-      <div className="space-y-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
-          <Layers className="w-3.5 h-3.5" />
-          <span>Pilih Laboratorium Eksperimen:</span>
-        </span>
+      {/* Station Navigation Carousel / Selector Tabs */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-accent" />
+            <span>Pilih Stasiun Eksperimen:</span>
+          </span>
+          <span className="text-xs text-text-muted font-mono">
+            {LAB_STATIONS.findIndex((s) => s.id === activeStationId) + 1} / {LAB_STATIONS.length}
+          </span>
+        </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
           {LAB_STATIONS.map((station) => {
+            const isActive = station.id === activeStationId;
             const Icon = station.icon;
-            const isActive = activeStationId === station.id;
-
             return (
               <button
                 key={station.id}
                 type="button"
                 onClick={() => setActiveStationId(station.id)}
-                className={`p-3.5 rounded-xl border text-left transition-all flex flex-col justify-between gap-2.5 ${
+                className={`p-3 rounded-xl border text-left transition-all flex flex-col justify-between gap-2.5 group ${
                   isActive
-                    ? "bg-surface-raised border-accent text-accent shadow-sm ring-1 ring-accent/30"
-                    : "bg-surface-raised border-border text-text hover:bg-surface hover:border-border-subtle"
+                    ? "bg-accent-muted/40 border-accent shadow-xs ring-1 ring-accent/40"
+                    : "bg-surface-raised border-border hover:bg-surface hover:border-border-strong"
                 }`}
               >
                 <div className="flex items-center justify-between w-full">
@@ -607,9 +740,9 @@ export default function NalarLabPage() {
                     <Icon className="w-4 h-4" />
                   </span>
                   <span
-                    className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${station.badgeColor}`}
+                    className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${station.badgeColor}`}
                   >
-                    {station.domain}
+                    {station.domainSlug}
                   </span>
                 </div>
 
@@ -653,30 +786,19 @@ export default function NalarLabPage() {
       {/* Active Station Interactive Content */}
       <div className="pt-2">
         {activeStationId === "calculus" && <CalculusLabView />}
-
-        {activeStationId === "number-line" && (
-          <div className="space-y-4">
-            <NumberLinePlayground />
-          </div>
-        )}
-
-        {activeStationId === "vector" && (
-          <div className="space-y-4">
-            <VectorPlayground />
-          </div>
-        )}
-
-        {activeStationId === "matter" && (
-          <div className="space-y-4">
-            <MatterPlayground />
-          </div>
-        )}
-
-        {activeStationId === "biology" && (
-          <div className="space-y-4">
-            <BiologicalScalePlayground />
-          </div>
-        )}
+        {activeStationId === "number-line" && <NumberLinePlayground />}
+        {activeStationId === "fraction-ratio" && <FractionRatioPlayground />}
+        {activeStationId === "pattern-exponent" && <PatternExponentPlayground />}
+        {activeStationId === "vector" && <VectorPlayground />}
+        {activeStationId === "projectile" && <ProjectileMotionPlayground />}
+        {activeStationId === "newton-dynamics" && <NewtonDynamicsPlayground />}
+        {activeStationId === "oscillation" && <HarmonicOscillationPlayground />}
+        {activeStationId === "periodic-atom" && <PeriodicTableAtomPlayground />}
+        {activeStationId === "chemical-bonding" && <ChemicalBondingPlayground />}
+        {activeStationId === "matter" && <MatterPlayground />}
+        {activeStationId === "biology" && <BiologicalScalePlayground />}
+        {activeStationId === "cell-structure" && <CellStructurePlayground />}
+        {activeStationId === "biological-energy" && <BiologicalEnergyPlayground />}
       </div>
     </div>
   );

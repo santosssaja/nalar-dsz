@@ -12,7 +12,7 @@ import {
   learningSteps,
 } from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
-import { getStepById, getConceptById } from "@/content/loader";
+import { getStepById, getConceptById, getConcepts } from "@/content/loader";
 import { evaluateStepResponse, EvaluationResult } from "./evaluator";
 import {
   getDimensionForStep,
@@ -430,17 +430,30 @@ export async function getMistakeSummaryForLearner(
 
   const result: MistakeSummaryItem[] = [];
   for (const item of map.values()) {
-    const concept = getConceptById(item.conceptId);
-    const taxonomy = concept?.misconceptions.find(
+    let concept = getConceptById(item.conceptId);
+    let taxonomy = concept?.misconceptions.find(
       (m) => m.code === item.misconceptionCode
     );
+
+    // Fallback across all registered concepts if conceptId shifted
+    if (!taxonomy) {
+      for (const c of getConcepts()) {
+        const found = c.misconceptions.find((m) => m.code === item.misconceptionCode);
+        if (found) {
+          taxonomy = found;
+          concept = c;
+          break;
+        }
+      }
+    }
+
     result.push({
       misconceptionCode: item.misconceptionCode,
       label: taxonomy?.label ?? item.misconceptionCode,
       remediation: taxonomy?.remediation ?? "Tinjau kembali konsep ini untuk memperdalam pemahaman.",
       count: item.count,
       lastOccurredAt: item.lastOccurredAt,
-      conceptId: item.conceptId,
+      conceptId: concept?.id ?? item.conceptId,
       conceptTitle: concept?.title ?? "Konsep Pembelajaran",
     });
   }

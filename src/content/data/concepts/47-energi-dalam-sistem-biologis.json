@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000047",
+  "moduleId": "20000000-0000-4000-8000-000000000005",
+  "slug": "energi-dalam-sistem-biologis",
+  "title": "Bioenergetika: Daur Ulang ATP, Fotosintesis Kloroplas, dan Respirasi Mitokondria",
+  "summary": "Membedah aliran termodinamika hayati: peran molekul ATP sebagai mata uang energi universal sel, reaksi anabolisme fotosintesis penangkap foton surya, serta katabolisme respirasi seluler aerobik penghasil daya.",
+  "difficulty": "advanced",
+  "learningObjectives": [
+    "Memahami siklus fosforilasi dan hidrolisis ATP (ATP ⇌ ADP + Pi) sebagai transfer energi universal",
+    "Menjelaskan persamaan kimiawi reaksi terang-gelap fotosintesis dalam kloroplas",
+    "Melacak alur empat tahapan respirasi seluler aerobik (glikolisis hingga fosforilasi oksidatif) dalam memanen molekul ATP"
+  ],
+  "prerequisites": [
+    "sel",
+    "molekul-biologis",
+    "karakteristik-kehidupan"
+  ],
+  "misconceptions": [
+    {
+      "code": "ATP_IS_STORED_IN_BULK",
+      "label": "Menganggap tubuh manusia menimbun cadangan ATP dalam jumlah puluhan kilogram di dalam sel",
+      "remediation": "Tubuh manusia setiap saat hanya memiliki total sekitar 50 gram ATP! Namun karena molekul ATP terus-menerus didaur ulang ribuan kali sehari melalui hidrolisis dan regenerasi ulang, seorang manusia aktif memutar balik dan menggunakan setara dengan 50 hingga 75 kilogram ATP setiap harinya!"
+    },
+    {
+      "code": "PHOTOSYNTHESIS_MAKES_ENERGY_FROM_NOTHING",
+      "label": "Mengira fotosintesis menciptakan energi baru dari ketiadaan",
+      "remediation": "Sesuai Hukum I Termodinamika, tumbuhan tidak menciptakan energi, melainkan mengonversi energi radiasi foton sinar matahari menjadi energi potensial kimiawi yang tersimpan di dalam ikatan kovalen molekul glukosa."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004701",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Baterai yang Terisi Ulang Sejuta Kali Sehari: Dunia Tanpa Henti ATP",
+      "instruction": "Rasakan detak jantung dan embusan napasmu: ke mana larinya udara dan sarapan pagimu?",
+      "content": "Setiap detik kamu hidup:\n- Jutaan ion dipompa keluar masuk neuron otakmu agar kamu bisa berpikir.\n- Filamen aktin-miosin di otot kakimu meluncur agar kamu bisa melangkah.\n- Ribosom merajut untaian protein baru untuk menyembuhkan luka.\n\nSeluruh aktivitas biologis ini menuntut satu bahan bakar yang sama: **Adenosin Trifosfat (ATP)**.\nATP sering dijuluki sebagai **mata uang energi universal seluruh sel bumi**.\nKetika sel membutuhkan energi, ia memutuskan satu gugus fosfat terluar dari ATP seperti melepas pelatuk pegas bertekanan tinggi. Hasilnya adalah **ADP (Adenosin Difosfat)** dan semburan energi bebas yang langsung menggerakkan mesin nano sel!\nDan melalui respirasi makanan yang kamu santap, mitokondria mengisi ulang ADP itu kembali menjadi ATP dalam siklus abadi yang menopang napas kehidupan.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram siklus isi ulang ATP membandingkan pelepasan energi hidrolisis menjadi ADP dengan regenerasi pengisian ulang dari pembakaran glukosa makanan.",
+        "screenReaderNote": "Materi pengantar menguraikan peranan sentral molekul ATP sebagai mata uang energi seluler."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004702",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Pasangan Kimiawi Fotosintesis dan Respirasi Seluler",
+      "instruction": "Bandingkan reaktan dan produk akhir dari fotosintesis tumbuhan dan respirasi aerobik manusia.",
+      "content": "Perhatikan dua reaksi biokimia terbesar di muka bumi:\n- **Fotosintesis (Tumbuhan hijau):** $6\\,\\text{CO}_2 + 6\\,\\text{H}_2\\text{O} + \\text{cahaya} \\longrightarrow \\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\,\\text{O}_2$\n- **Respirasi Aerobik (Hewan & Seluruh Sel):** $\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\,\\text{O}_2 \\longrightarrow 6\\,\\text{CO}_2 + 6\\,\\text{H}_2\\text{O} + \\text{ATP}$\n\nBagaimanakah hubungan termodinamika antara kedua reaksi mendasar ini?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Amati reaktan di sebelah kiri dan produk di sebelah kanan dari kedua persamaan.",
+        "concept": "Produk buangan fotosintesis (glukosa dan oksigen) adalah reaktan respirasi.",
+        "strategy": "Keduanya membentuk siklus biogeokimiawi tertutup yang saling menggenapi secara sempurna.",
+        "solution": "Keduanya merupakan reaksi kebalikan simetris yang mendaur ulang karbon dan oksigen di biosfer."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-siklus-simetris",
+            "label": "Keduanya adalah reaksi kebalikan simetris — fotosintesis mengikat karbon dan menyimpan energi surya ke dalam glukosa, sedangkan respirasi membakar glukosa untuk memanen energi kimiawi kembali",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Fotosintesis adalah anabolisme endergonik (menyimpan energi matahari), sedangkan respirasi adalah katabolisme eksergonik (melepaskan energi ke ATP). Keduanya menopang siklus biosfer bumi."
+          },
+          {
+            "id": "opt-reaksi-kompetisi",
+            "label": "Keduanya bersaing memperebutkan molekul glukosa yang sama di atmosfer",
+            "isCorrect": false,
+            "explanation": "Glukosa tidak berada di atmosfer, melainkan diproduksi internal oleh produsen fotosintetik dan dialirkan melalui rantai makanan."
+          },
+          {
+            "id": "opt-reaksi-identik",
+            "label": "Keduanya menghasilkan produk sampingan beracun yang memusnahkan ekosistem",
+            "isCorrect": false,
+            "explanation": "Produk sampingan fotosintesis (oksigen) adalah gas esensial yang memungkinkan respirasi hewan dan manusia."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004703",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Simulator Aliran Energi Biologis di Playground",
+      "instruction": "Uji parameter kloroplas dan mitokondria pada simulator siklus bioenergetika interaktif.",
+      "content": "Amati aliran siklis energi dalam sistem hayati:\n1. **Fase Pengisian (Kloroplas):**\n   - Foton cahaya matahari ditangkap klorofil membran tilakoid.\n   - Fotolisis air menghasilkan elektron dan gas $\\text{O}_2$.\n   - Siklus Calvin di stroma mereduksi $\\text{CO}_2$ menjadi gula glukosa $\\text{C}_6\\text{H}_{12}\\text{O}_6$.\n2. **Fase Pembalikan (Mitokondria):**\n   - Glukosa dipecah di sitoplasma (glikolisis $\\rightarrow$ 2 piruvat).\n   - Siklus Krebs di matriks mitokondria melepaskan $\\text{CO}_2$ dan mengumpulkan elektron NADH/FADH₂.\n   - Rantai Transpor Elektron memompa gradien proton $\\text{H}^+$ melintasi krista untuk memutar turbin **ATP Sintase** menghasilkan puluhan molekul ATP!",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Visualisasi interaktif siklus bioenergetika kloroplas memproduksi glukosa dan oksigen yang diserap mitokondria untuk menghasilkan ATP dan karbon dioksida.",
+        "screenReaderNote": "Materi interaktif menyajikan simulasi siklus energi antara kloroplas tumbuhan dan mitokondria eukariotik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004704",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Neraca Energi Daur ATP dan Efisiensi Respirasi",
+      "instruction": "Pelajari termodinamika kuantitatif hidrolisis ATP dan neraca panen respirasi aerobik.",
+      "content": "### 1. Termodinamika Hidrolisis ATP\nReaksi hidrolisis pemutusan ikatan fosfoanhidrida terluar bersifat sangat eksergonik (melepaskan energi bebas Gibbs):\n$$\\text{ATP} + \\text{H}_2\\text{O} \\rightleftharpoons \\text{ADP} + \\text{P}_i \\quad (\\Delta G^\\circ = -30{,}5\\text{ kJ/mol} \\approx -7{,}3\\text{ kkal/mol})$$\nDalam kondisi fisiologis intraseluler riil, energi bebas yang dibebaskan bahkan lebih tinggi: $\\Delta G \\approx -50\\text{ kJ/mol}$.\n\n### 2. Neraca Panen ATP Respirasi Aerobik Lengkap (1 Molekul Glukosa)\n1. **Glikolisis (di Sitosol):** Menghasilkan $2\\,\\text{ATP}$ (bersih) $+ 2\\,\\text{NADH}$\n2. **Dekarboksilasi Oksidatif Piruvat:** Menghasilkan $2\\,\\text{NADH} + 2\\,\\text{CO}_2$\n3. **Siklus Asam Sitrat / Krebs (di Matriks Mitokondria):** Menghasilkan $2\\,\\text{ATP} + 6\\,\\text{NADH} + 2\\,\\text{FADH}_2 + 4\\,\\text{CO}_2$\n4. **Fosforilasi Oksidatif (Rantai Transpor Elektron & Kemiosmosis):**\n   - $1\\,\\text{NADH} \\approx 2{,}5\\,\\text{ATP}$\n   - $1\\,\\text{FADH}_2 \\approx 1{,}5\\,\\text{ATP}$\n\n**Hasil Panen Teoritis Maksimum Total:**\n$$1\\text{ Glukosa} \\longrightarrow 30\\text{ hingga } 32\\text{ Molekul ATP}$$\nEfisiensi konversi energi respirasi sel mencapai $\\approx 34\\%$, jauh lebih tinggi daripada efisiensi mesin mobil bensin konvensional ($20\\text{–}25\\%$)!",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Diagram aliran neraca matematis pembentukan 30-32 ATP dari satu molekul glukosa melalui glikolisis, dekarboksilasi, siklus Krebs, dan kemiosmosis.",
+        "screenReaderNote": "Halaman merangkum formulasi termodinamika hidrolisis ATP delta G dan neraca analitis panen 30 hingga 32 ATP respirasi seluler."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004705",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Panen ATP dari Pemecahan Glukosa",
+      "instruction": "Hitung jumlah molekul ATP yang dipanen dari pembakaran sejumlah glukosa.",
+      "content": "Dalam suatu kultur sel mamalia, mitokondria bekerja optimal memanen rata-rata $32\\text{ molekul ATP}$ dari setiap pembakaran sempurna $1\\text{ molekul glukosa}$ melalui respirasi aerobik lengkap.\n\nBerapakah jumlah total molekul ATP yang dihasilkan jika sel mengoksidasi $5\\text{ molekul glukosa}$ secara sempurna?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Kalikan jumlah molekul glukosa dengan faktor panen ATP per glukosa.",
+        "concept": "1 molekul glukosa menghasilkan 32 ATP.",
+        "strategy": "Hitung: 5 × 32.",
+        "solution": "Total ATP yang dihasilkan adalah 160 molekul."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 1,
+        "expectedValue": 160,
+        "units": "ATP",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004706",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Turbin Nano Peter Mitchell — Teori Kemiosmosis",
+      "instruction": "Jelaskan bagaimana sel memanfaatkan gradien proton mirip bendungan pembangkit listrik tenaga air (PLTA) untuk mensintesis ATP.",
+      "content": "Uraikan Teori Kemiosmosis Peter Mitchell (Hadiah Nobel Kimia 1978):\n1. Bagaimana rantai transpor elektron menggunakan energi elektron berenergi tinggi untuk memompa proton ($\\text{H}^+$) dari matriks ke ruang antarmembran mitokondria.\n2. Mengapa penumpukan proton ini menciptakan gaya penggerak proton (**Proton-Motive Force**) berupa gradien konsentrasi pH dan beda potensial listrik.\n3. Jelaskan bagaimana enzim nano motor **ATP Sintase** berputar secara mekanis saat proton mengalir kembali melintasinya untuk menyatukan $\\text{ADP} + \\text{P}_i \\rightarrow \\text{ATP}$.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-energi-dalam-sistem-biologis",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-energi-dalam-sistem-biologis-pemompaan-proton-membran",
+        "name": "Mekanisme Pemompaan Proton Kompleks I-IV",
+        "description": "Menjelaskan bahwa aliran elektron sepanjang kompleks I hingga IV menyediakan energi untuk memompa ion H+ melawan gradien ke ruang antarmembran mitokondria.",
+        "weight": 1
+      },
+      {
+        "id": "crit-energi-dalam-sistem-biologis-gaya-penggerak-proton-pmf",
+        "name": "Gaya Penggerak Proton (Proton Motive Force)",
+        "description": "Menerangkan bahwa akumulasi muatan positif dan konsentrasi H+ tinggi menciptakan gradien elektrokimia masif yang bertindak sebagai energi potensial simpanan.",
+        "weight": 1
+      },
+      {
+        "id": "crit-energi-dalam-sistem-biologis-turbin-rotasi-atp-sintase",
+        "name": "Mekanisme Rotasi Fisik Enzim ATP Sintase",
+        "description": "Menjelaskan bahwa proton mengalir kembali ke matriks melalui rotor ATP sintase memicu rotasi mekanis subunit katalitik yang memadatkan ADP dan fosfat anorganik menjadi ATP.",
+        "weight": 1
+      }
+    ]
+  }
+}

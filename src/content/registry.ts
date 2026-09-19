@@ -28,20 +28,53 @@ import definisiTurunanConcept from "./data/concepts/03-definisi-turunan.json";
 import bilanganConcept from "./data/concepts/04-bilangan.json";
 import operasiAritmetikaConcept from "./data/concepts/05-operasi-aritmetika.json";
 import pecahanDanDesimalConcept from "./data/concepts/06-pecahan-dan-desimal.json";
+import rasioDanProporsiConcept from "./data/concepts/15-rasio-dan-proporsi.json";
+import persentaseConcept from "./data/concepts/16-persentase.json";
+import pangkatDanAkarConcept from "./data/concepts/17-pangkat-dan-akar.json";
+import urutanDanPolaConcept from "./data/concepts/18-urutan-dan-pola.json";
+import estimasiConcept from "./data/concepts/19-estimasi.json";
+import satuanPengukuranConcept from "./data/concepts/20-satuan-dan-pengukuran-matematika.json";
 
 // Raw JSON Imports: Fisika Concepts
 import pengukuranBesaranConcept from "./data/concepts/07-pengukuran-dan-besaran.json";
 import vektorConcept from "./data/concepts/08-vektor.json";
 import kinematikaConcept from "./data/concepts/09-kinematika.json";
+import gerakLurusConcept from "./data/concepts/21-gerak-lurus.json";
+import gerakParabolaConcept from "./data/concepts/22-gerak-parabola.json";
+import gerakMelingkarConcept from "./data/concepts/23-gerak-melingkar.json";
+import hukumNewtonConcept from "./data/concepts/24-hukum-newton.json";
+import gayaConcept from "./data/concepts/25-gaya.json";
+import gesekanConcept from "./data/concepts/26-gesekan.json";
+import usahaDanEnergiConcept from "./data/concepts/27-usaha-dan-energi.json";
+import momentumDanImpulsConcept from "./data/concepts/28-momentum-dan-impuls.json";
+import tumbukanConcept from "./data/concepts/29-tumbukan.json";
+import rotasiConcept from "./data/concepts/30-rotasi.json";
+import torsiConcept from "./data/concepts/31-torsi.json";
+import momentumSudutConcept from "./data/concepts/32-momentum-sudut.json";
+import gravitasiConcept from "./data/concepts/33-gravitasi.json";
+import kesetimbanganConcept from "./data/concepts/34-kesetimbangan.json";
+import osilasiConcept from "./data/concepts/35-osilasi.json";
 
 // Raw JSON Imports: Kimia Concepts
 import materiSifatConcept from "./data/concepts/10-materi-dan-sifatnya.json";
 import unsurSenyawaConcept from "./data/concepts/11-unsur-dan-senyawa.json";
 import atomConcept from "./data/concepts/12-atom.json";
+import molekulConcept from "./data/concepts/36-molekul.json";
+import ionConcept from "./data/concepts/37-ion.json";
+import sistemPeriodikConcept from "./data/concepts/38-sistem-periodik.json";
+import konfigurasiElektronConcept from "./data/concepts/39-konfigurasi-elektron.json";
+import bilanganKuantumConcept from "./data/concepts/40-bilangan-kuantum.json";
+import ikatanKimiaConcept from "./data/concepts/41-ikatan-kimia.json";
+import strukturLewisConcept from "./data/concepts/42-struktur-lewis.json";
+import geometriMolekulConcept from "./data/concepts/43-geometri-molekul.json";
 
 // Raw JSON Imports: Biologi Concepts
 import karakteristikKehidupanConcept from "./data/concepts/13-karakteristik-kehidupan.json";
 import tingkatanOrganisasiConcept from "./data/concepts/14-tingkatan-organisasi-kehidupan.json";
+import metodeIlmiahConcept from "./data/concepts/44-metode-ilmiah.json";
+import selConcept from "./data/concepts/45-sel.json";
+import molekulBiologisConcept from "./data/concepts/46-molekul-biologis.json";
+import energiBiologisConcept from "./data/concepts/47-energi-dalam-sistem-biologis.json";
 
 export interface GraphNode {
   id: string;
@@ -102,27 +135,62 @@ export class ContentRegistry {
 
     // 3. Parse & Validate Concepts
     this.concepts = [
-      // Matematika
+      // Matematika - Fondasi
       ConceptContentSchema.parse(bilanganConcept),
       ConceptContentSchema.parse(operasiAritmetikaConcept),
       ConceptContentSchema.parse(pecahanDanDesimalConcept),
+      ConceptContentSchema.parse(rasioDanProporsiConcept),
+      ConceptContentSchema.parse(persentaseConcept),
+      ConceptContentSchema.parse(pangkatDanAkarConcept),
+      ConceptContentSchema.parse(urutanDanPolaConcept),
+      ConceptContentSchema.parse(estimasiConcept),
+      ConceptContentSchema.parse(satuanPengukuranConcept),
+
+      // Matematika - Turunan
       ConceptContentSchema.parse(perubahanConcept),
       ConceptContentSchema.parse(lajuPerubahanConcept),
       ConceptContentSchema.parse(definisiTurunanConcept),
 
-      // Fisika
+      // Fisika - Mekanika
       ConceptContentSchema.parse(pengukuranBesaranConcept),
       ConceptContentSchema.parse(vektorConcept),
       ConceptContentSchema.parse(kinematikaConcept),
+      ConceptContentSchema.parse(gerakLurusConcept),
+      ConceptContentSchema.parse(gerakParabolaConcept),
+      ConceptContentSchema.parse(gerakMelingkarConcept),
+      ConceptContentSchema.parse(hukumNewtonConcept),
+      ConceptContentSchema.parse(gayaConcept),
+      ConceptContentSchema.parse(gesekanConcept),
+      ConceptContentSchema.parse(usahaDanEnergiConcept),
+      ConceptContentSchema.parse(momentumDanImpulsConcept),
+      ConceptContentSchema.parse(tumbukanConcept),
+      ConceptContentSchema.parse(rotasiConcept),
+      ConceptContentSchema.parse(torsiConcept),
+      ConceptContentSchema.parse(momentumSudutConcept),
+      ConceptContentSchema.parse(gravitasiConcept),
+      ConceptContentSchema.parse(kesetimbanganConcept),
+      ConceptContentSchema.parse(osilasiConcept),
 
-      // Kimia
+      // Kimia - Dasar
       ConceptContentSchema.parse(materiSifatConcept),
       ConceptContentSchema.parse(unsurSenyawaConcept),
       ConceptContentSchema.parse(atomConcept),
+      ConceptContentSchema.parse(molekulConcept),
+      ConceptContentSchema.parse(ionConcept),
+      ConceptContentSchema.parse(sistemPeriodikConcept),
+      ConceptContentSchema.parse(konfigurasiElektronConcept),
+      ConceptContentSchema.parse(bilanganKuantumConcept),
+      ConceptContentSchema.parse(ikatanKimiaConcept),
+      ConceptContentSchema.parse(strukturLewisConcept),
+      ConceptContentSchema.parse(geometriMolekulConcept),
 
-      // Biologi
+      // Biologi - Dasar
       ConceptContentSchema.parse(karakteristikKehidupanConcept),
       ConceptContentSchema.parse(tingkatanOrganisasiConcept),
+      ConceptContentSchema.parse(metodeIlmiahConcept),
+      ConceptContentSchema.parse(selConcept),
+      ConceptContentSchema.parse(molekulBiologisConcept),
+      ConceptContentSchema.parse(energiBiologisConcept),
     ];
 
     // 4. Build Indexes
@@ -269,9 +337,29 @@ export class ContentRegistry {
         label: "Diferensial Percepatan (a = dv/dt)",
       },
       {
+        source: "definisi-turunan",
+        target: "osilasi",
+        label: "Persamaan Diferensial Harmonik (d²x/dt² = -ω²x)",
+      },
+      {
         source: "vektor",
         target: "operasi-aritmetika",
         label: "Geometri Translasi & Arah",
+      },
+      {
+        source: "pangkat-dan-akar",
+        target: "gravitasi",
+        label: "Hukum Kuadrat Terbalik (1/r²)",
+      },
+      {
+        source: "rasio-dan-proporsi",
+        target: "sistem-periodik",
+        label: "Rasio Stoikiometrik & Massa Relatif",
+      },
+      {
+        source: "satuan-dan-pengukuran-matematika",
+        target: "pengukuran-dan-besaran",
+        label: "Standar Dimensi Satuan SI",
       },
       {
         source: "pengukuran-dan-besaran",
@@ -281,12 +369,27 @@ export class ContentRegistry {
       {
         source: "atom",
         target: "tingkatan-organisasi-kehidupan",
-        label: "Pondasi Molekuler Organisme",
+        label: "Fondasi Molekuler Organisme",
       },
       {
-        source: "materi-dan-sifatnya",
+        source: "molekul",
+        target: "molekul-biologis",
+        label: "Struktur Karbon Makromolekul",
+      },
+      {
+        source: "ikatan-kimia",
         target: "karakteristik-kehidupan",
-        label: "Metabolisme Transformasi Materi",
+        label: "Energi Kovalen Ikatan Biologis",
+      },
+      {
+        source: "usaha-dan-energi",
+        target: "energi-dalam-sistem-biologis",
+        label: "Termodinamika Daur Energi Seluler",
+      },
+      {
+        source: "metode-ilmiah",
+        target: "pengukuran-dan-besaran",
+        label: "Metodologi Pengukuran Empiris",
       },
     ];
 

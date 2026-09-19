@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000015",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "rasio-dan-proporsi",
+  "title": "Rasio dan Proporsi: Perbandingan Relatif dan Hubungan Multiplikatif",
+  "summary": "Memahami cara membandingkan dua kuantitas secara multiplikatif (bukan selisih aditif): konsep rasio invarian A:B, proporsi senilai (kesebangunan), dan aplikasi penskalaan resep atau peta.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan perbandingan aditif (selisih pengurangan) dengan perbandingan multiplikatif (rasio pembagian)",
+    "Memahami konsep proporsi sebagai kesamaan dua rasio A:B = C:D",
+    "Menyelesaikan masalah penskalaan proporsional menggunakan faktor pengali k konstan"
+  ],
+  "prerequisites": ["bilangan", "operasi-aritmetika", "pecahan-dan-desimal"],
+  "misconceptions": [
+    {
+      "code": "ADDITIVE_RATIO_FALLACY",
+      "label": "Menganggap memperbesar proporsi dilakukan dengan menambah angka yang sama pada kedua suku (misal 2:3 menjadi 4:5 dengan menambah 2)",
+      "remediation": "Rasio adalah hubungan perkalian (multiplikatif). Untuk menjaga proporsi tetap seimbang, kedua suku harus dikalikan dengan faktor yang sama: 2:3 senilai dengan (2×2):(3×2) = 4:6, bukan 4:5."
+    },
+    {
+      "code": "REVERSED_RATIO_ORDER",
+      "label": "Membalik urutan suku dalam rasio tanpa memperhatikan kuantitas acuannya",
+      "remediation": "Urutan dalam rasio sangat krusial: rasio sirup terhadap air 1:4 sama sekali berbeda rasanya dengan rasio sirup terhadap air 4:1."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000001501",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Kekentalan Sirup: Selisih vs Rasio Rasa",
+      "instruction": "Amati mengapa rasa manis ditentukan oleh perbandingan relatif, bukan jumlah absolut.",
+      "content": "Bayangkan dua gelas minuman sirup:\n- Gelas A: $1$ sendok sirup dicampur dengan $3$ sendok air (total 4 sendok).\n- Gelas B: $2$ sendok sirup dicampur dengan $6$ sendok air (total 8 sendok).\n\nGelas manakah yang terasa lebih manis? Jawabannya: **Keduanya terasa sama manisnya!**\n\nWalaupun Gelas B memiliki sirup lebih banyak ($2 > 1$), airnya pun bertambah secara seimbang ($6 > 3$). Hubungan perbandingan kedua zat adalah tetap: untuk setiap $1$ sendok sirup, terdapat $3$ sendok air ($1:3$). Inilah hakikat **rasio**: perbandingan multiplikatif yang menentukan sifat relatif suatu campuran.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Dua gelas campuran sirup dan air dengan rasio 1 berbanding 3 dan 2 berbanding 6 yang menghasilkan rasa manis sama persis.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan perbandingan relatif rasio sirup terhadap air."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001502",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menjaga Rasa Kopi Tetap Identik",
+      "instruction": "Tentukan jumlah gula yang tepat saat takaran kopi dilipatgandakan.",
+      "content": "Resep kopi standar barista menggunakan takaran $2$ sendok bubuk kopi dan $3$ sendok gula ($2:3$).\n\nJika seorang pelanggan memesan cangkir jumbo dengan menggunakan $6$ sendok bubuk kopi, berapa sendok gula yang harus ditambahkan agar rasanya tetap persis sama?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Cari faktor pengali yang digunakan untuk melipatgandakan bubuk kopi.",
+        "concept": "Bubuk kopi berubah dari 2 menjadi 6, artinya dikalikan 3 (faktor k = 3).",
+        "strategy": "Kalikan jumlah gula dengan faktor yang sama persis: 3 × 3.",
+        "solution": "Takaran gula yang dibutuhkan adalah 3 × 3 = 9 sendok."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-gula-9",
+            "label": "9 sendok gula — karena kopi dikalikan 3 (2 × 3 = 6), maka gula juga harus dikalikan 3 (3 × 3 = 9)",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Hubungan proporsi adalah multiplikatif: k = 3 sehingga 3 × 3 = 9."
+          },
+          {
+            "id": "opt-gula-7",
+            "label": "7 sendok gula — karena kopi bertambah 4 (2 + 4 = 6), maka gula bertambah 4 (3 + 4 = 7)",
+            "isCorrect": false,
+            "misconceptionCode": "ADDITIVE_RATIO_FALLACY",
+            "feedback": "Hati-hati: rasio tidak dijaga dengan menambah angka yang sama (+4). Jika kamu menambah 4 sendok gula (total 7), rasio 6:7 akan terasa jauh lebih pahit daripada 2:3 (6:9)."
+          },
+          {
+            "id": "opt-gula-6",
+            "label": "6 sendok gula — disamakan dengan jumlah kopi",
+            "isCorrect": false,
+            "feedback": "Jika gula 6 sendok dan kopi 6 sendok, rasionya menjadi 1:1, padahal resep aslinya 2:3."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Pemahamanmu tentang faktor pengali proporsional sudah sangat tepat."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan pilihan ganda menghitung takaran gula seimbang saat takaran kopi berubah dari 2 menjadi 6.",
+        "screenReaderNote": "Pilih salah satu opsi jawaban untuk menentukan takaran proporsional yang benar."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001503",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Invariansi Proporsi & Faktor Pengali",
+      "instruction": "Ubah kuantitas dan amati diagram bilah proporsi serta diagram lingkaran.",
+      "content": "Gunakan wahana interaktif di bawah untuk menguji berbagai perbandingan bagian $A$ dan $B$:\n1. Atur kuantitas $A = 3$ dan $B = 5$.\n2. Geser faktor pengali proporsi $k$ dari $1\\times$ ke $2\\times$ atau $3\\times$.\n3. Perhatikan bahwa persentase pada diagram lingkaran tidak pernah berubah sedikit pun meskipun jumlah absolutnya bertambah!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Eksplorasi interaktif bilah proporsi dan diagram lingkaran.",
+        "screenReaderNote": "Gunakan slider pada wahana interaktif untuk mengamati invariansi rasio terhadap faktor pengali k."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001504",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Matematika Proporsi: Kesamaan Dua Rasio",
+      "instruction": "Pahami persamaan proporsi formal dan perkalian silang.",
+      "content": "Secara matematis, **proporsi** adalah pernyataan bahwa dua rasio bernilai setara:\n$$\\frac{a}{b} = \\frac{c}{d}$$\n\nBerdasarkan sifat aljabar perkalian silang:\n$$a \\cdot d = b \\cdot c$$\n\nContoh pada peta berskala $1 : 50.000$:\n- Jarak $1\\text{ cm}$ di peta mewakili $50.000\\text{ cm} = 500\\text{ m}$ di dunia nyata.\n- Jika jarak di peta adalah $4\\text{ cm}$, maka jarak sesungguhnya adalah:\n$$d = 4 \\times 500\\text{ m} = 2.000\\text{ m} = 2\\text{ km}$$\n\nSetiap kali kamu melihat skala, kurs mata uang, atau pembagian warisan, kamu sedang menerapkan hukum perbandingan proporsional ini!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus proporsi a per b sama dengan c per d dan pembuktian perkalian silang a dikali d sama dengan b dikali c.",
+        "screenReaderNote": "Materi konsep menjelaskan formulasi matematis proporsi dan sifat perkalian silang."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001505",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Nilai yang Belum Diketahui dalam Proporsi",
+      "instruction": "Gunakan perkalian silang untuk mencari nilai x.",
+      "content": "Sebuah mobil membutuhkan $3\\text{ liter}$ bensin untuk menempuh jarak $45\\text{ km}$.\n\nDengan efisiensi mesin yang sama, berapakah liter bensin yang dibutuhkan mobil tersebut untuk menempuh jarak $105\\text{ km}$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Susun persamaan proporsi antara volume bensin dan jarak tempuh.",
+        "concept": "Rasio bensin terhadap jarak adalah konstan: 3 / 45 = x / 105.",
+        "strategy": "Sederhanakan 3/45 menjadi 1/15. Maka x = 105 / 15.",
+        "solution": "x = 105 / 15 = 7 liter bensin."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 7,
+        "tolerance": 0.1,
+        "units": "liter",
+        "feedbackCorrect": "Tepat sekali! Mobil memerlukan 7 liter bensin (karena 1 liter = 15 km, maka 105 / 15 = 7 liter).",
+        "misconceptions": [
+          {
+            "code": "ADDITIVE_RATIO_FALLACY",
+            "triggerValue": 63,
+            "feedback": "Jangan menggunakan selisih aditif (105 - 45 = 60 lalu 3 + 60 = 63). Rasio konsumsi bahan bakar dihitung secara perkalian."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung konsumsi bahan bakar secara proporsional.",
+        "screenReaderNote": "Ketikkan angka liter bensin pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001506",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Selisih Penjumlahan vs Rasio Perkalian",
+      "instruction": "Tuliskan penalaranmu membedakan perubahan aditif dan multiplikatif.",
+      "content": "Seorang anak berusia $2$ tahun memiliki kakak berusia $4$ tahun. Anak itu berkata: *'Umur kakak dua kali lipat umurku ($4 = 2 \\times 2$). Berarti waktu umurku 20 tahun nanti, umur kakak pasti 40 tahun!'.*\n\nJelaskan mengapa kesimpulan anak tersebut keliru! Kapan suatu perbandingan bersifat selisih tetap (aditif), dan kapan perbandingan bersifat kelipatan rasio (multiplikatif)?",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan perbedaan perbandingan aditif pada usia dengan rasio multiplikatif.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai selisih usia tetap versus perbandingan rasio."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-rasio-dan-proporsi",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-rasio-aditif",
+        "name": "Identifikasi Selisih Aditif Konstan",
+        "description": "Menjelaskan bahwa selisih umur kakak dan adik selalu tetap 2 tahun (penambahan waktu berlaku sama untuk kedua orang)",
+        "weight": 1
+      },
+      {
+        "id": "crit-rasio-multiplikatif",
+        "name": "Sifat Dinamis Rasio Multiplikatif",
+        "description": "Menjelaskan bahwa rasio kelipatan umur berubah seiring berjalannya waktu (4:2 = 2, namun 22:20 = 1.1 kali lipat, bukan 40)",
+        "weight": 1
+      },
+      {
+        "id": "crit-rasio-penerapan",
+        "name": "Pembedaan Konteks Proporsi",
+        "description": "Menyebutkan contoh nyata di mana rasio multiplikatif berlaku (seperti resep, skala peta, atau kecepatan)",
+        "weight": 1
+      }
+    ]
+  }
+}

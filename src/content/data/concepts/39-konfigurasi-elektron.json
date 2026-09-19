@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000039",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "konfigurasi-elektron",
+  "title": "Konfigurasi Elektron: Prinsip Aufbau, Aturan Hund, dan Asas Larangan Pauli",
+  "summary": "Mempelajari aturan kuantum distribusi elektron pada orbital atomik: urutan tingkat energi Aufbau, minimasi tolakan antar-elektron aturan Hund, serta larangan Pauli tentang spin antiparalel.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Menuliskan konfigurasi elektron atom menurut diagram urutan tingkat energi Aufbau",
+    "Menerapkan Aturan Hund dalam pengisian orbital terdegenerasi",
+    "Memahami Asas Larangan Pauli dan kapasitas maksimum subkulit s, p, d, dan f"
+  ],
+  "prerequisites": [
+    "atom",
+    "sistem-periodik"
+  ],
+  "misconceptions": [
+    {
+      "code": "FILL_3D_BEFORE_4S",
+      "label": "Mengira orbital 3d selalu diisi sebelum orbital 4s karena angka kulitnya (3) lebih kecil daripada (4)",
+      "remediation": "Tingkat energi ditentukan oleh aturan (n + l), bukan nilai n semata. Untuk 4s: n+l = 4+0 = 4. Untuk 3d: n+l = 3+2 = 5. Karena 4 < 5, orbital 4s memiliki energi lebih rendah dan diisi TERLEBIH DAHULU sebelum elektron mulai mengisi 3d."
+    },
+    {
+      "code": "PAIRING_ELECTRONS_IMMEDIATELY",
+      "label": "Memasangkan elektron berdua-dua di satu orbital sebelum orbital setingkat lainnya terisi",
+      "remediation": "Menurut Aturan Hund, elektron bermuatan negatif sejenis sehingga saling tolak-menolak. Elektron akan menempati orbital kosong secara sendiri-sendiri dengan arah spin searah terlebih dahulu untuk meminimalkan tolakan elektrostatik sebelum dipaksa berpasangan."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003901",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Aturan Kursi Bus Kota: Naluri Elektron Menghindari Desakan",
+      "instruction": "Amati bagaimana penumpang memilih kursi saat menaiki bus kota yang separuh kosong.",
+      "content": "Bayangkan kamu menaiki sebuah bus kota yang setiap barisnya memiliki dua kursi berdampingan:\n- Penumpang pertama memilih duduk di kursi kosong baris pertama dekat jendela.\n- Penumpang kedua masuk. Apakah ia akan duduk berdesakan persis di sebelah penumpang pertama? Tentu tidak! Ia akan memilih baris kosong berikutnya yang masih lapang.\n- Setiap orang lebih suka duduk sendirian di baris masing-masing selama masih ada bangku kosong.\n- Barulah ketika seluruh baris sudah terisi satu orang, penumpang baru terpaksa duduk berpasangan mendampingi penumpang lain!\n\nDi dunia kuantum mikroskopis, elektron berperilaku persis seperti penumpang bus ini! Karena sama-sama bermuatan negatif, elektron saling tolak-menolak dan selalu menempati kamar orbital yang masih kosong terlebih dahulu: inilah **Aturan Hund**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi kursi bus kota memperlihatkan diagram orbital kotak dengan tanda panah spin ke atas terisi tunggal sebelum berpasangan.",
+        "screenReaderNote": "Materi pengantar menguraikan analogi penumpang bus untuk aturan Hund dalam pengisian orbital atom."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003902",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Jumlah Elektron Tak Berpasangan pada Atom Oksigen",
+      "instruction": "Tentukan berapa banyak elektron tunggal (tak berpasangan) pada konfigurasi atom Oksigen.",
+      "content": "Atom Oksigen memiliki nomor atom $Z = 8$.\nKonfigurasi elektronnya menurut Aufbau adalah $1s^2\\,2s^2\\,2p^4$.\nSubkulit $2p$ memiliki $3\\text{ kamar orbital}$ yang harus menampung $4\\text{ elektron}$.\n\nMenurut Aturan Hund, berapakah jumlah elektron yang berstatus **tidak berpasangan (sendirian)** pada orbital $2p$ atom Oksigen?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gambar 3 kotak untuk orbital 2p, lalu isi 4 elektron satu per satu dengan spin ke atas terlebih dahulu.",
+        "concept": "Elektron 1 di kotak pertama (↑), elektron 2 di kotak kedua (↑), elektron 3 di kotak ketiga (↑).",
+        "strategy": "Elektron ke-4 baru berpasangan di kotak pertama (↑↓). Kotak kedua dan ketiga tetap berisi elektron tunggal.",
+        "solution": "Terdapat 2 elektron yang tidak berpasangan."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-2-elektron",
+            "label": "2 elektron — karena orbital pertama terisi pasangan (↑↓), sedangkan dua orbital lainnya masing-masing berisi 1 elektron tunggal (↑) (↑)",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Menurut Hund, 3 orbital diisi 1 elektron dulu (↑)(↑)(↑), lalu elektron ke-4 berpasangan di orbital pertama (↑↓)(↑)(↑). Tersisa 2 elektron tunggal tak berpasangan, yang menjadikan gas oksigen bersifat paramagnetik!"
+          },
+          {
+            "id": "opt-0-elektron",
+            "label": "0 elektron — karena 4 adalah angka genap sehingga semua elektron berpasangan rapi (↑↓)(↑↓)( )",
+            "isCorrect": false,
+            "explanation": "Memasangkan dua orbital dan membiarkan satu orbital kosong melanggar aturan Hund karena meningkatkan tolakan elektrostatik antar-elektron."
+          },
+          {
+            "id": "opt-4-elektron",
+            "label": "4 elektron — seluruh elektron pada subkulit 2p",
+            "isCorrect": false,
+            "explanation": "Dua dari empat elektron tersebut telah berpasangan di orbital pertama."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003903",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Diagram Tingkat Energi dan Jalur Tangga Aufbau",
+      "instruction": "Telusuri urutan lintasan pengisian orbital menurut aturan garis diagonal (n + l).",
+      "content": "Amati urutan pengisian orbital berdasarkan peningkatan energi:\n$$1s \\rightarrow 2s \\rightarrow 2p \\rightarrow 3s \\rightarrow 3p \\rightarrow 4s \\rightarrow 3d \\rightarrow 4p \\rightarrow 5s \\rightarrow 4d \\dots$$\n\nKapasitas maksimum tiap jenis subkulit:\n- **Subkulit $s$:** 1 orbital $\\implies$ maksimum **2 elektron**\n- **Subkulit $p$:** 3 orbital $\\implies$ maksimum **6 elektron**\n- **Subkulit $d$:** 5 orbital $\\implies$ maksimum **10 elektron**\n- **Subkulit $f$:** 7 orbital $\\implies$ maksimum **14 elektron**",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Bagan diagonal pengisian orbital elektron prinsip Aufbau dari 1s hingga 7p.",
+        "screenReaderNote": "Materi interaktif menguraikan aturan diagonal Aufbau dan kapasitas daya tampung elektron subkulit s, p, d, f."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003904",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Tiga Hukum Penataan Elektron Kuantum",
+      "instruction": "Kuasai ketiga pilar pembangun konfigurasi elektron atomik.",
+      "content": "### 1. Prinsip Aufbau (Jerman: 'Aufbauen' = Membangun)\nElektron mengisi orbital dari tingkat energi yang paling rendah ke tingkat energi yang lebih tinggi. Tingkat energi ditentukan oleh aturan Klechkowski: nilai $(n + l)$ terendah lebih dahulu; jika $(n+l)$ sama, nilai $n$ terkecil lebih dahulu.\n\n### 2. Aturan Hund (Friedrich Hund, 1927)\nPada subkulit dengan orbital terdegenerasi (setingkat energinya, seperti $p_x, p_y, p_z$):\n- Elektron tidak berpasangan terlebih dahulu sebelum seluruh orbital masing-masing terisi satu elektron.\n- Elektron-elektron tak berpasangan tersebut harus memiliki **arah spin paralel yang sama** ($m_s = +\\frac{1}{2}$) untuk memaksimalkan energi pertukaran kuantum.\n\n### 3. Asas Larangan Pauli (Wolfgang Pauli, 1925)\nDalam sebuah atom, tidak boleh ada dua elektron yang memiliki keempat bilangan kuantum ($n, l, m_l, m_s$) yang identik.\n- Konsekuensi: Satu orbital (dengan $n, l, m_l$ yang sama) paling banyak hanya dapat dihuni oleh **dua elektron**, dan keduanya wajib memiliki arah spin yang berlawanan (antiparalel: $\\uparrow$ dan $\\downarrow$).",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap prinsip Aufbau Klechkowski n+l, aturan Hund spin paralel, dan larangan Pauli keempat bilangan kuantum.",
+        "screenReaderNote": "Halaman merangkum formulasi kuantum tiga aturan pengisian konfigurasi elektron atomik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003905",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menuliskan Konfigurasi Atom Kalsium (Z=20)",
+      "instruction": "Tentukan jumlah elektron valensi pada kulit terluar atom Kalsium.",
+      "content": "Atom Kalsium memiliki nomor atom $Z = 20$.\nKonfigurasi elektron lengkapnya menurut aturan Aufbau adalah:\n$$1s^2\\,2s^2\\,2p^6\\,3s^2\\,3p^6\\,4s^2$$\nAtau disingkat dengan notasi gas mulia Argon: $[\\text{Ar}]\\,4s^2$.\n\nBerapakah jumlah elektron valensi (elektron pada kulit terluar $n = 4$) dari atom Kalsium tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Cari kulit dengan nomor n terbesar dalam konfigurasi.",
+        "concept": "Kulit terluar adalah n = 4, yaitu subkulit 4s².",
+        "strategy": "Eksponen pada 4s adalah 2.",
+        "solution": "Jumlah elektron valensinya adalah 2."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 2,
+        "units": "elektron",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003906",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Anomali Konfigurasi Kromium (Z=24) dan Tembaga (Z=29)",
+      "instruction": "Jelaskan mengapa Kromium dan Tembaga menyimpang dari urutan baku aturan Aufbau.",
+      "content": "Uraikan analisis kestabilan subkulit d:\n1. Mengapa menurut aturan baku Aufbau konfigurasi Kromium seharusnya $[\\text{Ar}]\\,4s^2\\,3d^4$, namun konfigurasi di alam justru $[\\text{Ar}]\\,4s^1\\,3d^5$.\n2. Jelaskan konsep kestabilan khusus subkulit yang **terisi setengah penuh ($d^5$)** dan **terisi penuh ($d^{10}$ pada Tembaga)**.\n3. Bagaimana simetri bola distribusi awan elektron meminimalkan energi tolakan antar-elektron.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-konfigurasi-elektron",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-konfigurasi-elektron-identifikasi-anomali",
+        "name": "Identifikasi Anomali 4s1 3d5 dan 4s1 3d10",
+        "description": "Menjelaskan perpindahan satu elektron dari 4s ke 3d menghasilkan konfigurasi setengah penuh d5 (Cr) atau penuh d10 (Cu).",
+        "weight": 1
+      },
+      {
+        "id": "crit-konfigurasi-elektron-faktor-kestabilan-simetri",
+        "name": "Kestabilan Simetri dan Energi Pertukaran",
+        "description": "Menerangkan bahwa orbital yang terisi tepat setengah penuh atau penuh memiliki simetri ruang bola yang seragam dan energi pertukaran kuantum maksimal yang menurunkan tingkat energi total atom.",
+        "weight": 1
+      },
+      {
+        "id": "crit-konfigurasi-elektron-kedekatan-tingkat-energi",
+        "name": "Kedekatan Energi Subkulit 4s dan 3d",
+        "description": "Menunjukkan bahwa promosi elektron hanya dapat terjadi karena perbedaan tingkat energi antara 4s dan 3d sangat kecil pada unsur-unsur transisi periode 4.",
+        "weight": 1
+      }
+    ]
+  }
+}

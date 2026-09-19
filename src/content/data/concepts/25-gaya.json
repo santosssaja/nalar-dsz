@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000025",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "gaya",
+  "title": "Gaya: Klasifikasi Interaksi, Gaya Kontak, dan Diagram Benda Bebas",
+  "summary": "Memahami hakikat gaya sebagai tarikan atau dorongan vektor penyebab perubahan momentum, klasifikasi gaya kontak dan gaya medan, serta teknik analisis Free Body Diagram (FBD).",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan gaya kontak (normal, tegangan tali, pegas) dan gaya tak sentuh/medan (gravitasi)",
+    "Memahami konsep gaya normal sebagai gaya elektrostatik mikroskopis penahan permukaan",
+    "Menggambar dan menguraikan vektor gaya pada Diagram Benda Bebas (FBD)"
+  ],
+  "prerequisites": [
+    "hukum-newton",
+    "vektor"
+  ],
+  "misconceptions": [
+    {
+      "code": "NORMAL_FORCE_EQUALS_WEIGHT_ALWAYS",
+      "label": "Menganggap gaya normal selalu bernilai sama persis dengan gaya berat (N = W)",
+      "remediation": "Gaya normal hanya sama dengan gaya berat pada bidang horizontal datar tanpa tarikan vertikal lain. Pada bidang miring atau saat ada gaya dorong menyudut, N = mg cos(θ) atau N = mg ± F_sin(θ)."
+    },
+    {
+      "code": "MASS_AND_WEIGHT_SYNONYM",
+      "label": "Menyamakan massa dan gaya berat sebagai besaran yang identik",
+      "remediation": "Massa (kg) adalah ukuran kelembaman materi yang tidak berubah di mana pun benda berada, sedangkan berat (Newton) adalah gaya gravitasi yang bekerja pada massa tersebut (W = mg) dan nilainya tergantung pada medan gravitasi setempat."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002501",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Buku di Atas Meja: Mengapa Meja Mampu Menahan Gravitasi?",
+      "instruction": "Amati buku tebal yang diletakkan di atas meja datar.",
+      "content": "Sebuah buku tebal seberat $20\\text{ Newton}$ tergeletak diam di atas meja belajarmu.\n- Gravitasi bumi menarik buku itu ke bawah setiap saat.\n- Namun buku tidak jatuh menembus papan meja ke lantai.\n\nApa yang menahannya? **Gaya Normal ($N$)**!\nKetika buku menekan kayu meja, atom-atom kayu meja sedikit tertekan dan saling tolak-menolak secara mikroskopis melalui gaya tolak elektrostatik antar awan elektron. Gaya tolak kolektif inilah yang muncul secara makroskopis sebagai Gaya Normal yang mendorong buku tegak lurus ke atas.\n\nDalam mekanika, kita mengurai setiap interaksi gaya ini menggunakan instrumen penting: **Diagram Benda Bebas (Free Body Diagram)**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram buku di atas meja memperlihatkan gaya gravitasi mengarah ke bawah dan gaya normal tegak lurus mengarah ke atas.",
+        "screenReaderNote": "Materi pengantar menguraikan asal-usul mikroskopis gaya normal dan pengenalan Diagram Benda Bebas."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002502",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Berat Badan di Dalam Lift yang Bergerak Dipercepat",
+      "instruction": "Pikirkan apa yang ditunjukkan oleh timbangan saat kamu berdiri di lift yang dipercepat ke atas.",
+      "content": "Seseorang bermassa $60\\text{ kg}$ berdiri di atas timbangan badan di dalam sebuah lift ($g = 10\\text{ m/s}^2$, berat diam $W = 600\\text{ N}$).\nLift tersebut tiba-tiba mulai bergerak melaju naik ke atas dengan percepatan $a = 2\\text{ m/s}^2$.\n\nBerapakah angka gaya normal yang dibaca oleh jarum timbangan saat lift sedang dipercepat ke atas?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Terapkan Hukum II Newton pada sumbu vertikal: ΣFy = N - W = m × a.",
+        "concept": "Gaya normal N = W + m × a = m × (g + a).",
+        "strategy": "Hitung: N = 60 × (10 + 2) = 60 × 12.",
+        "solution": "Jarum timbangan membaca 720 Newton (terasa lebih berat)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-720-n",
+            "label": "720 Newton — jarum timbangan naik karena lantai harus memberikan gaya normal lebih besar untuk mempercepat tubuh ke atas",
+            "isCorrect": true,
+            "explanation": "Tepat! N = m(g + a) = 60(10 + 2) = 720 N. Inilah sebabnya lutut kita terasa sedikit tertekan saat lift mulai bergerak naik."
+          },
+          {
+            "id": "opt-600-n",
+            "label": "600 Newton — angka timbangan tetap sama karena massa dan berat tubuh tidak bertambah",
+            "isCorrect": false,
+            "explanation": "Timbangan tidak mengukur berat gravitasi secara langsung, melainkan mengukur gaya normal kontak yang menopang telapak kaki."
+          },
+          {
+            "id": "opt-480-n",
+            "label": "480 Newton — berkurang karena lift bergerak menjauhi pusat bumi",
+            "isCorrect": false,
+            "explanation": "Pengurangan gaya semu (N = m(g - a)) terjadi saat lift bergerak dipercepat ke bawah, bukan ke atas."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002503",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Menyusun Diagram Benda Bebas (FBD)",
+      "instruction": "Petakan seluruh gaya yang bekerja pada objek pada bidang miring atau datar.",
+      "content": "Pahami tiga aturan emas Diagram Benda Bebas:\n1. **Isolasi benda:** Gambar benda sebagai titik pusat massa atau kotak tunggal, lepaskan dari lingkungan sekitarnya.\n2. **Hanya gaya luar yang bekerja PADA benda:** Jangan pernah menggambarkan gaya yang dilakukan benda pada lingkungan luar.\n3. **Uraikan gaya ke sumbu koordinat:** Pada bidang miring bersudut $\\theta$, proyeksikan gaya berat ke sumbu sejajar ($mg \\sin\\theta$) dan sumbu tegak lurus bidang ($mg \\cos\\theta$).",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram FBD balok pada bidang miring menampilkan vektor gaya normal N, komponen berat sejajar dan tegak lurus bidang.",
+        "screenReaderNote": "Materi interaktif menguraikan teknik dekomposisi vektor berat pada sistem bidang miring."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002504",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Macam-Macam Gaya Mekanika",
+      "instruction": "Pelajari rumus analitik berbagai gaya kontak dan gaya gravitasi.",
+      "content": "### 1. Gaya Berat ($W$)\nGaya tarik medan gravitasi terhadap massa inersia:\n$$W = m \\cdot g \\quad (\\text{selalu tegak lurus ke pusat bumi})$$\n\n### 2. Gaya Normal ($N$)\nGaya reaksi kontak permukaan yang arahnya selalu **tegak lurus terhadap bidang kontak**:\n- Pada bidang datar horizontal: $N = W = mg$.\n- Pada bidang miring sudut $\\theta$: $N = mg \\cos\\theta$.\n- Saat ditekan ke bawah dengan gaya luar $F$: $N = mg + F$.\n\n### 3. Gaya Tegangan Tali ($T$)\nGaya tarikan sepanjang tali ideal (tanpa massa dan tidak mulur). Tali hanya dapat menarik, tidak pernah mendorong!\n\n### 4. Gaya Pemulih Pegas (Hukum Hooke)\n$$F_{\\text{pegas}} = -k \\cdot \\Delta x$$\nDi mana $k$ adalah konstanta kekakuan pegas (N/m) dan $\\Delta x$ adalah perubahan panjang simpangan.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap gaya berat, gaya normal pada berbagai orientasi, tegangan tali, dan hukum Hooke pegas.",
+        "screenReaderNote": "Materi merangkum formulasi gaya berat, rumus gaya normal bidang miring mg cos theta, tegangan tali, dan hukum Hooke."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002505",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Gaya Normal pada Bidang Miring",
+      "instruction": "Hitung besarnya gaya normal yang menopang balok pada bidang miring.",
+      "content": "Sebuah balok bermassa $m = 8\\text{ kg}$ diletakkan di atas bidang miring licin dengan sudut kemiringan $\\theta = 60^\\circ$.\nDiketahui percepatan gravitasi $g = 10\\text{ m/s}^2$ dan $\\cos(60^\\circ) = 0{,}5$.\n\nBerapakah besar gaya normal ($N$) yang dikerjakan bidang miring pada balok tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan persamaan gaya normal bidang miring N = m × g × cos(θ).",
+        "concept": "Gaya berat balok adalah W = m × g = 8 × 10 = 80 N.",
+        "strategy": "Hitung: N = 80 × cos(60°) = 80 × 0.5.",
+        "solution": "Gaya normal bernilai 40 Newton."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.5,
+        "expectedValue": 40,
+        "units": "N",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002506",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Esensi Diagram Benda Bebas",
+      "instruction": "Uraikan mengapa FBD adalah alat paling krusial dalam menyelesaikan persoalan gerak mekanika.",
+      "content": "Jawab pertanyaan reflektif berikut:\n1. Mengapa kita tidak boleh memasukkan gaya yang dikerjakan oleh benda ke luar (misal: gaya tekan balok ke lantai) ke dalam Diagram Benda Bebas benda itu sendiri?\n2. Bagaimana cara menguraikan gaya berat saat benda meluncur di bidang miring?\n3. Jelaskan mengapa gaya normal berkurang saat sudut kemiringan bidang miring dinaikkan dari $0^\\circ$ ke $90^\\circ$.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-gaya",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-gaya-isolasi-sistem",
+        "name": "Prinsip Isolasi Benda",
+        "description": "Menjelaskan bahwa Hukum II Newton hanya memperhitungkan resultan gaya yang bekerja PADA sistem benda yang ditinjau, bukan gaya yang dikerjakan oleh benda.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gaya-dekomposisi-vektor",
+        "name": "Dekomposisi Sumbu Bidang Miring",
+        "description": "Menjelaskan pembagian komponen berat: komponen tegak lurus ditahan gaya normal dan komponen sejajar menggerakkan balok ke bawah.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gaya-perubahan-sudut",
+        "name": "Pengaruh Peningkatan Sudut Kemiringan",
+        "description": "Menerangkan bahwa nilai cos(θ) mengecil seiring bertambahnya sudut sehingga gaya tekan normal melemah hingga menjadi nol saat vertikal.",
+        "weight": 1
+      }
+    ]
+  }
+}

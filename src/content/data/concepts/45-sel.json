@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000045",
+  "moduleId": "20000000-0000-4000-8000-000000000005",
+  "slug": "sel",
+  "title": "Struktur Sel: Teori Sel, Prokariotik vs Eukariotik, dan Kompartementalisasi Organel",
+  "summary": "Menjelajahi unit fundamental kehidupan: tiga pilar Teori Sel klasik, dikotomi arsitektur prokariotik versus eukariotik, spesialisasi fungsi organel selular, dan perbandingan sel hewan vs tumbuhan.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami tiga postulat fundamental Teori Sel dalam biologi modern",
+    "Membedakan ciri sitologis sel prokariotik (tanpa membran inti) dan eukariotik",
+    "Mengidentifikasi fungsi organel utama: nukleus, mitokondria, ribosom, retikulum endoplasma, dan kloroplas"
+  ],
+  "prerequisites": [
+    "karakteristik-kehidupan",
+    "tingkatan-organisasi-kehidupan"
+  ],
+  "misconceptions": [
+    {
+      "code": "PLANT_CELLS_HAVE_NO_MITOCHONDRIA",
+      "label": "Menganggap sel tumbuhan hanya memiliki kloroplas dan tidak memiliki mitokondria",
+      "remediation": "Sel tumbuhan memiliki KEDUA organel tersebut! Kloroplas berfungsi memproduksi glukosa melalui fotosintesis, sedangkan mitokondria berfungsi membakar glukosa tersebut menjadi ATP sepanjang siang dan malam untuk menggerakkan metabolisme sel tumbuhan."
+    },
+    {
+      "code": "PROKARYOTES_HAVE_NO_DNA",
+      "label": "Mengira bakteri prokariotik tidak memiliki materi genetik DNA karena tidak memiliki nukleus",
+      "remediation": "Prokariotik tetap memiliki materi genetik DNA lengkap. Hanya saja, DNA bakteri berbentuk sirkuler terbuka di sitoplasma (daerah nukleoid) tanpa dibungkus oleh membran inti seperti pada sel eukariotik."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004501",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Kepingan Gabus Robert Hooke: Mengintip Kamar-Kamar Kehidupan",
+      "instruction": "Bayangkan mengintip sayatan kayu gabus di bawah mikroskop kuno untuk pertama kalinya dalam sejarah.",
+      "content": "Pada tahun 1665 di London, ilmuwan Robert Hooke mengarahkan mikroskop rancangannya ke sayatan tipis kulit kayu pohon gabus.\nDi bawah lensa, ia terperangah melihat susunan kotak-kotak berongga kecil teratur yang menyerupai kamar-kamar para biarawan di biara (*cellula*).\nHooke menyebut kotak-kotak itu: **Cell (Sel)**.\n\nHampir dua abad kemudian, para ilmuwan menyadari bahwa kotak-kotak tersebut bukan sekadar dinding kayu mati, melainkan **unit hidup mandiri paling fundamental di seluruh biosfer**!\nTubuhmu sendiri tersusun dari sekitar $37\\text{ triliun sel}$ yang bekerja serempak dalam harmoni luar biasa: bernapas, membelah diri, menghasilkan energi, dan membaca kode genetik DNA.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Sketsa historis mikroskop Robert Hooke dan sayatan gabus memperlihatkan rongga-rongga sel bersisi teratur.",
+        "screenReaderNote": "Materi pengantar menguraikan penemuan pertama sel oleh Robert Hooke dan perannya sebagai unit kehidupan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004502",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Pembangkit Tenaga Listrik Seluler",
+      "instruction": "Tentukan organel mana yang akan ditemukan dalam jumlah paling melimpah pada sel otot jantung atlet pelari maraton.",
+      "content": "Otot jantung manusia berdenyut lebih dari $100.000\\text{ kali per hari}$ tanpa pernah beristirahat sedetik pun seumur hidup.\nUntuk melakukan kontraksi mekanik yang konstan dan tanpa henti ini, sel otot jantung menuntut pasokan energi kimiawi berupa molekul Adenosin Trifosfat (ATP) dalam jumlah yang luar biasa raksasa.\n\nOrganel intraseluler manakah yang populasinya mencapai hingga $40\\%$ dari total volume sitoplasma di dalam satu sel otot jantung?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Cari organel yang berfungsi sebagai 'pabrik respirasi seluler penghasil molekul ATP'.",
+        "concept": "Mitokondria mengoksidasi glukosa dan asam lemak menjadi ATP melalui siklus Krebs dan rantai transpor elektron.",
+        "strategy": "Jaringan yang membutuhkan daya tinggi (seperti otot jantung dan otot sayap burung) selalu kaya akan mitokondria.",
+        "solution": "Organel tersebut adalah mitokondria."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-mitokondria",
+            "label": "Mitokondria — organel 'pembangkit tenaga' sel yang memproduksi lebih dari 90% pasokan molekul energi ATP melalui respirasi aerobik",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Mitokondria adalah dapur respirasi seluler. Sel otot jantung memiliki ribuan krista mitokondria rapat untuk memasok pasokan energi kontraksi tak henti."
+          },
+          {
+            "id": "opt-lisosom",
+            "label": "Lisosom — kantong enzim pencernaan intraseluler",
+            "isCorrect": false,
+            "explanation": "Lisosom berfungsi mendaur ulang organel rusak dan membunuh patogen, bukan memproduksi energi ATP."
+          },
+          {
+            "id": "opt-vakuola",
+            "label": "Vakuola sentral — organel penyimpan cadangan air",
+            "isCorrect": false,
+            "explanation": "Vakuola sentral besar merupakan organel khas sel tumbuhan untuk turgiditas, bukan sel otot jantung hewan."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004503",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Sel Prokariotik, Hewan, dan Tumbuhan di Playground",
+      "instruction": "Bandingkan kompartementalisasi organel antara sel bakteri, sel hewan, dan sel tumbuhan.",
+      "content": "Jelajahi perbandingan tiga arsitektur sel:\n1. **Sel Prokariotik (Bakteri):**\n   - Sederhana, ukuran kecil ($1\\text{–}5\\,\\mu\\text{m}$).\n   - Tanpa membran nukleus, tanpa organel bermembran.\n   - Memiliki dinding sel peptidoglikan, membran plasma, ribosom $70S$, dan DNA sirkuler di nukleoid.\n2. **Sel Eukariotik Hewan:**\n   - Memiliki nukleus sejati membran ganda, mitokondria, RE kasar & halus, badan Golgi, lisosom, sentrosom/sentriol.\n3. **Sel Eukariotik Tumbuhan:**\n   - Memiliki dinding sel selulosa kaku, kloroplas (fotosintesis), vakuola sentral raksasa (tekanan turgor), plasmodesmata.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Diagram interaktif anatomi komparasi tiga sel: bakteri tanpa nukleus, sel hewan tanpa dinding, dan sel tumbuhan berdinding tebal dengan kloroplas hijau.",
+        "screenReaderNote": "Materi interaktif menyajikan diagram anatomi perbandingan kompartemen sel prokariotik, sel hewan, dan sel tumbuhan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004504",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Tiga Postulat Teori Sel dan Rasio Luas/Volume",
+      "instruction": "Pahami perumusan formal Teori Sel dan batas fisik ukuran sel.",
+      "content": "### 1. Tiga Postulat Teori Sel Klasik (Schleiden, Schwann, & Virchow)\n1. Seluruh makhluk hidup tersusun dari satu atau lebih sel.\n2. Sel adalah unit struktural dan fungsional paling dasar dari kehidupan.\n3. Sel baru hanya dapat muncul dari pembelahan sel yang telah ada sebelumnya (*Omnis cellula e cellula*).\n\n### 2. Batas Fisik Ukuran Sel: Rasio Luas Permukaan terhadap Volume (\\(A/V\\))\nMengapa ukuran sel mikroskopis dan tidak pernah sebesar bola basket?\nAnggap sel berbentuk bola berjari-jari $r$:\n- Luas permukaan membran difusi: $A = 4\\pi r^2$\n- Volume sitoplasma konsumen nutrisi: $V = \\frac{4}{3}\\pi r^3$\n- Rasio pertukaran metabolik:\n$$\\frac{A}{V} = \\frac{4\\pi r^2}{\\frac{4}{3}\\pi r^3} = \\frac{3}{r}$$\nKetika sel membesar ($r$ meningkat), volume sitoplasma yang membutuhkan pasokan glukosa dan oksigen tumbuh secara kubik ($r^3$), sedangkan luas pintu masuk membran hanya tumbuh secara kuadrat ($r^2$). Jika sel terlalu besar, rasio $A/V$ anjlok sehingga sel mati kelaparan karena difusi zat tidak mampu menembus ke bagian dalam.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Penjelasan formulasi matematis rasio luas permukaan terhadap volume A/V = 3/r yang membatasi batas maksimum ukuran sel.",
+        "screenReaderNote": "Halaman merangkum tiga postulat teori sel dan penurunan matematis rasio luas terhadap volume sebagai pembatas difusi sel."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004505",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Rasio Luas-Volume Kubus Sel",
+      "instruction": "Hitung penurunan rasio efisiensi difusi saat ukuran sel membengkak.",
+      "content": "Pikirkan dua model sel berbentuk kubus:\n- **Sel Kecil:** panjang sisi $s_1 = 1\\,\\mu\\text{m}$ (Luas $A_1 = 6\\times 1^2 = 6$, Volume $V_1 = 1^3 = 1$, sehingga $\\frac{A_1}{V_1} = 6$).\n- **Sel Besar:** panjang sisi $s_2 = 3\\,\\mu\\text{m}$ (Luas $A_2 = 6\\times 3^2 = 54\\,\\mu\\text{m}^2$, Volume $V_2 = 3^3 = 27\\,\\mu\\text{m}^3$).\n\nBerapakah nilai rasio luas permukaan terhadap volume ($\\frac{A_2}{V_2}$) dari sel yang berukuran lebih besar tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Bagi luas permukaan A2 dengan volume V2.",
+        "concept": "A2 = 54 dan V2 = 27.",
+        "strategy": "Hitung: 54 / 27.",
+        "solution": "Rasio A/V sel besar menyusut menjadi 2 (sepertiga dari sel kecil)."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 2,
+        "units": "μm⁻¹",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004506",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Teori Endosimbiosis — Tamu Kuno di Dalam Tubuh Kita",
+      "instruction": "Jelaskan bukti-bukti ilmiah bahwa mitokondria dan kloroplas dahulunya adalah bakteri prokariotik bebas yang ditelan oleh sel purba.",
+      "content": "Uraikan Teori Endosimbiosis Lynn Margulis:\n1. Jelaskan hipotesis asal-usul mitokondria dari bakteri aerob purba yang hidup bersimbiosis di dalam sel inang anaerobik.\n2. Tuliskan tiga bukti sitologis dan molekuler yang mendukung teori ini (membran ganda, DNA sirkuler mandiri mirip bakteri, dan ribosom prokariotik $70S$ yang membelah diri secara biner independen).\n3. Mengapa kompartementalisasi organel ini menjadi lompatan evolusi terpenting yang memungkinkan munculnya makhluk hidup multiseluler kompleks.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-sel",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-sel-bukti-membran-dan-dna",
+        "name": "Bukti Membran Ganda dan DNA Mandiri",
+        "description": "Menjelaskan bahwa mitokondria memiliki membran ganda (membran dalam prokariotik dan membran luar vesikel inang) serta memiliki DNA sirkuler mandiri yang mereplikasi sendiri.",
+        "weight": 1
+      },
+      {
+        "id": "crit-sel-ribosom-dan-pembelahan-biner",
+        "name": "Ribosom 70S dan Pembelahan Biner",
+        "description": "Menerangkan bahwa mitokondria membelah diri independen dengan cara fisi biner mirip bakteri dan memiliki ribosom tipe 70S prokariotik yang rentan terhadap antibiotik.",
+        "weight": 1
+      },
+      {
+        "id": "crit-sel-efisiensi-energi-multiseluler",
+        "name": "Dampak Evolusioner bagi Kehidupan Multiseluler",
+        "description": "Menyimpulkan bahwa efisiensi energi raksasa dari respirasi aerobik mitokondria melipatgandakan pasokan ATP hingga 18 kali lipat memungkinkan evolusi organisme multiseluler kompleks.",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000046",
+  "moduleId": "20000000-0000-4000-8000-000000000005",
+  "slug": "molekul-biologis",
+  "title": "Biomolekul Kehidupan: Karbohidrat, Lipid, Protein, dan Asam Nukleat",
+  "summary": "Membedah empat pilar makromolekul organik berbasis karbon penyusun sel: metabolisme karbohidrat, sifat hidrofobik lipid dan membran fosfolipid, empat tingkatan konformasi protein enzim, serta arsitektur kode genetik asam nukleat DNA/RNA.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Mengidentifikasi monomer dan polimer dari empat kelompok biomolekul utama",
+    "Memahami struktur amfipatik fosfolipid dalam membentuk membran dwilapis sel",
+    "Menjelaskan empat tingkatan struktur protein (primer, sekunder, tersier, kuartener) dan kerja katalitik enzim"
+  ],
+  "prerequisites": [
+    "molekul",
+    "sel",
+    "karakteristik-kehidupan"
+  ],
+  "misconceptions": [
+    {
+      "code": "LIPIDS_ARE_POLYMERS",
+      "label": "Menganggap lipid adalah polimer yang tersusun dari rantai panjang monomer identik berulang",
+      "remediation": "Lipid BUKAN polimer sejati karena tidak terbentuk dari perulangan unit monomer identik. Lemak trigliserida tersusun dari satu molekul gliserol yang mengikat tiga ekor asam lemak melalui ikatan ester, disatukan oleh sifat hidrofobiknya."
+    },
+    {
+      "code": "PROTEIN_DENATURATION_BREAKS_PEPTIDE_BONDS",
+      "label": "Mengira denaturasi protein (seperti menggoreng putih telur) merusak dan memutus rantai ikatan peptida asam amino",
+      "remediation": "Denaturasi akibat panas atau asam HANYA merusak ikatan lemah hidrogen dan interaksi hidrofobik pada struktur sekunder dan tersier 3D. Urutan primer rantai asam amino dan ikatan kovalen peptidanya tetap utuh tidak terputus."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004601",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Karbon si Arsitek Alam: Dari Unsur Mati Menjadi Mesin Hayati",
+      "instruction": "Amati mengapa atom Karbon dipilih oleh evolusi semesta sebagai tulang punggung seluruh makhluk hidup.",
+      "content": "Jika kamu mengeringkan seluruh air dari tubuh manusia, $50\\%$ dari massa kering yang tersisa adalah **atom Karbon ($\\text{C}$)**.\nMengapa Karbon?\nKarena Karbon memiliki 4 elektron valensi. Ia mampu membentuk **empat ikatan kovalen stabil sekaligus** ke segala arah: membentuk rantai lurus, cabang rumit, cincin aromatik, hingga jaring tiga dimensi raksasa!\n\nDengan kelenturan Karbon ini, alam merakit empat famili makromolekul ajaib yang menjalankan seluruh drama kehidupan:\n1. **Karbohidrat:** Bahan bakar instan dan dinding struktur sel.\n2. **Lipid:** Benteng membran pelindung sel dan cadangan energi padat.\n3. **Protein:** Robot pekerja nano, enzim katalisator, dan serat otot.\n4. **Asam Nukleat (DNA/RNA):** Perpustakaan cetak biru kode genetik abadi.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi empat biomolekul utama: cincin glukosa, ekor fosfolipid, pita heliks protein mioglobin, dan heliks ganda DNA.",
+        "screenReaderNote": "Materi pengantar menguraikan fleksibilitas atom karbon dan empat keluarga biomolekul kehidupan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004602",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Mengapa Minyak dan Air Tidak Pernah Menyatu?",
+      "instruction": "Prediksi perilaku lapisan molekul fosfolipid saat dicelupkan ke dalam wadah air.",
+      "content": "Molekul fosfolipid pembangun membran sel memiliki dua bagian dengan sifat bertolak belakang:\n- **Kepala Fosfat:** Bermuatan dan sangat suka air (**hidrofilik / polar**).\n- **Dua Ekor Asam Lemak:** Rantai hidrokarbon nonpolar yang takut air (**hidrofobik**).\n\nKetika ribuan molekul fosfolipid dijatuhkan ke dalam air, bagaimanakah susunan spontan yang akan mereka bentuk untuk meminimalkan energi potensial sistem?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ekor hidrofobik harus terlindung dari kontak langsung dengan molekul air polar.",
+        "concept": "Kepala polar hidrofilik menyukai kontak dengan molekul air di sekitarnya.",
+        "strategy": "Ekor-ekor nonpolar akan saling menyembunyikan diri di bagian dalam, sementara kepala polar menghadap keluar.",
+        "solution": "Membentuk lapisan ganda fosfolipid (phospholipid bilayer) atau gelembung misel."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-bilayer",
+            "label": "Membentuk lapisan ganda (bilayer) — kepala hidrofilik menghadap ke luar bersentuhan dengan air di kedua sisi, sementara ekor-ekor hidrofobik saling mengunci di bagian dalam yang kering",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Formasi spontan 'Phospholipid Bilayer' ini adalah fondasi seluruh membran plasma sel di bumi, menciptakan batas pemisah antara dunia internal sel dan lingkungan eksternal."
+          },
+          {
+            "id": "opt-larut-merata",
+            "label": "Larut merata sempurna seperti garam meja",
+            "isCorrect": false,
+            "explanation": "Ekor asam lemak bersifat nonpolar kuat sehingga tidak dapat membentuk ikatan hidrogen dengan air dan menolak larut."
+          },
+          {
+            "id": "opt-mengendap-padat",
+            "label": "Mengendap di dasar wadah membentuk kristal kaku",
+            "isCorrect": false,
+            "explanation": "Fosfolipid bersifat fluida cair-kristal fleksibel, bukan kristal garam padat."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004603",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Empat Tingkatan Arsitektur Struktur Protein",
+      "instruction": "Telusuri bagaimana lipatan pita asam amino linier bertransformasi menjadi enzim fungsional 3D.",
+      "content": "Amati empat tingkatan hierarki struktur protein:\n1. **Struktur Primer:** Urutan sekuens linier asam amino yang dihubungkan oleh ikatan kovalen peptida kuat (ditentukan langsung oleh urutan kodon DNA).\n2. **Struktur Sekunder:** Lipatan lokal rantai polipeptida akibat ikatan hidrogen antar tulang punggung peptida: membentuk **$\\alpha$-heliks** (spiral) atau **$\\beta$-pleated sheet** (lembaran berlipat).\n3. **Struktur Tersier:** Pelipatan 3D globular lengkap akibat interaksi rantai samping R (jembatan disulfida, interaksi hidrofobik, ikatan ionik/garam). Menentukan situs aktif enzim!\n4. **Struktur Kuartener:** Gabungan dua atau lebih rantai polipeptida (contoh: Hemoglobin dengan 4 subunit rantai).",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram empat tingkatan struktur protein dari untaian manik primer, spiral alfa heliks sekunder, gumpalan tersier 3D, hingga tetramer hemoglobin kuartener.",
+        "screenReaderNote": "Materi interaktif menyajikan bagan hierarki struktural pelipatan rantai polipeptida protein."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004604",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Taksonomi Polimer dan Monomer Biomolekul",
+      "instruction": "Kuasai matriks komparasi empat kelompok makromolekul biologis.",
+      "content": "### 1. Matriks Empat Biomolekul Utama\n\n| Biomolekul | Monomer Dasar | Ikatan Kovalen Khas | Fungsi Biologis Kunci |\n| :--- | :--- | :--- | :--- |\n| **Karbohidrat** | Monosakarida (glukosa, fruktosa) | Ikatan Glikosidik | Sumber energi cepat (glukosa/glikogen), struktur dinding sel (selulosa) |\n| **Lipid** | Gliserol + Asam Lemak | Ikatan Ester | Cadangan energi tinggi ($9\\text{ kkal/g}$), membran sel (fosfolipid), hormon sterol |\n| **Protein** | Asam Amino (20 jenis) | Ikatan Peptida | Katalisator biokimiawi (enzim), motor gerak (aktin/miosin), antibodi |\n| **Asam Nukleat** | Nukleotida (gula + fosfat + basa) | Ikatan Fosfodiester | Penyimpan informasi genetik (DNA) dan sintesis protein (RNA) |\n\n### 2. Reaksi Dehidrasi dan Hidrolisis\n- **Sintesis Dehidrasi (Kondensasi):** Menggabungkan dua monomer dengan melepaskan satu molekul air ($\\text{H}_2\\text{O}$):\n$$\\text{Monomer}-\\text{OH} + \\text{H}-\\text{Monomer} \\longrightarrow \\text{Dimer} + \\text{H}_2\\text{O}$$\n- **Reaksi Hidrolisis:** Memecah polimer menjadi monomer dengan menyerap molekul air saat pencernaan makanan.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Tabel komparasi matriks monomer, ikatan kovalen, dan fungsi keempat biomolekul beserta reaksi dehidrasi dan hidrolisis.",
+        "screenReaderNote": "Halaman merangkum tabel matriks komprehensif monomer, ikatan polimerisasi, dan reaksi hidrolisis biomolekul."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004605",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Pelepasan Molekul Air pada Polimerisasi Peptida",
+      "instruction": "Hitung jumlah molekul air yang dilepaskan saat merakit rantai polipeptida.",
+      "content": "Sebuah ribosom merakit hormon polipeptida pendek yang tersusun dari $15\\text{ molekul asam amino}$ linier.\nSetiap pembentukan satu ikatan peptida antara dua asam amino yang berdampingan melepaskan tepat satu molekul air ($\\text{H}_2\\text{O}$) melalui reaksi kondensasi dehidrasi.\n\nBerapakah jumlah molekul air ($\\text{H}_2\\text{O}$) yang dibebaskan selama pembentukan rantai 15 asam amino tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Jumlah sambungan ikatan antar n benda selalu bernilai (n - 1).",
+        "concept": "Untuk menghubungkan 15 mata rantai dibutuhkan 15 - 1 = 14 sambungan ikatan peptida.",
+        "strategy": "Setiap ikatan melepaskan 1 H2O.",
+        "solution": "Dilepaskan 14 molekul air."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 14,
+        "units": "molekul",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004606",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Spesifisitas Enzim — Model Gembok dan Kunci Koshland",
+      "instruction": "Jelaskan mengapa tubuh manusia membutuhkan ribuan jenis enzim berbeda yang sangat spesifik.",
+      "content": "Uraikan mekanisme biokatalitik enzim:\n1. Jelaskan bagaimana enzim menurunkan energi aktivasi ($E_a$) suatu reaksi kimiawi sel tanpa ikut habis bereaksi.\n2. Mengapa struktur 3D situs aktif (active site) enzim hanya mengenali substrat tertentu secara presisi (model induced-fit Koshland).\n3. Apa akibat fatal demam bersuhu tinggi ($> 42^\\circ\\text{C}$) terhadap konformasi tersier enzim tubuh manusia.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-molekul-biologis",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-molekul-biologis-penurunan-energi-aktivasi",
+        "name": "Mekanisme Reduksi Energi Aktivasi",
+        "description": "Menjelaskan bahwa enzim menstabilkan keadaan transisi reaksi sehingga menurunkan ambang energi aktivasi yang diperlukan agar reaksi berlangsung cepat pada suhu fisiologis tubuh.",
+        "weight": 1
+      },
+      {
+        "id": "crit-molekul-biologis-model-induced-fit-spesifisitas",
+        "name": "Spesifisitas Situs Aktif dan Induced-Fit",
+        "description": "Menerangkan bahwa geometri 3D situs aktif dirancang fleksibel menyesuaikan bentuk substrat spesifik membentuk kompleks enzim-substrat yang sangat eksklusif.",
+        "weight": 1
+      },
+      {
+        "id": "crit-molekul-biologis-dampak-denaturasi-demam",
+        "name": "Dampak Denaturasi Termal Akibat Demam",
+        "description": "Menjelaskan bahwa suhu ekstrem memutus ikatan hidrogen penstabil struktur tersier sehingga situs aktif berubah bentuk dan enzim kehilangan kemampuan katalitik vitalnya.",
+        "weight": 1
+      }
+    ]
+  }
+}

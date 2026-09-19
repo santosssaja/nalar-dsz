@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000043",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "geometri-molekul",
+  "title": "Geometri Molekul: Teori VSEPR, Gaya Tolak Domain Elektron, dan Topologi Tiga Dimensi",
+  "summary": "Membangun arsitektur spasial molekuler dari diagram datar 2D ke bentuk 3D nyata: prinsip tolakan pasangan elektron VSEPR, hierarki desakan pasangan elektron bebas (PEB), serta klasifikasi bentuk geometri ruang.",
+  "difficulty": "advanced",
+  "learningObjectives": [
+    "Menerapkan Teori VSEPR untuk menentukan bentuk geometri 3D molekul berdasarkan domain elektron",
+    "Memahami hierarki kekuatan tolakan: PEB-PEB > PEB-PEI > PEI-PEI yang mendistorsi sudut ikatan",
+    "Membedakan geometri domain elektron dengan geometri molekuler nyata"
+  ],
+  "prerequisites": [
+    "struktur-lewis",
+    "ikatan-kimia"
+  ],
+  "misconceptions": [
+    {
+      "code": "LEWIS_2D_SHAPE_IS_REAL_SHAPE",
+      "label": "Menganggap bentuk molekul di alam sama persis seperti gambar struktur Lewis 2D di atas kertas",
+      "remediation": "Di atas kertas, molekul air sering digambar H-O-H lurus 180° atau metana CH₄ digambar silang datar 90°. Di alam nyata, molekul hidup di ruang 3 dimensi: CH₄ membentuk tetrahedral simetris 109,5° dan air membentuk sudut bengkok 104,5° karena tolakan spasial awan elektron."
+    },
+    {
+      "code": "ELECTRON_GEOMETRY_EQUALS_MOLECULAR_GEOMETRY",
+      "label": "Menyamakan geometri domain elektron dengan geometri molekul",
+      "remediation": "Geometri domain elektron memperhitungkan SEMUA pasangan elektron (termasuk PEB). Namun geometri molekul HANYA melihat posisi inti-inti atom nyata. Contoh: amonia (NH₃) memiliki domain elektron tetrahedral, tetapi geometri molekulnya adalah piramida trigonal karena PEB di puncak tidak terlihat sebagai atom."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004301",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Balon Pesta yang Saling Sikut: Geometri Tolakan Alami",
+      "instruction": "Amati apa yang terjadi saat kamu mengikat 4 buah balon pesta bulat di satu titik pusat yang sama.",
+      "content": "Ikatlah empat buah balon tiup pada satu titik simpul pusat yang sama:\n- Balon-balon itu tidak akan menumpuk di satu bidang datar menyerupai tanda tambah ($+$).\n- Keempat balon akan secara otomatis **saling dorong menjauh sejauh mungkin** hingga membentuk formasi simetris tiga dimensi yang anggun:\n  Tiga balon membentuk alas segitiga di bawah, dan satu balon menjulang tegak lurus ke atas!\n\nBentuk ini disebut piramida segitiga berkaki empat atau **Tetrahedral**!\nPasangan elektron di kulit valensi atom berperilaku persis seperti balon-balon pesta tersebut. Karena sama-sama bermuatan negatif, awan elektron saling tolak-menolak dan berusaha mencari sudut jarak terjauh: inilah prinsip dasar **Teori VSEPR (Valence Shell Electron Pair Repulsion)**!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Analogi ikatan empat balon tiup membentuk tetrahedral 3D 109,5 derajat dibandingkan dengan bentuk molekul metana CH4.",
+        "screenReaderNote": "Materi pengantar menguraikan prinsip tolakan VSEPR melalui analogi ikatan balon pesta."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004302",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Mengapa Sudut Molekul Air Menyusut?",
+      "instruction": "Bandingkan sudut ikatan antara Metana (CH4), Amonia (NH3), dan Air (H2O) yang sama-sama memiliki 4 domain elektron.",
+      "content": "Ketiga molekul berikut memiliki total 4 domain elektron di sekitar atom pusatnya:\n- **Metana ($\\text{CH}_4$):** 4 pasang ikatan (PEI), 0 pasang bebas (PEB) $\\implies$ sudut ikatan $109{,}5^\\circ$.\n- **Amonia ($\\text{NH}_3$):** 3 pasang ikatan (PEI), 1 pasang bebas (PEB) $\\implies$ sudut ikatan $107^\\circ$.\n- **Air ($\\text{H}_2\\text{O}$):** 2 pasang ikatan (PEI), 2 pasang bebas (PEB).\n\nBagaimanakah perkiraan besar sudut ikatan $\\text{H}-\\text{O}-\\text{H}$ pada molekul air?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat bahwa Pasangan Elektron Bebas (PEB) lebih gemuk dan menolak lebih ganas dibanding pasangan ikatan.",
+        "concept": "Setiap penambahan 1 PEB menekan sudut ikatan menyusut sekitar 2° hingga 2,5°.",
+        "strategy": "Dengan adanya 2 PEB pada oksigen, sudut ikatan ditekan lebih sempit lagi dari 107°.",
+        "solution": "Sudut ikatan molekul air menyusut menjadi sekitar 104,5°."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-104-derajat",
+            "label": "Sekitar 104,5° (bengkok/V) — karena dua pasang elektron bebas (PEB) memiliki daya tolak paling agresif sehingga menekan kedua ikatan O-H semakin rapat merapat",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! PEB hanya terikat pada satu inti atom sehingga awan elektronnya lebih mengembang dan menyita ruang lebih besar. Tolakan PEB-PEB dan PEB-PEI meremas sudut tetrahedral 109,5° menyusut menjadi 104,5°."
+          },
+          {
+            "id": "opt-180-derajat",
+            "label": "Tepat 180° (linear lurus) — agar kedua atom hidrogen berada sejauh mungkin satu sama lain",
+            "isCorrect": false,
+            "explanation": "Sudut 180° mengabaikan keberadaan 2 pasang elektron bebas yang berada di atas oksigen."
+          },
+          {
+            "id": "opt-109-derajat",
+            "label": "Tetap 109,5° — karena memiliki 4 domain elektron tetrahedral",
+            "isCorrect": false,
+            "explanation": "Sudut 109,5° hanya terjadi jika keempat domainnya identik berupa ikatan atom yang sama (seperti CH₄)."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004303",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Galeri Topologi Bentuk 3D VSEPR",
+      "instruction": "Jelajahi spektrum bentuk molekul berdasarkan kombinasi domain ikatan dan domain bebas.",
+      "content": "Klasifikasi geometri molekul berdasarkan notasi $\\text{AX}_m\\text{E}_n$ ($A$ = atom pusat, $X$ = PEI, $E$ = PEB):\n- **Linear ($\\text{AX}_2$):** 2 domain ikatan, sudut $180^\\circ$ (contoh: $\\text{CO}_2, \\text{BeCl}_2$).\n- **Trigonal Planar ($\\text{AX}_3$):** 3 domain ikatan datar, sudut $120^\\circ$ (contoh: $\\text{BF}_3$).\n  - Jika ada 1 PEB ($\\text{AX}_2\\text{E}$): **Bengkok / Bentuk V** sudut $< 120^\\circ$ (contoh: $\\text{SO}_2$).\n- **Tetrahedral ($\\text{AX}_4$):** 4 domain ikatan, sudut $109{,}5^\\circ$ (contoh: $\\text{CH}_4, \\text{CCl}_4$).\n  - Jika ada 1 PEB ($\\text{AX}_3\\text{E}$): **Piramida Trigonal** sudut $107^\\circ$ (contoh: $\\text{NH}_3$).\n  - Jika ada 2 PEB ($\\text{AX}_2\\text{E}_2$): **Bengkok / Bentuk V** sudut $104{,}5^\\circ$ (contoh: $\\text{H}_2\\text{O}$).\n- **Bipiramida Trigonal ($\\text{AX}_5$):** 5 domain, sudut aksial $90^\\circ$ & ekuatorial $120^\\circ$ (contoh: $\\text{PCl}_5$).\n- **Oktahedral ($\\text{AX}_6$):** 6 domain simetris sempurna, seluruh sudut $90^\\circ$ (contoh: $\\text{SF}_6$).",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Galeri bentuk 3D VSEPR dari linear, trigonal planar, tetrahedral, bipiramida trigonal hingga oktahedral.",
+        "screenReaderNote": "Materi interaktif menguraikan katalog bentuk molekuler 3D berdasarkan jumlah pasangan elektron terikat dan bebas."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004304",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Aturan Tolakan VSEPR dan Tipe Molekul",
+      "instruction": "Kuasai perumusan hierarki gaya tolak domain elektron.",
+      "content": "### 1. Hierarki Gaya Tolak Antar-Domain Elektron\nElektron ikatan ditarik oleh dua inti atom, sedangkan elektron bebas hanya ditarik oleh satu inti atom (lebih mengembang dan gemuk di ruang):\n$$\\text{Tolakan (PEB - PEB)} > \\text{Tolakan (PEB - PEI)} > \\text{Tolakan (PEI - PEI)}$$\n\n### 2. Penentuan Tipe Molekul (\\(\\text{AX}_m\\text{E}_n\\))\n- $A$: Atom pusat\n- $X$: Pasangan elektron ikatan (ikatan tunggal, rangkap dua, maupun rangkap tiga masing-masing dihitung sebagai **1 domain ikatan**)\n- $E$: Pasangan elektron bebas pada atom pusat\n- Bilangan sterik: $\\text{Steric Number} = m + n$\n\n### 3. Korelasi dengan Polaritas Molekul Total\nBentuk molekul menentukan apakah momen dipol ikatan saling meniadakan secara vektor:\n$$\\vec{\\mu}_{\\text{total}} = \\sum \\vec{\\mu}_{\\text{ikatan}}$$\n- Molekul simetris tanpa PEB (seperti $\\text{CO}_2$ linear atau $\\text{CCl}_4$ tetrahedral): vektor dipol saling meniadakan secara simetris $\\implies \\vec{\\mu}_{\\text{total}} = 0$ (**Molekul Nonpolar**).\n- Molekul asimetris dengan PEB (seperti $\\text{H}_2\\text{O}$ bengkok): resultan vektor dipol mengarah ke atas $\\implies \\vec{\\mu}_{\\text{total}} \\ne 0$ (**Molekul Sangat Polar**).",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi hierarki gaya tolak VSEPR, notasi AXmEn, dan vektor resultan momen dipol mu_total.",
+        "screenReaderNote": "Halaman merangkum hierarki gaya tolak domain VSEPR, klasifikasi rumus tipe AXmEn, dan penjumlahan vektor momen dipol total."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004305",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menentukan Sudut Ikatan Molekul Gas Metana",
+      "instruction": "Tentukan besar sudut ikatan H-C-H pada molekul tetrahedral metana CH4.",
+      "content": "Pada molekul gas metana ($\\text{CH}_4$), atom Karbon pusat mengikat 4 atom Hidrogen secara simetris sempurna di ruang 3D tanpa memiliki pasangan elektron bebas (tipe $\\text{AX}_4$).\nKeempat ikatan kovalen saling tolak-menolak secara seimbang membentuk geometri tetrahedral.\n\nBerapakah besar sudut ikatan ($\\theta$) antara ikatan $\\text{H}-\\text{C}-\\text{H}$ dalam derajat busur?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Ingat sudut tetrahedral standar tanpa distorsi PEB.",
+        "concept": "Bentuk AX4 simetris sempurna memiliki sudut 109,5°.",
+        "strategy": "Ketik nilai 109.5.",
+        "solution": "Sudut ikatan CH4 adalah 109,5 derajat."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.5,
+        "expectedValue": 109.5,
+        "units": "derajat",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004306",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa CO2 Linear Bersifat Nonpolar Sedangkan H2O Bengkok Sangat Polar?",
+      "instruction": "Jelaskan bagaimana geometri molekul menentukan sifat fisis kepolaran zat yang berikatan polar.",
+      "content": "Analisis komparatif berikut:\n1. Buktikan bahwa ikatan $\\text{C}=\\text{O}$ pada $\\text{CO}_2$ dan ikatan $\\text{O}-\\text{H}$ pada $\\text{H}_2\\text{O}$ sama-sama merupakan ikatan kovalen polar dengan selisih elektronegativitas yang besar.\n2. Jelaskan mengapa secara makroskopis gas $\\text{CO}_2$ sama sekali tidak memiliki kutub dipol (nonpolar) sedangkan air $\\text{H}_2\\text{O}$ adalah zat cair dengan polaritas sangat tinggi.\n3. Uraikan bagaimana penjumlahan vektor momen dipol ($\\vec{\\mu}$) dipengaruhi oleh simetri linear $180^\\circ$ vs bentuk sudut bengkok $104{,}5^\\circ$.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-geometri-molekul",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-geometri-molekul-polaritas-ikatan-individual",
+        "name": "Eksistensi Dipol Ikatan Individual",
+        "description": "Menjelaskan bahwa kedua molekul memiliki ikatan individu yang sama-sama polar karena oksigen sangat elektronegatif dibanding C atau H.",
+        "weight": 1
+      },
+      {
+        "id": "crit-geometri-molekul-eliminasi-vektor-simetris-co2",
+        "name": "Peniadaan Vektor pada CO2 Linear",
+        "description": "Menunjukkan dengan penjumlahan vektor bahwa pada CO2 linear, dua vektor dipol berlawanan arah tepat 180 derajat sehingga saling menghilangkan menjadi resultan dipol nol.",
+        "weight": 1
+      },
+      {
+        "id": "crit-geometri-molekul-resultan-asimetris-h2o",
+        "name": "Resultan Vektor Bersih pada H2O Bengkok",
+        "description": "Menerangkan bahwa pada air yang bengkok (akibat tolakan 2 PEB), kedua vektor dipol tidak saling meniadakan melainkan menghasilkan vektor dipol bersih ke arah atom oksigen.",
+        "weight": 1
+      }
+    ]
+  }
+}

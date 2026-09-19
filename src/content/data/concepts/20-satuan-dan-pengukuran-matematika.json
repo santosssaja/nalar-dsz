@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000020",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "satuan-dan-pengukuran-matematika",
+  "title": "Satuan dan Pengukuran: Dimensi, Konversi Metrik, dan Skala Geometris",
+  "summary": "Menghubungkan dunia angka murni dengan realitas fisik: sistem metrik desimal, konversi berdimensi (panjang m, luas m², volume m³), serta bahaya jebakan skala kuadratik pada satuan bidang.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami satuan sebagai acuan pembanding standar yang memberi arti fisik pada angka",
+    "Melakukan konversi metrik awalan desimal (mili, senti, desimal, kilo)",
+    "Membuktikan mengapa konversi satuan luas dan volume melipatgandakan faktor pengali secara kuadratik dan kubik"
+  ],
+  "prerequisites": ["bilangan", "pecahan-dan-desimal", "pangkat-dan-akar"],
+  "misconceptions": [
+    {
+      "code": "LINEAR_CONVERSION_ON_AREA",
+      "label": "Menggunakan faktor konversi panjang pada satuan luas (mengira 1 m² = 100 cm²)",
+      "remediation": "Luas adalah perkalian dua dimensi (panjang × lebar). Karena 1 m = 100 cm, maka 1 m² = 100 cm × 100 cm = 10.000 cm², bukan 100 cm²."
+    },
+    {
+      "code": "UNITLESS_NUMBER_AMBIGUITY",
+      "label": "Mengabaikan satuan dalam perhitungan ilmiah dan mengira angka murni sudah cukup",
+      "remediation": "Angka '5' tidak bermakna tanpa satuan: 5 milimeter adalah ketebalan koin, sedangkan 5 kilometer adalah jarak lari antar-kampus."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002001",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Bencana Wahana Antariksa Mars 1999",
+      "instruction": "Amati akibat fatal ketika angka diperlakukan tanpa satuan yang jelas.",
+      "content": "Pada tahun $1999$, wahana antariksa NASA senilai $\\$125\\text{ juta}$ (*Mars Climate Orbiter*) hancur berkeping-keping saat mendekati atmosfer planet Mars.\n\nPenyebabnya bukan mesin rusak, melainkan **kesalahan konversi satuan**:\n- Tim insinyur Lockheed Martin menggunakan satuan imperial Amerika (**pound-force detik**).\n- Tim navigasi NASA mengira data tersebut bersatuan metrik standar internasional (**newton detik**).\n\nKarena $1\\text{ lbf} \\approx 4.45\\text{ N}$, wahana menerima dorongan $4.45$ kali lebih kuat dari perhitungan seharusnya, menukik terlalu rendah, dan terbakar di atmosfer.\n\nAngka tanpa satuan dalam sains dan matematika adalah resep bencana!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi kegagalan wahana antariksa Mars Climate Orbiter akibat perbedaan satuan newton dan pound.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan pentingnya konsistensi satuan dalam rekayasa dan matematika."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002002",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Berapa cm² dalam 1 m²?",
+      "instruction": "Tentukan luas bidang persegi 1 meter kali 1 meter dalam satuan sentimeter persegi.",
+      "content": "Sebuah ubin lantai memiliki bentuk persegi dengan panjang sisi $1\\text{ meter}$.\nKita tahu bahwa $1\\text{ meter} = 100\\text{ sentimeter}$.\n\nBerapakah luas ubin tersebut jika dinyatakan dalam satuan sentimeter persegi ($\\text{cm}^2$)?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Gunakan rumus luas persegi: Luas = sisi × sisi.",
+        "concept": "1 meter = 100 cm. Hitung luasnya dalam cm: 100 cm × 100 cm.",
+        "strategy": "Kalikan 100 dengan 100: berapa banyak angka nol yang dihasilkan?",
+        "solution": "100 × 100 = 10.000 cm²."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-luas-10000",
+            "label": "10.000 cm² — karena 100 cm × 100 cm = 10.000 cm²",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Luas memiliki dua dimensi: 1 m² = (100 cm)² = 10.000 cm²."
+          },
+          {
+            "id": "opt-luas-100",
+            "label": "100 cm² — karena 1 m = 100 cm",
+            "isCorrect": false,
+            "misconceptionCode": "LINEAR_CONVERSION_ON_AREA",
+            "feedback": "Salah kaprah klasik! 100 cm² hanyalah luas persegi kecil berukuran 10 cm × 10 cm, bukan 1 meter persegi utuh."
+          },
+          {
+            "id": "opt-luas-1000",
+            "label": "1.000 cm²",
+            "isCorrect": false,
+            "feedback": "Kurang tepat: 100 dikali 100 menghasilkan 10.000 (empat angka nol)."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Kamu memahami bagaimana perpangkatan dimensi melipatgandakan faktor konversi secara kuadratik."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda menghitung konversi 1 meter persegi ke sentimeter persegi.",
+        "screenReaderNote": "Pilih salah satu opsi jawaban untuk konversi satuan luas."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002003",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Garis Bilangan Satuan Metrik",
+      "instruction": "Amati hubungan tangga satuan metrik berbasis kelipatan sepuluh.",
+      "content": "Sistem metrik dirancang sangat konsisten menggunakan basis sepuluh ($10$):\n- $1\\text{ kilometer (km)} = 10^3\\text{ m} = 1.000\\text{ m}$\n- $1\\text{ desimeter (dm)} = 10^{-1}\\text{ m} = 0.1\\text{ m}$\n- $1\\text{ sentimeter (cm)} = 10^{-2}\\text{ m} = 0.01\\text{ m}$\n- $1\\text{ milimeter (mm)} = 10^{-3}\\text{ m} = 0.001\\text{ m}$\n\nKarena berbasis sepuluh, konversi metrik hanyalah pergeseran koma desimal ke kiri atau ke kanan di garis bilangan!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Daftar awalan metrik kilo desimeter sentimeter milimeter berbasis pangkat sepuluh.",
+        "screenReaderNote": "Materi panduan menjelaskan hubungan kelipatan sepuluh pada sistem pengukuran metrik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002004",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Analisis Dimensi: Kekuatan Pangkat pada Satuan",
+      "instruction": "Pahami aturan perubahan pangkat dimensi pada konversi satuan.",
+      "content": "Perhatikan aturan konversi dimensi bertingkat:\n\n1. **Dimensi 1 (Panjang, Satuan $m^1$)**:\nFaktor konversi berpangkat $1$:\n$$1\\text{ m} = 100\\text{ cm} = 10^2\\text{ cm}$$\n\n2. **Dimensi 2 (Luas, Satuan $m^2$)**:\nFaktor konversi dipangkatkan $2$:\n$$1\\text{ m}^2 = (10^2\\text{ cm})^2 = 10^4\\text{ cm}^2 = 10.000\\text{ cm}^2$$\n\n3. **Dimensi 3 (Volume, Satuan $m^3$)**:\nFaktor konversi dipangkatkan $3$:\n$$1\\text{ m}^3 = (10^2\\text{ cm})^3 = 10^6\\text{ cm}^3 = 1.000.000\\text{ cm}^3$$\n\nDan karena $1\\text{ liter} = 1\\text{ dm}^3 = (10\\text{ cm})^3 = 1.000\\text{ cm}^3$, maka $1\\text{ m}^3$ sama dengan $1.000\\text{ liter}$ air (setara dengan massa $1\\text{ ton}$!).",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus analisis dimensi konversi panjang m ke cm kuadrat ke cm persegi dan kubik ke cm kubik.",
+        "screenReaderNote": "Materi konsep menjelaskan aturan eksponensial dalam konversi satuan panjang luas dan volume."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002005",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Kapasitas Kolam dalam Liter",
+      "instruction": "Konversikan volume meter kubik ke satuan liter.",
+      "content": "Sebuah penampungan air berbentuk balok memiliki ukuran panjang $2\\text{ m}$, lebar $1.5\\text{ m}$, dan kedalaman $1\\text{ m}$.\n\nVolume wadah tersebut adalah:\n$$V = 2 \\times 1.5 \\times 1 = 3\\text{ m}^3$$\n\nBerapakah liter air maksimum yang dapat ditampung oleh wadah tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat bahwa 1 meter kubik sama dengan 1.000 liter.",
+        "concept": "1 m³ = 1000 dm³ = 1000 liter.",
+        "strategy": "Kalikan volume meter kubik dengan 1000: 3 × 1000.",
+        "solution": "3 × 1000 = 3.000 liter."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 3000,
+        "tolerance": 10,
+        "units": "liter",
+        "feedbackCorrect": "Tepat sekali! 3 m³ setara dengan 3.000 liter air.",
+        "misconceptions": [
+          {
+            "code": "LINEAR_CONVERSION_ON_AREA",
+            "triggerValue": 300,
+            "feedback": "Hati-hati dengan faktor pangkat tiga: 1 m³ adalah 1000 liter, bukan 100 liter."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung volume air 3 meter kubik ke liter.",
+        "screenReaderNote": "Ketikkan angka volume liter pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002006",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Semut Tidak Bisa Sebesar Gajah?",
+      "instruction": "Tuliskan penjelasan logismu berdasarkan hukum kuadrat-kubik (Square-Cube Law).",
+      "content": "Dalam film fiksi ilmiah, sering ada monster laba-laba atau semut raksasa setinggi gedung $10\\text{ meter}$.\n\nBerdasarkan prinsip penskalaan geometris (jika ukuran panjang dilipatgandakan $k$ kali, luas penampang kaki hanya membesar $k^2$ kali, namun massa dan bobot tubuh membesar $k^3$ kali), jelaskan mengapa secara matematis dan fisika semut raksasa tidak akan bisa hidup di bumi!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan biologis dan geometris hukum kuadrat kubik pada penskalaan ukuran tubuh hewan.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai hukum kuadrat kubik."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-satuan-dan-pengukuran-matematika",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-skala-kekuatan",
+        "name": "Kekuatan Otot Berbanding Luas (k²)",
+        "description": "Menjelaskan bahwa kekuatan kaki dan otot hanya sebanding dengan luas penampang melintang (pangkat dua k²)",
+        "weight": 1
+      },
+      {
+        "id": "crit-skala-berat",
+        "name": "Berat Tubuh Berbanding Volume (k³)",
+        "description": "Menjelaskan bahwa massa dan berat tubuh bertambah sebanding dengan volume kubik (pangkat tiga k³)",
+        "weight": 1
+      },
+      {
+        "id": "crit-skala-konsekuensi",
+        "name": "Konsekuensi Kegagalan Biologis",
+        "description": "Menyimpulkan bahwa kaki semut raksasa akan patah seketika di bawah beban tubuhnya sendiri karena laju pertumbuhan volume jauh melampaui luas kaki",
+        "weight": 1
+      }
+    ]
+  }
+}

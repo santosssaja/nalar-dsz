@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000042",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "struktur-lewis",
+  "title": "Struktur Lewis: Pasangan Elektron Ikatan, Elektron Bebas, dan Analisis Muatan Formal",
+  "summary": "Menguasai bahasa diagram 2D ikatan kimia ciptaan Gilbert N. Lewis: pemetaan pasangan elektron ikatan (PEI) dan bebas (PEB), kalkulasi muatan formal, fenomena resonansi hibrida, serta pengecualian kaidah oktet.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Menggambar diagram struktur titik Lewis untuk molekul dan ion poliatomik",
+    "Menghitung muatan formal atom untuk menentukan struktur resonansi paling stabil",
+    "Memahami anomali kaidah oktet: oktet tak lengkap, radikal bebas, dan oktet diperluas"
+  ],
+  "prerequisites": [
+    "ikatan-kimia",
+    "konfigurasi-elektron"
+  ],
+  "misconceptions": [
+    {
+      "code": "OCTET_RULE_IS_UNIVERSAL_WITHOUT_EXCEPTION",
+      "label": "Menganggap aturan oktet 8 elektron adalah hukum mutlak yang tidak pernah dilanggar oleh atom apa pun",
+      "remediation": "Kaidah oktet hanyalah panduan umum praktis yang terutama berlaku bagi unsur periode kedua (C, N, O, F). Unsur periode ketiga ke bawah (seperti P dan S) memiliki orbital d yang kosong sehingga dapat menampung 10 atau 12 elektron (oktet diperluas, seperti pada SF₆ dan PCl₅)."
+    },
+    {
+      "code": "RESONANCE_MEANS_OSCILLATING_BONDS",
+      "label": "Membayangkan molekul beresonansi dengan cara bolak-balik bergetar bergantian antara dua bentuk struktur Lewis",
+      "remediation": "Resonansi BUKAN osilasi waktu nyata antara struktur A dan B! Struktur sebenarnya adalah satu kesatuan hibrida resonansi permanen tunggal di mana elektron terdelokalisasi merata. Seperti badak yang merupakan 'hibrida' antara mitos naga dan unicorn, bukan hewan yang berubah wujud setiap detik."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004201",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Sketsa di Balik Amplop: Bahasa Visual Gilbert N. Lewis",
+      "instruction": "Amati bagaimana simbol sederhana berupa titik dan garis dapat menjelaskan arsitektur molekuler yang rumit.",
+      "content": "Pada tahun 1916, kimiawan legendaris UC Berkeley, Gilbert N. Lewis, memperkenalkan cara menggambar molekul yang begitu sederhana namun luar biasa ampuh:\n- Lambang unsur kimia ditulis di tengah mewakili inti atom dan elektron kulit dalam.\n- Elektron valensi terluar digambarkan sebagai **titik-titik (dots)** di empat penjuru mata angin.\n- Dua titik yang dipakai bersama oleh dua atom digabungkan menjadi **satu garis ikatan tunggal** (2 elektron).\n- Jika dua atom berbagi 4 elektron: **ikatan rangkap dua** ($=$).\n- Jika berbagi 6 elektron: **ikatan rangkap tiga** ($\\equiv$).\n\nDengan aturan sederhana ini, para kimiawan dapat memprediksi formula jutaan molekul obat-obatan, plastik, dan senyawa biologis tanpa harus memecahkan persamaan kalkulus mekanika kuantum yang rumit!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi struktur Lewis molekul air H-O-H dengan dua garis ikatan tunggal dan dua pasang titik elektron bebas di atas oksigen.",
+        "screenReaderNote": "Materi pengantar menguraikan notasi titik dan garis struktur Lewis untuk pemetaan pasangan elektron ikatan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004202",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menghitung Pasangan Elektron Bebas pada Molekul Air",
+      "instruction": "Tentukan berapa banyak pasangan elektron bebas (PEB) yang tersisa pada atom pusat Oksigen di molekul H2O.",
+      "content": "Atom Oksigen memiliki $6\\text{ elektron valensi}$.\nPada molekul air ($\\text{H}_2\\text{O}$), atom Oksigen memakai $2\\text{ elektronnya}$ untuk berikatan tunggal dengan dua atom Hidrogen (masing-masing menyumbang 1e).\n\nBerapakah jumlah **Pasangan Elektron Bebas (PEB / lone pairs)** yang masih tersisa dan tidak dipakai berikatan pada atom pusat Oksigen tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Hitung elektron valensi bebas: elektron awal dikurangi elektron yang dipakai berikatan.",
+        "concept": "Elektron bebas = 6 - 2 = 4 elektron.",
+        "strategy": "Karena 1 pasang = 2 elektron, maka 4 elektron bebas = 4 / 2 pasang.",
+        "solution": "Tersisa 2 pasang elektron bebas (2 PEB)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-2-peb",
+            "label": "2 pasang elektron bebas (PEB) — dari 6 elektron valensi oksigen, 2 elektron membentuk ikatan dan 4 elektron lainnya membentuk 2 pasang elektron bebas non-ikatan",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Total 8 elektron di sekitar O: 2 pasang ikatan (PEI) dan 2 pasang bebas (PEB). Keberadaan dua pasang elektron bebas inilah yang mendorong bentuk molekul air menjadi bengkok/V!"
+          },
+          {
+            "id": "opt-4-peb",
+            "label": "4 pasang elektron bebas — karena ada 4 elektron yang tidak berikatan",
+            "isCorrect": false,
+            "explanation": "4 elektron membentuk 2 pasang, bukan 4 pasang."
+          },
+          {
+            "id": "opt-0-peb",
+            "label": "0 pasang elektron bebas — seluruh elektron terpakai untuk memenuhi kaidah oktet",
+            "isCorrect": false,
+            "explanation": "Elektron bebas tetap berada di kulit valensi dan ikut memperhitungkan kaidah oktet 8 elektron."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004203",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Anomali Kaidah Oktet",
+      "instruction": "Amati molekul-molekul stabil di laboratorium yang melanggar aturan oktet 8 elektron.",
+      "content": "Pelajari tiga perkecualian utama kaidah oktet:\n1. **Oktet Tak Lengkap (Incomplete Octet):**\n   - Terjadi pada Berilium dan Boron (elektron valensi terlalu sedikit).\n   - Contoh: $\\text{BF}_3$ hanya memiliki $6\\text{ elektron}$ di sekitar atom pusat Boron, namun stabil.\n2. **Elektron Ganjil (Radikal Bebas):**\n   - Jumlah total elektron valensi ganjil sehingga pasti ada 1 elektron sendirian tanpa pasangan.\n   - Contoh: Nitrogen monoksida ($\\text{NO}$, total 11 elektron valensi), sangat reaktif.\n3. **Oktet Diperluas (Expanded Octet):**\n   - Terjadi pada unsur Periode 3 ke bawah yang memiliki subkulit d kosong.\n   - Contoh: $\\text{PCl}_5$ (10 elektron valensi) dan $\\text{SF}_6$ (12 elektron valensi di sekitar Sulfur!).",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Struktur Lewis anomali oktet memperlihatkan BF3 dengan 6 elektron dan SF6 dengan 12 elektron mengelilingi sulfur pusat.",
+        "screenReaderNote": "Materi interaktif menguraikan tiga varian anomali kaidah oktet: tak lengkap, radikal ganjil, dan ekspansi oktet subkulit d."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004204",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Kalkulasi Muatan Formal (Formal Charge)",
+      "instruction": "Kuasai formula analitis muatan formal untuk memilih struktur Lewis yang paling disukai alam.",
+      "content": "### 1. Rumus Muatan Formal (\\(\\text{FC}\\))\nMuatan hipotesis yang dimiliki atom jika seluruh pasangan elektron ikatan dibagi rata sempurna:\n$$\\text{FC} = V - N - \\frac{B}{2}$$\nDi mana:\n- $V$: Jumlah elektron valensi atom bebas (sesuai nomor golongan)\n- $N$: Jumlah elektron bebas yang tidak berikatan (nonbonding electrons)\n- $B$: Jumlah elektron yang terlibat dalam ikatan (bonding electrons, atau $B/2$ = jumlah garis ikatan)\n\n### 2. Kriteria Struktur Lewis Terbaik Berdasarkan Muatan Formal\n1. Struktur dengan nilai muatan formal mendekati atau tepat **nol** di seluruh atom adalah yang paling stabil.\n2. Jika harus ada muatan negatif, muatan tersebut wajib berada pada atom yang paling **elektronegatif**.\n3. Muatan formal yang berdekatan tidak boleh bertanda sejenis.\n\n### 3. Resonansi Hibrida\nJika suatu molekul memiliki dua atau lebih struktur Lewis sah yang setara (misal ion karbonat $\\text{CO}_3^{2-}$ atau ozon $\\text{O}_3$), struktur aslinya adalah **hibrida resonansi** dengan panjang ikatan yang identik dan orde ikatan pecahan (seperti $1\\frac{1}{3}$ atau $1{,}5$).",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap rumus muatan formal FC = V - N - B/2 beserta tiga kriteria seleksi struktur resonansi paling stabil.",
+        "screenReaderNote": "Halaman merangkum formulasi analitis muatan formal, kriteria seleksi struktur Lewis optimum, dan konsep hibrida resonansi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004205",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Muatan Formal Karbon pada Gas CO2",
+      "instruction": "Hitung muatan formal atom pusat Karbon pada struktur Lewis molekul karbon dioksida.",
+      "content": "Pada struktur Lewis karbon dioksida ($\\,\\text{O}=\\text{C}=\\text{O}\\,$):\n- Atom Karbon ($V = 4$) berada di tengah.\n- Membentuk dua ikatan rangkap dua dengan atom Oksigen ($B = 8\\text{ elektron ikatan}$). Mengapa? Karena $2 \\times 2 = 4\\text{ garis ikatan}$.\n- Karbon tidak memiliki elektron bebas ($N = 0$).\n\nBerapakah nilai muatan formal ($\\text{FC}$) dari atom Karbon tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Gunakan rumus FC = V - N - (B / 2).",
+        "concept": "V = 4, N = 0, dan B = 8.",
+        "strategy": "Hitung: FC = 4 - 0 - (8 / 2) = 4 - 4.",
+        "solution": "Muatan formal Karbon adalah 0 (sangat stabil netral)."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 0,
+        "units": "",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004206",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Panjang Ikatan Identik pada Ion Karbonat (CO3 2-)",
+      "instruction": "Jelaskan mengapa eksperimen kristalografi sinar-X membuktikan bahwa ketiga ikatan C-O pada ion karbonat memiliki panjang yang persis sama.",
+      "content": "Analisis paradoks struktur Lewis ini:\n1. Saat menggambar struktur Lewis ion $\\text{CO}_3^{2-}$, kita terpaksa menggambar satu ikatan rangkap dua ($\\text{C}=\\text{O}$) dan dua ikatan tunggal ($\\text{C}-\\text{O}^-$).\n2. Di atas kertas, ikatan rangkap dua seharusnya jauh lebih pendek dan lebih kuat daripada ikatan tunggal.\n3. Mengapa pengukuran instrumen nyata menunjukkan ketiga ikatan memiliki panjang yang persis sama ($128\\text{ pm}$) dan orde ikatan $1{,}33$?\n4. Jelaskan fenomena delokalisasi elektron pi pada hibrida resonansi.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-struktur-lewis",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-struktur-lewis-keterbatasan-struktur-lewis-tunggal",
+        "name": "Keterbatasan Representasi Lewis Statis",
+        "description": "Menjelaskan bahwa struktur Lewis tunggal mengasumsikan elektron terlokalisasi kaku pada dua atom yang tidak mencerminkan realitas kuantum molekul.",
+        "weight": 1
+      },
+      {
+        "id": "crit-struktur-lewis-delokalisasi-elektron-pi",
+        "name": "Mekanisme Delokalisasi Elektron Pi",
+        "description": "Menerangkan bahwa elektron ikatan pi terdelokalisasi secara merata ke ketiga atom oksigen melalui tumpang tindih orbital p yang kontinu.",
+        "weight": 1
+      },
+      {
+        "id": "crit-struktur-lewis-orde-ikatan-pecahan",
+        "name": "Konsep Orde Ikatan Pecahan 1,33",
+        "description": "Menyimpulkan bahwa keempat pasangan elektron ikatan dibagi rata pada tiga ikatan menghasilkan orde ikatan 4/3 = 1,33 sehingga panjang ikatannya identik di ketiga sisi.",
+        "weight": 1
+      }
+    ]
+  }
+}

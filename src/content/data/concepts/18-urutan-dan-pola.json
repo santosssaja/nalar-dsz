@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000018",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "urutan-dan-pola",
+  "title": "Urutan dan Pola: Menemukan Keteraturan dan Merumuskan Kaidah Umum",
+  "summary": "Membangun kemampuan berpikir aljabar awal: mengenali pola berulang, membedakan barisan dengan selisih tetap (aritmetika) versus kelipatan rasio (geometri), dan merumuskan suku ke-n secara analitis.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Mengenali keteraturan pola dalam deretan angka dan struktur geometris",
+    "Membedakan barisan aritmetika (selisih b konstan) dengan barisan geometri (rasio r konstan)",
+    "Merumuskan nilai suku ke-n (Un) tanpa harus mendaftar semua angka secara manual"
+  ],
+  "prerequisites": ["bilangan", "operasi-aritmetika"],
+  "misconceptions": [
+    {
+      "code": "CONFUSING_ARITHMETIC_GEOMETRIC",
+      "label": "Mengira semua pola deretan angka selalu bertambah dengan selisih penjumlahan yang sama",
+      "remediation": "Pola dapat tumbuh secara penjumlahan tetap (aritmetika, misal +3, +3, +3) atau perkalian berulang (geometri, misal ×2, ×2, ×2 seperti pembelahan sel)."
+    },
+    {
+      "code": "OFF_BY_ONE_INDEXING",
+      "label": "Lupa mengurangkan 1 pada rumus suku ke-n (mengalikan n langsung dengan beda b bukannya (n-1))",
+      "remediation": "Suku pertama sudah memiliki nilai awal a. Untuk mencapai suku ke-n, kita hanya perlu melangkah sebanyak (n-1) kali: Un = a + (n-1)b."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000001801",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Tumpukan Kursi dan Rumah Lebah",
+      "instruction": "Amati bagaimana alam semesta dan desain manusia dipenuhi oleh keteraturan pola.",
+      "content": "Perhatikan tumpukan kursi plastik di aula sekolah:\n- $1$ kursi memiliki tinggi $80\\text{ cm}$.\n- $2$ kursi memiliki tinggi $85\\text{ cm}$ (bertambah $5\\text{ cm}$).\n- $3$ kursi memiliki tinggi $90\\text{ cm}$ (bertambah $5\\text{ cm}$ lagi).\n\nApakah kamu harus menumpuk $100$ kursi untuk mengetahui tingginya? Tentu tidak!\nOtak manusia dirancang untuk mengenali **pola (pattern)**. Karena setiap tambahan satu kursi selalu menambah tinggi sebesar $5\\text{ cm}$ secara teratur, kita dapat memprediksi tumpukan kursi ke-$100$ secara presisi dengan matematika.\n\nMatematika pada hakikatnya adalah sains tentang keteraturan pola!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi tumpukan kursi bertingkat dengan penambahan tinggi teratur 5 cm tiap kursi.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan pembentukan barisan aritmetika dalam kehidupan sehari-hari."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001802",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Suku Berikutnya dari 2, 4, 8, 16...",
+      "instruction": "Tentukan angka berikutnya dalam barisan pertumbuhan.",
+      "content": "Perhatikan barisan bilangan berikut:\n$$2, \\quad 4, \\quad 8, \\quad 16, \\quad \\dots$$\n\nBerapakah angka kelima dalam barisan tersebut?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Amati hubungan antara suku-suku yang berdampingan.",
+        "concept": "Apakah selisihnya konstan (+2), ataukah dikalikan angka tertentu (×2)?",
+        "strategy": "Dari 2 ke 4 (×2), 4 ke 8 (×2), 8 ke 16 (×2). Pola ini selalu melipatgandakan nilai.",
+        "solution": "16 × 2 = 32."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-pola-32",
+            "label": "32 — karena polanya selalu dikalikan 2 (barisan geometri)",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Pola ini adalah perkalian berulang dengan rasio r = 2: 16 × 2 = 32."
+          },
+          {
+            "id": "opt-pola-24",
+            "label": "24 — karena bertambah 8 dari 16",
+            "isCorrect": false,
+            "misconceptionCode": "CONFUSING_ARITHMETIC_GEOMETRIC",
+            "feedback": "Kurang tepat: penambahan antar suku berubah (dari 2 ke 4 bertambah 2, dari 4 ke 8 bertambah 4, dari 8 ke 16 bertambah 8). Pola utamanya adalah pengali ×2, bukan penambahan tetap."
+          },
+          {
+            "id": "opt-pola-18",
+            "label": "18 — karena ditambah 2 dari 16",
+            "isCorrect": false,
+            "feedback": "Salah: barisan ini tidak bertambah dua secara tetap."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Kamu berhasil mengenali barisan geometri berlipat ganda."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan pilihan ganda menebak angka kelima dari barisan 2, 4, 8, 16.",
+        "screenReaderNote": "Pilih opsi jawaban yang benar berdasarkan analisis pola pengali."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001803",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Visualisasi Pertumbuhan Barisan",
+      "instruction": "Ubah parameter n pada wahana interaktif untuk melihat kurva pertumbuhan.",
+      "content": "Gunakan wahana interaktif di bawah:\n1. Amati pola linier aritmetika: setiap langkah $n$ menambah panjang baris secara seragam.\n2. Bandingkan dengan barisan eksponensial geometri: setiap penambahan satu langkah melipatgandakan seluruh tinggi bar.\n3. Perhatikan bagaimana formulasi suku ke-$n$ memungkinkan kita langsung melompat ke nilai tinggi tanpa menghitung satu per satu!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Eksplorasi visual perbandingan barisan aritmetika dan geometri.",
+        "screenReaderNote": "Gunakan slider n pada wahana interaktif untuk membedakan pertumbuhan barisan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001804",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Dua Mazhab Barisan: Aritmetika vs Geometri",
+      "instruction": "Kuasai formulasi analitis suku ke-n (Un).",
+      "content": "Dalam matematika, terdapat dua barisan dasar yang paling sering ditemui:\n\n### 1. Barisan Aritmetika (Selisih Penjumlahan Tetap)\nSetiap suku diperoleh dengan menambahkan **beda ($b$)** yang konstan ke suku sebelumnya:\n$$U_n = a + (n - 1)b$$\ndi mana:\n- $a = U_1$ adalah suku pertama\n- $b = U_n - U_{n-1}$ adalah selisih antar suku\n- $(n-1)$ adalah jumlah lompatan langkah dari suku pertama\n\n### 2. Barisan Geometri (Kelipatan Perkalian Tetap)\nSetiap suku diperoleh dengan mengalikan **rasio ($r$)** yang konstan:\n$$U_n = a \\cdot r^{n-1}$$\n\nKemampuan merumuskan $U_n$ ini adalah fondasi aljabar fungsi: dari deret angka sederhana hingga rumus bunga majemuk perbankan dan deret Taylor kalkulus!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus suku ke-n barisan aritmetika a ditambah n minus 1 kali b dan barisan geometri a kali r pangkat n minus 1.",
+        "screenReaderNote": "Materi konsep menjelaskan rumus eksplisit barisan aritmetika dan geometri."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001805",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Suku ke-20 Barisan Aritmetika",
+      "instruction": "Gunakan rumus Un = a + (n-1)b untuk menemukan nilai suku ke-20.",
+      "content": "Diketahui barisan aritmetika:\n$$3, \\quad 7, \\quad 11, \\quad 15, \\quad \\dots$$\n\nBerapakah nilai suku ke-$20$ ($U_{20}$) dari barisan tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Tentukan suku pertama (a) dan beda selisih (b).",
+        "concept": "Suku pertama a = 3. Beda selisih b = 7 - 3 = 4.",
+        "strategy": "Gunakan rumus U20 = 3 + (20 - 1) × 4 = 3 + (19 × 4).",
+        "solution": "19 × 4 = 76. Maka U20 = 3 + 76 = 79."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 79,
+        "tolerance": 0.1,
+        "units": "",
+        "feedbackCorrect": "Tepat sekali! U20 = 3 + (19 × 4) = 3 + 76 = 79.",
+        "misconceptions": [
+          {
+            "code": "OFF_BY_ONE_INDEXING",
+            "triggerValue": 83,
+            "feedback": "Hati-hati: jangan mengalikan n langsung (20 × 4 = 80 lalu 3 + 80 = 83). Dari suku ke-1 ke suku ke-20 hanya ada 19 kali penambahan beda."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung suku ke-20 dari barisan 3, 7, 11, 15.",
+        "screenReaderNote": "Ketikkan angka suku ke-20 pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001806",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Kita Menggunakan (n - 1) Bukan n?",
+      "instruction": "Tuliskan penalaran logismu menjelaskan indeks pergeseran (n - 1).",
+      "content": "Banyak siswa sering salah menghitung suku ke-$n$ karena menulis rumus $U_n = a + n \\cdot b$ alih-alih $U_n = a + (n - 1)b$.\n\nJelaskan secara visual atau menggunakan analogi tiang pagar mengapa pengali dari beda $b$ harus $(n - 1)$ dan bukan $n$! Mengapa suku pertama ($n=1$) tidak memerlukan penambahan beda sama sekali?",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan mengapa rumus barisan aritmetika menggunakan n minus 1 bukan n.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai indeks pergeseran n minus satu."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-urutan-dan-pola",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-pola-titik-awal",
+        "name": "Titik Awal Suku Pertama",
+        "description": "Menjelaskan bahwa suku pertama a adalah titik awal berdiri di n=1, sehingga belum ada langkah penambahan beda yang dilakukan (0 × b)",
+        "weight": 1
+      },
+      {
+        "id": "crit-pola-lompatan",
+        "name": "Konsep Jarak Antar Titik / Lompatan",
+        "description": "Menjelaskan bahwa untuk mencapai tiang ke-n dari tiang ke-1 hanya dibutuhkan (n - 1) rentang jarak lompatan",
+        "weight": 1
+      },
+      {
+        "id": "crit-pola-konsekuensi",
+        "name": "Koreksi Terhadap Rumus Keliru",
+        "description": "Menunjukkan bahwa jika menggunakan n × b, maka suku pertama akan keliru menjadi a + b bukannya a",
+        "weight": 1
+      }
+    ]
+  }
+}

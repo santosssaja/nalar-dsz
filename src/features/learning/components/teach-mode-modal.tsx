@@ -65,6 +65,72 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
         return "Guru, robot pintar bisa berjalan dan bicara, tapi kenapa robot dibilang benda mati sedangkan bakteri got dibilang makhluk hidup?";
       case "tingkatan-organisasi-kehidupan":
         return "Guru, apa maksudnya sifat emergen? Kenapa sekelompok sel bisa membentuk otak yang bisa berpikir padahal sel satuan tidak punya pikiran?";
+      case "rasio-dan-proporsi":
+        return "Guru, kenapa campuran 2 gelas sirup banding 3 gelas air rasanya tetap sama manisnya kalau kita bikin 4 gelas sirup banding 6 gelas air?";
+      case "persentase":
+        return "Guru, kenapa diskon 50% lalu ada diskon tambahan 20% tidak sama dengan diskon 70%?";
+      case "pangkat-dan-akar":
+        return "Guru, kenapa angka berapa pun dipangkatkan nol hasilnya satu dan bukan nol?";
+      case "urutan-dan-pola":
+        return "Guru, bagaimana cara kita tahu angka ke-100 dari suatu barisan tanpa harus menghitungnya satu demi satu?";
+      case "estimasi":
+        return "Guru, kenapa memperkirakan jawaban dulu sebelum menghitung teliti justru tanda orang yang paham matematika?";
+      case "satuan-dan-pengukuran-matematika":
+        return "Guru, kenapa 1 meter persegi sama dengan 10.000 sentimeter persegi dan bukan 100 sentimeter persegi?";
+      case "gerak-lurus":
+        return "Guru, kenapa waktu kereta cepat melaju konstan 300 km/jam air di gelas tenang, tapi begitu direm mendadak airnya langsung tumpah?";
+      case "gerak-parabola":
+        return "Guru, kalau ada dua peluru dijatuhkan dari ketinggian sama, satu ditembakkan kencang mendatar dan satu dijatuhkan bebas, kenapa mereka menyentuh tanah bersamaan?";
+      case "gerak-melingkar":
+        return "Guru, kalau kelajuan mobil di tikungan tetap 40 km/jam, kenapa mobil itu dibilang memiliki percepatan sentripetal?";
+      case "hukum-newton":
+        return "Guru, kalau gaya aksi dan reaksi besarnya sama tapi berlawanan arah, kenapa kuda bisa menarik kereta maju dan tidak saling menghilangkan?";
+      case "gaya":
+        return "Guru, kenapa meja kayu bisa menahan buku yang ditarik gravitasi tanpa runtuh? Meja itu mendorong balik pakai apa?";
+      case "gesekan":
+        return "Guru, kenapa mendorong lemari pakaian yang diam berat sekali di awal, tapi begitu meluncur terasa lebih enteng?";
+      case "usaha-dan-energi":
+        return "Guru, kalau Nai memikul kardus berat sambil jalan datar sejauh 100 meter, kenapa fisika bilang usaha gravitasi Nai adalah nol?";
+      case "momentum-dan-impuls":
+        return "Guru, kenapa jatuh ke atas kasur busa tebal tidak sakit, tapi jatuh ke lantai semen keras bisa mematahkan tulang?";
+      case "tumbukan":
+        return "Guru, pada mainan bandul Newton, kenapa kalau kita tarik satu bola hanya satu bola di ujung lain yang terpental?";
+      case "rotasi":
+        return "Guru, pada balapan menggelinding di bidang miring, kenapa bola pejal selalu mengalahkan pipa berongga bermassa sama?";
+      case "torsi":
+        return "Guru, kenapa gagang pintu selalu dipasang di ujung paling jauh dari engsel dan tidak pernah di dekat engsel?";
+      case "momentum-sudut":
+        return "Guru, kenapa penari balet bisa berputar makin kencang waktu melipat tangannya ke dada padahal tidak ada dorongan baru?";
+      case "gravitasi":
+        return "Guru, kenapa astronot di stasiun luar angkasa ISS melayang? Apakah benar di sana sudah tidak ada gravitasi bumi?";
+      case "kesetimbangan":
+        return "Guru, kenapa mobil balap Formula 1 dibuat sangat ceper dan lebar rodanya? Apa hubungannya dengan titik berat?";
+      case "osilasi":
+        return "Guru, kenapa ayunan bandul jam dinding waktunya tetap sama persis meskipun ayunannya sudah melemah dan menyempit?";
+      case "molekul":
+        return "Guru, kenapa gas hidrogen yang mudah meledak dan gas oksigen pemicu api bisa berubah jadi molekul air yang memadamkan api?";
+      case "ion":
+        return "Guru, kenapa kristal garam padat tidak bisa menghantarkan listrik, tapi kalau dilarutkan ke air lampunya langsung menyala?";
+      case "sistem-periodik":
+        return "Guru, kenapa ukuran atom Klorin lebih kecil dari atom Natrium padahal Klorin punya lebih banyak proton dan elektron?";
+      case "konfigurasi-elektron":
+        return "Guru, kenapa elektron lebih suka mengisi kamar orbital kosong sendirian dulu sebelum berpasangan?";
+      case "bilangan-kuantum":
+        return "Guru, kenapa tidak boleh ada dua elektron dalam satu atom yang punya empat bilangan kuantum sama?";
+      case "ikatan-kimia":
+        return "Guru, kenapa logam seperti emas bisa ditempa jadi lembaran tipis tanpa pecah sedangkan kaca langsung hancur berkeping-keping?";
+      case "struktur-lewis":
+        return "Guru, kenapa molekul air H2O bentuknya bengkok seperti huruf V dan tidak lurus saja?";
+      case "geometri-molekul":
+        return "Guru, kenapa gas karbon dioksida CO2 tidak punya kutub listrik tapi molekul air H2O sangat berkutub polar?";
+      case "metode-ilmiah":
+        return "Guru, kenapa dokter harus menguji obat baru dengan cara buta ganda (double-blind) di mana dokter dan pasien sama-sama tidak tahu?";
+      case "sel":
+        return "Guru, kenapa sel tubuh makhluk hidup ukurannya mikroskopis dan tidak pernah ada sel tunggal yang sebesar bola basket?";
+      case "molekul-biologis":
+        return "Guru, kenapa merebus putih telur membuatnya menggumpal keras dan tidak bisa kembali cair lagi?";
+      case "energi-dalam-sistem-biologis":
+        return "Guru, kenapa tubuh kita repot-repot mendaur ulang molekul ATP ribuan kali sehari padahal kita sudah punya cadangan lemak?";
       default:
         return `Guru, Nai ingin paham tentang konsep '${concept.title}'. Bisa tolong jelaskan intuisinya dengan analogi sederhana?`;
     }

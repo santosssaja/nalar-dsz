@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000030",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "rotasi",
+  "title": "Dinamika Rotasi: Kinematika Sudut dan Momen Inersia Benda Tegar",
+  "summary": "Membangun jembatan analogi dari gerak translasi ke gerak rotasi benda tegar: variabel kinematika sudut (θ, ω, α), momen inersia sebagai resistensi putar massa terdistribusi, serta energi kinetik menggelinding.",
+  "difficulty": "advanced",
+  "learningObjectives": [
+    "Memetakan analogi besaran translasi (s, v, a, m) ke besaran rotasi (θ, ω, α, I)",
+    "Memahami konsep momen inersia (I = Σ m r²) sebagai ukuran kelembaman rotasi yang bergantung pada distribusi massa",
+    "Menghitung energi kinetik total benda yang menggelinding murni (translasi + rotasi)"
+  ],
+  "prerequisites": [
+    "gerak-melingkar",
+    "usaha-dan-energi",
+    "hukum-newton"
+  ],
+  "misconceptions": [
+    {
+      "code": "MOMENT_OF_INERTIA_IS_JUST_MASS",
+      "label": "Mengira dua benda dengan massa total yang sama pasti memiliki resistensi putar yang sama",
+      "remediation": "Momen inersia bukan hanya tentang massa, melainkan tentang seberapa jauh massa tersebut diletakkan dari sumbu putar (I = Σ m·r²). Silinder berongga jauh lebih sulit diputar daripada silinder pejal bermassa sama karena massanya terkonsentrasi di tepi luar."
+    },
+    {
+      "code": "ROLLING_WITHOUT_SLIP_SPEED",
+      "label": "Menganggap semua benda menggelinding menuruni bidang miring akan tiba di dasar secara bersamaan asalkan massanya sama",
+      "remediation": "Kecepatan menggelinding tidak bergantung pada massa total atau jari-jari, melainkan semata-mata pada bentuk geometris (faktor pengali momen inersia k). Bola pejal selalu memenangkan perlombaan menggelinding melawan silinder berongga."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003001",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Perlombaan Menggelinding: Bola Pejal vs Cincin Silinder",
+      "instruction": "Amati fenomena dua benda dengan massa dan jari-jari sama yang menggelinding di bidang miring.",
+      "content": "Bayangkan eksperimen balapan menuruni bidang miring:\n- Benda 1: **Bola pejal logam** seberat $1\\text{ kg}$.\n- Benda 2: **Pipa silinder berongga** seberat $1\\text{ kg}$ dengan diameter yang sama persis.\n\nKeduanya dilepaskan secara serentak dari puncak bidang miring yang sama.\nSiapa yang akan meluncur tiba di dasar terlebih dahulu?\nBanyak orang menduga keduanya akan tiba bersamaan karena massanya sama ($1\\text{ kg}$). Namun kenyataannya, **bola pejal selalu menang telak**!\n\nMengapa demikian? Karena pada silinder berongga, seluruh massanya terkonsentrasi jauh di tepi lingkar luar, memberikan **kelembaman rotasi (Momen Inersia)** yang jauh lebih besar! Benda dengan momen inersia besar 'malas berputar', sehingga membuang terlalu banyak energi potensial hanya untuk memutar tubuhnya.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi perlombaan dua silinder menggelinding di bidang miring memperlihatkan silinder pejal mendahului silinder berongga.",
+        "screenReaderNote": "Materi pengantar menguraikan paradoks balapan menggelinding dan konsep momen inersia."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003002",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Memutar Tongkat Bambu Panjang",
+      "instruction": "Bandingkan kemudahan memutar tongkat bambu dengan dua posisi pegangan yang berbeda.",
+      "content": "Kamu memegang sebuah tongkat bambu sepanjang $1\\text{ meter}$ yang di kedua ujungnya dipasangi pemberat logam berat.\n- **Cara A:** Kamu memegang tongkat tepat di tengah-tengahnya ($r = 0{,}5\\text{ m}$ ke masing-masing beban) lalu memuntir pergelangan tanganmu bolak-balik.\n- **Cara B:** Kamu memegang tongkat di salah satu ujungnya ($r = 1\\text{ m}$ ke beban seberang) lalu memuntir pergelangan tanganmu.\n\nCara manakah yang terasa jauh lebih berat dan melelahkan bagi pergelangan tanganmu?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat rumus momen inersia partikel I = m × r².",
+        "concept": "Perhatikan bahwa jarak r dipangkatkan dua (kuadrat).",
+        "strategy": "Pada cara B, jarak beban ke poros putar bertambah 2 kali lipat, sehingga momen inersia r² melonjak 4 kali lipat!",
+        "solution": "Cara B jauh lebih berat karena momen inersianya jauh lebih besar."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-cara-b",
+            "label": "Cara B jauh lebih berat — karena jarak massa ke poros berlipat ganda, momen inersianya (I = m·r²) melonjak 4 kali lipat",
+            "isCorrect": true,
+            "explanation": "Benar! Menjauhkan massa dari sumbu putar melipatgandakan kelembaman putar secara kuadratik, sehingga pergelangan tangan harus mengerahkan torsi jauh lebih besar."
+          },
+          {
+            "id": "opt-cara-a",
+            "label": "Cara A lebih berat — karena kedua beban harus digerakkan sekaligus",
+            "isCorrect": false,
+            "explanation": "Pada cara A, kedua beban berada sangat dekat dengan poros putar sehingga nilai r²-nya sangat kecil."
+          },
+          {
+            "id": "opt-sama-berat",
+            "label": "Sama berat — karena massa total tongkat dan beban tidak berubah sama sekali",
+            "isCorrect": false,
+            "explanation": "Massa sama tidak berarti kelembaman putar sama; distribusi letak massa terhadap sumbu putar adalah faktor penentu utama."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003003",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Tabel Analogi Dinamika Translasi dan Rotasi",
+      "instruction": "Bandingkan persamaan gerak lurus dengan gerak melingkar benda tegar.",
+      "content": "Hukum-hukum fisika rotasi adalah cerminan sempurna dari fisika translasi:\n\n| Besaran Translasi | Simbol | Besaran Rotasi | Simbol | Hubungan Linier |\n| :--- | :--- | :--- | :--- | :--- |\n| Posisi | $s$ | Sudut | $\\theta$ | $s = \\theta \\cdot r$ |\n| Kecepatan | $v$ | Kecepatan sudut | $\\omega$ | $v = \\omega \\cdot r$ |\n| Percepatan | $a$ | Percepatan sudut | $\\alpha$ | $a = \\alpha \\cdot r$ |\n| Massa (Inersia) | $m$ | Momen Inersia | $I$ | $I = \\Sigma m_i r_i^2$ |\n| Gaya Luar | $F$ | Momen Gaya (Torsi) | $\\tau$ | $\\tau = r \\cdot F$ |\n| Hukum II Newton | $F = ma$ | Hukum II Rotasi | $\\tau = I\\alpha$ | - |\n| Momentum | $p = mv$ | Momentum Sudut | $L = I\\omega$ | - |\n| Energi Kinetik | $\\frac{1}{2}mv^2$ | Energi Kinetik Rotasi | $\\frac{1}{2}I\\omega^2$ | - |",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Tabel komprehensif analogi besaran fisika translasi dan rotasi mencakup posisi, kecepatan, percepatan, inersia, gaya, momentum, dan energi kinetik.",
+        "screenReaderNote": "Materi interaktif menyajikan tabel perbandingan 1-ke-1 besaran gerak translasi dengan besaran gerak rotasi benda tegar."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003004",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Momen Inersia dan Energi Menggelinding",
+      "instruction": "Pahami perumusan analitik momen inersia dan konservasi energi menggelinding murni.",
+      "content": "### 1. Momen Inersia Benda Kontinu (\\(I\\))\n$$I = \\int r^2 \\, dm$$\nBeberapa nilai baku momen inersia dengan massa $M$ dan jari-jari $R$:\n- Silinder pejal / cakram: $I = \\frac{1}{2} M R^2$\n- Bola pejal: $I = \\frac{2}{5} M R^2$\n- Silinder berongga tipis / cincin: $I = M R^2$\n- Batang silinder poros tengah: $I = \\frac{1}{12} M L^2$\n\nSecara umum dapat ditulis: $I = k \\cdot M R^2$, di mana $k$ adalah konstanta bentuk geometris.\n\n### 2. Energi Kinetik Total Menggelinding Murni\nSaat menggelinding murni tanpa selip ($v = \\omega R$):\n$$E_{k,\\text{total}} = E_{k,\\text{translasi}} + E_{k,\\text{rotasi}}$$\n$$E_{k,\\text{total}} = \\frac{1}{2} M v^2 + \\frac{1}{2} I \\omega^2 = \\frac{1}{2} M v^2 (1 + k)$$\n\nKecepatan di dasar bidang miring berketinggian $h$:\n$$Mgh = \\frac{1}{2} M v^2 (1 + k) \\implies v = \\sqrt{\\frac{2gh}{1 + k}}$$\nSemakin kecil nilai $k$, semakin cepat benda tiba di dasar! (Bola pejal $k = 0{,}4$, silinder pejal $k = 0{,}5$, cincin $k = 1{,}0$).",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap momen inersia bentuk standar, energi kinetik menggelinding total, dan rumus kecepatan di dasar bidang miring.",
+        "screenReaderNote": "Materi analitik merangkum nilai momen inersia bola dan silinder, energi translasi ditambah rotasi, dan kelajuan di dasar bidang miring."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003005",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Momen Inersia Silinder Pejal",
+      "instruction": "Hitung nilai momen inersia silinder pejal berdasarkan massa dan jari-jarinya.",
+      "content": "Sebuah roda gerinda berbentuk silinder pejal memiliki massa $M = 6\\text{ kg}$ dan jari-jari $R = 0{,}2\\text{ meter}$.\nRoda tersebut berputar pada poros silinder pusatnya.\n\nBerapakah momen inersia ($I$) dari roda gerinda tersebut dalam $\\text{kg}\\cdot\\text{m}^2$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus momen inersia silinder pejal: I = (1/2) × M × R².",
+        "concept": "M = 6 kg dan R = 0.2 m.",
+        "strategy": "R² = 0.2² = 0.04. Lalu hitung: I = 0.5 × 6 × 0.04 = 3 × 0.04.",
+        "solution": "I = 0.12 kg·m²."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.01,
+        "expectedValue": 0.12,
+        "units": "kg·m²",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003006",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Massa Bukan Satu-satunya Penentu Kelembaman?",
+      "instruction": "Jelaskan dengan bahasa ilmiah mengapa konsep inersia rotasi harus memasukkan faktor kuadrat jarak dari poros.",
+      "content": "Tuliskan analisis konseptual mengenai:\n1. Perbedaan mendasar antara kelembaman gerak lurus (massa $m$) dengan kelembaman gerak rotasi ($I$).\n2. Mengapa partikel yang berada di tepi luar ($r$ besar) menyumbang resistensi inersia putar yang jauh lebih dominan dibanding partikel di dekat poros.\n3. Mengapa roda gila (flywheel) pada mesin selalu didesain dengan massa pejal terpusat di lingkar terluar.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-rotasi",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-rotasi-distribusi-massa-r2",
+        "name": "Ketergantungan Kuadrat Jarak r2",
+        "description": "Menjelaskan bahwa kelembaman rotasi mengalikan massa tiap elemen materi dengan kuadrat jaraknya dari poros (r^2), bukan sekadar penjumlahan skalar massa total.",
+        "weight": 1
+      },
+      {
+        "id": "crit-rotasi-kelajuan-linier-elemen",
+        "name": "Kelajuan Linier Elemen Tepi v = omega r",
+        "description": "Menerangkan bahwa materi di tepi luar harus bergerak dengan kelajuan linier v jauh lebih tinggi untuk mencapai kecepatan sudut yang sama, sehingga menuntut energi yang jauh lebih besar.",
+        "weight": 1
+      },
+      {
+        "id": "crit-rotasi-rekayasa-flywheel",
+        "name": "Aplikasi Rekayasa Roda Gila",
+        "description": "Menghubungkan prinsip ini dengan desain roda gila yang memaksimalkan massa di lingkar tepi luar untuk menyimpan energi kinetik rotasi sebesar-besarnya.",
+        "weight": 1
+      }
+    ]
+  }
+}

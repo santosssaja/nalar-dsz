@@ -4,9 +4,18 @@ import React from "react";
 import { StepContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { NumberLinePlayground } from "./playgrounds/number-line-playground";
+import { FractionRatioPlayground } from "./playgrounds/fraction-ratio-playground";
+import { PatternExponentPlayground } from "./playgrounds/pattern-exponent-playground";
 import { VectorPlayground } from "./playgrounds/vector-playground";
+import { ProjectileMotionPlayground } from "./playgrounds/projectile-motion-playground";
+import { NewtonDynamicsPlayground } from "./playgrounds/newton-dynamics-playground";
+import { HarmonicOscillationPlayground } from "./playgrounds/harmonic-oscillation-playground";
 import { MatterPlayground } from "./playgrounds/matter-playground";
+import { PeriodicTableAtomPlayground } from "./playgrounds/periodic-table-atom-playground";
+import { ChemicalBondingPlayground } from "./playgrounds/chemical-bonding-playground";
 import { BiologicalScalePlayground } from "./playgrounds/biological-scale-playground";
+import { CellStructurePlayground } from "./playgrounds/cell-structure-playground";
+import { BiologicalEnergyPlayground } from "./playgrounds/biological-energy-playground";
 import { CalculusPlayground } from "./playgrounds/calculus-playground";
 
 interface StepExploreProps {
@@ -26,35 +35,50 @@ export function StepExplore({
   const renderPlayground = () => {
     const slug = conceptSlug.toLowerCase();
 
-    if (
-      slug.includes("bilangan") ||
-      slug.includes("operasi") ||
-      slug.includes("pecahan")
-    ) {
+    // 1. Fondasi Matematika Playgrounds
+    if (slug.includes("rasio") || slug.includes("proporsi") || slug.includes("persentase") || slug.includes("pecahan")) {
+      return <FractionRatioPlayground />;
+    }
+    if (slug.includes("pangkat") || slug.includes("akar") || slug.includes("pola") || slug.includes("urutan") || slug.includes("estimasi")) {
+      return <PatternExponentPlayground />;
+    }
+    if (slug.includes("bilangan") || slug.includes("operasi") || slug.includes("satuan-dan-pengukuran-matematika")) {
       return <NumberLinePlayground />;
     }
 
-    if (
-      slug.includes("vektor") ||
-      slug.includes("kinematika") ||
-      slug.includes("pengukuran")
-    ) {
+    // 2. Fisika Mekanika Playgrounds
+    if (slug.includes("parabola") || slug.includes("gerak-lurus") || slug.includes("gerak-melingkar") || slug.includes("kinematika")) {
+      return <ProjectileMotionPlayground />;
+    }
+    if (slug.includes("newton") || slug.includes("gaya") || slug.includes("gesekan") || slug.includes("usaha") || slug.includes("momentum") || slug.includes("tumbukan") || slug.includes("kesetimbangan")) {
+      return <NewtonDynamicsPlayground />;
+    }
+    if (slug.includes("osilasi") || slug.includes("rotasi") || slug.includes("torsi") || slug.includes("gravitasi")) {
+      return <HarmonicOscillationPlayground />;
+    }
+    if (slug.includes("vektor") || slug.includes("pengukuran")) {
       return <VectorPlayground />;
     }
 
-    if (
-      slug.includes("materi") ||
-      slug.includes("unsur") ||
-      slug.includes("atom")
-    ) {
+    // 3. Dasar Kimia Playgrounds
+    if (slug.includes("periodik") || slug.includes("konfigurasi") || slug.includes("kuantum") || slug.includes("atom")) {
+      return <PeriodicTableAtomPlayground />;
+    }
+    if (slug.includes("ikatan") || slug.includes("lewis") || slug.includes("geometri") || slug.includes("molekul") || slug.includes("ion")) {
+      return <ChemicalBondingPlayground />;
+    }
+    if (slug.includes("materi") || slug.includes("unsur")) {
       return <MatterPlayground />;
     }
 
-    if (
-      slug.includes("karakteristik") ||
-      slug.includes("organisasi") ||
-      slug.includes("biologi")
-    ) {
+    // 4. Dasar Biologi Playgrounds
+    if (slug.includes("sel") || slug.includes("metode-ilmiah")) {
+      return <CellStructurePlayground />;
+    }
+    if (slug.includes("energi-dalam-sistem-biologis") || slug.includes("molekul-biologis")) {
+      return <BiologicalEnergyPlayground />;
+    }
+    if (slug.includes("karakteristik") || slug.includes("organisasi") || slug.includes("biologi")) {
       return <BiologicalScalePlayground />;
     }
 

@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000016",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "persentase",
+  "title": "Persentase: Hakikat Per-Seratus dan Asimetri Perubahan Relatif",
+  "summary": "Memahami persentase sebagai perbandingan pecahan berpenyebut standar 100, menghitung diskon dan bunga, serta membongkar jebakan asimetri kenaikan dan penurunan persentase.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami persentase p% sebagai pecahan p/100 dan desimal 0.01p",
+    "Menghitung nilai bagian terhadap acuan keseluruhan (base value)",
+    "Membuktikan mengapa penurunan p% yang diikuti kenaikan p% tidak pernah mengembalikan nilai awal"
+  ],
+  "prerequisites": ["pecahan-dan-desimal", "rasio-dan-proporsi"],
+  "misconceptions": [
+    {
+      "code": "ASYMMETRIC_PERCENT_CHANGE",
+      "label": "Menganggap diskon P% lalu dinaikkan P% akan mengembalikan harga ke nilai semula",
+      "remediation": "Nilai persentase selalu dihitung terhadap basis harga saat itu. Jika harga Rp100.000 diskon 50% menjadi Rp50.000, kenaikan 50% berikutnya dihitung dari basis baru Rp50.000 (+Rp25.000), menghasilkan Rp75.000, bukan Rp100.000."
+    },
+    {
+      "code": "PERCENT_AS_ABSOLUTE_NUMBER",
+      "label": "Memperlakukan angka persen sebagai kuantitas absolut yang bisa dijumlahkan langsung tanpa acuan basis",
+      "remediation": "Persen adalah pengali pecahan tanpa satuan: 50% dari 10 (hanya 5) jauh lebih kecil daripada 10% dari 1.000 (yaitu 100)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000001601",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Mengapa Menggunakan Angka 100?",
+      "instruction": "Amati mengapa manusia menciptakan standar per-seratus untuk membandingkan keberhasilan.",
+      "content": "Dua atlet basket bertanding dalam musim yang berbeda:\n- Atlet A berhasil memasukkan $17$ bola dari $25$ kali percobaan lemparan.\n- Atlet B berhasil memasukkan $33$ bola dari $50$ kali percobaan lemparan.\n\nSiapakah yang memiliki akurasi tembakan lebih baik? Sulit membandingkan $17/25$ dengan $33/50$ secara sekilas di kepala.\n\nNamun jika kita ubah penyebutnya menjadi **100**:\n- Atlet A: $\\frac{17 \\times 4}{25 \\times 4} = \\frac{68}{100} = 68\\%$\n- Atlet B: $\\frac{33 \\times 2}{50 \\times 2} = \\frac{66}{100} = 66\\%$\n\nSeketika terlihat jelas bahwa Atlet A memiliki efektivitas lebih tinggi ($68\\% > 66\\%$)! **Persen** (*per centum*) adalah bahasa universal untuk menstandarkan perbandingan terhadap patokan seratus.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi perbandingan akurasi tembakan basket 17/25 vs 33/50 yang disetarakan menjadi 68 persen dan 66 persen.",
+        "screenReaderNote": "Materi pengantar menjelaskan fungsi persentase sebagai penyebut standar 100."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001602",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Diskon 20% Kemudian Naik 20%",
+      "instruction": "Tentukan harga akhir barang setelah mengalami diskon dan kenaikan persentase yang sama.",
+      "content": "Sebuah jaket seharga $\\text{Rp }1.000.000$ mendapat diskon sebesar $20\\%$ pada akhir pekan. Setelah periode promo selesai, toko menaikkan harga jaket tersebut sebesar $20\\%$.\n\nBerapakah harga jaket tersebut sekarang?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Hitung harga jaket setelah diskon 20% terlebih dahulu.",
+        "concept": "Diskon 20% dari 1.000.000 adalah 200.000, sehingga harga menjadi 800.000.",
+        "strategy": "Kenaikan 20% berikutnya dihitung dari harga 800.000, BUKAN dari harga awal 1.000.000!",
+        "solution": "800.000 + (20% × 800.000) = 800.000 + 160.000 = 960.000."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-harga-960",
+            "label": "Rp 960.000 — lebih murah dari harga semula karena kenaikan dihitung dari basis harga yang sudah turun",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Diskon membuat harga jadi Rp800.000. Kenaikan 20% dari Rp800.000 hanya menambah Rp160.000, menghasilkan Rp960.000."
+          },
+          {
+            "id": "opt-harga-1000",
+            "label": "Rp 1.000.000 — kembali ke harga semula karena -20% dan +20% saling meniadakan",
+            "isCorrect": false,
+            "misconceptionCode": "ASYMMETRIC_PERCENT_CHANGE",
+            "feedback": "Salah kaprah umum: persentase bukan penjumlahan absolut. Nilai nominal 20% dari harga Rp800.000 lebih kecil daripada 20% dari Rp1.000.000."
+          },
+          {
+            "id": "opt-harga-1040",
+            "label": "Rp 1.040.000 — menjadi lebih mahal",
+            "isCorrect": false,
+            "feedback": "Perhitungan keliru. Harga akhir jaket adalah Rp960.000."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Kamu berhasil menghindari salah kaprah asimetri persentase yang paling umum di dunia finansial."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi pilihan ganda menghitung harga jaket setelah turun 20% lalu naik 20%.",
+        "screenReaderNote": "Pilih opsi jawaban yang benar berdasarkan perhitungan basis harga."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001603",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Visualisasi Persen Bagian-Utuh",
+      "instruction": "Ubah pembagian kuantitas dan amati persentase dalam diagram lingkaran.",
+      "content": "Gunakan wahana interaktif di bawah:\n1. Atur kuantitas $A = 1$ dan $B = 3$.\n2. Perhatikan bagian $A$ bernilai $25\\%$ dan bagian $B$ bernilai $75\\%$.\n3. Ubah kuantitas $A = 1$ dan $B = 1$. Amati bahwa kedua bagian seimbang masing-masing tepat $50\\%$!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Eksplorasi visual diagram lingkaran persentase.",
+        "screenReaderNote": "Gunakan slider pada wahana interaktif untuk mengamati perubahan persentase bagian terhadap utuh 100 persen."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001604",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Multiplikatif Pengali Persen",
+      "instruction": "Pahami cara menghitung perubahan persentase dalam satu langkah pengali.",
+      "content": "Daripada menghitung diskon lalu mengurangkannya dalam dua tahap terpisah, kita dapat menggunakan **faktor pengali desimal** langsung:\n- Diskon $15\\%$ berarti sisa yang harus dibayar adalah $100\\% - 15\\% = 85\\%$ ($0.85$):\n$$\\text{Harga Akhir} = \\text{Harga Awal} \\times 0.85$$\n\n- Kenaikan harga (inflasi / pajak) $11\\%$ berarti harga baru menjadi $100\\% + 11\\% = 111\\%$ ($1.11$):\n$$\\text{Harga Akhir} = \\text{Harga Awal} \\times 1.11$$\n\nDengan cara ini, kasus jaket sebelumnya dapat dihitung dalam satu baris perkalian anggun:\n$$1.000.000 \\times 0.80 \\times 1.20 = 1.000.000 \\times 0.96 = 960.000$$\nPerhatikan bahwa $0.80 \\times 1.20 = 0.96$ (terjadi penurunan bersih $4\\%$)!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus faktor pengali persentase 0.8 dikali 1.2 menghasilkan 0.96.",
+        "screenReaderNote": "Materi konsep menjelaskan efisiensi perhitungan perubahan persentase menggunakan faktor desimal pengali tunggal."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001605",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Harga Setelah Pajak dan Diskon",
+      "instruction": "Hitung harga akhir sebuah barang setelah diskon 25%.",
+      "content": "Sebuah buku sains memiliki harga banderol $\\text{Rp }120.000$.\nToko memberikan diskon sebesar $25\\%$.\n\nBerapakah rupiah harga yang harus dibayar pembeli di kasir?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Diskon 25% berarti pembeli hanya membayar 75% dari harga asli.",
+        "concept": "Gunakan pengali 0.75: Harga = 120.000 × 0.75.",
+        "strategy": "Atau hitung potongan: 25% dari 120.000 = 30.000. Lalu 120.000 - 30.000.",
+        "solution": "120.000 - 30.000 = 90.000 rupiah."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 90000,
+        "tolerance": 100,
+        "units": "rupiah",
+        "feedbackCorrect": "Tepat sekali! Harga yang harus dibayar adalah Rp 90.000 (karena 120.000 × 0.75 = 90.000).",
+        "misconceptions": [
+          {
+            "code": "PERCENT_AS_ABSOLUTE_NUMBER",
+            "triggerValue": 30000,
+            "feedback": "Rp 30.000 adalah besarnya potongan diskon, bukan harga yang harus dibayar pembeli di kasir."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung harga buku 120.000 setelah diskon 25 persen.",
+        "screenReaderNote": "Ketikkan angka harga akhir pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001606",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Perubahan Persen Tidak Simetris?",
+      "instruction": "Tuliskan penalaranmu dengan kata-kata sendiri untuk menjelaskan asimetri perubahan persentase.",
+      "content": "Seorang investor kripto mengalami kerugian nilai portofolio sebesar $50\\%$ pada hari Senin. Temannya menghibur: *'Tenang saja, besok kalau pasarnya naik 50%, uangmu pasti balik utuh seperti semula!'.*\n\nJelaskan kepada teman investor tersebut mengapa kenaikan $50\\%$ tidak akan mengembalikan modalnya ke nilai awal! Berapa persen keuntungan yang sebenarnya ia butuhkan agar modalnya kembali utuh?",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan mengapa kenaikan 50 persen tidak memulihkan kerugian 50 persen.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai asimetri basis persentase keuntungan dan kerugian."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-persentase",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-persen-basis",
+        "name": "Pemahaman Basis Nilai Baru",
+        "description": "Menjelaskan bahwa setelah rugi 50%, modal tersisa setengah (50%), dan kenaikan 50% berikutnya dihitung dari basis modal yang sudah mengecil tersebut",
+        "weight": 1
+      },
+      {
+        "id": "crit-persen-kalkulasi",
+        "name": "Kalkulasi Nilai Riil",
+        "description": "Membuktikan dengan angka (misal modal 100 menjadi 50, naik 50% menjadi 75, masih rugi 25%)",
+        "weight": 1
+      },
+      {
+        "id": "crit-persen-pemulihan",
+        "name": "Penentuan Persentase Pemulihan Sejati",
+        "description": "Menyebutkan bahwa untuk mengembalikan modal dari 50 ke 100 dibutuhkan kenaikan 100% (dua kali lipat)",
+        "weight": 1
+      }
+    ]
+  }
+}

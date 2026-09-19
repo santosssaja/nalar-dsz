@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000026",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "gesekan",
+  "title": "Gaya Gesek: Statis, Kinetis, dan Koefisien Gesekan Permukaan",
+  "summary": "Menganalisis interaksi resistensi kontak mikroskopis antar permukaan: sifat adaptif gaya gesek statis hingga ambang batas maksimum, dan transisi ke gaya gesek kinetis konstan.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan sifat adaptif gaya gesek statis dengan gaya gesek kinetis yang bernilai konstan",
+    "Menghitung nilai ambang batas gesek statis maksimum (fs_max = μs × N)",
+    "Memahami mengapa koefisien gesek kinetis (μk) selalu lebih kecil daripada koefisien gesek statis (μs)"
+  ],
+  "prerequisites": [
+    "gaya",
+    "hukum-newton"
+  ],
+  "misconceptions": [
+    {
+      "code": "STATIC_FRICTION_IS_ALWAYS_MAX",
+      "label": "Menganggap gaya gesek statis selalu sama dengan μs × N setiap saat",
+      "remediation": "Formula fs_max = μs × N adalah batas ambang maksimum sebelum benda bergerak. Jika kamu mendorong lemari dengan gaya 10 N dan lemari masih diam, gaya gesek statis bernilai persis 10 N, bukan nilai maksimumnya."
+    },
+    {
+      "code": "FRICTION_ALWAYS_OPPOSES_MOTION",
+      "label": "Menganggap gaya gesek selalu menghambat gerak dan merugikan",
+      "remediation": "Gaya gesek melawan kecenderungan pergeseran relatif antar permukaan, bukan selalu menghambat arah gerak. Tanpa gaya gesek statis antara sol sepatu dan lantai, atau ban dan aspal, manusia dan mobil tidak akan pernah bisa melangkah atau maju ke depan."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002601",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Mendorong Lemari Berat: Kenapa Tarikan Pertama Paling Berat?",
+      "instruction": "Rasakan transisi sensasi dorongan saat menggeser lemari pakaian yang sangat berat.",
+      "content": "Pernahkah kamu mencoba menggeser lemari pakaian kayu di lantai kamar?\n- Saat didorong perlahan dengan gaya kecil: lemari tidak bergeming sama sekali.\n- Didorong semakin kuat: masih diam membatu!\n- Lalu, ketika kamu mengerahkan seluruh tenaga sampai melampaui suatu titik, lemari mendadak tergelincir (bergerak)!\n- Dan begitu sudah meluncur, mendorong lemari terasa **jauh lebih ringan** daripada saat memulainya!\n\nFenomena ini membuktikan adanya dua fase gaya gesek:\n1. **Gaya Gesek Statis ($f_s$):** Menahan benda agar tetap diam dan nilainya secara cerdas menyesuaikan diri persis sebesar gaya dorongmu.\n2. **Gaya Gesek Kinetis ($f_k$):** Bekerja saat benda sudah meluncur, dengan hambatan yang lebih kecil karena ikatan mikroskopis antar tonjolan permukaan sudah terputus.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Grafik gaya gesek terhadap gaya dorong luar memperlihatkan tanjakan linier statis hingga puncak fs_max lalu turun ke garis mendatar fk kinetis.",
+        "screenReaderNote": "Materi menguraikan transisi dari gesekan statis adaptif ke puncak maksimum lalu turun ke gesekan kinetis."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002602",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Nilai Gesekan Saat Dorongan Belum Mampu Menggerakkan Benda",
+      "instruction": "Tentukan berapa besar gaya gesek yang bekerja saat balok masih dalam kondisi diam.",
+      "content": "Sebuah peti bermassa $10\\text{ kg}$ diletakkan di lantai datar ($g = 10\\text{ m/s}^2$, $N = 100\\text{ N}$).\nKoefisien gesek statis $\\mu_s = 0{,}5$ dan koefisien gesek kinetis $\\mu_k = 0{,}3$.\nBatas gesek statis maksimumnya adalah $f_{s,\\max} = \\mu_s \\times N = 0{,}5 \\times 100 = 50\\text{ N}$.\n\nJika peti didorong mendatar dengan gaya sebesar $F = 20\\text{ N}$, berapakah besar gaya gesek yang bekerja pada peti tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Bandingkan gaya dorong F dengan ambang batas fs_max.",
+        "concept": "Karena F = 20 N < fs_max (50 N), maka peti masih diam (a = 0).",
+        "strategy": "Menurut Hukum I Newton, ΣF = F - fs = 0.",
+        "solution": "Gaya gesek statis bernilai persis sama dengan gaya dorong: 20 Newton."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-20-n",
+            "label": "20 Newton — karena peti masih diam, gaya gesek statis menyesuaikan diri tepat mengimbangi gaya dorong luar (ΣF = 0)",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Selama gaya dorong di bawah ambang 50 N, gaya gesek statis bekerja adaptif: fs = F. Jika fs bernilai 50 N, peti justru akan bergerak mundur ke belakang sendiri!"
+          },
+          {
+            "id": "opt-50-n",
+            "label": "50 Newton — karena rumus gaya gesek adalah μs × N = 0,5 × 100 = 50 N",
+            "isCorrect": false,
+            "explanation": "50 N adalah batas maksimum toleransi sebelum bergeser, bukan gaya aktual yang bekerja saat dorongan hanya 20 N."
+          },
+          {
+            "id": "opt-30-n",
+            "label": "30 Newton — menggunakan koefisien kinetis 0,3 × 100",
+            "isCorrect": false,
+            "explanation": "Koefisien kinetis hanya berlaku jika benda sudah bergerak (F > 50 N)."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002603",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Grafik Transisi Statis-Kinetis di Laboratorium Fisika",
+      "instruction": "Uji respons gaya gesek terhadap peningkatan gaya dorong secara bertahap.",
+      "content": "Amati karakteristik kurva gaya gesek:\n1. **Fase Statis Linier:** Sepanjang $F \\le f_{s,\\max}$, grafik membentuk garis lurus miring dengan kemiringan $45^\\circ$ ($f_s = F$). Kecepatan $v = 0$.\n2. **Titik Kritis ($f_{s,\\max}$):** Titik tertinggi di mana ikatan mikro permukaan berada di ambang putus.\n3. **Fase Kinetis Konstan:** Segera setelah melewati puncak, kurva anjlok ke tingkat $f_k = \\mu_k N$ dan mendatar konstan terlepas dari seberapa kencang benda melaju.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Grafik respons gesekan terhadap gaya luar menunjukkan wilayah statis naik linier dan wilayah kinetis mendatar.",
+        "screenReaderNote": "Materi interaktif menguraikan grafik hubungan gaya gesek terhadap gaya pendorong."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002604",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Persamaan Gaya Gesek",
+      "instruction": "Pelajari formulasi analitik gaya gesek statis dan kinetis.",
+      "content": "### 1. Gaya Gesek Statis ($f_s$)\nBekerja saat tidak ada gerak relatif antar dua permukaan kontak:\n$$f_s \\le \\mu_s \\cdot N$$\nNilai maksimum sebelum benda mulai bergerak disebut **gaya gesek statis maksimum**:\n$$f_{s,\\max} = \\mu_s \\cdot N$$\n\n### 2. Gaya Gesek Kinetis ($f_k$)\nBekerja saat terjadi gerak luncur (relatif) antar permukaan:\n$$f_k = \\mu_k \\cdot N$$\n\n### 3. Hubungan Koefisien Gesekan\nUntuk pasangan material yang sama:\n$$0 < \\mu_k < \\mu_s < 1 \\quad (\\text{umumnya})$$\nAlasan fisik: pada saat diam, atom-atom kedua permukaan memiliki waktu untuk 'saling mengunci' (cold welding). Saat meluncur, kontak antar puncak mikroskopis hanya berlangsung sesaat sehingga gaya hambat rata-ratanya lebih kecil.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap fs leq mu_s N, fs_max = mu_s N, dan fk = mu_k N beserta penjelasan mikroskopis cold welding.",
+        "screenReaderNote": "Materi menjelaskan rumus matematis gesekan statis maksimum, kinetis, dan alasan mengapa mu_k selalu lebih kecil dari mu_s."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002605",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Percepatan Balok saat Meluncur",
+      "instruction": "Hitung percepatan balok yang ditarik gaya luar melawan gesekan kinetis.",
+      "content": "Sebuah peti bermassa $m = 4\\text{ kg}$ berada di lantai mendatar ($g = 10\\text{ m/s}^2$, $N = 40\\text{ N}$).\nKoefisien gesek kinetis antara peti dan lantai adalah $\\mu_k = 0{,}2$.\nPeti ditarik mendatar dengan gaya konstan $F = 20\\text{ N}$.\n\nBerapakah percepatan ($a$) yang dialami peti tersebut saat meluncur?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Hitung dulu gaya gesek kinetis fk = μk × N.",
+        "concept": "fk = 0.2 × 40 = 8 N.",
+        "strategy": "Cari resultan gaya netto: ΣF = F - fk = 20 - 8 = 12 N. Lalu a = ΣF / m = 12 / 4.",
+        "solution": "Percepatan balok adalah 3 m/s²."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 3,
+        "units": "m/s²",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002606",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mekanisme Rem Mobil ABS (Anti-lock Braking System)",
+      "instruction": "Jelaskan mengapa rem ABS pada mobil dirancang mencegah roda terkunci mati saat pengereman darurat.",
+      "content": "Jelaskan secara konseptual dan fisika:\n1. Mengapa rem ABS mengusahakan agar roda tetap menggelinding dan tidak tergelincir (selip) mengunci mati.\n2. Kaitkan dengan perbedaan nilai koefisien gesek statis ($\\mu_s$) dan kinetis ($\\mu_k$) antara ban dan aspal.\n3. Apa keuntungan rem ABS terhadap pengendalian setir pengemudi saat pengereman darurat.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-gesekan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-gesekan-statis-vs-kinetis-ban",
+        "name": "Perbandingan Gesekan Ban-Aspal",
+        "description": "Menjelaskan bahwa selama ban berputar (menggelinding), titik kontak dengan aspal mengalami gesekan statis yang lebih besar daripada gesekan kinetis saat ban terkunci dan terseret selip.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gesekan-jarak-pengereman",
+        "name": "Optimalisasi Jarak Henti",
+        "description": "Menyimpulkan bahwa gaya pengereman maksimum dicapai pada ambang gesek statis maksimum sehingga memperpendek jarak henti kendaraan.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gesekan-kendali-arah",
+        "name": "Kemampuan Manuver & Kemudi",
+        "description": "Menerangkan bahwa roda yang tidak terkunci tetap memiliki traksi lateral sehingga mobil masih dapat dikemudikan untuk menghindari rintangan.",
+        "weight": 1
+      }
+    ]
+  }
+}

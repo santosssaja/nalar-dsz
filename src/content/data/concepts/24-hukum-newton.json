@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000024",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "hukum-newton",
+  "title": "Hukum Gerak Newton: Inersia, Dinamika Gaya, dan Pasangan Aksi-Reaksi",
+  "summary": "Memahami tiga pilar mekanika klasik Sir Isaac Newton: kelembaman (inersia), perumusan percepatan dari resultan gaya luar, serta simetri gaya interaksi dua benda.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami Hukum I Newton sebagai prinsip inersia materi",
+    "Menerapkan Hukum II Newton (ΣF = ma) untuk menghitung percepatan sistem",
+    "Mengidentifikasi pasangan aksi-reaksi Hukum III Newton yang bekerja pada dua benda berbeda"
+  ],
+  "prerequisites": [
+    "kinematika",
+    "vektor",
+    "gerak-lurus"
+  ],
+  "misconceptions": [
+    {
+      "code": "FORCE_NEEDED_FOR_MOTION",
+      "label": "Menganggap benda membutuhkan dorongan gaya terus-menerus agar tetap bergerak maju",
+      "remediation": "Menurut Hukum I Newton, benda yang bergerak akan terus melaju dengan kecepatan konstan tanpa perlu gaya dorong apa pun, asalkan resultan gaya gesek dan gaya luar lainnya bernilai nol."
+    },
+    {
+      "code": "ACTION_REACTION_CANCEL",
+      "label": "Mengira gaya aksi dan reaksi saling meniadakan karena nilainya sama dan arahnya berlawanan",
+      "remediation": "Gaya aksi dan gaya reaksi TIDAK pernah saling meniadakan karena bekerja pada dua benda yang BERBEDA (misal: kaki menolak tanah ke belakang, tanah mendorong kaki ke depan)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002401",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Sabuk Pengaman dan Roket: Di Balik Gerak Alam Semesta",
+      "instruction": "Renungkan mengapa kita terlempar ke depan saat mobil direm mendadak, dan bagaimana roket terbang di ruang hampa.",
+      "content": "Sebelum Isaac Newton merumuskan karyanya *Principia Mathematica* pada 1687, filsuf kuno mengira bahwa 'keadaan alami benda adalah diam, dan jika dorongan berhenti maka benda akan berhenti'.\n\nNewton membalik cara pandang ini secara radikal:\n- Benda diam akan tetap diam.\n- Benda bergerak akan **terus bergerak lurus beraturan selamanya**, kecuali ada gaya luar yang memaksanya berubah!\n\nKetika mobil mengerem mendadak, sabuk pengaman menyelamatkanmu karena tubuhmu mempertahankan kecepatannya (inersia). Dan ketika mesin roket menyemburkan gas panas ke belakang, gas itu mendorong balik roket melesat maju ke depan menembus ruang hampa (aksi-reaksi).",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi tiga fenomena hukum Newton: inersia sabuk pengaman, percepatan balok ditarik gaya, dan semburan roket.",
+        "screenReaderNote": "Pengantar menguraikan kelembaman inersia, dorongan percepatan, dan aksi-reaksi roket."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002402",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menarik Keranjang Belanja Kosong vs Penuh",
+      "instruction": "Bandingkan percepatan dua keranjang belanja dengan gaya dorong yang sama persis.",
+      "content": "Kamu mendorong troli belanja kosong bermassa $m_1 = 10\\text{ kg}$ dengan gaya konstan $F = 40\\text{ N}$ di lantai licin, sehingga percepatannya $a_1 = 4\\text{ m/s}^2$.\n\nKemudian troli tersebut diisi barang-barang sehingga total massanya menjadi $m_2 = 40\\text{ kg}$ (4 kali lipat dari semula). Jika kamu mendorongnya dengan gaya yang sama persis ($F = 40\\text{ N}$), berapakah percepatan troli sekarang?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Gunakan Hukum II Newton F = m × a.",
+        "concept": "Percepatan berbanding terbalik dengan massa: a = F / m.",
+        "strategy": "Hitung: a = 40 / 40.",
+        "solution": "Percepatan menjadi 1 m/s² (1/4 dari percepatan awal)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-1-ms2",
+            "label": "1 m/s² — percepatan berkurang menjadi 1/4 kali semula karena inersia massa berlipat 4 kali",
+            "isCorrect": true,
+            "explanation": "Benar! Menurut a = F / m, pada gaya yang tetap, semakin besar massa inersia benda, semakin lambat laju pertambahan kecepatannya."
+          },
+          {
+            "id": "opt-4-ms2",
+            "label": "Tetap 4 m/s² — karena gaya dorong yang diberikan tidak berubah",
+            "isCorrect": false,
+            "explanation": "Gaya dorong sama pada massa yang 4 kali lebih berat akan menghasilkan percepatan yang jauh lebih lambat."
+          },
+          {
+            "id": "opt-16-ms2",
+            "label": "16 m/s² — bertambah seiring membesarnya bobot benda",
+            "isCorrect": false,
+            "explanation": "Massa benda yang lebih besar melawan perubahan gerak (kelembaman lebih tinggi), bukan mempercepatnya."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002403",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Uji Dinamika Hukum Newton di Playground",
+      "instruction": "Ubah massa beban dan gaya penggerak pada simulator Free Body Diagram.",
+      "content": "Eksplorasi interaktif Hukum Newton:\n- Tambahkan gaya dorong horizontal $F$ dan amati vektor percepatan $a$.\n- Ubah massa benda $m$ dan amati perubahan kemiringan grafik kecepatan terhadap waktu.\n- Perhatikan bagaimana resultan gaya netto $\\Sigma F$ menentukan ada atau tidaknya percepatan.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Playground interaktif dinamika benda balok dengan slider gaya dorong dan massa serta visualisasi vektor gaya.",
+        "screenReaderNote": "Simulator interaktif hukum Newton menunjukkan hubungan proporsional percepatan dengan resultan gaya dan perbandingan terbalik dengan massa."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002404",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Tiga Hukum Gerak Newton",
+      "instruction": "Kuasai perumusan formal ketiga hukum gerak Newton.",
+      "content": "### 1. Hukum I Newton (Prinsip Kelembaman / Inersia)\nJika resultan gaya yang bekerja pada benda sama dengan nol, maka benda yang mula-mula diam akan tetap diam, dan benda yang mula-mula bergerak akan terus bergerak lurus beraturan (GLB):\n$$\\Sigma \\vec{F} = 0 \\implies \\vec{v} = \\text{konstan}, \\quad \\vec{a} = 0$$\n\n### 2. Hukum II Newton (Hukum Dinamika Gerak)\nPercepatan suatu benda berbanding lurus dengan resultan gaya luar netto yang bekerja padanya dan berbanding terbalik dengan massa inersia benda tersebut:\n$$\\Sigma \\vec{F} = m \\cdot \\vec{a} \\iff \\vec{a} = \\frac{\\Sigma \\vec{F}}{m}$$\nSecara kalkulus, gaya adalah turunan momentum linier terhadap waktu: $\\vec{F} = \\frac{d\\vec{p}}{dt}$.\n\n### 3. Hukum III Newton (Hukum Aksi-Reaksi)\nJika benda A mengerjakan gaya pada benda B ($\\vec{F}_{AB}$), maka benda B akan secara serentak mengerjakan gaya pada benda A ($\\vec{F}_{BA}$) yang sama besar tetapi berlawanan arah:\n$$\\vec{F}_{\\text{aksi}} = -\\vec{F}_{\\text{reaksi}}$$\n*Syarat penting:* Pasangan aksi-reaksi selalu bekerja pada **dua benda yang berbeda**, sehingga tidak pernah saling meniadakan dalam satu diagram benda bebas.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Tiga formulasi matematis hukum Newton beserta syarat keberlakuan dan diagram aksi-reaksi.",
+        "screenReaderNote": "Halaman merangkum formulasi Sigma F = 0, Sigma F = m a, dan F aksi = minus F reaksi pada dua benda berbeda."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002405",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Percepatan Balok Ditarik Dua Gaya",
+      "instruction": "Hitung percepatan benda bermassa berdasarkan resultan gaya yang bekerja.",
+      "content": "Sebuah peti bermassa $m = 5\\text{ kg}$ berada di atas lantai mendatar yang licin tanpa gesekan.\nPeti tersebut ditarik oleh dua orang sekaligus:\n- Gaya $F_1 = 35\\text{ N}$ ke arah kanan.\n- Gaya $F_2 = 15\\text{ N}$ ke arah kiri.\n\nBerapakah percepatan ($a$) yang dialami peti tersebut ke arah kanan?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Cari resultan gaya netto ΣF terlebih dahulu dengan memperhatikan arahnya.",
+        "concept": "Gaya ke kanan positif, ke kiri negatif: ΣF = F1 - F2.",
+        "strategy": "ΣF = 35 - 15 = 20 N. Lalu hitung a = ΣF / m = 20 / 5.",
+        "solution": "Percepatan peti adalah 4 m/s²."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 4,
+        "units": "m/s²",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002406",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Gaya Aksi dan Reaksi Tidak Saling Menghilangkan?",
+      "instruction": "Bongkar miskonsepsi umum mengenai pasangan aksi-reaksi menggunakan contoh orang yang melompat dari perahu.",
+      "content": "Jelaskan dengan logis dan mendalam:\n1. Mengapa kuda bisa menarik kereta maju ke depan jika gaya tarik kuda pada kereta sama besar dengan gaya tarik kereta pada kuda ke belakang.\n2. Benda manakah yang menerima gaya aksi, dan benda manakah yang menerima gaya reaksi.\n3. Apa peran gaya gesekan tanah pada kuku kaki kuda dalam sistem tersebut.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-hukum-newton",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-hukum-newton-dua-benda-terpisah",
+        "name": "Pemisahan Objek Kerja Gaya",
+        "description": "Menegaskan bahwa aksi-reaksi bekerja pada objek terpisah (kereta dan kuda), sehingga masing-masing benda merasakan gaya netto eksternalnya sendiri.",
+        "weight": 1
+      },
+      {
+        "id": "crit-hukum-newton-interaksi-eksternal-tanah",
+        "name": "Peran Gaya Eksternal Tanah",
+        "description": "Menjelaskan bahwa kuda mendorong tanah ke belakang, dan tanah mendorong kuda ke depan dengan gaya yang lebih besar dari tarikan beban kereta.",
+        "weight": 1
+      },
+      {
+        "id": "crit-hukum-newton-resultan-sistem",
+        "name": "Analisis Resultan Gaya",
+        "description": "Menunjukkan bahwa resultan gaya horisontal pada sistem bernilai positif ke arah depan sehingga sistem mengalami percepatan.",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000032",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "momentum-sudut",
+  "title": "Momentum Sudut: Vektor Kuantitas Rotasi dan Konservasi Sumbu Putar",
+  "summary": "Menyelidiki kuantitas gerak rotasi (vektor L = r × p = I·ω), hukum kekekalan momentum sudut pada sistem bebas torsi eksternal, serta fenomena presesi giroskopik.",
+  "difficulty": "advanced",
+  "learningObjectives": [
+    "Menghitung momentum sudut partikel (L = r × p) dan benda tegar (L = I·ω)",
+    "Menerapkan Hukum Kekekalan Momentum Sudut (I1·ω1 = I2·ω2) ketika resultan torsi luar nol",
+    "Menganalisis fenomena fisika penari balet dan stabilitas rotasi giroskop"
+  ],
+  "prerequisites": [
+    "torsi",
+    "rotasi",
+    "momentum-dan-impuls"
+  ],
+  "misconceptions": [
+    {
+      "code": "SPIN_SPEED_INCREASE_MEANS_ENERGY_ADDED_EXTERNALLY",
+      "label": "Menganggap penari balet yang berputar makin kencang saat melipat tangan pasti mendapatkan dorongan gaya luar baru",
+      "remediation": "Tidak ada torsi luar yang bekerja. Putaran menjadi lebih cepat murni karena momen inersia berkurang (I mengecil) sehingga kecepatan sudut (ω) wajib meningkat agar momentum sudut L = I·ω tetap kekal. Bahkan energi kinetik rotasi bertambah karena kerja internal otot sang atlet."
+    },
+    {
+      "code": "ANGULAR_MOMENTUM_ONLY_FOR_CIRCLES",
+      "label": "Mengira partikel yang bergerak lurus tidak bisa memiliki momentum sudut",
+      "remediation": "Partikel yang bergerak lurus tetap memiliki momentum sudut terhadap titik acuan tertentu di luar garis lintasannya, yaitu L = r × p = m v d (dengan d adalah jarak tegak lurus terdekat ke titik acuan)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003201",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Putaran Ajaib Penari Es (Figure Skater)",
+      "instruction": "Amati bagaimana seorang atlet seluncur es dapat berputar begitu cepat tanpa menyentuh es sama sekali.",
+      "content": "Saksikan aksi memukau seorang atlet seluncur es (figure skater):\n- Mula-mula, ia berputar anggun di satu ujung mata skate dengan **kedua tangan dan satu kaki terentang lebar**. Putarannya tampak santai dan lambat.\n- Tiba-tiba, ia menarik kedua tangan rapat ke dadanya dan merapatkan kakinya lurus ke bawah.\n- Seketika itu juga, seolah disihir oleh kekuatan tak kasat mata, **ia berputar seperti gasing super kencang** hingga pandangan mata tak sanggup mengikutinya!\n- Lalu, ketika ia kembali merentangkan kedua tangannya, putarannya melambat seketika ke kecepatan semula.\n\nTidak ada motor mesin di sepatunya, tidak ada orang yang mendorongnya dari luar. Fenomena menakjubkan ini murni didikte oleh hukum fundamental semesta: **Kekekalan Momentum Sudut**!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi atlet seluncur es berputar lambat saat tangan merentang dan berputar sangat cepat saat tangan dilipat ke dada.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan konservasi momentum sudut pada penari es."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003202",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Melipat Tangan di Kursi Putar Kantor",
+      "instruction": "Prediksi apa yang terjadi pada kecepatan putar saat kamu menarik beban ke pusat tubuh.",
+      "content": "Kamu duduk di atas kursi putar kantor yang bantalannya sangat licin (gesekan nol). Kamu memegang dua dumbbell berat di kedua tanganmu yang terentang lurus ke samping, dan seseorang memutar kursimu dengan kecepatan sudut $\\omega_1 = 2\\text{ rad/s}$. Momen inersia total sistem adalah $I_1 = 4\\text{ kg}\\cdot\\text{m}^2$.\n\nSaat sedang berputar di udara, kamu menarik kedua dumbbell rapat ke dada sehingga momen inersia sistem menyusut separuhnya menjadi $I_2 = 2\\text{ kg}\\cdot\\text{m}^2$.\n\nBerapakah kecepatan sudut putar kursimu sekarang ($\\omega_2$)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan Hukum Kekekalan Momentum Sudut: I1 × ω1 = I2 × ω2.",
+        "concept": "Karena tidak ada torsi eksternal, L_awal = L_akhir = konstan.",
+        "strategy": "L = 4 × 2 = 8 kg·m²/s. Samakan dengan I2 × ω2: 2 × ω2 = 8.",
+        "solution": "ω2 = 4 rad/s (kecepatan sudut meningkat 2 kali lipat)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-4-rads",
+            "label": "4 rad/s — kecepatan sudut berlipat ganda karena momen inersia berkurang separuhnya sehingga L = I·ω tetap konstan",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! I1·ω1 = I2·ω2 ⟹ 4(2) = 2(ω2) ⟹ ω2 = 4 rad/s. Kecepatan putar otomatis melonjak dua kali lipat!"
+          },
+          {
+            "id": "opt-2-rads",
+            "label": "2 rad/s — tetap sama karena tidak ada dorongan gaya baru dari luar",
+            "isCorrect": false,
+            "explanation": "Meskipun tidak ada dorongan torsi baru, perubahan geometri sebaran massa mengubah kecepatan sudut secara langsung."
+          },
+          {
+            "id": "opt-1-rads",
+            "label": "1 rad/s — melambat karena beban ditarik mendekat",
+            "isCorrect": false,
+            "explanation": "Mendekatkan beban memperkecil kelembaman inersia rotasi, bukan memperbesarnya."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003203",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Efek Giroskopik dan Roda Sepeda Melayang",
+      "instruction": "Amati bagaimana momentum sudut yang besar mempertahankan arah sumbu rotasi di ruang 3 dimensi.",
+      "content": "Eksplorasi kestabilan momentum sudut:\n- Mengapa sepeda yang sedang melaju kencang sangat mudah seimbang, sedangkan sepeda yang berhenti langsung roboh ke samping?\n- Mengapa roda sepeda yang berputar kencang pada porosnya dapat digantung hanya dengan satu utas tali di salah satu ujung tanpa terjatuh ke bawah?\n- **Vektor Momentum Sudut $\\vec{L}$** memiliki arah sumbu yang sangat kokoh. Untuk mengubah arah sumbu $\\vec{L}$, diperlukan torsi eksternal yang besar. Roda tidak roboh melainkan mengalami gerak melingkar sumbu yang disebut **presesi**.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Visualisasi giroskop berputar yang digantung pada satu tali menunjukkan vektor momentum sudut L dan arah gerak presesi.",
+        "screenReaderNote": "Materi interaktif menguraikan kestabilan orientasi vektor momentum sudut dan presesi giroskopik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003204",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Vektor Momentum Sudut dan Konservasi",
+      "instruction": "Pelajari perumusan matematis momentum sudut dan hukum kekekalan rotasi.",
+      "content": "### 1. Momentum Sudut Partikel Tunggal (\\(\\vec{L}\\))\nPerkalian silang vektor posisi $\\vec{r}$ dari titik acuan dengan momentum linier $\\vec{p}$:\n$$\\vec{L} = \\vec{r} \\times \\vec{p} = \\vec{r} \\times (m\\vec{v})$$\nBesar skalar: $L = m \\cdot v \\cdot r \\cdot \\sin\\theta = m \\cdot v \\cdot d$\n\n### 2. Momentum Sudut Benda Tegar\nUntuk benda tegar yang berputar mengelilingi sumbu simetri tetap:\n$$\\vec{L} = I \\cdot \\vec{\\omega} \\quad (\\text{kg}\\cdot\\text{m}^2/\\text{s})$$\n\n### 3. Hubungan Torsi dan Laju Perubahan Momentum Sudut\n$$\\vec{\\tau}_{\\text{net}} = \\frac{d\\vec{L}}{dt}$$\n\n### 4. Hukum Kekekalan Momentum Sudut\nJika resultan torsi luar yang bekerja pada sistem sama dengan nol ($\\Sigma \\vec{\\tau}_{\\text{ext}} = 0$):\n$$\\frac{d\\vec{L}}{dt} = 0 \\implies \\vec{L}_{\\text{total}} = \\text{konstan}$$\n$$I_1 \\vec{\\omega}_1 = I_2 \\vec{\\omega}_2$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi analitik L = r cross p, L = I omega, hubungan tau = dL/dt, dan hukum kekekalan momentum sudut I1 omega1 = I2 omega2.",
+        "screenReaderNote": "Halaman merangkum formulasi matematis momentum sudut partikel, benda tegar, keterkaitan dengan torsi, dan syarat kekekalan momentum sudut."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003205",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Kelajuan Putar Bintang Neutron (Pulsar)",
+      "instruction": "Hitung peningkatan kecepatan rotasi bintang saat mengalami keruntuhan gravitasi.",
+      "content": "Sebuah bintang bermassa tetap memiliki jari-jari awal $R_1 = 700.000\\text{ km}$ dan berputar satu kali setiap $T_1 = 30\\text{ hari}$.\nBintang tersebut runtuh akibat gravitasinya sendiri menjadi bintang neutron mini dengan jari-jari $R_2 = 14\\text{ km}$ (menyusut $50.000$ kali lipat!).\nAnggap bintang berbentuk bola pejal sempurna ($I = \\frac{2}{5}MR^2$) dan tidak ada massa yang hilang.\n\nKarena $I \\propto R^2$, momen inersia bintang berkurang sebesar $(50.000)^2 = 2{,}5 \\times 10^9$ kali lipat!\nJika momentum sudut kekal ($I_1 \\omega_1 = I_2 \\omega_2$), apa rasio $\\frac{\\omega_2}{\\omega_1}$?",
+      "estimatedMinutes": 4,
+      "hints": {
+        "orientation": "Gunakan persamaan I1 × ω1 = I2 × ω2.",
+        "concept": "ω2 / ω1 = I1 / I2 = (R1 / R2)².",
+        "strategy": "R1 / R2 = 700000 / 14 = 50000. Kuadratkan: 50000² = 2.500.000.000.",
+        "solution": "Rasio peningkatan kecepatan putaran adalah 2.500.000.000 (2,5 miliar kali lipat)."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 1000000,
+        "expectedValue": 2500000000,
+        "units": "",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003206",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Konservasi Momentum Sudut vs Energi Kinetik Rotasi",
+      "instruction": "Jelaskan mengapa energi kinetik rotasi bertambah saat penari es melipat tangannya padahal tidak ada gaya dari luar.",
+      "content": "Analisis paradoks energi ini:\n1. Buktikan hubungan energi kinetik rotasi dengan momentum sudut: $E_{k,\\text{rotasi}} = \\frac{L^2}{2I}$.\n2. Saat tangan dilipat dan $I$ mengecil sementara $L$ konstan, mengapa $E_{k,\\text{rotasi}}$ justru bertambah besar?\n3. Dari manakah asal pasokan energi mekanik tambahan tersebut jika tidak ada sumber gaya dari lingkungan eksternal?",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-momentum-sudut",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-momentum-sudut-relasi-energi-momentum",
+        "name": "Hubungan Matematis Ek = L2 / 2I",
+        "description": "Menunjukkan dari rumus Ek = L^2 / (2I) bahwa ketika I berkurang sementara L konstan, maka nilai energi kinetik rotasi harus bertambah secara otomatis.",
+        "weight": 1
+      },
+      {
+        "id": "crit-momentum-sudut-sumber-energi-otot",
+        "name": "Asal Energi dari Usaha Otot Internal",
+        "description": "Menjelaskan bahwa penari harus mengerahkan tenaga otot (usaha mekanik internal) untuk menarik lengannya ke dalam melawan kecenderungan inersia keluar, mengubah energi kimiawi tubuh menjadi energi kinetik rotasi.",
+        "weight": 1
+      },
+      {
+        "id": "crit-momentum-sudut-konsistensi-hukum-termodinamika",
+        "name": "Kepatuhan Hukum Kekekalan Energi",
+        "description": "Menyimpulkan bahwa hukum kekekalan energi total tetap terpenuhi secara sempurna karena energi mekanik bertambah sebanding dengan energi biologis otot yang dikeluarkan.",
+        "weight": 1
+      }
+    ]
+  }
+}

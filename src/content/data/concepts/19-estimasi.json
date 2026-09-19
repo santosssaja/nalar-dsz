@@ -1,0 +1,170 @@
+{
+  "id": "30000000-0000-4000-8000-000000000019",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "estimasi",
+  "title": "Estimasi: Seni Pendekatan Cepat dan Orde Magnitudo",
+  "summary": "Mengembangkan intuisi berpikir saintifik dan finansial: memperkirakan hasil perhitungan kompleks secara mental, teknik pembulatan bermakna, batas atas dan batas bawah (bounding), serta metode masalah Fermi.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan estimasi ilmiah (pendekatan terukur) dengan tebakan asal",
+    "Melakukan pembulatan angka ke orde terdekat untuk memeriksa kelogisan jawaban (sanity check)",
+    "Memecahkan masalah Fermi untuk memperkirakan kuantitas raksasa secara berurutan logis"
+  ],
+  "prerequisites": ["bilangan", "operasi-aritmetika"],
+  "misconceptions": [
+    {
+      "code": "ESTIMATION_IS_MERE_GUESSING",
+      "label": "Menganggap estimasi hanyalah tebakan asal tanpa aturan matematis",
+      "remediation": "Estimasi adalah kalkulasi terukur menggunakan angka ramah (friendly numbers) dan batas rentang atas-bawah yang dapat dipertanggungjawabkan secara logis."
+    },
+    {
+      "code": "ROUNDING_ACCUMULATION_ERROR",
+      "label": "Membulatkan angka terlalu dini pada setiap langkah operasi perkalian berantai sehingga eror membengkak",
+      "remediation": "Pada perkalian berantai, lakukan pembulatan yang saling mengimbangi (satu dibulatkan ke atas, satu dibulatkan ke bawah) agar hasil estimasi tetap dekat dengan nilai sejati."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000001901",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Berapa Banyak Penyetem Piano di Kotamu?",
+      "instruction": "Amati bagaimana fisikawan Enrico Fermi memecahkan masalah tanpa data lengkap.",
+      "content": "Fisikawan pemenang Nobel Enrico Fermi terkenal dengan kebiasaannya menguji mahasiswanya dengan pertanyaan aneh:\n*'Berapa banyak penyetem piano yang bekerja di kota Chicago?'.*\n\nTidak ada sensus pekerjaan yang mencatatnya. Namun dengan **estimasi logis bertahap (Fermi Problem)**:\n1. Populasi Chicago $\\approx 3.000.000$ orang.\n2. Jika $1$ keluarga beranggotakan $3$ orang $\\implies 1.000.000$ rumah tangga.\n3. Jika $1$ dari $10$ rumah memiliki piano $\\implies 100.000$ piano.\n4. Piano disetem $1$ kali setahun $\\implies 100.000$ layanan setem per tahun.\n5. Jika seorang penyetem melayani $4$ piano per hari dalam $250$ hari kerja setahun $\\implies 1.000$ piano per tahun per penyetem.\n6. Maka jumlah penyetem piano adalah $\\approx \\frac{100.000}{1.000} = 100\\text{ orang}$!\n\nEstimasi bukan tebakan buta, melainkan rantai deduksi rasional yang mendekati orde kebenaran.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Langkah-langkah deduksi Enrico Fermi memperkirakan jumlah penyetem piano di Chicago.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan kekuatan estimasi orde magnitudo metode Fermi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001902",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menaksir Cepat 49 x 21",
+      "instruction": "Tentukan rentang nilai perkalian tanpa menghitung angka belakang satu per satu.",
+      "content": "Seorang kasir supermarket menghitung tagihan $49$ kardus minuman seharga $\\text{Rp }21.000$ per kardus.\nLayar kasir menunjukkan total tagihan sebesar $\\text{Rp }1.890.000$.\n\nApakah total di kasir tersebut masuk akal, ataukah kasir salah memasukkan angka?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Bulatkan angka 49 dan 21 ke angka puluhan terdekat yang mudah dikalikan di kepala.",
+        "concept": "49 sangat dekat dengan 50. 21 sangat dekat dengan 20.",
+        "strategy": "Hitung 50 × 20.000 di kepala: 50 × 20 = 1.000 ribu = Rp 1.000.000.",
+        "solution": "Hasil sebenarnya harus sekitar Rp 1.000.000. Angka Rp 1.890.000 hampir dua kali lipat, jadi pasti salah!"
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-kasir-salah",
+            "label": "Pasti salah — estimasi kasarnya adalah 50 × 20.000 = Rp 1.000.000, jadi tagihan Rp 1.890.000 terlalu besar hampir 2x lipat!",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! Nilai sejati adalah 49 × 21.000 = Rp 1.029.000. Angka Rp 1.890.000 adalah eror fatal input kasir."
+          },
+          {
+            "id": "opt-kasir-benar",
+            "label": "Masuk akal dan benar — karena 49 × 21 memang mendekati 1.800-an",
+            "isCorrect": false,
+            "misconceptionCode": "ESTIMATION_IS_MERE_GUESSING",
+            "feedback": "Kurang tepat: 50 × 20 = 1.000, bukan 1.800. Selalu gunakan angka puluhan acuan ramah untuk sanity check cepat."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Estimasi mental membuatmu kebal dari kesalahan tagihan atau bug software di kehidupan sehari-hari."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi memeriksa kebenaran total tagihan 49 kali 21.000.",
+        "screenReaderNote": "Pilih opsi jawaban yang benar berdasarkan pembulatan angka puluhan ramah."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001903",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Pembulatan Saling Mengimbangi",
+      "instruction": "Uji bagaimana pembulatan kompensatif meminimalkan galat eror.",
+      "content": "Perhatikan trik estimasi perkalian dua bilangan:\n- Jika kita ingin menghitung $48 \\times 22$:\n- $48$ dibulatkan **ke atas** menjadi $50$ ($+2$).\n- $22$ dibulatkan **ke bawah** menjadi $20$ ($-2$).\n- Perkalian mental: $50 \\times 20 = 1.000$.\n- Nilai eksak di kalkulator: $48 \\times 22 = 1.056$.\n\nGalat eror hanya sekitar $5\\%$! Pembulatan berlawanan arah (satu ke atas, satu ke bawah) saling mengimbangi galat perhitungan.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi pembulatan kompensatif 48 ke atas jadi 50 dan 22 ke bawah jadi 20.",
+        "screenReaderNote": "Materi panduan menjelaskan teknik pembulatan yang saling mengimbangi untuk menjaga akurasi estimasi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001904",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Batas Atas, Batas Bawah, dan Orde Magnitudo",
+      "instruction": "Pahami metode penjepitan (bounding) dalam sains.",
+      "content": "Dalam matematika dan rekayasa, estimasi sering dinyatakan dalam **batas penjepit (bounding)**:\n\n$$\\text{Batas Bawah} \\le \\text{Nilai Sejati} \\le \\text{Batas Atas}$$\n\nContoh: Menaksir biaya renovasi laboratorium sains:\n- Skenario paling hemat (batas bawah): $\\text{Rp }40.000.000$\n- Skenario paling mahal (batas atas): $\\text{Rp }60.000.000$\n\nDengan mengetahui rentang ini, kita dapat menyiapkan anggaran darurat tanpa harus mengetahui harga sebutir paku secara detail.\n\nSelain itu, **Orde Magnitudo** menggunakan notasi ilmiah basis sepuluh ($10^n$) untuk memperkirakan ukuran alam semesta: dari ukuran sel darah ($10^{-6}\\text{ m}$) hingga jarak galaksi ($10^{21}\\text{ m}$).",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Penjelasan rumus batas atas dan batas bawah serta notasi orde magnitudo pangkat sepuluh.",
+        "screenReaderNote": "Materi konsep menguraikan teknik penaksiran rentang bounding dan skala orde magnitudo."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001905",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Estimasi Pengeluaran Bulanan",
+      "instruction": "Gunakan pembulatan angka ramah untuk menaksir total pengeluaran.",
+      "content": "Seorang mahasiswa mencatat $3$ pengeluaran mingguan:\n- Buku kuliah: $\\text{Rp }198.500$\n- Paket internet: $\\text{Rp }99.000$\n- Kebutuhan makan: $\\text{Rp }503.000$\n\nDengan membulatkan setiap item ke ratusan ribu terdekat (misal 198.500 dibulatkan ke 200.000), berapakah taksiran cepat total pengeluaran mahasiswa tersebut (dalam satuan ribu rupiah)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Bulatkan tiap angka ke ratusan ribu terdekat.",
+        "concept": "198.500 ≈ 200.000; 99.000 ≈ 100.000; 503.000 ≈ 500.000.",
+        "strategy": "Jumlahkan: 200 + 100 + 500.",
+        "solution": "Total taksiran = 800 ribu rupiah."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 800,
+        "tolerance": 10,
+        "units": "ribu rupiah",
+        "feedbackCorrect": "Tepat sekali! Taksiran cepatnya adalah 800 ribu rupiah (nilai sejati 800.500, galat hanya 0.06%!).",
+        "misconceptions": []
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung taksiran pengeluaran mingguan dengan pembulatan.",
+        "screenReaderNote": "Ketikkan angka taksiran dalam ribuan pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001906",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Insinyur Wajib Menguasai Estimasi?",
+      "instruction": "Tuliskan penalaranmu tentang pentingnya uji kewajaran (sanity check).",
+      "content": "Di era komputer dan kecerdasan buatan, kita bisa mendapatkan jawaban kalkulasi hingga $15$ digit di belakang koma dalam sekejap.\n\nMengapa seorang insinyur, ilmuwan, atau dokter tetap wajib memiliki kemampuan estimasi mental yang tajam? Berikan satu skenario di mana ketergantungan buta pada kalkulator tanpa estimasi mental dapat membahayakan keselamatan atau merugikan finansial!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan urgensi kemampuan estimasi mental bagi profesi insinyur dan saintis.",
+        "screenReaderNote": "Area input teks untuk mengetikkan penjelasan konseptual mengenai fungsi sanity check."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-estimasi",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-estimasi-sanity",
+        "name": "Fungsi Sanity Check",
+        "description": "Menjelaskan bahwa estimasi berguna untuk mendeteksi kesalahan input (typo) atau bug software secara instan",
+        "weight": 1
+      },
+      {
+        "id": "crit-estimasi-kasus",
+        "name": "Analisis Skenario Konkret",
+        "description": "Memberikan contoh konkret (misal dosis obat medis yang kelebihan nol, atau kekuatan jembatan yang runtuh karena salah satuan)",
+        "weight": 1
+      },
+      {
+        "id": "crit-estimasi-keputusan",
+        "name": "Efisiensi Pengambilan Keputusan",
+        "description": "Menyebutkan bahwa estimasi menghemat waktu saat data lengkap belum tersedia di lapangan",
+        "weight": 1
+      }
+    ]
+  }
+}

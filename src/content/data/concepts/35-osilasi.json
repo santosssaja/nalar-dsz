@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000035",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "osilasi",
+  "title": "Osilasi: Gerak Harmonik Sederhana, Gaya Pemulih, dan Konservasi Energi Getaran",
+  "summary": "Membedah gerak periodik bolak-balik di sekitar titik kesetimbangan: karakteristik gaya pemulih linier Hooke, perumusan periode osilasi pegas dan bandul, serta siklus pertukaran energi getaran.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami kriteria Gerak Harmonik Sederhana (GHS) dengan gaya pemulih F = -kx",
+    "Menghitung periode getaran sistem pegas-massa (T = 2π√(m/k)) dan bandul sederhana (T = 2π√(L/g))",
+    "Menganalisis siklus konservasi energi total osilator harmonik (E_total = 1/2 k A²)"
+  ],
+  "prerequisites": [
+    "usaha-dan-energi",
+    "gerak-melingkar",
+    "hukum-newton"
+  ],
+  "misconceptions": [
+    {
+      "code": "AMPLITUDE_AFFECTS_PERIOD",
+      "label": "Menganggap mengayunkan bandul dengan simpangan lebih lebar akan membuat periode ayunannya lebih lambat",
+      "remediation": "Pada rentang sudut kecil (isokronisme Galileo), periode getaran harmonik sama sekali TIDAK bergantung pada amplitudo simpangan A! Simpangan yang lebih lebar memang menuntut lintasan lebih jauh, namun gaya pemulih yang bekerja juga membesar secara proporsional sehingga keduanya saling menyeimbangkan tepat."
+    },
+    {
+      "code": "ACCELERATION_ZERO_AT_EXTREMES",
+      "label": "Mengira di titik balik terjauh percepatan osilator bernilai nol karena kecepatannya nol",
+      "remediation": "Di titik balik simpangan maksimum x = ±A, kelajuan v memang nol, namun gaya pemulih F = -kA justru berada pada nilai puncaknya! Menurut a = F/m, percepatan osilator justru mencapai nilai MAKSIMUM di titik balik."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003501",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Detak Jam Bandul dan Senar Gitar: Irama Siklis Alam",
+      "instruction": "Dengarkan dengung senar gitar yang dipetik atau amati ayunan pendulum jam dinding antik.",
+      "content": "Petiklah senar gitar nomor satu:\n- Senar itu bergetar bolak-balik ratusan kali per detik menghasilkan nada 'E' yang bening dan stabil.\n- Entah kamu memetiknya perlahan atau memetiknya keras, frekuensi nada getarannya tetap persis sama!\n\nBegitu pula bandul lonceng gereja katedral di Pisa yang diamati Galileo pada tahun 1581: waktu yang dibutuhkan bandul untuk berayun bolak-balik satu kali (periode $T$) selalu konstan, tidak peduli apakah ayunannya lebar atau sempit.\n\nGerak bolak-balik melalui lintasan yang sama secara periodik ini disebut **Osilasi**. Jantung dari osilasi adalah **gaya pemulih (restoring force)** yang selalu menarik sistem kembali ke titik kesetimbangan setiap kali ia menyimpang.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi getaran pegas horizontal bolak-balik terhadap titik nol kesetimbangan dengan kurva gelombang sinusoida posisi waktu.",
+        "screenReaderNote": "Materi pengantar menguraikan sifat isokronis ayunan bandul dan konsep gaya pemulih osilasi harmonik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003502",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menggandakan Massa Beban pada Pegas",
+      "instruction": "Prediksi apa yang terjadi pada periode getaran pegas jika massa beban digandakan empat kali lipat.",
+      "content": "Sebuah beban bermassa $m_1 = 1\\text{ kg}$ digantungkan pada pegas berkonstanta $k$ dan bergetar dengan periode $T_1 = 1\\text{ detik}$.\n\nJika massa beban diganti menjadi empat kali lebih berat ($m_2 = 4\\text{ kg}$) pada pegas yang sama persis, berapakah periode getaran yang baru ($T_2$)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus periode getaran pegas: T = 2π × √(m / k).",
+        "concept": "Periode berbanding lurus dengan akar kuadrat massa: T ∝ √m.",
+        "strategy": "Jika m naik 4 kali lipat, maka √m naik sebesar √4 = 2 kali lipat.",
+        "solution": "Periode getaran menjadi 2 detik (2 kali lebih lambat)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-2-sekon",
+            "label": "2 detik — periode meningkat 2 kali lipat karena periode berbanding lurus dengan akar kuadrat massa (√4 = 2)",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! T = 2π√(m/k). Mengalikan massa dengan 4 memperpanjang periode ayunan sebesar √4 = 2 kali lipat sehingga pegas bergetar lebih lambat."
+          },
+          {
+            "id": "opt-4-sekon",
+            "label": "4 detik — periode naik 4 kali lipat sebanding linier dengan massa",
+            "isCorrect": false,
+            "explanation": "Hubungan massa dan periode bersifat akar kuadrat, bukan proporsional linier."
+          },
+          {
+            "id": "opt-1-sekon",
+            "label": "1 detik — periode getaran tidak terpengaruh oleh massa beban",
+            "isCorrect": false,
+            "explanation": "Massa mempengaruhi kelembaman getaran secara langsung; benda yang lebih berat lebih lambat diakselerasi oleh gaya pemulih pegas."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003503",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Simulator Harmonik Pegas dan Pertukaran Energi",
+      "instruction": "Uji parameter massa dan kekakuan pegas pada simulator osilasi harmonik.",
+      "content": "Amati pertukaran energi pada getaran harmonik sederhana:\n- **Di Titik Keseimbangan ($x = 0$):** Simpangan nol, gaya pemulih nol ($F = 0$, $a = 0$), namun kelajuan berada pada nilai puncak ($v_{\\max}$). Seluruh energi berbentuk **Energi Kinetik ($E_k = E_{\\text{total}}$)**.\n- **Di Titik Balik Simpangan Ekstrem ($x = \\pm A$):** Benda berhenti sesaat ($v = 0$, $E_k = 0$), namun gaya pemulih dan percepatan berada pada puncak ($a_{\\max}$). Seluruh energi tersimpan sebagai **Energi Potensial Pegas ($E_p = E_{\\text{total}}$)**.\n- Energi total $E = \\frac{1}{2} k A^2$ selalu kekal!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Visualisasi osilator harmonik dengan diagram energi kinetik dan energi potensial pegas saling berfluktuasi menghasilkan garis horizontal energi mekanik konstan.",
+        "screenReaderNote": "Materi interaktif menguraikan grafik pertukaran energi kinetik dan potensial pegas terhadap simpangan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003504",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Persamaan Diferensial Osilasi Harmonik",
+      "instruction": "Kuasai formulasi matematis gerak harmonik sederhana.",
+      "content": "### 1. Gaya Pemulih dan Persamaan Diferensial GHS\n$$F = -k \\cdot x \\iff m \\frac{d^2x}{dt^2} = -kx \\iff \\frac{d^2x}{dt^2} + \\omega^2 x = 0$$\nDengan frekuensi sudut alami: $\\omega = \\sqrt{\\frac{k}{m}}$.\n\n### 2. Solusi Persamaan Gerak\n$$x(t) = A \\cos(\\omega t + \\phi_0)$$\n$$v(t) = \\frac{dx}{dt} = -\\omega A \\sin(\\omega t + \\phi_0) \\implies v_{\\max} = \\omega A$$\n$$a(t) = \\frac{dv}{dt} = -\\omega^2 A \\cos(\\omega t + \\phi_0) = -\\omega^2 x \\implies a_{\\max} = \\omega^2 A$$\n\n### 3. Periode Getaran\n- **Sistem Pegas-Massa:** $T = \\frac{2\\pi}{\\omega} = 2\\pi \\sqrt{\\frac{m}{k}}$\n- **Bandul Sederhana (panjang tali $L$):** $T = 2\\pi \\sqrt{\\frac{L}{g}}$\n\n### 4. Konservasi Energi Total Getaran\n$$E_{\\text{total}} = E_p + E_k = \\frac{1}{2} k x^2 + \\frac{1}{2} m v^2 = \\frac{1}{2} k A^2 = \\frac{1}{2} m v_{\\max}^2$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap persamaan simpangan x(t), kecepatan v(t), percepatan a(t), periode pegas dan bandul, serta energi total getaran.",
+        "screenReaderNote": "Halaman merangkum formulasi analitik diferensial GHS, rumus periode pegas dan bandul sederhana, dan energi getaran 1/2 k A^2."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003505",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Kelajuan Maksimum Osilator",
+      "instruction": "Hitung kelajuan maksimum benda yang bergetar harmonik.",
+      "content": "Sebuah balok bermassa $m = 0{,}2\\text{ kg}$ dihubungkan ke pegas berkonstanta $k = 80\\text{ N/m}$ di atas lantai licin.\nBalok ditarik sejauh $A = 0{,}05\\text{ meter}$ dari titik kesetimbangan lalu dilepaskan tanpa kecepatan awal.\n\nBerapakah kelajuan maksimum ($v_{\\max}$) yang dicapai balok tersebut saat melewati titik kesetimbangan dalam $\\text{m/s}$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan hubungan v_max = ω × A atau kekekalan energi (1/2) m v_max² = (1/2) k A².",
+        "concept": "Frekuensi sudut ω = √(k / m) = √(80 / 0.2) = √400 = 20 rad/s.",
+        "strategy": "Hitung: v_max = ω × A = 20 × 0.05.",
+        "solution": "v_max = 1 m/s."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.05,
+        "expectedValue": 1,
+        "units": "m/s",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003506",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Fenomena Resonansi dan Runtuhnya Jembatan",
+      "instruction": "Jelaskan konsep transfer energi resonansi mekanik dan dampaknya pada struktur rekayasa bangunan.",
+      "content": "Tuliskan uraian ilmiah mendalam mengenai:\n1. Apa yang dimaksud dengan **frekuensi alami (natural frequency)** suatu benda tegar atau struktur jembatan.\n2. Mengapa ketika frekuensi gaya dorong luar berosilasi persis menyamai frekuensi alami sistem, amplitudo getaran melonjak dramatis (**Resonansi**).\n3. Mengapa tentara yang sedang berbaris rapi diinstruksikan untuk memecah langkah kaki (tidak melangkah serempak) saat melintasi jembatan penyeberangan.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-osilasi",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-osilasi-definisi-frekuensi-alami",
+        "name": "Definisi Frekuensi Alami",
+        "description": "Menjelaskan bahwa setiap struktur memiliki frekuensi osilasi khas yang ditentukan oleh massa dan kekakuan elastisitas materialnya.",
+        "weight": 1
+      },
+      {
+        "id": "crit-osilasi-mekanisme-akumulasi-resonansi",
+        "name": "Mekanisme Akumulasi Energi Resonansi",
+        "description": "Menjelaskan bahwa gaya pemacu yang sefase mentransfer energi secara konstruktif pada setiap siklus getaran tanpa saling menghilangkan sehingga energi terakumulasi dan memperbesar amplitudo hingga batas destruktif.",
+        "weight": 1
+      },
+      {
+        "id": "crit-osilasi-protokol-langkah-tentara",
+        "name": "Aplikasi Protokol Baris-Berbaris",
+        "description": "Menerangkan bahwa memecah langkah bertujuan mengacak ritme frekuensi dorongan hentakan kaki agar tidak sinkron dengan frekuensi alami jembatan yang dapat meruntuhkannya.",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000040",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "bilangan-kuantum",
+  "title": "Bilangan Kuantum: Alamat Gelombang Elektron, Bentuk Orbital, dan Orientasi Spasial",
+  "summary": "Membongkar koordinat matematis mekanika kuantum Schrödinger: empat bilangan kuantum (n, l, m_l, m_s) yang mendefinisikan energi kulit, bentuk geometri awan elektron, orientasi 3D, dan arah spin intrinsik.",
+  "difficulty": "advanced",
+  "learningObjectives": [
+    "Menentukan empat bilangan kuantum (n, l, m_l, m_s) dari elektron terakhir suatu atom",
+    "Memahami makna fisis bentuk orbital s (bola simetris) dan orbital p (cuping terpilin dumbel)",
+    "Menghitung jumlah maksimum orbital dan elektron yang diizinkan pada kulit ke-n"
+  ],
+  "prerequisites": [
+    "konfigurasi-elektron",
+    "atom"
+  ],
+  "misconceptions": [
+    {
+      "code": "ELECTRONS_ORBIT_LIKE_PLANETS",
+      "label": "Membayangkan elektron beredar mengitari inti pada lintasan melingkar kaku seperti orbit planet tata surya",
+      "remediation": "Prinsip Ketidakpastian Heisenberg membuktikan kita tidak pernah bisa mengetahui posisi dan momentum elektron secara pasti bersamaan. Orbital BUKAN lintasan fisik lintasan, melainkan 'awan probabilitas 3D' di mana kemungkinan menemukan elektron bernilai paling tinggi (≥ 90%)."
+    },
+    {
+      "code": "SPIN_MEANS_PHYSICAL_SPHERICAL_ROTATION",
+      "label": "Menganggap elektron adalah bola padat bermuatan yang berputar secara mekanis pada porosnya sendiri",
+      "remediation": "Bilangan kuantum spin (ms = ±1/2) adalah sifat intrinsik kuantum fundamental partikel elementer (seperti massa dan muatan), bukan putaran fisik mekanis bola karena jika elektron berputar fisik, permukaannya harus melaju melampaui kecepatan cahaya!"
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004001",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Alamat Surat di Dunia Kuantum: Menemukan Satu Elektron di Ruang Hampa",
+      "instruction": "Pikirkan bagaimana tukang pos dapat menemukan rumahmu di antara miliaran rumah di dunia.",
+      "content": "Jika seseorang ingin mengirim surat kepadamu, ia membutuhkan empat lapis informasi terstruktur:\n1. **Negara / Provinsi:** Menentukan wilayah makro.\n2. **Kota / Kecamatan:** Menentukan sub-wilayah.\n3. **Nama Jalan / Kompleks:** Menentukan blok jalanan spesifik.\n4. **Nomor Rumah / Kamar:** Menentukan tempat persis kamu berada.\n\nDalam mekanika kuantum, para fisikawan menemukan bahwa setiap elektron di dalam atom memiliki 'kartu identitas empat lapis' yang persis sama:\n1. **$n$ (Kulit Utama):** Seberapa jauh jarak rata-rata elektron dari inti.\n2. **$l$ (Subkulit / Bentuk Geometri):** Apakah rumahnya berbentuk bola atau balon terpilin.\n3. **$m_l$ (Orientasi Ruang 3D):** Ke arah sumbu mana balon tersebut menghadap ($x, y,$ atau $z$).\n4. **$m_s$ (Spin Kuantum):** Arah jarum kuantumnya (ke atas atau ke bawah).\nTidak ada dua elektron di seluruh atom yang memiliki alamat empat lapis yang sama persis!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram hierarki empat bilangan kuantum dari kulit n ke subkulit l, orientasi m_l, dan spin m_s.",
+        "screenReaderNote": "Materi pengantar menguraikan analogi sistem alamat surat untuk empat bilangan kuantum."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004002",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Kombinasi Bilangan Kuantum yang Diizinkan",
+      "instruction": "Tentukan kombinasi bilangan kuantum manakah yang melanggar aturan matematis kuantum.",
+      "content": "Diberikan tiga set kombinasi bilangan kuantum $(n, l, m_l, m_s)$ untuk satu elektron:\n- **Set A:** $(n=2, l=1, m_l=0, m_s=+\\frac{1}{2})$\n- **Set B:** $(n=3, l=0, m_l=0, m_s=-\\frac{1}{2})$\n- **Set C:** $(n=2, l=2, m_l=+1, m_s=+\\frac{1}{2})$\n\nManakah di antara set di atas yang **TIDAK MUNGKIN ADA (terlarang secara fisika)**?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat batasan nilai l: nilai l hanya diizinkan dari 0 hingga (n - 1).",
+        "concept": "Jika n = 2, maka nilai l yang diizinkan hanyalah l = 0 (subkulit s) dan l = 1 (subkulit p).",
+        "strategy": "Pada Set C, tertulis l = 2 untuk n = 2 (tidak ada subkulit 2d!).",
+        "solution": "Set C terlarang karena nilai l tidak boleh sama dengan n."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-set-c",
+            "label": "Set C terlarang — karena nilai l maksimal adalah (n - 1). Pada kulit n = 2, l tidak boleh bernilai 2 (tidak ada orbital 2d di alam)",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Syarat matematis persamaan gelombang Schrödinger: 0 ≤ l ≤ n - 1. Pada kulit n = 2, nilai l yang sah hanya 0 (2s) dan 1 (2p). Subkulit d baru muncul mulai kulit n = 3."
+          },
+          {
+            "id": "opt-set-a",
+            "label": "Set A terlarang — karena ml tidak boleh bernilai 0",
+            "isCorrect": false,
+            "explanation": "ml berkisar dari -l hingga +l, sehingga untuk l = 1 nilai ml = 0 sah dan merepresentasikan orbital 2pz."
+          },
+          {
+            "id": "opt-set-b",
+            "label": "Set B terlarang — karena ms bernilai minus setengah",
+            "isCorrect": false,
+            "explanation": "Spin ms = -1/2 sepenuhnya valid dan menyatakan orientasi spin ke bawah (spin down)."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004003",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Visualisasi Bentuk Geometri Awan Orbital 3D",
+      "instruction": "Amati bentuk topologi orbital s, p, dan d pada koordinat kartesius 3 dimensi.",
+      "content": "Eksplorasi bentuk ruang probabilitas elektron:\n1. **Orbital $s$ ($l = 0$):** Bentuk bola simetris sempurna di sekitar inti. Probabilitas menemukan elektron sama ke segala arah.\n2. **Orbital $p$ ($l = 1$):** Bentuk dua cuping terpilin (seperti balon dumbel) dengan satu bidang simpul simetris di mana probabilitas menemukan elektron tepat nol di inti.\n   - Tiga orientasi spasial ortogonal: $p_x$ (sepanjang sumbu x), $p_y$ (sumbu y), dan $p_z$ (sumbu z).\n3. **Orbital $d$ ($l = 2$):** Bentuk empat cuping daun semanggi ($d_{xy}, d_{yz}, d_{xz}, d_{x^2-y^2}$) dan satu bentuk donat cincin ($d_{z^2}$).",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Visualisasi grafis 3D bentuk orbital s bola, orbital p cuping balon tiga sumbu, dan orbital d daun semanggi.",
+        "screenReaderNote": "Materi interaktif menguraikan geometri bentuk ruang fungsi gelombang orbital s, p, dan d."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004004",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Empat Bilangan Kuantum Schrödinger",
+      "instruction": "Kuasai batas nilai dan makna fisis keempat bilangan kuantum.",
+      "content": "### 1. Bilangan Kuantum Utama ($n$)\nMenentukan **tingkat energi utama** dan **ukuran jarak rata-rata** orbital dari inti:\n$$n = 1, 2, 3, 4, \\dots$$\n- Jumlah orbital pada kulit ke-$n$: $N_{\\text{orbital}} = n^2$\n- Jumlah maksimum elektron pada kulit ke-$n$: $N_{e,\\max} = 2n^2$\n\n### 2. Bilangan Kuantum Azimut / Momentum Sudut ($l$)\nMenentukan **bentuk geometri ruang** orbital:\n$$l = 0, 1, 2, \\dots, (n - 1)$$\n- $l = 0 \\implies$ subkulit $s$ (bola)\n- $l = 1 \\implies$ subkulit $p$ (dumbel)\n- $l = 2 \\implies$ subkulit $d$ (daun semanggi)\n- $l = 3 \\implies$ subkulit $f$\n\n### 3. Bilangan Kuantum Magnetik ($m_l$)\nMenentukan **orientasi spasial arah 3D** orbital dalam medan magnet:\n$$m_l = -l, -(l-1), \\dots, 0, \\dots, +(l-1), +l$$\nJumlah orbital pada subkulit $l$ adalah $(2l + 1)$.\n\n### 4. Bilangan Kuantum Spin ($m_s$)\nMenentukan **momentum sudut intrinsik** elektron:\n$$m_s = +\\frac{1}{2} \\; (\\uparrow) \\quad \\text{atau} \\quad m_s = -\\frac{1}{2} \\; (\\downarrow)$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Tabel matematis batas nilai keempat bilangan kuantum n, l, m_l, m_s beserta rumus kapasitas n^2 dan 2n^2.",
+        "screenReaderNote": "Halaman merangkum formulasi matematis empat bilangan kuantum, batas nilai interval, dan kapasitas daya tampung kulit."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004005",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Daya Tampung Maksimum Elektron pada Kulit M (n=3)",
+      "instruction": "Hitung daya tampung maksimum elektron pada kulit ketiga atom.",
+      "content": "Berdasarkan perumusan mekanika kuantum, setiap kulit utama ke-$n$ memiliki jumlah orbital sebanyak $n^2$ dan setiap orbital dapat dihuni maksimal $2\\text{ elektron}$ dengan spin berlawanan.\n\nBerapakah kapasitas maksimum elektron ($N_{e,\\max}$) yang dapat ditampung secara keseluruhan pada kulit ketiga ($n = 3$ / Kulit M)?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Gunakan rumus kapasitas maksimum elektron kulit: Ne_max = 2 × n².",
+        "concept": "Pada n = 3, terdapat subkulit 3s (1 orbital), 3p (3 orbital), dan 3d (5 orbital).",
+        "strategy": "Total orbital = 1 + 3 + 5 = 9 orbital (= 3²). Kapasitas elektron = 2 × 9.",
+        "solution": "Kapasitas maksimum adalah 18 elektron."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 18,
+        "units": "elektron",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004006",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Orbital Adalah Gelombang Probabilitas dan Bukan Lintasan?",
+      "instruction": "Jelaskan transisi konsep dari model orbit planet Bohr ke model mekanika kuantum awan elektron.",
+      "content": "Tuliskan uraian ilmiah mendalam mengenai:\n1. Keterbatasan model atom Bohr yang memandang elektron bergerak pada jalur rel lingkaran pasti.\n2. Bagaimana Prinsip Ketidakpastian Heisenberg ($\\Delta x \\cdot \\Delta p \\ge \\frac{\\hbar}{2}$) meruntuhkan konsep lintasan pasti di skala atomik.\n3. Apa makna fisik dari fungsi kuadrat gelombang $|\\psi|^2$ dalam melahirkan konsep orbital sebagai awan probabilitas.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-bilangan-kuantum",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-bilangan-kuantum-keterbatasan-model-bohr",
+        "name": "Keterbatasan Model Bohr",
+        "description": "Menjelaskan bahwa model orbit Bohr memperlakukan elektron sebagai partikel klasik pada lintasan kaku yang gagal menjelaskan atom berlektron banyak.",
+        "weight": 1
+      },
+      {
+        "id": "crit-bilangan-kuantum-prinsip-ketidakpastian-heisenberg",
+        "name": "Peran Prinsip Ketidakpastian Heisenberg",
+        "description": "Menerangkan bahwa ketidakpastian mendasar membuat konsep lintasan presisi mustahil didefinisikan secara fisis di dunia kuantum.",
+        "weight": 1
+      },
+      {
+        "id": "crit-bilangan-kuantum-rapatan-probabilitas-psi2",
+        "name": "Makna Fisik Kerapatan Probabilitas Born",
+        "description": "Menjelaskan interpretasi Max Born bahwa fungsi kuadrat modulus gelombang |ψ|^2 menyatakan densitas probabilitas menemukan elektron di suatu titik ruang 3D.",
+        "weight": 1
+      }
+    ]
+  }
+}

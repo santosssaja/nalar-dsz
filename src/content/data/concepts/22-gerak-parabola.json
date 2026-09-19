@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000022",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "gerak-parabola",
+  "title": "Gerak Parabola: Superposisi Dua Dimensi dan Trayektori Proyektil",
+  "summary": "Menganalisis lintasan dua dimensi proyektil sebagai perpaduan independen antara gerak lurus beraturan (GLB) horizontal dan gerak lurus berubah beraturan (GLBB) vertikal di bawah pengaruh gravitasi.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami prinsip independensi gerak horizontal (sumbu x) dan gerak vertikal (sumbu y)",
+    "Menghitung komponen kecepatan awal proyektil menggunakan trigonometri",
+    "Menentukan titik puncak ketinggian maksimum dan jarak jangkauan terjauh"
+  ],
+  "prerequisites": [
+    "kinematika",
+    "vektor",
+    "gerak-lurus"
+  ],
+  "misconceptions": [
+    {
+      "code": "HORIZONTAL_FORCE_NEEDED",
+      "label": "Menganggap ada gaya dorong horizontal terus-menerus yang menjaga bola tetap melaju maju di udara",
+      "remediation": "Setelah bola lepas dari pelempar, tidak ada gaya horizontal yang bekerja padanya (mengabaikan gesekan udara). Kecepatan horizontal tetap konstan murni karena inersia (Hukum I Newton)."
+    },
+    {
+      "code": "ZERO_VELOCITY_AT_APEX",
+      "label": "Mengira kecepatan total benda di puncak lintasan bernilai nol",
+      "remediation": "Di titik puncak, hanya komponen kecepatan vertikal ($v_y$) yang nol. Komponen kecepatan horizontal ($v_x = v_0 \\cos\\theta$) tetap aktif dan tidak nol."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002201",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Tendangan Melengkung: Mengapa Lintasan Bola Berbentuk Busur?",
+      "instruction": "Amati bentuk lintasan bola saat ditendang melambung ke udara.",
+      "content": "Ketika seorang pemain sepak bola menendang bola melambung ke gawang:\n- Bola bergerak maju ke depan sekaligus naik ke atas.\n- Bola melambat saat menanjak, mencapai puncak tertinggi, lalu menukik turun semakin cepat hingga mendarat di tanah.\n\nLintasannya membentuk kurva simetris yang sangat anggun: **parabola**.\n\nRahasia di balik kurva ini ditemukan oleh Galileo Galilei: gerak proyektil sebenarnya adalah **dua gerak independen yang terjadi serentak**!\n1. **Arah horizontal ($x$):** Gerak Lurus Beraturan (GLB) tanpa percepatan ($a_x = 0$).\n2. **Arah vertikal ($y$):** Gerak Lurus Berubah Beraturan (GLBB) ditarik gravitasi bumi ($a_y = -g$).",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi lintasan parabola bola sepak dengan uraian vektor kecepatan horizontal dan vertikal.",
+        "screenReaderNote": "Materi menguraikan konsep gerak proyektil 2 dimensi sebagai perpaduan GLB horizontal dan GLBB vertikal."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002202",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menembak vs Menjatuhkan Peluru Secara Bersamaan",
+      "instruction": "Pikirkan eksperimen klasik dua peluru yang ditembakkan dari ketinggian yang sama.",
+      "content": "Dua peluru identik berada pada ketinggian $1{,}8\\text{ meter}$ di atas tanah datar.\n- **Peluru A** ditembakkan mendatar dengan kecepatan sangat tinggi ($v_{0x} = 400\\text{ m/s}$, $v_{0y} = 0$).\n- **Peluru B** dijatuhkan bebas lurus ke bawah pada saat yang persis sama ($v_0 = 0$).\n\nJika gesekan udara diabaikan, peluru manakah yang akan menyentuh tanah terlebih dahulu?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat bahwa gerak vertikal dan gerak horizontal tidak saling mempengaruhi (independen).",
+        "concept": "Waktu jatuh hanya ditentukan oleh ketinggian awal h dan percepatan gravitasi g: t = √(2h/g).",
+        "strategy": "Komponen kecepatan horizontal tidak mempengaruhi laju jatuh ke bawah peluru.",
+        "solution": "Kedua peluru menyentuh tanah pada waktu yang persis bersamaan."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-same-time",
+            "label": "Keduanya menyentuh tanah pada waktu yang persis bersamaan — karena gerak jatuh vertikal kedua peluru sama-sama ditarik g dari ketinggian h yang sama.",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Kecepatan horizontal Peluru A tidak mempengaruhi percepatan gravitasinya. Waktu jatuh vertikal t = √(2h/g) identik untuk kedua peluru."
+          },
+          {
+            "id": "opt-peluru-b",
+            "label": "Peluru B lebih dulu — karena lintasannya lurus ke bawah sehingga jaraknya jauh lebih pendek.",
+            "isCorrect": false,
+            "explanation": "Walaupun lintasan Peluru B lebih pendek, laju vertikal Peluru A bertambah dengan percepatan gravitasi yang persis sama di setiap milidetik."
+          },
+          {
+            "id": "opt-peluru-a",
+            "label": "Peluru A lebih dulu — karena peluru A memiliki kecepatan awal yang sangat tinggi.",
+            "isCorrect": false,
+            "explanation": "Kecepatan awal Peluru A seluruhnya berada di sumbu horizontal, sama sekali tidak membantu mempercepat gerak jatuh vertikal."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002203",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Simulator Trayektori Peluru & Sudut Tembak",
+      "instruction": "Ubah sudut elevasi tembakan dan laju awal untuk melihat bagaimana ketinggian puncak dan jangkauan terjauh berubah.",
+      "content": "Gunakan simulator interaktif di bawah untuk mengamati lintasan proyektil:\n- Geser sudut peluncuran $\\theta$ dari $0^\\circ$ hingga $90^\\circ$.\n- Amati bagaimana kecepatan awal terurai menjadi $v_{0x} = v_0 \\cos\\theta$ dan $v_{0y} = v_0 \\sin\\theta$.\n- Perhatikan sudut berapa yang menghasilkan jarak jangkauan ($R$) paling jauh di medan datar!",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Simulator lintasan gerak parabola interaktif dengan slider kecepatan awal dan sudut elevasi proyektil.",
+        "screenReaderNote": "Interaktif proyektil: sudut 45 derajat menghasilkan jangkauan terjauh maksimum pada bidang datar."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002204",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Persamaan Gerak Parabola",
+      "instruction": "Pahami perumusan analitik posisi, waktu puncak, dan jarak jangkauan.",
+      "content": "Dengan laju awal $v_0$ dan sudut elevasi $\\theta$ terhadap bidang horizontal:\n\n### 1. Komponen Kecepatan Awal\n$$v_{0x} = v_0 \\cos\\theta, \\quad v_{0y} = v_0 \\sin\\theta$$\n\n### 2. Kecepatan Sesaat pada Waktu $t$\n$$v_x(t) = v_{0x} = v_0 \\cos\\theta \\quad \\text{(konstan)}$$\n$$v_y(t) = v_{0y} - gt = v_0 \\sin\\theta - gt$$\n\n### 3. Waktu Mencapai Puncak ($t_p$) & Waktu Total Terbang ($t_{\\text{total}}$)\nDi puncak, $v_y = 0 \\implies t_p = \\frac{v_0 \\sin\\theta}{g}$\n$$t_{\\text{total}} = 2 t_p = \\frac{2v_0 \\sin\\theta}{g}$$\n\n### 4. Ketinggian Maksimum ($H_{\\max}$) & Jangkauan Terjauh ($R$)\n$$H_{\\max} = \\frac{v_0^2 \\sin^2\\theta}{2g}$$\n$$R = v_x \\times t_{\\text{total}} = \\frac{v_0^2 \\sin(2\\theta)}{g}$$\n\nKarena nilai maksimum fungsi sinus adalah $\\sin(2\\theta) = 1$ saat $2\\theta = 90^\\circ$, maka jangkauan horizontal terjauh selalu dicapai pada sudut $\\theta = 45^\\circ$!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Daftar persamaan matematis gerak parabola lengkap untuk komponen kecepatan, waktu puncak, tinggi maksimum, dan jangkauan maksimum.",
+        "screenReaderNote": "Materi matematis menguraikan rumus waktu puncak, ketinggian maksimum, dan jangkauan sudut optimum 45 derajat."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002205",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Ketinggian Maksimum Panah",
+      "instruction": "Hitung ketinggian maksimum yang dicapai anak panah berdasarkan rumus kinematika parabola.",
+      "content": "Seorang pemanah melesatkan anak panah dengan kecepatan awal $v_0 = 40\\text{ m/s}$ pada sudut elevasi $\\theta = 30^\\circ$.\nDiketahui percepatan gravitasi bumi $g = 10\\text{ m/s}^2$, dan $\\sin(30^\\circ) = 0{,}5$.\n\nBerapakah ketinggian maksimum ($H_{\\max}$) yang dicapai anak panah dari tanah datar?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan persamaan ketinggian maksimum H_max = (v0² × sin²θ) / (2g).",
+        "concept": "Komponen kecepatan vertikal awal v0y = 40 × sin(30°) = 40 × 0.5 = 20 m/s.",
+        "strategy": "Hitung: H_max = v0y² / (2g) = 20² / (2 × 10) = 400 / 20.",
+        "solution": "H_max = 20 meter."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.5,
+        "expectedValue": 20,
+        "units": "m",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002206",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Prinsip Superposisi Gerak Parabola",
+      "instruction": "Jelaskan dengan bahasa sendiri mengapa gerak horizontal proyektil tidak melambat walau gravitasi bumi terus menarik ke bawah.",
+      "content": "Tulis penjelasan konseptual mengenai:\n1. Mengapa kecepatan horizontal proyektil ($v_x$) tetap konstan sepanjang lintasan jika gesekan udara diabaikan.\n2. Mengapa sudut $45^\\circ$ menghasilkan jarak tembak terjauh pada bidang datar.\n3. Apa yang terjadi pada vektor kecepatan total di titik puncak lintasan.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-gerak-parabola",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-gerak-parabola-independensi-arah",
+        "name": "Independensi Arah Gaya & Sumbu",
+        "description": "Menjelaskan bahwa gaya gravitasi hanya bekerja vertikal ke bawah, tegak lurus terhadap sumbu horizontal sehingga tidak ada gaya yang mempercepat atau memperlambat sumbu x.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gerak-parabola-vektor-puncak",
+        "name": "Kecepatan di Puncak",
+        "description": "Menjelaskan secara tepat bahwa di puncak hanya komponen vertikal vy yang nol, sedangkan vx tetap aktif sehingga kecepatan total bukan nol.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gerak-parabola-alasan-sudut-45",
+        "name": "Optimasi Sudut 45 Derajat",
+        "description": "Mengaitkan sudut 45 derajat dengan fungsi sin(2θ) bernilai 1 atau keseimbangan ideal antara waktu melayang (komponen y) dan kelajuan jelajah (komponen x).",
+        "weight": 1
+      }
+    ]
+  }
+}

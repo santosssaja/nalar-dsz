@@ -3,9 +3,9 @@
   "domainId": "10000000-0000-4000-8000-000000000003",
   "domainSlug": "kimia",
   "slug": "kimia-dasar",
-  "title": "Kimia: Struktur Materi dan Atom",
-  "summary": "Menjelajahi zat penyusun alam semesta: wujud materi, perbedaan unsur senyawa campuran, dan arsitektur partikel subatomik.",
-  "estimatedMinutes": 200,
+  "title": "Kimia: Struktur Materi, Teori Kuantum Atom, dan Ikatan Kimia",
+  "summary": "Menjelajahi zat penyusun alam semesta: wujud materi, perbedaan unsur senyawa campuran, arsitektur partikel atomik, molekul, ion, tabel periodik, konfigurasi elektron Aufbau, bilangan kuantum Schrödinger, ikatan kimiawi, struktur Lewis, dan geometri molekuler 3D VSEPR.",
+  "estimatedMinutes": 480,
   "prerequisites": [
     {
       "slug": "fondasi-matematika",
@@ -13,7 +13,19 @@
       "required": true
     }
   ],
-  "conceptSlugs": ["materi-dan-sifatnya", "unsur-dan-senyawa", "atom"],
+  "conceptSlugs": [
+    "materi-dan-sifatnya",
+    "unsur-dan-senyawa",
+    "atom",
+    "molekul",
+    "ion",
+    "sistem-periodik",
+    "konfigurasi-elektron",
+    "bilangan-kuantum",
+    "ikatan-kimia",
+    "struktur-lewis",
+    "geometri-molekul"
+  ],
   "learningPath": {
     "slug": "jalur-kimia-dasar",
     "title": "Jalur Utama Kimia Dasar",
@@ -31,6 +43,46 @@
       {
         "conceptSlug": "atom",
         "sortOrder": 3,
+        "required": true
+      },
+      {
+        "conceptSlug": "molekul",
+        "sortOrder": 4,
+        "required": true
+      },
+      {
+        "conceptSlug": "ion",
+        "sortOrder": 5,
+        "required": true
+      },
+      {
+        "conceptSlug": "sistem-periodik",
+        "sortOrder": 6,
+        "required": true
+      },
+      {
+        "conceptSlug": "konfigurasi-elektron",
+        "sortOrder": 7,
+        "required": true
+      },
+      {
+        "conceptSlug": "bilangan-kuantum",
+        "sortOrder": 8,
+        "required": true
+      },
+      {
+        "conceptSlug": "ikatan-kimia",
+        "sortOrder": 9,
+        "required": true
+      },
+      {
+        "conceptSlug": "struktur-lewis",
+        "sortOrder": 10,
+        "required": true
+      },
+      {
+        "conceptSlug": "geometri-molekul",
+        "sortOrder": 11,
         "required": true
       }
     ]

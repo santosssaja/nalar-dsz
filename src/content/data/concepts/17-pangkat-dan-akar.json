@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000017",
+  "moduleId": "20000000-0000-4000-8000-000000000002",
+  "slug": "pangkat-dan-akar",
+  "title": "Pangkat dan Akar: Pertumbuhan Eksponensial dan Inversi Geometris",
+  "summary": "Mendalami esensi perkalian berulang pada bilangan berpangkat: mengapa eksponen bukan perkalian biasa, interpretasi geometris luas dan volume, aturan eksponen, serta akar sebagai operasi pencarian dimensi asal.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan perkalian berulang (a^b) dengan penjumlahan berulang (a × b)",
+    "Memahami arti geometris pangkat dua (kuadrat/luas) dan pangkat tiga (kubik/volume)",
+    "Memahami operasi inversi akar kuadrat (√x) dan makna eksponen negatif sebagai pecahan inversi"
+  ],
+  "prerequisites": ["bilangan", "operasi-aritmetika"],
+  "misconceptions": [
+    {
+      "code": "POWER_AS_MULTIPLICATION",
+      "label": "Menganggap bilangan berpangkat sama dengan mengalikan basis dengan eksponennya (misal 2^3 = 6)",
+      "remediation": "Pangkat adalah perkalian berulang: 2^3 berarti 2 dikalikan dengan dirinya sendiri sebanyak 3 kali: 2 × 2 × 2 = 8, bukan 2 × 3 = 6."
+    },
+    {
+      "code": "NEGATIVE_POWER_NEGATIVE_VALUE",
+      "label": "Mengira eksponen negatif menghasilkan bilangan bertanda negatif (misal 2^-2 = -4)",
+      "remediation": "Tanda negatif pada eksponen melambangkan pembalikan arah pembagian (kebalikan/invers): 2^-2 = 1 / (2^2) = 1/4 = 0.25, nilainya tetap positif."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000001701",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Legenda Catur dan Butir Beras",
+      "instruction": "Amati ledakan perkalian berulang yang melampaui imajinasi manusia.",
+      "content": "Alkisah, penemu permainan catur meminta hadiah sederhana kepada sang raja:\n- Pada petak ke-$1$, letakkan $1$ butir beras ($2^0$).\n- Pada petak ke-$2$, letakkan $2$ butir beras ($2^1$).\n- Pada petak ke-$3$, letakkan $4$ butir beras ($2^2 = 2 \\times 2$).\n- Pada petak ke-$4$, letakkan $8$ butir beras ($2^3 = 2 \\times 2 \\times 2$).\n\nSetiap petak berikutnya berisi dua kali lipat petak sebelumnya. Sang raja tertawa mengira itu permintaan sepele. Namun pada petak ke-$64$ ($2^{63}$), jumlah beras melebihi $18$ triliun butir — lebih banyak dari seluruh panen beras di planet Bumi!\n\nInilah kedahsyatan **bilangan berpangkat (eksponen)**: laju pertumbuhan yang melompat secara multiplikatif.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi papan catur dengan butir beras yang berlipat ganda secara eksponensial di setiap petak.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan perbedaan laju eksponensial dibandingkan penjumlahan biasa."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001702",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menghitung 3 Pangkat 3",
+      "instruction": "Tentukan hasil perhitungan tiga berpangkat tiga.",
+      "content": "Sebuah kubus padat memiliki panjang rusuk $3\\text{ cm}$. Volume kubus tersebut dinyatakan dengan $3^3\\text{ cm}^3$.\n\nBerapakah nilai dari $3^3$?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Tuliskan operasi perkalian berulang untuk 3^3.",
+        "concept": "3^3 berarti angka 3 dikalikan sebanyak 3 kali: 3 × 3 × 3.",
+        "strategy": "Hitung 3 × 3 = 9. Lalu kalikan hasilnya sekali lagi dengan 3: 9 × 3.",
+        "solution": "3 × 3 × 3 = 27."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-pangkat-27",
+            "label": "27 — karena 3 × 3 × 3 = 27",
+            "isCorrect": true,
+            "feedback": "Tepat sekali! 3^3 = 3 × 3 × 3 = 27. Volume kubus adalah 27 kubus satuan kecil."
+          },
+          {
+            "id": "opt-pangkat-9",
+            "label": "9 — karena 3 × 3 = 9",
+            "isCorrect": false,
+            "misconceptionCode": "POWER_AS_MULTIPLICATION",
+            "feedback": "Kurang tepat: 9 adalah hasil dari 3^2 (3 × 3). Pada 3^3, angka 3 dikalikan sekali lagi: 9 × 3 = 27."
+          },
+          {
+            "id": "opt-pangkat-6",
+            "label": "6 — karena 3 + 3 = 6",
+            "isCorrect": false,
+            "feedback": "Salah: itu operasi penjumlahan, bukan perpangkatan."
+          }
+        ],
+        "feedbackCorrect": "Luar biasa! Kamu memahami perbedaan mendasar perkalian berulang eksponen."
+      },
+      "accessibility": {
+        "altText": "Pertanyaan prediksi menghitung nilai tiga pangkat tiga.",
+        "screenReaderNote": "Pilih salah satu opsi jawaban untuk menentukan hasil perpangkatan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001703",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Bandingkan Linier vs Kuadrat vs Eksponen",
+      "instruction": "Ubah langkah n dan basis perkalian pada wahana interaktif.",
+      "content": "Gunakan wahana interaktif di bawah:\n1. Atur basis $b = 2$ dan amati bar perbandingan saat $n$ dinaikkan dari $1$ ke $5$.\n2. Amati bagaimana nilai eksponensial $2^5 = 32$ melesat jauh meninggalkan nilai linier $2 \\times 5 = 10$.\n3. Amati susunan grid kuadrat $n^2$: perhatikan bahwa akar kuadrat $\\sqrt{n^2} = n$ merepresentasikan panjang sisi dari grid tersebut!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Wahana interaktif perbandingan pertumbuhan linier, kuadratik, dan eksponensial.",
+        "screenReaderNote": "Gunakan slider n dan basis untuk mengamati kurva pertumbuhan eksponen."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001704",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Hukum Aljabar Eksponen dan Inversi Akar",
+      "instruction": "Kuasai hukum dasar perpangkatan dan arti pangkat negatif.",
+      "content": "Terdapat aturan-aturan elegan dalam aljabar eksponen:\n\n1. **Perkalian Basis Sama (Pangkat Dijumlahkan)**:\n$$a^m \\times a^n = a^{m+n}$$\nContoh: $2^3 \\times 2^2 = (2 \\times 2 \\times 2) \\times (2 \\times 2) = 2^5 = 32$.\n\n2. **Pembagian Basis Sama (Pangkat Dikurangkan)**:\n$$\\frac{a^m}{a^n} = a^{m-n}$$\n\n3. **Pangkat Nol Selalu Bernilai 1 ($a \\neq 0$)**:\n$$a^0 = a^{n-n} = \\frac{a^n}{a^n} = 1$$\n\n4. **Pangkat Negatif Melambangkan Pecahan Kebalikan**:\n$$a^{-n} = \\frac{1}{a^n}$$\nContoh: $2^{-1} = \\frac{1}{2} = 0.5$, dan $2^{-2} = \\frac{1}{2^2} = \\frac{1}{4} = 0.25$.\n\n5. **Akar sebagai Pangkat Pecahan**:\n$$\\sqrt[n]{a} = a^{1/n}$$\nOperasi akar adalah membalikkan proses: $\\sqrt{49} = 7$ karena $7^2 = 49$.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Rumus hukum aljabar eksponen perkalian pembagian pangkat nol pangkat negatif dan bentuk akar.",
+        "screenReaderNote": "Materi konsep merangkum hukum formal eksponensial dan operasi invers akar kuadrat."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001705",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Nilai Eksponen Negatif",
+      "instruction": "Hitung nilai desimal dari 5 pangkat minus 1 (5^-1).",
+      "content": "Hitunglah nilai desimal dari bilangan berpangkat negatif berikut:\n$$5^{-1}$$\n\n*(Petunjuk: Ingat bahwa $a^{-1} = \\frac{1}{a}$)*.\n\nBerapakah nilai desimalnya?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan definisi pangkat negatif: a^-1 = 1/a.",
+        "concept": "5^-1 sama dengan pecahan 1/5.",
+        "strategy": "Ubahlah pecahan 1/5 ke dalam bentuk desimal: 1 dibagi 5.",
+        "solution": "1/5 = 0.2."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "expectedValue": 0.2,
+        "tolerance": 0.01,
+        "units": "",
+        "feedbackCorrect": "Sempurna! 5^-1 = 1/5 = 0.2.",
+        "misconceptions": [
+          {
+            "code": "NEGATIVE_POWER_NEGATIVE_VALUE",
+            "triggerValue": -5,
+            "feedback": "Pangkat negatif tidak membuat angka menjadi negatif. Pangkat negatif berarti 1 dibagi basis: 1/5 = 0.2, bukan -5."
+          }
+        ]
+      },
+      "accessibility": {
+        "altText": "Soal latihan numerik menghitung nilai 5 pangkat minus 1.",
+        "screenReaderNote": "Ketikkan angka desimal hasil 5 pangkat minus 1 pada kotak isian numerik."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000001706",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Jelaskan Kembali: Mengapa Sembarang Bilangan Pangkat 0 Bernilai 1?",
+      "instruction": "Tuliskan pembuktian logis mengapa a^0 = 1 (untuk a ≠ 0).",
+      "content": "Banyak orang menghafal rumus bahwa *'apapun dipangkatkan 0 hasilnya 1'*, tetapi tidak tahu alasannya.\n\nJelaskan dengan menggunakan pola pembagian berurutan (misal $2^3 = 8, 2^2 = 4, 2^1 = 2, 2^0 = ?$) atau menggunakan sifat pembagian eksponen $\\frac{a^n}{a^n}$ mengapa $a^0$ harus sama dengan $1$!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Permintaan penjelasan logis mengapa bilangan berpangkat nol bernilai satu.",
+        "screenReaderNote": "Area input teks untuk mengetikkan pembuktian matematis sifat pangkat nol."
+      }
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-pangkat-dan-akar",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-pangkat-pola",
+        "name": "Penjelasan Melalui Pola Pembagian",
+        "description": "Menunjukkan bahwa setiap kali eksponen berkurang 1, nilai hasil dibagi dengan basis (8 / 2 = 4, 4 / 2 = 2, 2 / 2 = 1)",
+        "weight": 1
+      },
+      {
+        "id": "crit-pangkat-aljabar",
+        "name": "Pembuktian Melalui Sifat Pembagian",
+        "description": "Membuktikan bahwa a^n / a^n = a^(n-n) = a^0, dan karena sembarang bilangan bukan nol dibagi dirinya sendiri adalah 1, maka a^0 = 1",
+        "weight": 1
+      },
+      {
+        "id": "crit-pangkat-identitas",
+        "name": "Konsep Elemen Identitas Perkalian",
+        "description": "Menyebutkan bahwa angka 1 adalah elemen netral / identitas dalam perkalian berulang",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000033",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "gravitasi",
+  "title": "Gravitasi Universal: Hukum Newton, Medan Gravitasi, dan Mekanika Orbit",
+  "summary": "Menyatukan gerak apel jatuh di bumi dengan peredaran bulan di langit malam: hukum gravitasi universal kuadrat terbalik Newton, kuat medan gravitasi, dan prinsip jatuh bebas abadi pada orbit satelit.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami Hukum Gravitasi Universal Newton (F = G m1 m2 / r²) sebagai interaksi massa universal",
+    "Menghitung percepatan gravitasi planet dan medan gravitasi lokal (g = GM / r²)",
+    "Menganalisis orbit melingkar satelit dan membongkar miskonsepsi bobot nol di luar angkasa"
+  ],
+  "prerequisites": [
+    "gerak-melingkar",
+    "hukum-newton",
+    "vektor"
+  ],
+  "misconceptions": [
+    {
+      "code": "ZERO_GRAVITY_IN_SPACE",
+      "label": "Menganggap di stasiun luar angkasa (ISS) tidak ada gravitasi sama sekali sehingga astronot melayang",
+      "remediation": "Pada ketinggian ISS (sekitar 400 km di atas bumi), gravitasi bumi masih aktif sekitar 90% dari gravitasi di permukaan! Astronot melayang bukan karena gravitasi nol, melainkan karena ISS dan astronot sedang berada dalam kondisi jatuh bebas abadi (free fall) bersama-sama mengitari kelengkungan bumi."
+    },
+    {
+      "code": "HEAVIER_FALLS_FASTER_IN_VACUUM",
+      "label": "Mengira benda bermassa besar ditarik dengan percepatan gravitasi yang lebih kencang dibanding benda ringan di ruang hampa",
+      "remediation": "Meskipun gaya tarik gravitasi F memang lebih besar pada benda berat (F = mg), massa inersia benda berat yang harus dipercepat juga sebanding (a = F/m = mg/m = g). Oleh karena itu, di ruang hampa, sebutir bulu ayam dan bola boling jatuh dengan percepatan yang persis sama."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003301",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Apel yang Jatuh dan Bulan yang Tidak Pernah Jatuh",
+      "instruction": "Renungkan lompatan imajinasi Isaac Newton saat melihat apel jatuh dari pohon sambil menatap bulan di langit.",
+      "content": "Legenda mencatat bahwa pada tahun 1666, saat wabah melanda Inggris dan Newton mengisolasi diri di Woolsthorpe, ia melihat sebuah apel jatuh ke tanah.\nSaat itu Newton mengajukan pertanyaan paling berani dalam sejarah sains:\n> *'Jika gaya tarik bumi menjangkau puncak pohon apel teratas, apakah gaya yang sama juga menjangkau hingga ke bulan?'*\n\nNewton menyadari bahwa **Bulan sebenarnya juga sedang jatuh ke bumi setiap detik**!\nNamun karena Bulan memiliki kecepatan mendatar yang sangat tinggi, setiap kali Bulan 'jatuh' sejauh beberapa meter, kelengkungan permukaan bumi melengkung menjauh di bawahnya dengan jarak yang persis sama. Bulan jatuh mengitari bumi tanpa pernah menyentuh tanah: inilah hakikat sebuah **orbit**!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Diagram kanon peluru Newton di atas gunung memperlihatkan peluru ditembakkan makin cepat hingga lintasannya melengkung mengitari bumi tanpa jatuh.",
+        "screenReaderNote": "Materi pengantar menguraikan eksperimen pikiran kanon Newton dan konsep orbit sebagai gerak jatuh bebas abadi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003302",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Melipatgandakan Jarak Dua Planet",
+      "instruction": "Prediksi pengaruh pertambahan jarak terhadap gaya gravitasi antar dua benda langit.",
+      "content": "Dua buah asteroid di luar angkasa terpisah pada jarak $r = 1000\\text{ km}$ dan saling menarik dengan gaya gravitasi sebesar $F_1 = 1600\\text{ Newton}$.\n\nJika lintasan kedua asteroid menjauh sehingga jarak antar keduanya menjadi dua kali lipat ($r = 2000\\text{ km}$), berapakah besar gaya gravitasi timbal-balik yang baru ($F_2$)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan Hukum Kuadrat Terbalik Newton: F ∝ 1 / r².",
+        "concept": "Jarak r berada di bagian penyebut dan dipangkatkan dua.",
+        "strategy": "Jika r menjadi 2 kali lipat, maka r² menjadi 2² = 4 kali lipat. Gaya F berkurang menjadi 1/4 kali semula.",
+        "solution": "Gaya gravitasi menjadi 1600 / 4 = 400 Newton."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-400-n",
+            "label": "400 Newton — gaya gravitasi berkurang menjadi 1/4 kali semula karena berbanding terbalik dengan kuadrat jarak (1/r²)",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Hukum gravitasi Newton adalah inverse-square law: F = G·m1·m2 / r². Melipatgandakan jarak membagi gaya dengan 2² = 4."
+          },
+          {
+            "id": "opt-800-n",
+            "label": "800 Newton — berkurang setengahnya secara linier",
+            "isCorrect": false,
+            "explanation": "Gravitasi tidak berkurang secara linier melainkan kuadratik; pelemahannya berlangsung jauh lebih curam seiring pertambahan jarak."
+          },
+          {
+            "id": "opt-1600-n",
+            "label": "1600 Newton — tetap sama karena massa kedua asteroid tidak berubah",
+            "isCorrect": false,
+            "explanation": "Jarak adalah salah satu parameter terpenting yang menentukan intensitas medan gravitasi."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003303",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Kanon Meriam Newton dan Kecepatan Lepas Orbit",
+      "instruction": "Amati bagaimana kecepatan horizontal mengubah lintasan proyektil menjadi orbit lingkaran dan elips.",
+      "content": "Pikirkan eksperimen meriam di puncak gunung tinggi di luar atmosfer bumi:\n- **$v < 7{,}9\\text{ km/s}$:** Peluru meluncur parabola dan jatuh menumbuk tanah.\n- **$v = 7{,}9\\text{ km/s}$ (Kecepatan Orbit Melingkar):** Kelengkungan jatuh peluru tepat menyamai kelengkungan bumi! Peluru mengitari bumi dalam orbit lingkaran stabil selamanya.\n- **$7{,}9\\text{ km/s} < v < 11{,}2\\text{ km/s}$:** Peluru membentuk orbit lonjong (elips).\n- **$v \\ge 11{,}2\\text{ km/s}$ (Kecepatan Lepas / Escape Velocity):** Peluru berhasil melepaskan diri dari cengkeraman gravitasi bumi dan menjelajah tata surya!",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram kanon meriam Newton memperlihatkan empat tingkatan lintasan: parabola jatuh, orbit lingkaran v_orb, elips, dan hiperbola lepas v_esc.",
+        "screenReaderNote": "Materi interaktif menguraikan tingkatan kecepatan orbital 7,9 km/s dan kecepatan lepas 11,2 km/s dari bumi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003304",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Hukum Gravitasi dan Kelajuan Orbit",
+      "instruction": "Pelajari perumusan kuantitatif gravitasi universal dan mekanika orbit.",
+      "content": "### 1. Hukum Gravitasi Universal Newton\nSetiap partikel bermassa menarik partikel lain dengan gaya yang sebanding dengan perkalian kedua massa dan berbanding terbalik dengan kuadrat jaraknya:\n$$F = G \\frac{m_1 \\cdot m_2}{r^2}$$\nDengan konstanta gravitasi universal: $G \\approx 6{,}674 \\times 10^{-11} \\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$.\n\n### 2. Percepatan Gravitasi / Kuat Medan Gravitasi ($g$)\nGaya gravitasi yang dialami benda bermassa uji $m$ di permukaan planet bermassa $M$ dan jari-jari $R$:\n$$F = m \\cdot g \\implies g = G \\frac{M}{R^2}$$\n\n### 3. Kecepatan Orbit Satelit Melingkar ($v_{\\text{orbit}}$)\nGaya gravitasi bertindak sebagai gaya sentripetal pengikat orbit:\n$$F_{\\text{gravitasi}} = F_{\\text{sentripetal}} \\implies G \\frac{M m}{r^2} = \\frac{m v^2}{r}$$\n$$v_{\\text{orbit}} = \\sqrt{\\frac{GM}{r}}$$\nPerhatikan bahwa massa satelit $m$ saling mencoret! Kecepatan orbit satelit hanya bergantung pada massa bumi $M$ dan jarak orbit $r$, tidak bergantung pada bobot satelit itu sendiri.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi analitik hukum gravitasi F = G m1 m2 / r^2, kuat medan g = GM / R^2, dan kecepatan orbit v = akar(GM/r).",
+        "screenReaderNote": "Halaman merangkum formulasi matematis hukum gravitasi universal Newton, percepatan gravitasi planet, dan perumusan kecepatan orbital satelit."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003305",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Percepatan Gravitasi Planet Super",
+      "instruction": "Hitung percepatan gravitasi di permukaan sebuah eksoplanet baru.",
+      "content": "Sebuah eksoplanet ditemukan dengan massa dua kali lipat massa bumi ($M_p = 2 M_{\\text{bumi}}$) dan jari-jari yang sama persis dengan jari-jari bumi ($R_p = R_{\\text{bumi}}$).\nJika percepatan gravitasi di permukaan bumi adalah $g_{\\text{bumi}} = 9{,}8\\text{ m/s}^2$.\n\nBerapakah percepatan gravitasi di permukaan eksoplanet tersebut ($g_p$) dalam $\\text{m/s}^2$?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan persamaan g = G × M / R².",
+        "concept": "Karena R sama dan M dua kali lipat, maka g berbanding lurus secara linier dengan M.",
+        "strategy": "Hitung: gp = 2 × 9.8.",
+        "solution": "gp = 19.6 m/s²."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.2,
+        "expectedValue": 19.6,
+        "units": "m/s²",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003306",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Membongkar Mitos Bobot Nol di Luar Angkasa",
+      "instruction": "Jelaskan mengapa astronot di stasiun antariksa ISS melayang meskipun gravitasi bumi di sana masih sangat kuat.",
+      "content": "Tuliskan uraian ilmiah mendalam mengenai:\n1. Berapa besar persentase medan gravitasi bumi pada orbit ISS di ketinggian $400\\text{ km}$ ($R_{\\text{bumi}} \\approx 6400\\text{ km}$).\n2. Mengapa timbangan yang diletakkan di bawah kaki astronot di dalam stasiun luar angkasa menunjukkan angka nol (keadaan apparent weightlessness).\n3. Analogi antara astronot di orbit dengan orang di dalam sangkar lift yang kabel penahannya putus dan jatuh bebas bersama-sama.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-gravitasi",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-gravitasi-intensitas-gravitasi-iss",
+        "name": "Kekuatan Gravitasi Aktual di Ketinggian ISS",
+        "description": "Menunjukkan pemahaman bahwa gravitasi bumi di ketinggian 400 km masih sangat besar (sekitar 8,8 m/s^2 atau 90% dari permukaan bumi), membantah mitos bahwa luar angkasa adalah zona tanpa gravitasi.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gravitasi-konsep-jatuh-bebas",
+        "name": "Konsep Jatuh Bebas Bersama (Free Fall)",
+        "description": "Menjelaskan bahwa ISS dan tubuh astronot sama-sama ditarik dengan percepatan gravitasi yang identik sehingga stasiun tidak memberikan gaya normal penopang pada kaki astronot.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gravitasi-analogi-lift-putus",
+        "name": "Analogi Lift Jatuh Bebas",
+        "description": "Menghubungkan fenomena ini dengan analogi lift yang putus tali: tubuh melayang di dalam lift karena lantai kabin jatuh dengan percepatan g yang persis sama dengan tubuh penumpang.",
+        "weight": 1
+      }
+    ]
+  }
+}

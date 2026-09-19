@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000034",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "kesetimbangan",
+  "title": "Kesetimbangan Benda Tegar: Statika Struktur, Titik Berat, dan Kestabilan Sistem",
+  "summary": "Menganalisis kondisi diam absolut pada struktur dan benda tegar: syarat kesetimbangan translasi dan rotasi simultan, kalkulasi pusat massa/titik berat, serta klasifikasi kestabilan statik.",
+  "difficulty": "advanced",
+  "learningObjectives": [
+    "Menerapkan dua syarat kesetimbangan benda tegar (ΣF = 0 dan Στ = 0)",
+    "Menghitung koordinat titik berat (pusat massa) benda komposit",
+    "Membedakan tiga jenis kesetimbangan: stabil, labil, dan netral (indiferen)"
+  ],
+  "prerequisites": [
+    "torsi",
+    "gaya",
+    "vektor"
+  ],
+  "misconceptions": [
+    {
+      "code": "ZERO_FORCE_GUARANTEES_EQUILIBRIUM",
+      "label": "Menganggap jika resultan gaya luar nol (ΣF = 0) maka benda pasti tidak akan bergerak atau berotasi",
+      "remediation": "Jika dua gaya sama besar berlawanan arah bekerja pada garis kerja berbeda (kopel), ΣF bernilai nol namun benda akan berotasi sangat cepat karena resultan torsi Στ ≠ 0. Benda tegar menuntut KEDUA syarat (ΣF = 0 DAN Στ = 0) terpenuhi serentak."
+    },
+    {
+      "code": "CENTER_OF_GRAVITY_MUST_BE_INSIDE_MATTER",
+      "label": "Mengira titik berat benda harus selalu berada di dalam bagian fisik materi padat benda tersebut",
+      "remediation": "Titik berat adalah titik keseimbangan rata-rata geometris massa. Pada cincin, donat, atau tapal kuda, titik berat berada di udara kosong tepat di tengah lingkaran tanpa menyentuh materi fisiknya sama sekali."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003401",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Jembatan Gantung dan Crane Konstruksi: Seni Menjaga Diam",
+      "instruction": "Amati bagaimana crane konstruksi raksasa di pelabuhan dapat mengangkat kontainer puluhan ton tanpa terjungkal.",
+      "content": "Pernahkah kamu melihat crane menara (tower crane) menjulang di lokasi proyek gedung pencakar langit?\n- Di lengan depan yang panjang, crane mengangkat beban beton berton-ton.\n- Di lengan belakang yang pendek, dipasang balok-balok beton pemberat raksasa (counterweight).\n\nJika tali penyeimbang atau posisi bebannya bergeser sedikit saja dari batas aman, seluruh menara baja itu bisa runtuh terpuntir ke tanah!\n\nStatika struktur adalah cabang fisika yang mempelajari bagaimana meniadakan seluruh kecenderungan gerak. Untuk memastikan sebuah jembatan, gedung, atau tangga tidak roboh, para insinyur mengunci alam dengan dua gembok matematis tak tertawar:\n1. **Tidak boleh bergeser:** $\\Sigma \\vec{F} = 0$.\n2. **Tidak boleh berputar:** $\\Sigma \\vec{\\tau} = 0$.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi tower crane menyeimbangkan beban kontainer depan dengan counterweight belakang melalui kesetimbangan momen gaya torsi.",
+        "screenReaderNote": "Materi pengantar menguraikan aplikasi kesetimbangan statis pada tower crane dan konstruksi jembatan."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003402",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menyeimbangkan Jungkat-Jungkit Ayah dan Anak",
+      "instruction": "Tentukan posisi duduk anak agar jungkat-jungkit tepat horizontal seimbang.",
+      "content": "Seorang ayah bermassa $m_1 = 80\\text{ kg}$ dan putrinya bermassa $m_2 = 20\\text{ kg}$ bermain jungkat-jungkit dengan poros tepat di tengah batang papan ($g = 10\\text{ m/s}^2$).\nSang ayah duduk pada jarak $r_1 = 1\\text{ meter}$ di sebelah kiri poros putar ($W_1 = 800\\text{ N}$).\n\nPada jarak berapakah ($r_2$) sang putri harus duduk di sebelah kanan poros agar jungkat-jungkit berada dalam kesetimbangan rotasi sempurna?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan syarat kesetimbangan rotasi: Στ = 0 terhadap poros pusat.",
+        "concept": "Torsi ayah (searah jarum jam / berlawanan) harus tepat diimbangi oleh torsi putri: τ1 = τ2.",
+        "strategy": "W1 × r1 = W2 × r2 ⟹ 800 × 1 = 200 × r2.",
+        "solution": "r2 = 800 / 200 = 4 meter dari poros."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-4-meter",
+            "label": "4 meter dari poros — karena massa anak 4 kali lebih ringan, ia harus duduk 4 kali lebih jauh agar torsinya tepat mengimbangi ayahnya",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Kesetimbangan rotasi menuntut τ_ayah = τ_anak ⟹ m1·g·r1 = m2·g·r2 ⟹ 80(1) = 20(r2) ⟹ r2 = 4 meter."
+          },
+          {
+            "id": "opt-1-meter",
+            "label": "1 meter dari poros — jarak harus simetris di kedua sisi papan",
+            "isCorrect": false,
+            "explanation": "Jika jaraknya sama 1 meter, torsi ayah 4 kali lebih besar sehingga papan akan langsung terbanting jatuh ke sisi ayah."
+          },
+          {
+            "id": "opt-2-meter",
+            "label": "2 meter dari poros — perbandingan proporsi berat tubuh",
+            "isCorrect": false,
+            "explanation": "Rasio berat ayah dan anak adalah 4 banding 1, bukan 2 banding 1."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003403",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Tiga Wajah Kestabilan (Stabil, Labil, Netral)",
+      "instruction": "Amati perilaku bola pada tiga jenis kontur permukaan saat diberi gangguan kecil.",
+      "content": "Eksplorasi kestabilan statik sistem:\n1. **Kesetimbangan Stabil:** Bola di dasar mangkuk cekung. Jika disenggol sedikit, titik beratnya naik dan timbul torsi/gaya pemulih yang mengembalikannya ke posisi semula.\n2. **Kesetimbangan Labil (Tak Stabil):** Bola di puncak bukit cembung atau pensil yang ditegakkan di atas ujung lancipnya. Gangguan sekecil apa pun menurunkan titik berat dan menimbulkan gaya guling yang merobohkannya.\n3. **Kesetimbangan Netral (Indiferen):** Bola di lantai datar horisontal. Jika digeser, ketinggian titik beratnya tetap sama persis dan bola berada dalam posisi kesetimbangan baru.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram tiga mangkuk membandingkan bola di cekungan dasar (stabil), bola di puncak cembung (labil), dan bola di meja datar (netral).",
+        "screenReaderNote": "Materi interaktif menguraikan tiga macam kestabilan berdasarkan perubahan ketinggian pusat massa."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003404",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Syarat Kesetimbangan Statis dan Titik Berat",
+      "instruction": "Kuasai sistem persamaan statika benda tegar.",
+      "content": "### 1. Dua Syarat Kesetimbangan Benda Tegar\nSuatu benda tegar berada dalam kondisi kesetimbangan statis sempurna jika dan hanya jika:\n$$\\Sigma \\vec{F} = 0 \\implies \\begin{cases} \\Sigma F_x = 0 \\\\ \\Sigma F_y = 0 \\end{cases}$$\n$$\\Sigma \\vec{\\tau} = 0 \\quad (\\text{terhadap titik poros acuan mana pun})$$\n*Tips praktis:* Pilihlah titik poros pada titik tangkap gaya yang tidak diketahui nilainya untuk mengeliminasi variabel tersebut dari persamaan torsi.\n\n### 2. Koordinat Titik Berat / Pusat Massa (\\(x_{\\text{pm}}, y_{\\text{pm}}\\))\nTitik tangkap resultan gaya berat seluruh partikel penyusun benda:\n$$x_{\\text{pm}} = \\frac{\\Sigma m_i x_i}{\\Sigma m_i} = \\frac{\\Sigma W_i x_i}{\\Sigma W_i}$$\n$$y_{\\text{pm}} = \\frac{\\Sigma m_i y_i}{\\Sigma m_i} = \\frac{\\Sigma W_i y_i}{\\Sigma W_i}$$\nUntuk benda homogen berbentuk geometri beraturan, titik berat tepat berimpit dengan pusat simetri geometrisnya (garis bagi, diagonal, atau pusat lingkaran).",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi analitik Sigma Fx = 0, Sigma Fy = 0, Sigma tau = 0, dan rumus pusat massa koordinat x_pm dan y_pm.",
+        "screenReaderNote": "Halaman merangkum formulasi analitis dua syarat kesetimbangan statis benda tegar dan koordinat titik berat."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003405",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Gaya Penopang Jembatan Kayu",
+      "instruction": "Hitung gaya penopang tiang jembatan menggunakan kesetimbangan momen gaya torsi.",
+      "content": "Sebuah papan jembatan homogen sepanjang $L = 6\\text{ meter}$ dengan berat $W_p = 400\\text{ N}$ ditopang oleh dua tiang penyangga di ujung A ($x = 0$) dan ujung B ($x = 6\\text{ m}$).\nSeseorang seberat $W_o = 600\\text{ N}$ berdiri pada jarak $2\\text{ meter}$ dari ujung A.\nTitik berat papan homogen berada tepat di tengahnya ($x = 3\\text{ m}$).\n\nBerapakah gaya penopang ($F_B$) yang dikerjakan tiang penyangga B pada jembatan tersebut dalam Newton?",
+      "estimatedMinutes": 4,
+      "hints": {
+        "orientation": "Gunakan titik A sebagai poros putar sehingga Στ_A = 0.",
+        "concept": "Torsi searah jarum jam: (Wo × 2) + (Wp × 3). Torsi berlawanan: FB × 6.",
+        "strategy": "Στ_A = (600 × 2) + (400 × 3) - (FB × 6) = 0 ⟹ 1200 + 1200 = 6 FB ⟹ 2400 = 6 FB.",
+        "solution": "FB = 2400 / 6 = 400 Newton."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 5,
+        "expectedValue": 400,
+        "units": "N",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003406",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Mobil Balap F1 Dibuat Sangat Ceper dan Lebar?",
+      "instruction": "Jelaskan prinsip fisika titik berat dan torsi guling dalam desain aerodinamika dan keselamatan mobil balap Formula 1.",
+      "content": "Uraikan dalam penjelasan fisika terstruktur:\n1. Di mana letak titik berat mobil F1 terhadap tanah dan bagaimana lebar tapak rodanya (wheelbase) mempengaruhi stabilitas guling.\n2. Tuliskan analisis garis kerja gaya berat saat mobil menikung kencang: kapan sebuah kendaraan akan mulai terguling terbalik.\n3. Bandingkan stabilitas mobil F1 dengan truk boks bertingkat saat bermanuver darurat menghindari rintangan.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-kesetimbangan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-kesetimbangan-posisi-titik-berat-rendah",
+        "name": "Ketinggian Titik Berat Rendah",
+        "description": "Menjelaskan bahwa posisi titik berat yang sangat rendah meminimalkan lengan momen gaya inersia lateral saat menikung.",
+        "weight": 1
+      },
+      {
+        "id": "crit-kesetimbangan-kondisi-guling-garis-kerja",
+        "name": "Batas Garis Kerja Titik Berat Terhadap Tapak Roda",
+        "description": "Menerangkan bahwa kendaraan hanya akan terguling jika resultan vektor gaya melewati bagian luar batas bidang tumpuan tapak roda; tapak yang lebar memperluas margin kestabilan.",
+        "weight": 1
+      },
+      {
+        "id": "crit-kesetimbangan-komparasi-truk-tinggi",
+        "name": "Komparasi dengan Kendaraan Tinggi",
+        "description": "Mengontraskan stabilitas F1 dengan truk boks tinggi yang rentan terbalik karena titik beratnya yang tinggi menghasilkan torsi guling besar pada akselerasi lateral kecil.",
+        "weight": 1
+      }
+    ]
+  }
+}

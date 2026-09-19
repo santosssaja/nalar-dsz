@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000029",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "tumbukan",
+  "title": "Tumbukan: Konservasi Momentum Sistem dan Spektrum Restitusi",
+  "summary": "Menganalisis interaksi tabrakan pada sistem terisolasi: hukum kekekalan momentum linier universal, koefisien restitusi, serta dikotomi tumbukan lenting sempurna versus tidak lenting sama sekali.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Menerapkan hukum kekekalan momentum linier (m1 v1 + m2 v2 = m1 v1' + m2 v2')",
+    "Mengklasifikasikan jenis tumbukan berdasarkan koefisien restitusi e (0 ≤ e ≤ 1)",
+    "Menghitung kehilangan energi kinetik pada tumbukan tidak lenting di mana kedua benda menyatu"
+  ],
+  "prerequisites": [
+    "momentum-dan-impuls",
+    "usaha-dan-energi",
+    "hukum-newton"
+  ],
+  "misconceptions": [
+    {
+      "code": "MOMENTUM_LOST_IN_INELASTIC",
+      "label": "Menganggap momentum hilang jika tabrakan tidak lenting dan menghasilkan panas serta penyok",
+      "remediation": "Pada sistem terisolasi (tanpa gaya eksternal luar), momentum TOTAL selalu kekal 100% pada SEMUA jenis tumbukan (lenting sempurna, lenting sebagian, maupun tidak lenting sama sekali). Yang berkurang atau berubah menjadi energi termal hanyalah energi kinetiknya."
+    },
+    {
+      "code": "RESTITUTION_GREATER_THAN_ONE",
+      "label": "Mengira benda bisa memantul lebih kencang dari kecepatan datangnya tanpa ada ledakan sumber energi tambahan",
+      "remediation": "Nilai koefisien restitusi pasif selalu berada pada rentang 0 ≤ e ≤ 1. Pemantulan dengan e > 1 hanya mungkin terjadi jika ada energi internal yang dilepaskan, seperti bahan peledak aktif di titik benturan."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002901",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Bandul Newton (Newton's Cradle): Estafet Gerak yang Presisi",
+      "instruction": "Amati mainan meja klasik dengan lima bola baja yang saling bersentuhan.",
+      "content": "Tarik satu bola baja ke samping lalu lepaskan:\n- Bola itu mengayun dan menghantam deretan bola diam dengan dentingan nyaring.\n- Ajaibnya: tiga bola di tengah tetap diam membatu, dan **hanya satu bola di ujung seberang yang terlontar melesat ke atas** dengan ketinggian yang persis sama!\n- Jika kamu menarik dua bola sekaligus lalu melepasnya, dua bola di seberang pula yang akan terpental keluar!\n\nMengapa bukan satu bola yang terlontar dengan kecepatan ganda? Mengapa bola-bola di tengah tidak terhambur ke mana-mana?\nKarena interaksi ini diatur oleh dua hukum fundamental yang bekerja serempak:\n1. **Kekekalan Momentum Linier Total**\n2. **Kekekalan Energi Kinetik (Tumbukan Lenting Sempurna)**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi bandul Newton memperlihatkan satu bola berayun masuk dan tepat satu bola terpental keluar di ujung lainnya.",
+        "screenReaderNote": "Materi pengantar mengilustrasikan konservasi momentum dan energi kinetik pada bandul Newton."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002902",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Tabrakan Kereta Mainan yang Menempel Bersama",
+      "instruction": "Tentukan kelajuan gabungan dua gerbong kereta setelah bertabrakan dan saling mengunci.",
+      "content": "Gerbong kereta mainan A bermassa $m_A = 1\\text{ kg}$ meluncur dengan kelajuan $v_A = 6\\text{ m/s}$ di atas rel tanpa gesekan.\nGerbong A menabrak Gerbong B bermassa $m_B = 2\\text{ kg}$ yang sedang diam membisu ($v_B = 0$).\nSaat bertabrakan, kait kedua gerbong saling mengunci sehingga keduanya menempel dan meluncur bersama-sama ($v'$).\n\nBerapakah kecepatan akhir bersama ($v'$) kedua gerbong tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan Hukum Kekekalan Momentum: p_awal = p_akhir.",
+        "concept": "p_awal = mA × vA + mB × vB = (1 × 6) + (2 × 0) = 6 kg·m/s.",
+        "strategy": "p_akhir = (mA + mB) × v' = (1 + 2) × v' = 3 v'. Samakan: 3 v' = 6.",
+        "solution": "v' = 2 m/s."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-2-ms",
+            "label": "2 m/s — karena massa total sistem bertambah menjadi 3 kg, kecepatan berkurang menjadi sepertiganya agar momentum total 6 kg·m/s tetap kekal",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! p_awal = 1(6) + 2(0) = 6 kg·m/s. Karena massa gabungan adalah 3 kg, maka v' = 6 / 3 = 2 m/s."
+          },
+          {
+            "id": "opt-3-ms",
+            "label": "3 m/s — rata-rata kelajuan kedua gerbong (6 + 0) / 2",
+            "isCorrect": false,
+            "explanation": "Kelajuan rata-rata aritmetika mengabaikan perbedaan massa inersia kedua gerbong."
+          },
+          {
+            "id": "opt-6-ms",
+            "label": "6 m/s — kelajuan tidak berubah karena gerbong A mendorong gerbong B",
+            "isCorrect": false,
+            "explanation": "Jika laju tetap 6 m/s pada massa 3 kg, momentum akan melonjak menjadi 18 kg·m/s, melanggar hukum kekekalan momentum."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002903",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Spektrum Koefisien Restitusi",
+      "instruction": "Amati perbedaan perilaku tumbukan dari elastis sempurna hingga menempel total.",
+      "content": "Eksplorasi tiga kategori tumbukan berdasarkan koefisien elastisitas restitusi ($e$):\n1. **Lenting Sempurna ($e = 1$):** Partikel memantul dengan kecepatan relatif yang persis sama dengan kecepatan datangnya. Tidak ada energi kinetik yang hilang ($E_{k,\\text{awal}} = E_{k,\\text{akhir}}$).\n2. **Lenting Sebagian ($0 < e < 1$):** Benda memantul tetapi melambat. Sebagian energi kinetik berubah menjadi bunyi dentuman atau panas gesekan mikro.\n3. **Tidak Lenting Sama Sekali ($e = 0$):** Benda saling menempel dan bergerak serempak dengan kecepatan sama ($v_1' = v_2'$).",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram spektrum tumbukan membandingkan animasi lenting sempurna bola biliar, lenting sebagian bola tenis, dan tumbukan menempel tanah liat.",
+        "screenReaderNote": "Materi interaktif mengklasifikasikan tiga jenis tumbukan berdasarkan nilai koefisien restitusi e."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002904",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Hukum Konservasi & Koefisien Restitusi",
+      "instruction": "Kuasai formulasi matematis untuk memecahkan dinamika tumbukan 1 dimensi.",
+      "content": "### 1. Hukum Kekekalan Momentum Linier\nPada sistem terisolasi tanpa gaya luar netto ($\\Sigma \\vec{F}_{\\text{ext}} = 0$):\n$$\\Sigma \\vec{p}_{\\text{awal}} = \\Sigma \\vec{p}_{\\text{akhir}}$$\n$$m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2'$$\n\n### 2. Koefisien Restitusi ($e$)\nUkuran kelentingan tumbukan yang menyatakan perbandingan negatif antara kecepatan relatif setelah dan sebelum tumbukan:\n$$e = -\\frac{v_1' - v_2'}{v_1 - v_2} = \\frac{v_2' - v_1'}{v_1 - v_2}$$\n- $e = 1$: Tumbukan lenting sempurna (energi kinetik kekal).\n- $0 < e < 1$: Tumbukan lenting sebagian.\n- $e = 0$: Tumbukan tidak lenting sama sekali ($v_1' = v_2'$).\n\n### 3. Pantulan Bola pada Lantai Diam ($v_2 = v_2' = 0$)\nJika bola dijatuhkan dari ketinggian $h_1$ dan memantul hingga ketinggian $h_2$:\n$$e = \\sqrt{\\frac{h_2}{h_1}}$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Persamaan matematis kekekalan momentum linier, definisi koefisien restitusi e, dan rumus pantulan tinggi bola.",
+        "screenReaderNote": "Halaman merangkum formulasi analitik kekekalan momentum, koefisien restitusi e, dan aplikasi tinggi pantulan akar h2 per h1."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002905",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Koefisien Restitusi Bola Memantul",
+      "instruction": "Hitung koefisien elastisitas bola dari data ketinggian pantulan.",
+      "content": "Sebuah bola basket dijatuhkan bebas dari ketinggian $h_1 = 4\\text{ meter}$ di atas lantai beton keras.\nSetelah menumbuk lantai, bola memantul naik kembali hingga mencapai ketinggian maksimum $h_2 = 1{,}44\\text{ meter}$.\n\nBerapakah nilai koefisien restitusi ($e$) antara bola basket dan lantai tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan rumus koefisien restitusi pantulan lantai: e = √(h2 / h1).",
+        "concept": "h2 = 1.44 m dan h1 = 4 m.",
+        "strategy": "Hitung rasio: 1.44 / 4 = 0.36. Lalu cari akar kuadratnya: √0.36.",
+        "solution": "e = 0.6."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.05,
+        "expectedValue": 0.6,
+        "units": "",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002906",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Dua Bola Tumbukan Lenting Sempurna Bertukar Kecepatan?",
+      "instruction": "Buktikan secara analitik mengapa dua benda bermassa identik yang bertumbukan lenting sempurna secara frontal akan saling bertukar kecepatan secara total.",
+      "content": "Uraikan dengan langkah-langkah logika fisika:\n1. Tuliskan dua persamaan dasar yang berlaku: kekekalan momentum ($m v_1 + m v_2 = m v_1' + m v_2'$) dan koefisien restitusi elastis sempurna ($e = 1$).\n2. Selesaikan sistem persamaan tersebut untuk membuktikan bahwa $v_1' = v_2$ dan $v_2' = v_1$.\n3. Kaitkan hasil matematis ini dengan perilaku bola-bola pada bandul Newton di atas meja.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-tumbukan",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-tumbukan-persamaan-momentum-dan-e",
+        "name": "Formulasi Dua Persamaan Simultan",
+        "description": "Menyusun sistem dua persamaan simultan dari kekekalan momentum linier dan definisi elastisitas e = 1 secara runtut.",
+        "weight": 1
+      },
+      {
+        "id": "crit-tumbukan-pembuktian-pertukaran-laju",
+        "name": "Penyelesaian Aljabar Pertukaran Kecepatan",
+        "description": "Menunjukkan dengan eliminasi/substitusi aljabar yang benar bahwa kecepatan akhir partikel 1 menjadi kecepatan awal partikel 2 dan sebaliknya.",
+        "weight": 1
+      },
+      {
+        "id": "crit-tumbukan-korelasi-bandul-newton",
+        "name": "Aplikasi Nyata pada Bandul Newton",
+        "description": "Menghubungkan bukti matematis dengan kenyataan fisis bahwa bola pemukul berhenti diam seketika dan mentransfer seluruh lajunya ke bola berikutnya.",
+        "weight": 1
+      }
+    ]
+  }
+}

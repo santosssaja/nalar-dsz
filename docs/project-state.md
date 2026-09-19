@@ -3,23 +3,39 @@
 ## Snapshot saat ini
 
 **Tanggal pembaruan:** 2026-09-19  
-**Tahap:** Implementasi Penuh Ekosistem STEM Nalar (Concept Graph 2D, Prediction Engine, Teach Mode, AI Tutor Nai Multi-Provider, & 4 Domain Kurikulum STEM)  
+**Tahap:** Implementasi Lengkap Kurikulum STEM Nalar (47 Konsep Terkurasi, 14 Stasiun Nalar Lab Interaktif, Concept Graph 2D Knowledge Mesh, & AI Tutor Nai Multi-Provider)  
 **Source code aplikasi:** Next.js 15 App Router (TypeScript strict), Tailwind CSS + design tokens, Drizzle ORM PostgreSQL schema, adapter PGlite / in-memory, actor/device resolver (guest & member session, auto-persisted guest device key cookie, atomic concurrency-safe insertion), persistent zero-flash ThemeProvider dengan synchronous head script dan dynamic local-first sync, pemisah tema (Terang / Gelap) dengan opsi aksesibilitas Kontras Tinggi (High Contrast) mandiri berupa slide button toggle, NavHeader responsif dengan dynamic active-page highlighting via usePathname (Graf Konsep, Kurikulum, Nalar Lab, Observabilitas, Auth), single-page authentication (`/auth` dan modal) dengan tab switch Login/Register, verifikasi email sekali klik (magic link) via Google Gmail SMTP (`nodemailer`) dengan halaman verifikasi otomatis (`/auth/verify`), health check endpoint, content loader & schema Zod terpusat (`ContentRegistry` singleton):
 - **4 Domain STEM Aktif:** Matematika, Fisika, Kimia, Biologi.
-- **5 Modul Pembelajaran:** `fondasi-matematika` (3 konsep), `turunan` (3 konsep), `fisika-mekanika` (3 konsep), `kimia-dasar` (3 konsep), `biologi-dasar` (2 konsep).
-- **14 Konsep Terkurasi Lengkap:** Menyelaraskan seluruh konsep di modul `turunan` (01 Perubahan, 02 Laju Perubahan, 03 Definisi Turunan) dengan standar pedoman kurikulum 6-tahap (`encounter` → `explore` → `predict` → `understand` → `practice` → `explain`), KaTeX, 4-layer hints (`orientation`, `concept`, `strategy`, `solution`), deteksi miskonsepsi eksplisit dengan trigger numerik dan distractor feedback, rubrik pedagogis berbasis kriteria semantik, serta teks aksesibilitas lengkap.
-- **Concept Graph 2D Interaktif (`/graph`):** Visualisasi SVG interaktif jejaring konsep 4 domain, filter pencarian real-time, inspeksi node, koneksi prasyarat, dan cross-discipline knowledge links (contoh: Laju Perubahan Matematika ↔ Kinematika Fisika; Atom Kimia ↔ Tingkatan Organisasi Biologi) serta list view ramah screen reader.
-- **Prediction Engine Tingkat Lanjut:** Pemilihan hipotesis kognitif, skala keyakinan kognitif (Eksploratif, Cukup Yakin, Sangat Yakin), formulasi alasan siswa, dan kartu komparasi mental model mismatch vs fakta empiris.
-- **Mode Guru (Teach Mode):** Murid berperan sebagai guru yang mengajarkan konsep kepada murid virtual Nai, dievaluasi dengan rubrik AI / kriteria semantik.
-- **AI Tutor Nai Multi-Provider & Real-time Stream Answer:** Dialog Sokratis & evaluasi mengajar dengan Google Gemma (default via `@google/generative-ai`), Google Gemini, OpenAI (`openai`), Anthropic Claude (`@anthropic-ai/sdk`), Ollama lokal (100% offline), serta fallback deterministik lokal kurasi offline tanpa memerlukan API key. Mendukung **real-time streaming jawaban** (SSE) dengan **collapsible reasoning/think block** (dapat di-hide dan di-unhide dengan tombol expand/collapse), typing cursor live, dan auto-scroll. Konfigurasi terpusat di server `.env.local` dan didokumentasikan lengkap di [`docs/llm-configuration.md`](./llm-configuration.md) serta [`.env.example`](../.env.example).
-- **Nalar Lab Suite Multidisiplin 5-Wahana STEM (`/lab`):** Memperluas laboratorium interaktif dari yang semula hanya simulasi kalkulus menjadi rangkaian 5 wahana eksplorasi visual lintas domain: Kalkulus & Turunan (Matematika Lanjut), Garis Bilangan Interaktif (Fondasi Matematika), Vektor & Gaya 2D (Fisika Mekanika), Kinetika Partikel & Materi (Kimia Dasar), dan Skala Organisasi Hayati (Biologi Dasar). Masing-masing dilengkapi navigasi tab stasiun eksperimen, penjelas intuisi ilmiah, serta tautan langsung ke modul pembelajarannya.
-- **Markdown & Math Rendering Berstandar Industri (`marked` + `katex`):** Menggantikan custom regex parser dengan library `marked` yang sepenuhnya mematuhi CommonMark & GitHub Flavored Markdown (GFM), mendukung nested formatting (contoh: `**titik acuan (*origin*)**`), ekstensi KaTeX display (`$$...$$`) & inline (`$...$`), custom renderer tema Nalar, serta zero-emoji UI design menggunakan `lucide-react`.
-- **Optimalisasi Performa Navigasi & Client Routing (SPA + Loading Skeletons):** Menggantikan seluruh tag `<a>` internal lintas halaman (Home, Kurikulum, Modul, Concept Graph, Lesson Player, Lesson Summary, dan Footer) dengan Next.js `<Link>` yang mengaktifkan transisi client-side instan dan auto-prefetching viewport tanpa full-page browser reload. Menghadirkan loading skeleton terarah (`src/app/loading.tsx`, `modules/[slug]/loading.tsx`, `learn/[conceptSlug]/loading.tsx`) untuk umpan balik instan (<16ms), mengonsolidasi query database N+1 di halaman modul menjadi batch query (`getAllLearnerProgress`), serta mengaktifkan `optimizePackageImports` di `next.config.ts`.
-- **Verifikasi Kualitas:** 24 test suite (82 tests) lulus 100%, TypeScript typecheck lulus tanpa error (`tsc --noEmit`), ESLint bersih (`eslint .`), dan production-ready.
+- **5 Modul Pembelajaran Lengkap Sesuai Kurikulum:**
+  1. `fondasi-matematika` (9 konsep): Bilangan, Operasi Aritmetika, Pecahan dan Desimal, Rasio dan Proporsi, Persentase, Pangkat dan Akar, Urutan dan Pola, Estimasi, Satuan dan Pengukuran Fondasi.
+  2. `turunan` (3 konsep): Perubahan, Laju Perubahan, Definisi Turunan.
+  3. `fisika-mekanika` (18 konsep): Pengukuran dan Besaran, Vektor, Kinematika, Gerak Lurus, Gerak Parabola, Gerak Melingkar, Hukum Newton, Gaya, Gesekan, Usaha dan Energi, Momentum dan Impuls, Tumbukan, Rotasi, Torsi, Momentum Sudut, Gravitasi, Kesetimbangan, Osilasi.
+  4. `kimia-dasar` (11 konsep): Materi dan Sifatnya, Unsur dan Senyawa, Atom, Molekul, Ion, Sistem Periodik, Konfigurasi Elektron, Bilangan Kuantum, Ikatan Kimia, Struktur Lewis, Geometri Molekul.
+  5. `biologi-dasar` (6 konsep): Karakteristik Kehidupan, Tingkatan Organisasi Kehidupan, Metode Ilmiah, Sel, Molekul Biologis, Energi dalam Sistem Biologis.
+- **47 Konsep Terkurasi Standar Penuh:** Seluruh 47 konsep mematuhi pedoman kurikulum 6-tahap Nalar (`encounter` → `explore` → `predict` → `understand` → `practice` → `explain`), KaTeX math typesetting, 4-layer hints (`orientation`, `concept`, `strategy`, `solution`), deteksi miskonsepsi terpetakan dengan trigger numerik/distraktor, rubrik semantik di level konsep, serta teks ramah pembaca layar (screen-reader accessibility).
+- **Nalar Lab Suite Lengkap 14-Stasiun Eksplorasi Interaktif (`/lab`):**
+  1. *Kalkulus:* Garis Sekan ke Garis Singgung & Turunan Sesaat
+  2. *Matematika:* Garis Bilangan & Nilai Mutlak
+  3. *Matematika:* Pecahan, Rasio Proporsi, & Persentase Visual
+  4. *Matematika:* Pola Pertumbuhan Eksponensial ($2^n$) vs Linier & Kuadratik
+  5. *Fisika:* Vektor Geometri & Resultan Analitik
+  6. *Fisika:* Kinematika Parabola 2 Dimensi & Jarak Maksimum
+  7. *Fisika:* Dinamika Hukum Newton, Free Body Diagram (FBD), & Transisi Gesekan Statis/Kinetis
+  8. *Fisika:* Gerak Harmonik Sederhana (GHS) & Kekekalan Energi Mekanik ($E_p + E_k$)
+  9. *Kimia:* Termodinamika Wujud Materi & Kinetika Partikel
+  10. *Kimia:* Model Atom Bohr & Tren Keperiodikan
+  11. *Kimia:* Ikatan Kimia, Titik Lewis, & Geometri VSEPR 3D
+  12. *Biologi:* Skala Ukuran Hayati dari Nanometer ke Biosfer
+  13. *Biologi:* Komparasi Sitologi Sel Prokariotik, Hewan, & Tumbuhan
+  14. *Biologi:* Daur Bioenergetika Fotosintesis Kloroplas & Respirasi Mitokondria (ATP)
+- **Concept Graph 2D Interaktif (`/graph`):** Visualisasi SVG interaktif jejaring konsep 4 domain dengan 47 node konsep, modul, prasyarat, filter pencarian live, dan jalinan lintas disiplin (knowledge mesh connections).
+- **Mode Guru (Teach Mode):** Dilengkapi pertanyaan pemantik Sokratis Nai yang unik untuk setiap konsep di seluruh modul.
+- **Showcase & Halaman Beranda Interaktif:** Beranda (`/`) diperbarui secara komprehensif menampilkan metrik 47 konsep, gerbang langsung ke 14 stasiun Nalar Lab, pratinjau Concept Graph 2D, pemaparan tutor Sokratis Nai, kurikulum 4 domain, dan prinsip pedagogis Active Before Passive.
+- **Dokumentasi Showcase & Naskah Produksi Video:** Tersedia dokumen profil komprehensif (`docs/nalar-showcase.md`) serta naskah storyboard/voiceover per adegan (`docs/showcase-video-script.md`) untuk pembuatan video showcase 2.5 menit dan format ringkas 60 detik.
+- **Verifikasi Kualitas:** 24 test suite (82 tests) lulus 100%, TypeScript typecheck lulus 100% (`tsc --noEmit`), zero syntax/lint error, zero-emoji UI design dengan Lucide icons.
 
 ## Target implementasi berikutnya
 
-- Melanjutkan perluasan manipulatif visual interaktif untuk konsep lainnya (Pecahan & Desimal, Atom, Kinematika).
 - Evaluasi telemetry performa pada hosting production cloud (misal Vercel / Railway / Cloudflare) bila akun cloud telah ditentukan.
 
 ## Scope yang sedang dikunci

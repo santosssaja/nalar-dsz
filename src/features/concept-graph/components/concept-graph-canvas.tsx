@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { ConceptGraphData, GraphNode, GraphEdge } from "@/content/registry";
+import { ConceptGraphData, GraphNode } from "@/content/registry";
 import { MathRenderer } from "@/components/ui/katex-math";
 
 interface ConceptGraphProps {
@@ -36,10 +36,127 @@ const DOMAIN_COLORS: Record<string, { border: string; bg: string; text: string; 
   },
 };
 
+// Clean, punchy labels for canvas nodes to avoid text clipping and visual collisions
+const SHORT_LABELS: Record<string, string> = {
+  // Matematika (12)
+  "perubahan": "Perubahan",
+  "laju-perubahan": "Laju Perubahan",
+  "definisi-turunan": "Definisi Turunan",
+  "bilangan": "Bilangan",
+  "operasi-aritmetika": "Aritmetika",
+  "pecahan-dan-desimal": "Pecahan",
+  "rasio-dan-proporsi": "Rasio",
+  "persentase": "Persentase",
+  "pangkat-dan-akar": "Pangkat & Akar",
+  "urutan-dan-pola": "Pola Bilangan",
+  "estimasi": "Estimasi",
+  "satuan-dan-pengukuran-matematika": "Satuan Ukur",
+
+  // Fisika Mekanika (18)
+  "pengukuran-dan-besaran": "Besaran Fisika",
+  "vektor": "Vektor",
+  "kinematika": "Kinematika",
+  "gerak-lurus": "Gerak Lurus",
+  "gerak-parabola": "Parabola",
+  "gerak-melingkar": "Melingkar",
+  "gaya": "Gaya",
+  "hukum-newton": "Hukum Newton",
+  "gesekan": "Gaya Gesek",
+  "usaha-dan-energi": "Usaha & Energi",
+  "momentum-dan-impuls": "Momentum",
+  "tumbukan": "Tumbukan",
+  "rotasi": "Rotasi",
+  "torsi": "Torsi",
+  "momentum-sudut": "Momentum Sudut",
+  "kesetimbangan": "Kesetimbangan",
+  "gravitasi": "Gravitasi",
+  "osilasi": "Osilasi",
+
+  // Kimia Dasar (11)
+  "materi-dan-sifatnya": "Wujud Materi",
+  "unsur-dan-senyawa": "Unsur & Senyawa",
+  "atom": "Struktur Atom",
+  "molekul": "Molekul",
+  "ion": "Ion & Muatan",
+  "sistem-periodik": "Tabel Periodik",
+  "konfigurasi-elektron": "Konfigurasi e⁻",
+  "bilangan-kuantum": "Bil. Kuantum",
+  "ikatan-kimia": "Ikatan Kimia",
+  "struktur-lewis": "Struktur Lewis",
+  "geometri-molekul": "Geometri VSEPR",
+
+  // Biologi Dasar (6)
+  "karakteristik-kehidupan": "Ciri Kehidupan",
+  "tingkatan-organisasi-kehidupan": "Organisasi Hayati",
+  "metode-ilmiah": "Metode Ilmiah",
+  "sel": "Struktur Sel",
+  "molekul-biologis": "Makromolekul",
+  "energi-dalam-sistem-biologis": "Bioenergetika",
+};
+
+// Generously spaced, deterministic 2D grid coordinates (min. 100px separation between any two nodes)
+const FIXED_POSITIONS: Record<string, { x: number; y: number }> = {
+  // Matematika (Top-Left: x 40..660, y 45..420)
+  "bilangan": { x: 110, y: 130 },
+  "operasi-aritmetika": { x: 250, y: 130 },
+  "pecahan-dan-desimal": { x: 390, y: 130 },
+  "rasio-dan-proporsi": { x: 530, y: 130 },
+  "persentase": { x: 110, y: 235 },
+  "pangkat-dan-akar": { x: 250, y: 235 },
+  "urutan-dan-pola": { x: 390, y: 235 },
+  "estimasi": { x: 530, y: 235 },
+  "satuan-dan-pengukuran-matematika": { x: 110, y: 340 },
+  "perubahan": { x: 250, y: 340 },
+  "laju-perubahan": { x: 390, y: 340 },
+  "definisi-turunan": { x: 530, y: 340 },
+
+  // Fisika Mekanika (Top-Right: x 700..1360, y 45..420)
+  "pengukuran-dan-besaran": { x: 780, y: 130 },
+  "vektor": { x: 880, y: 130 },
+  "kinematika": { x: 980, y: 130 },
+  "gerak-lurus": { x: 1080, y: 130 },
+  "gerak-parabola": { x: 1180, y: 130 },
+  "gerak-melingkar": { x: 1280, y: 130 },
+  "gaya": { x: 780, y: 235 },
+  "hukum-newton": { x: 880, y: 235 },
+  "gesekan": { x: 980, y: 235 },
+  "usaha-dan-energi": { x: 1080, y: 235 },
+  "momentum-dan-impuls": { x: 1180, y: 235 },
+  "tumbukan": { x: 1280, y: 235 },
+  "rotasi": { x: 780, y: 340 },
+  "torsi": { x: 880, y: 340 },
+  "momentum-sudut": { x: 980, y: 340 },
+  "kesetimbangan": { x: 1080, y: 340 },
+  "gravitasi": { x: 1180, y: 340 },
+  "osilasi": { x: 1280, y: 340 },
+
+  // Kimia Dasar (Bottom-Left: x 40..660, y 465..855)
+  "materi-dan-sifatnya": { x: 110, y: 570 },
+  "unsur-dan-senyawa": { x: 250, y: 570 },
+  "atom": { x: 390, y: 570 },
+  "molekul": { x: 530, y: 570 },
+  "ion": { x: 110, y: 675 },
+  "sistem-periodik": { x: 250, y: 675 },
+  "konfigurasi-elektron": { x: 390, y: 675 },
+  "bilangan-kuantum": { x: 530, y: 675 },
+  "ikatan-kimia": { x: 180, y: 780 },
+  "struktur-lewis": { x: 320, y: 780 },
+  "geometri-molekul": { x: 460, y: 780 },
+
+  // Biologi Dasar (Bottom-Right: x 700..1360, y 465..855)
+  "karakteristik-kehidupan": { x: 850, y: 610 },
+  "tingkatan-organisasi-kehidupan": { x: 1030, y: 610 },
+  "metode-ilmiah": { x: 1210, y: 610 },
+  "sel": { x: 850, y: 745 },
+  "molekul-biologis": { x: 1030, y: 745 },
+  "energi-dalam-sistem-biologis": { x: 1210, y: 745 },
+};
+
 export function ConceptGraphView({ graphData }: ConceptGraphProps) {
   const [selectedDomain, setSelectedDomain] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"graph" | "list">("graph");
 
   // Only display concept nodes in graph canvas
@@ -47,47 +164,21 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
     return graphData.nodes.filter((n) => n.type === "concept");
   }, [graphData]);
 
-  // Pre-compute 2D positions for each concept node organized cleanly in 4 domain clusters
-  const nodePositions = useMemo(() => {
-    const posMap = new Map<string, { x: number; y: number }>();
-
-    // Cluster centers (viewBox: 0 0 1000 650)
-    const clusterCenters: Record<string, { cx: number; cy: number }> = {
-      matematika: { cx: 220, cy: 180 },
-      fisika: { cx: 720, cy: 180 },
-      kimia: { cx: 300, cy: 460 },
-      biologi: { cx: 700, cy: 460 },
-    };
-
-    // Group nodes by domain
-    const byDomain: Record<string, GraphNode[]> = {
-      matematika: [],
-      fisika: [],
-      kimia: [],
-      biologi: [],
-    };
-
-    for (const node of conceptNodes) {
-      if (byDomain[node.domainSlug]) {
-        byDomain[node.domainSlug].push(node);
-      }
+  // Dynamic ViewBox: Focusing directly into the selected domain with high clarity and generous room
+  const currentViewBox = useMemo(() => {
+    switch (selectedDomain) {
+      case "matematika":
+        return "35 40 635 390";
+      case "fisika":
+        return "695 40 670 390";
+      case "kimia":
+        return "35 460 635 405";
+      case "biologi":
+        return "695 460 670 405";
+      default:
+        return "0 0 1400 890";
     }
-
-    // Distribute nodes in each cluster in a circular/arc pattern
-    Object.entries(byDomain).forEach(([dom, nodes]) => {
-      const center = clusterCenters[dom] ?? { cx: 500, cy: 300 };
-      const radius = 100;
-      nodes.forEach((node, idx) => {
-        const angle = (idx / nodes.length) * 2 * Math.PI - Math.PI / 2;
-        posMap.set(node.slug, {
-          x: center.cx + radius * Math.cos(angle),
-          y: center.cy + radius * Math.sin(angle),
-        });
-      });
-    });
-
-    return posMap;
-  }, [conceptNodes]);
+  }, [selectedDomain]);
 
   // Filtered concepts
   const filteredNodes = useMemo(() => {
@@ -101,15 +192,26 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
     });
   }, [conceptNodes, selectedDomain, searchQuery]);
 
-  // Edges connecting concepts
+  // Filtered Edges connecting concepts
   const conceptEdges = useMemo(() => {
-    return graphData.edges.filter(
-      (e) =>
-        nodePositions.has(e.source) &&
-        nodePositions.has(e.target) &&
-        (e.relationship === "prerequisite" || e.relationship === "cross_domain")
-    );
-  }, [graphData.edges, nodePositions]);
+    return graphData.edges.filter((e) => {
+      const hasSrc = Boolean(FIXED_POSITIONS[e.source]);
+      const hasTgt = Boolean(FIXED_POSITIONS[e.target]);
+      if (!hasSrc || !hasTgt) return false;
+
+      // In domain-specific view, only show edges internal to that domain
+      if (selectedDomain !== "all") {
+        const srcNode = conceptNodes.find((n) => n.slug === e.source);
+        const tgtNode = conceptNodes.find((n) => n.slug === e.target);
+        return srcNode?.domainSlug === selectedDomain && tgtNode?.domainSlug === selectedDomain;
+      }
+
+      return e.relationship === "prerequisite" || e.relationship === "cross_domain";
+    });
+  }, [graphData.edges, selectedDomain, conceptNodes]);
+
+  // Currently active concept (either hovered or selected) for connection illumination
+  const activeSlug = hoveredNode || selectedNode?.slug || null;
 
   return (
     <div className="space-y-6">
@@ -118,16 +220,19 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold text-text-muted mr-1">Filter Domain:</span>
           {[
-            { id: "all", label: "Semua Bidang" },
-            { id: "matematika", label: "Matematika" },
-            { id: "fisika", label: "Fisika" },
-            { id: "kimia", label: "Kimia" },
-            { id: "biologi", label: "Biologi" },
+            { id: "all", label: "Semua Bidang (47)" },
+            { id: "matematika", label: "Matematika (12)" },
+            { id: "fisika", label: "Fisika (18)" },
+            { id: "kimia", label: "Kimia (11)" },
+            { id: "biologi", label: "Biologi (6)" },
           ].map((tab) => (
             <button
               key={tab.id}
               type="button"
-              onClick={() => setSelectedDomain(tab.id)}
+              onClick={() => {
+                setSelectedDomain(tab.id);
+                setSelectedNode(null);
+              }}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 selectedDomain === tab.id
                   ? "bg-accent text-surface-raised font-bold shadow-xs"
@@ -154,7 +259,7 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               onClick={() => setViewMode("graph")}
               className={`px-2.5 py-1 text-xs rounded-md font-medium transition-colors ${
                 viewMode === "graph"
-                  ? "bg-accent text-surface-raised"
+                  ? "bg-accent text-surface-raised font-bold"
                   : "text-text-muted hover:text-text"
               }`}
             >
@@ -165,7 +270,7 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               onClick={() => setViewMode("list")}
               className={`px-2.5 py-1 text-xs rounded-md font-medium transition-colors ${
                 viewMode === "list"
-                  ? "bg-accent text-surface-raised"
+                  ? "bg-accent text-surface-raised font-bold"
                   : "text-text-muted hover:text-text"
               }`}
             >
@@ -180,7 +285,7 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
         <div className="relative w-full rounded-2xl bg-surface-raised border border-border overflow-hidden p-2">
           {/* Legend Banner */}
           <div className="absolute top-4 left-4 z-10 flex flex-wrap items-center gap-3 text-[11px] p-2.5 rounded-xl bg-surface/90 backdrop-blur-md border border-border shadow-xs">
-            <span className="font-semibold text-text">Legenda:</span>
+            <span className="font-semibold text-text">Bidang:</span>
             <span className="flex items-center gap-1.5 text-text">
               <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
               Matematika
@@ -197,14 +302,16 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               Biologi
             </span>
-            <span className="flex items-center gap-1.5 text-text-muted">
-              <span className="w-3 border-t-2 border-dashed border-accent"></span>
-              Koneksi Lintas Disiplin
-            </span>
+            {selectedDomain === "all" && (
+              <span className="flex items-center gap-1.5 text-text-muted">
+                <span className="w-3 border-t-2 border-dashed border-accent"></span>
+                Koneksi Lintas Disiplin
+              </span>
+            )}
           </div>
 
           <svg
-            viewBox="0 0 1000 650"
+            viewBox={currentViewBox}
             className="w-full aspect-[16/10] select-none touch-pan-y"
             aria-label="Kanvas Graf Konsep Pengetahuan STEM Nalar"
           >
@@ -213,7 +320,7 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
                 id="arrowhead-prereq"
                 markerWidth="8"
                 markerHeight="6"
-                refX="18"
+                refX="19"
                 refY="3"
                 orient="auto"
               >
@@ -223,44 +330,115 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
                 id="arrowhead-cross"
                 markerWidth="8"
                 markerHeight="6"
-                refX="18"
+                refX="19"
                 refY="3"
                 orient="auto"
               >
                 <polygon points="0 0, 8 3, 0 6" fill="var(--color-accent)" />
               </marker>
+              <marker
+                id="arrowhead-active"
+                markerWidth="9"
+                markerHeight="7"
+                refX="19"
+                refY="3.5"
+                orient="auto"
+              >
+                <polygon points="0 0, 9 3.5, 0 7" fill="var(--color-accent)" />
+              </marker>
             </defs>
 
-            {/* Background Cluster Zones */}
-            <circle cx="220" cy="180" r="140" fill="rgba(99, 102, 241, 0.03)" stroke="rgba(99, 102, 241, 0.1)" strokeDasharray="4 4" />
-            <circle cx="720" cy="180" r="140" fill="rgba(6, 182, 212, 0.03)" stroke="rgba(6, 182, 212, 0.1)" strokeDasharray="4 4" />
-            <circle cx="300" cy="460" r="140" fill="rgba(245, 158, 11, 0.03)" stroke="rgba(245, 158, 11, 0.1)" strokeDasharray="4 4" />
-            <circle cx="700" cy="460" r="140" fill="rgba(16, 185, 129, 0.03)" stroke="rgba(16, 185, 129, 0.1)" strokeDasharray="4 4" />
+            {/* Domain Background Boundary Cards */}
+            {(selectedDomain === "all" || selectedDomain === "matematika") && (
+              <g>
+                <rect
+                  x="45"
+                  y="50"
+                  width="610"
+                  height="370"
+                  rx="20"
+                  fill="#6366f1"
+                  fillOpacity="0.03"
+                  stroke="#6366f1"
+                  strokeOpacity="0.2"
+                  strokeDasharray="4 4"
+                />
+                <text x="70" y="82" fontSize="13" fontWeight="bold" fill="#6366f1" letterSpacing="0.5">
+                  FONDASI MATEMATIKA & KALKULUS
+                </text>
+              </g>
+            )}
 
-            {/* Cluster Domain Titles */}
-            <text x="220" y="55" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#6366f1" opacity="0.8">
-              MATEMATIKA
-            </text>
-            <text x="720" y="55" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#06b6d4" opacity="0.8">
-              FISIKA MEKANIKA
-            </text>
-            <text x="300" y="605" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#f59e0b" opacity="0.8">
-              KIMIA DASAR
-            </text>
-            <text x="700" y="605" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#10b981" opacity="0.8">
-              BIOLOGI DASAR
-            </text>
+            {(selectedDomain === "all" || selectedDomain === "fisika") && (
+              <g>
+                <rect
+                  x="705"
+                  y="50"
+                  width="650"
+                  height="370"
+                  rx="20"
+                  fill="#06b6d4"
+                  fillOpacity="0.03"
+                  stroke="#06b6d4"
+                  strokeOpacity="0.2"
+                  strokeDasharray="4 4"
+                />
+                <text x="730" y="82" fontSize="13" fontWeight="bold" fill="#06b6d4" letterSpacing="0.5">
+                  FISIKA MEKANIKA
+                </text>
+              </g>
+            )}
+
+            {(selectedDomain === "all" || selectedDomain === "kimia") && (
+              <g>
+                <rect
+                  x="45"
+                  y="470"
+                  width="610"
+                  height="385"
+                  rx="20"
+                  fill="#f59e0b"
+                  fillOpacity="0.03"
+                  stroke="#f59e0b"
+                  strokeOpacity="0.2"
+                  strokeDasharray="4 4"
+                />
+                <text x="70" y="504" fontSize="13" fontWeight="bold" fill="#f59e0b" letterSpacing="0.5">
+                  KIMIA DASAR: STRUKTUR & IKATAN
+                </text>
+              </g>
+            )}
+
+            {(selectedDomain === "all" || selectedDomain === "biologi") && (
+              <g>
+                <rect
+                  x="705"
+                  y="470"
+                  width="650"
+                  height="385"
+                  rx="20"
+                  fill="#10b981"
+                  fillOpacity="0.03"
+                  stroke="#10b981"
+                  strokeOpacity="0.2"
+                  strokeDasharray="4 4"
+                />
+                <text x="730" y="504" fontSize="13" fontWeight="bold" fill="#10b981" letterSpacing="0.5">
+                  BIOLOGI DASAR: ENTITAS HIDUP & SEL
+                </text>
+              </g>
+            )}
 
             {/* Edges */}
             {conceptEdges.map((edge) => {
-              const src = nodePositions.get(edge.source);
-              const tgt = nodePositions.get(edge.target);
+              const src = FIXED_POSITIONS[edge.source];
+              const tgt = FIXED_POSITIONS[edge.target];
               if (!src || !tgt) return null;
 
               const isCross = edge.relationship === "cross_domain";
-              const isHighlighted =
-                selectedNode &&
-                (selectedNode.slug === edge.source || selectedNode.slug === edge.target);
+              const isConnected =
+                activeSlug !== null && (edge.source === activeSlug || edge.target === activeSlug);
+              const isDimmed = activeSlug !== null && !isConnected;
 
               return (
                 <g key={edge.id}>
@@ -270,28 +448,48 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
                     x2={tgt.x}
                     y2={tgt.y}
                     stroke={
-                      isHighlighted
+                      isConnected
                         ? "var(--color-accent)"
                         : isCross
                         ? "var(--color-accent)"
                         : "var(--color-border)"
                     }
-                    strokeWidth={isHighlighted ? 2.5 : isCross ? 1.5 : 1}
+                    strokeWidth={isConnected ? 2.5 : isCross ? 1.5 : 1}
                     strokeDasharray={isCross ? "5 4" : undefined}
-                    opacity={isHighlighted ? 1 : isCross ? 0.75 : 0.4}
-                    markerEnd={isCross ? "url(#arrowhead-cross)" : "url(#arrowhead-prereq)"}
+                    opacity={isConnected ? 1 : isDimmed ? 0.12 : isCross ? 0.6 : 0.35}
+                    markerEnd={
+                      isConnected
+                        ? "url(#arrowhead-active)"
+                        : isCross
+                        ? "url(#arrowhead-cross)"
+                        : "url(#arrowhead-prereq)"
+                    }
+                    className="transition-all duration-150"
                   />
-                  {isCross && (
-                    <text
-                      x={(src.x + tgt.x) / 2}
-                      y={(src.y + tgt.y) / 2 - 4}
-                      textAnchor="middle"
-                      fontSize="9"
-                      fill="var(--color-accent)"
-                      fontWeight="bold"
-                    >
-                      {edge.label}
-                    </text>
+                  {isCross && selectedDomain === "all" && (
+                    <g opacity={isDimmed ? 0.2 : 0.95}>
+                      <rect
+                        x={Math.round(((src.x + tgt.x) / 2 - 80) * 10) / 10}
+                        y={Math.round(((src.y + tgt.y) / 2 - 9) * 10) / 10}
+                        width="160"
+                        height="18"
+                        rx="9"
+                        fill="var(--color-surface)"
+                        stroke="var(--color-accent)"
+                        strokeWidth="0.8"
+                      />
+                      <text
+                        x={Math.round(((src.x + tgt.x) / 2) * 10) / 10}
+                        y={Math.round(((src.y + tgt.y) / 2 + 3) * 10) / 10}
+                        textAnchor="middle"
+                        fontSize="8.5"
+                        fill="var(--color-accent)"
+                        fontWeight="bold"
+                        className="pointer-events-none select-none"
+                      >
+                        {edge.label}
+                      </text>
+                    </g>
                   )}
                 </g>
               );
@@ -299,52 +497,128 @@ export function ConceptGraphView({ graphData }: ConceptGraphProps) {
 
             {/* Nodes */}
             {filteredNodes.map((node) => {
-              const pos = nodePositions.get(node.slug) ?? { x: 500, y: 300 };
+              const pos = FIXED_POSITIONS[node.slug] ?? { x: 700, y: 450 };
               const colors = DOMAIN_COLORS[node.domainSlug] ?? DOMAIN_COLORS.matematika;
               const isSelected = selectedNode?.slug === node.slug;
+              const isHovered = hoveredNode === node.slug;
+
+              // Check if node is connected to active (hovered or selected) node
+              const isConnectedToActive =
+                activeSlug !== null &&
+                (node.slug === activeSlug ||
+                  graphData.edges.some(
+                    (e) =>
+                      (e.source === activeSlug && e.target === node.slug) ||
+                      (e.target === activeSlug && e.source === node.slug)
+                  ));
+              const isDimmed = activeSlug !== null && !isConnectedToActive;
 
               return (
                 <g
                   key={node.id}
                   onClick={() => setSelectedNode(node)}
-                  className="cursor-pointer transition-all hover:scale-105"
+                  onMouseEnter={() => setHoveredNode(node.slug)}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  className="cursor-pointer outline-none group"
                   role="button"
                   tabIndex={0}
                   aria-label={`Konsep ${node.title}`}
+                  opacity={isDimmed ? 0.35 : 1}
+                  style={{ transition: "opacity 150ms ease" }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       setSelectedNode(node);
                     }
                   }}
                 >
+                  {/* 1. Constant Invisible Hit-Test Area: Prevents boundary scaling jitter on hover */}
                   <circle
                     cx={pos.x}
                     cy={pos.y}
-                    r={isSelected ? 26 : 20}
-                    fill="var(--color-surface)"
-                    stroke={colors.glow}
-                    strokeWidth={isSelected ? 3.5 : 2}
-                    className="transition-all"
+                    r={26}
+                    fill="transparent"
                   />
+
+                  {/* 2. Outer Glow / Ring */}
                   <circle
                     cx={pos.x}
                     cy={pos.y}
-                    r={isSelected ? 20 : 15}
+                    r={isSelected ? 26 : isHovered ? 23 : 19}
                     fill={colors.glow}
-                    opacity={isSelected ? 0.3 : 0.15}
+                    opacity={isSelected ? 0.35 : isHovered ? 0.25 : 0.12}
+                    className="transition-all duration-150"
                   />
-                  {/* Node Label */}
+
+                  {/* 3. Main Node Circle */}
+                  <circle
+                    cx={pos.x}
+                    cy={pos.y}
+                    r={isSelected ? 20 : isHovered ? 18.5 : 16.5}
+                    fill="var(--color-surface)"
+                    stroke={
+                      isSelected
+                        ? "var(--color-accent)"
+                        : isHovered
+                        ? colors.glow
+                        : "var(--color-border)"
+                    }
+                    strokeWidth={isSelected ? 3.5 : isHovered ? 2.5 : 1.8}
+                    className="transition-all duration-150"
+                  />
+
+                  {/* 4. Center Dot Pip */}
+                  <circle
+                    cx={pos.x}
+                    cy={pos.y}
+                    r={isSelected ? 7 : isHovered ? 6 : 4}
+                    fill={colors.glow}
+                    className="transition-all duration-150"
+                  />
+
+                  {/* 5. Short Display Label */}
                   <text
                     x={pos.x}
-                    y={pos.y + 32}
+                    y={pos.y + 28}
                     textAnchor="middle"
-                    fontSize="10"
-                    fontWeight={isSelected ? "bold" : "600"}
-                    fill="var(--color-text)"
-                    className="pointer-events-none select-none"
+                    fontSize="9.5"
+                    fontWeight={isSelected || isHovered ? "bold" : "600"}
+                    fill={
+                      isSelected
+                        ? "var(--color-accent)"
+                        : isHovered
+                        ? "var(--color-text)"
+                        : "var(--color-text-muted)"
+                    }
+                    className="pointer-events-none select-none transition-colors duration-150"
                   >
-                    {node.title.length > 20 ? `${node.title.substring(0, 18)}...` : node.title}
+                    {SHORT_LABELS[node.slug] || node.title}
                   </text>
+
+                  {/* 6. Floating Tooltip Preview on Hover */}
+                  {isHovered && !isSelected && (
+                    <g className="pointer-events-none" opacity="0.97">
+                      <rect
+                        x={pos.x - 85}
+                        y={pos.y - 44}
+                        width="170"
+                        height="24"
+                        rx="12"
+                        fill="var(--color-surface-raised)"
+                        stroke="var(--color-border)"
+                        strokeWidth="1"
+                      />
+                      <text
+                        x={pos.x}
+                        y={pos.y - 28}
+                        textAnchor="middle"
+                        fontSize="9"
+                        fontWeight="bold"
+                        fill="var(--color-text)"
+                      >
+                        {node.title.length > 24 ? `${node.title.substring(0, 22)}...` : node.title}
+                      </text>
+                    </g>
+                  )}
                 </g>
               );
             })}

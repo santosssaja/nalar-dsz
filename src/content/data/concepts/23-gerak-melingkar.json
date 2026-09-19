@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000023",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "gerak-melingkar",
+  "title": "Gerak Melingkar: Kecepatan Sudut, Laju Linier, dan Percepatan Sentripetal",
+  "summary": "Mempelajari dinamika partikel pada lintasan melingkar: hubungan periode, frekuensi, kecepatan sudut, kelajuan tangensial linier, dan percepatan sentripetal yang selalu mengarah ke pusat rotasi.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan konsep kecepatan sudut (rad/s) dan kecepatan linier (m/s)",
+    "Memahami bahwa perubahan arah vektor kecepatan menimbulkan percepatan sentripetal meski kelajuannya konstan",
+    "Menghitung percepatan sentripetal dan mengidentifikasi gaya yang bertindak sebagai gaya sentripetal"
+  ],
+  "prerequisites": [
+    "kinematika",
+    "vektor",
+    "gerak-lurus"
+  ],
+  "misconceptions": [
+    {
+      "code": "CONSTANT_SPEED_MEANS_NO_ACCELERATION",
+      "label": "Menganggap benda yang bergerak melingkar dengan kelajuan konstan tidak memiliki percepatan",
+      "remediation": "Kecepatan adalah besaran vektor (memiliki besar dan arah). Pada gerak melingkar, arah vektor kecepatan terus-menerus berbelok di setiap saat, sehingga selalu ada percepatan yang mengarah ke pusat lingkaran (percepatan sentripetal)."
+    },
+    {
+      "code": "CENTRIFUGAL_FORCE_REALITY",
+      "label": "Menganggap gaya sentrifugal adalah gaya nyata yang mendorong benda terlempar ke luar lingkaran",
+      "remediation": "Gaya sentrifugal sebenarnya adalah efek semu inersia kerangka non-inersial (kelembaman tubuh yang ingin terus bergerak lurus menyusuri garis singgung), bukan gaya nyata dari interaksi fisik."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002301",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Kincir Ria dan Tikungan Jalan: Mengapa Tubuh Miring?",
+      "instruction": "Rasakan perubahan arah saat menaiki wahana putar atau berada di dalam mobil yang menikung tajam.",
+      "content": "Pernahkah kamu duduk di dalam mobil yang tiba-tiba berbelok tajam ke kiri pada kecepatan $60\\text{ km/jam}$?\n- Tubuhmu terasa 'terlempar' ke arah kanan menabrak pintu mobil!\n- Jika tali pengikat benda putar diayunkan lalu putus, ke manakah benda itu melesat? Bukan terlempar tegak lurus menjauhi pusat, melainkan **melesat lurus menyusuri garis singgung (tangensial)**!\n\nGerak melingkar memperlihatkan sifat paling mendasar dari hukum inersia: benda selalu ingin bergerak lurus ke depan, kecuali jika ada tarikan terus-menerus ke arah pusat yang membelokkan jalurnya.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Ilustrasi mobil menikung dan benda berputar pada tali yang menunjukkan arah garis singgung dan percepatan ke pusat.",
+        "screenReaderNote": "Pengantar mengilustrasikan inersia tubuh saat berbelok dan kecenderungan benda melesat tangensial."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002302",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menggandakan Kecepatan Tikungan",
+      "instruction": "Prediksi pengaruh penggandaan kelajuan terhadap tarikan sentripetal di tikungan jalan.",
+      "content": "Sebuah mobil melewati tikungan bundaran beradius $r = 50\\text{ meter}$ dengan kelajuan $v_1 = 10\\text{ m/s}$. Percepatan sentripetal yang dialaminya adalah $a_{s1}$.\n\nJika pengemudi memacu mobil hingga kelajuannya naik dua kali lipat menjadi $v_2 = 20\\text{ m/s}$ pada jari-jari tikungan yang sama, berapakah percepatan sentripetal yang baru ($a_{s2}$)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat rumus percepatan sentripetal as = v² / r.",
+        "concept": "Perhatikan bahwa kelajuan v dikuadratkan dalam formula.",
+        "strategy": "Jika v naik 2 kali lipat, maka v² naik sebesar 2² = 4 kali lipat.",
+        "solution": "Percepatan sentripetal menjadi 4 kali semula."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-4-times",
+            "label": "4 kali lebih besar — karena percepatan sentripetal berbanding lurus dengan kuadrat kelajuan (v²)",
+            "isCorrect": true,
+            "explanation": "Benar! Karena as = v² / r, saat v berlipat 2, v² menjadi 4 kali lipat sehingga beban percepatan sentripetal melonjak 4 kali lipat."
+          },
+          {
+            "id": "opt-2-times",
+            "label": "2 kali lebih besar — karena kelajuan bertambah dua kali lipat secara proporsional",
+            "isCorrect": false,
+            "explanation": "Kelajuan berpengaruh secara kuadratik, bukan linier. Menaikkan laju 2 kali lipat membuat risiko selip di tikungan melonjak 4 kali lipat."
+          },
+          {
+            "id": "opt-remain-same",
+            "label": "Tetap sama — karena jari-jari lintasan lingkaran tidak berubah",
+            "isCorrect": false,
+            "explanation": "Kelajuan partikel menentukan laju perubahan arah vektor kecepatannya; semakin cepat melaju, semakin drastis pembelokan per satuan waktu."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002303",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Hubungan Radius, Kecepatan Sudut, dan Laju Linier",
+      "instruction": "Amati bagaimana titik di tepi piringan hitam berputar lebih cepat secara linier dibandingkan titik di dekat poros putar.",
+      "content": "Saat sebuah piringan berputar dengan kecepatan sudut konstan $\\omega$:\n- Semua titik pada piringan menempuh sudut putar yang sama dalam waktu yang sama ($\\omega$ sama untuk seluruh benda tegar).\n- Namun, titik di bagian tepi luar menempuh keliling lingkaran yang jauh lebih panjang daripada titik di dekat poros!\n- Kecepatan linier berbanding lurus dengan jarak ke poros: $v = \\omega \\cdot r$.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram piringan berputar dengan dua titik pada radius berbeda menunjukkan vektor kecepatan linier berbeda panjang.",
+        "screenReaderNote": "Materi interaktif menunjukkan bahwa titik beradius lebih besar memiliki kelajuan linier lebih tinggi pada omega yang sama."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002304",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Besaran Gerak Melingkar Beraturan (GMB)",
+      "instruction": "Pelajari hubungan analitik antara besaran sudut dan besaran linier.",
+      "content": "### 1. Periode ($T$) dan Frekuensi ($f$)\n- **Periode ($T$)**: Waktu untuk 1 putaran penuh (sekon): $T = \\frac{t}{n}$.\n- **Frekuensi ($f$)**: Banyak putaran tiap sekon (Hz): $f = \\frac{1}{T}$.\n\n### 2. Kecepatan Sudut (\\(\\omega\\))\n$$\\omega = \\frac{2\\pi}{T} = 2\\pi f \\quad (\\text{rad/s})$$\n\n### 3. Kecepatan Linier / Tangensial ($v$)\nLintasan satu putaran adalah keliling lingkaran $2\\pi r$:\n$$v = \\frac{2\\pi r}{T} = \\omega \\cdot r \\quad (\\text{m/s})$$\n\n### 4. Percepatan Sentripetal ($a_s$)\nPercepatan yang selalu tegak lurus terhadap vektor kecepatan dan berarah menuju pusat lingkaran:\n$$a_s = \\frac{v^2}{r} = \\omega^2 \\cdot r \\quad (\\text{m/s}^2)$$\n\nBerdasarkan Hukum II Newton, percepatan sentripetal ini dihasilkan oleh **gaya sentripetal**:\n$$F_s = m \\cdot a_s = \\frac{m v^2}{r} = m \\omega^2 r$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap besaran gerak melingkar beraturan meliputi periode, frekuensi, omega, v tangensial, dan as.",
+        "screenReaderNote": "Halaman merangkum definisi rumus periode, frekuensi, kecepatan sudut rad per sekon, kecepatan linier, dan percepatan sentripetal."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002305",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Percepatan Sentripetal Satelit",
+      "instruction": "Hitung percepatan sentripetal benda yang bergerak melingkar.",
+      "content": "Sebuah bandul kecil diputar horizontal dengan tali sepanjang $r = 0{,}5\\text{ meter}$ sehingga melakukan gerak melingkar beraturan dengan kecepatan sudut tetap $\\omega = 6\\text{ rad/s}$.\n\nBerapakah besar percepatan sentripetal ($a_s$) yang dialami bandul tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan persamaan percepatan sentripetal as = ω² × r.",
+        "concept": "Nilai ω = 6 rad/s dan jari-jari tali r = 0.5 m.",
+        "strategy": "Hitung: as = 6² × 0.5 = 36 × 0.5.",
+        "solution": "as = 18 m/s²."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.2,
+        "expectedValue": 18,
+        "units": "m/s²",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002306",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Hakikat Percepatan Sentripetal",
+      "instruction": "Jelaskan mengapa partikel yang kelajuan tangensialnya konstan tetap dianggap dipercepat.",
+      "content": "Uraikan dalam 2–3 paragraf:\n1. Mengapa suatu benda yang berputar dengan kelajuan tetap (misalnya $10\\text{ m/s}$) dikatakan memiliki percepatan.\n2. Ke mana arah percepatan sentripetal dan apa yang menyediakannya pada kasus mobil berbelok di aspal datar.\n3. Apa yang terjadi jika gaya pengikat (seperti gesekan ban atau tali) tiba-tiba lenyap.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-gerak-melingkar",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-gerak-melingkar-vektor-arah",
+        "name": "Vektor dan Perubahan Arah",
+        "description": "Menjelaskan bahwa percepatan adalah turunan vektor kecepatan terhadap waktu; perubahan arah gerak sudah cukup membuktikan adanya percepatan meski besar nilainya tetap.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gerak-melingkar-arah-dan-sumber-gaya",
+        "name": "Arah dan Penyedia Gaya Sentripetal",
+        "description": "Menjelaskan arah percepatan menuju pusat putaran dan mengidentifikasi gaya gesek statis jalanan sebagai penyedia gaya sentripetal.",
+        "weight": 1
+      },
+      {
+        "id": "crit-gerak-melingkar-garis-singgung-inersia",
+        "name": "Perilaku Tangensial saat Putus",
+        "description": "Menjelaskan bahwa saat gaya hilang, benda akan melesat lurus sepanjang garis singgung karena inersia Hukum I Newton.",
+        "weight": 1
+      }
+    ]
+  }
+}

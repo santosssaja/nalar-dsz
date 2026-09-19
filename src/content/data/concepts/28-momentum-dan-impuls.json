@@ -1,0 +1,167 @@
+{
+  "id": "30000000-0000-4000-8000-000000000028",
+  "moduleId": "20000000-0000-4000-8000-000000000003",
+  "slug": "momentum-dan-impuls",
+  "title": "Momentum dan Impuls: Vektor Momentum, Teorema Impuls, dan Rekayasa Gaya Impak",
+  "summary": "Mempelajari kuantitas gerak materi (vektor momentum p = m·v), interaksi impuls gaya dalam rentang waktu kontak, serta prinsip fisika di balik sistem keselamatan airbag dan zona benturan.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Memahami momentum sebagai besaran vektor (p = mv) yang memperhatikan arah gerak",
+    "Menerapkan Teorema Impuls-Momentum (I = F_avg × Δt = Δp)",
+    "Menganalisis hubungan terbalik antara waktu benturan kontak (Δt) dengan besar gaya impak perusak (F_avg)"
+  ],
+  "prerequisites": [
+    "hukum-newton",
+    "gerak-lurus",
+    "vektor"
+  ],
+  "misconceptions": [
+    {
+      "code": "MOMENTUM_IS_SCALAR",
+      "label": "Memperlakukan momentum sebagai besaran skalar yang cukup dijumlahkan angkanya tanpa memperhatikan tanda arah",
+      "remediation": "Momentum adalah vektor. Jika bola bermassa 1 kg bergerak ke kanan dengan laju 5 m/s (+5 kg·m/s) lalu memantul ke kiri dengan laju 5 m/s (-5 kg·m/s), perubahan momentumnya BUKAN nol, melainkan Δp = (-5) - (+5) = -10 kg·m/s!"
+    },
+    {
+      "code": "CRUMPLE_ZONE_WEAKNESS",
+      "label": "Menganggap moncong mobil modern yang mudah penyok saat tabrakan adalah tanda kualitas material yang buruk",
+      "remediation": "Moncong yang penyok sengaja dirancang sebagai 'crumple zone' untuk memperpanjang waktu penghentian (Δt). Dengan memperbesar Δt, gaya benturan brutal (F = Δp/Δt) yang dialami penumpang di dalam kabin berkurang drastis sehingga menyelamatkan nyawa."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000002801",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Kantung Udara (Airbag) dan Sarung Tinju: Penyelamat dari Benturan",
+      "instruction": "Pikirkan mengapa mendarat di atas kasur busa terasa lembut sedangkan mendarat di atas beton semen terasa sangat menyakitkan.",
+      "content": "Bayangkan dua situasi pendaratan dari ketinggian $2\\text{ meter}$:\n1. Kamu melompat dan mendarat di atas tumpukan kasur busa tebal.\n2. Kamu melompat dan mendarat di atas lantai cor beton keras tanpa menekuk lutut.\n\nDalam kedua kasus tersebut:\n- Massa tubuhmu sama ($m$).\n- Kecepatan tepat sebelum menyentuh permukaan sama ($v$).\n- Kecepatan akhir sama-sama nol ($v_t = 0$).\nArtinya, **perubahan momentum total ($\\Delta p$) yang harus diredam tubuhmu persis sama**!\n\nLalu mengapa kasur busa terasa aman, sedangkan beton bisa mematahkan tulang?\nKuncinya terletak pada satu variabel: **waktu kontak benturan ($\\Delta t$)**!\nKasur busa memperpanjang waktu berhenti tubuh menjadi $0{,}5\\text{ detik}$, sedangkan semen menghentikan tubuhmu seketika dalam $0{,}005\\text{ detik}$ (100 kali lebih singkat), menghasilkan gaya hantam 100 kali lebih mematikan!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Perbandingan grafik gaya terhadap waktu saat mendarat di kasur busa berdurasi panjang dengan benturan semen berpuncak tajam.",
+        "screenReaderNote": "Materi pengantar menguraikan peranan waktu kontak benturan dalam meredam besarnya gaya impak."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002802",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Pantulan Bola Karet vs Tanah Liat Menempel",
+      "instruction": "Prediksi bola mana yang memberikan impuls dan gaya dorong lebih besar pada dinding target.",
+      "content": "Dua bola memiliki massa yang sama ($m = 0{,}2\\text{ kg}$) dan dilempar dengan kecepatan awal yang sama ($v = 10\\text{ m/s}$) ke arah dinding beton:\n- **Bola A (Karet elastis):** Memantul balik dengan kelajuan yang sama ($v' = -10\\text{ m/s}$).\n- **Bola B (Tanah liat):** Menempel di dinding dan langsung berhenti ($v' = 0$).\n\nBola manakah yang memberikan impuls (dan menerima perubahan momentum) lebih besar pada dinding?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat bahwa momentum adalah besaran vektor: Δp = p_akhir - p_awal.",
+        "concept": "Arah ke kanan bertanda positif (+), arah ke kiri bertanda negatif (-).",
+        "strategy": "Untuk bola A: Δp = (-mv) - (+mv) = -2mv. Untuk bola B: Δp = 0 - (+mv) = -mv.",
+        "solution": "Bola A yang memantul mengalami perubahan momentum dua kali lipat lebih besar dibanding bola B."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-bola-a",
+            "label": "Bola A (karet memantul) — karena arah geraknya berbalik sehingga perubahan momentumnya dua kali lebih besar: Δp = -2mv",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Membalikkan arah gerak membutuhkan dorongan impuls dua kali lipat dibanding sekadar menghentikannya. Dinding menerima impuls dua kali lebih besar dari bola karet yang memantul."
+          },
+          {
+            "id": "opt-bola-b",
+            "label": "Bola B (tanah liat) — karena seluruh energinya diserap dinding seketika",
+            "isCorrect": false,
+            "explanation": "Bola tanah liat hanya kehilangan momentum dari mv menjadi 0 (perubahan = mv), sedangkan bola elastis berubah dari +mv menjadi -mv (perubahan = 2mv)."
+          },
+          {
+            "id": "opt-kedua-sama",
+            "label": "Keduanya sama besar — karena massa dan kecepatan awalnya identik",
+            "isCorrect": false,
+            "explanation": "Keadaan akhir kedua bola berbeda arah secara vektor, sehingga perubahan momentumnya tidak sama."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002803",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Luas di Bawah Grafik Gaya-Waktu (F-t)",
+      "instruction": "Amati bagaimana luas kurva F-t merepresentasikan besaran impuls fisik.",
+      "content": "Perhatikan grafik gaya tumbukan terhadap waktu:\n- Gaya saat terjadi benturan tidak pernah konstan, melainkan melonjak tajam ke puncak lalu meluruh cepat.\n- **Impuls ($I$)** adalah luas daerah di bawah kurva fungsi $F(t)$ terhadap waktu $t$:\n$$I = \\int_{t_1}^{t_2} F(t)\\,dt = F_{\\text{rata-rata}} \\cdot \\Delta t$$\n- Untuk nilai luas (impuls) yang sama:\n  - Bila waktu benturan $\\Delta t$ sangat sempit $\\rightarrow$ puncak gaya $F_{\\max}$ sangat menjulang tinggi (merusak).\n  - Bila waktu benturan $\\Delta t$ diperlebar $\\rightarrow$ kurva mendatar landai dengan gaya puncak yang aman.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Kurva gaya terhadap waktu membandingkan kurva runcing bertaji tinggi dengan kurva landai melebar pada luas integral yang sama.",
+        "screenReaderNote": "Materi interaktif menguraikan representasi integral luas daerah di bawah grafik gaya terhadap waktu sebagai impuls."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002804",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Formulasi Momentum dan Impuls",
+      "instruction": "Pahami perumusan analitik momentum linier dan teorema impuls-momentum.",
+      "content": "### 1. Momentum Linier (\\(\\vec{p}\\))\nBesaran vektor ukuran kuantitas gerak inersia:\n$$\\vec{p} = m \\cdot \\vec{v} \\quad (\\text{kg}\\cdot\\text{m/s})$$\nArah vektor momentum selalu searah dengan arah vektor kecepatannya.\n\n### 2. Impuls (\\(\\vec{I}\\))\nAkumulasi gaya luar selama selang waktu kontak benturan $\\Delta t$:\n$$\\vec{I} = \\vec{F}_{\\text{rata-rata}} \\cdot \\Delta t \\quad (\\text{N}\\cdot\\text{s})$$\n\n### 3. Teorema Impuls-Momentum\nBerasal langsung dari perumusan diferensial Hukum II Newton: $\\vec{F} = \\frac{d\\vec{p}}{dt}$\n$$\\vec{I} = \\Delta \\vec{p} = \\vec{p}_2 - \\vec{p}_1 = m(\\vec{v}_2 - \\vec{v}_1)$$\n\n### 4. Gaya Rata-Rata Impak\n$$F_{\\text{rata-rata}} = \\frac{\\Delta p}{\\Delta t}$$\nPersamaan ini membuktikan bahwa untuk perubahan momentum $\\Delta p$ tertentu, gaya benturan berbanding terbalik dengan durasi waktu kontak $\\Delta t$.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi lengkap p = mv, I = F delta t, teorema I = Delta p, dan F_avg = Delta p / delta t.",
+        "screenReaderNote": "Materi merangkum formulasi analitik momentum linier, impuls, teorema impuls-momentum, dan persamaan gaya impak."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002805",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Gaya Pukul Raket Tenis",
+      "instruction": "Hitung gaya rata-rata yang diberikan senar raket saat memukul bola tenis.",
+      "content": "Sebuah bola tenis bermassa $m = 0{,}06\\text{ kg}$ datang mendekati raket ke arah kiri dengan kecepatan $v_1 = -20\\text{ m/s}$.\nPemain memukul bola tersebut sehingga memantul berbalik ke arah kanan dengan kecepatan $v_2 = +30\\text{ m/s}$.\nWaktu kontak bola dengan senar raket berlangsung selama $\\Delta t = 0{,}005\\text{ detik}$.\n\nBerapakah besar gaya rata-rata ($F$) yang dikerjakan raket pada bola?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Hitung perubahan momentum Δp = m(v2 - v1). Perhatikan tanda arah!",
+        "concept": "Δp = 0.06 × (30 - (-20)) = 0.06 × 50 = 3 kg·m/s.",
+        "strategy": "Hitung gaya rata-rata: F = Δp / Δt = 3 / 0.005.",
+        "solution": "Gaya rata-rata yang dialami bola adalah 600 Newton."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 5,
+        "expectedValue": 600,
+        "units": "N",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000002806",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Rekayasa Fisika Zona Remuk Kendaraan Modern",
+      "instruction": "Jelaskan prinsip fisika impuls dan momentum dalam rekayasa keselamatan otomotif.",
+      "content": "Uraikan dalam bentuk esai analitis:\n1. Mengapa bodi mobil masa kini sengaja dirancang agar moncongnya mudah hancur terlipat (crumple zone) saat terjadi tabrakan hebat.\n2. Bagaimana kombinasi crumple zone dan sabuk pengaman/airbag bekerja serempak memanipulasi variabel $\\Delta t$ dan gaya $F_{\\text{rata-rata}}$.\n3. Bandingkan nasib pengemudi pada mobil lawas berrangka baja kaku yang tidak bisa penyok dibandingkan mobil modern pada tabrakan berkecepatan tinggi yang sama.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-momentum-dan-impuls",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-momentum-dan-impuls-peningkatan-waktu-kontak",
+        "name": "Manipulasi Variabel Durasi Delta t",
+        "description": "Menjelaskan secara gamblang bahwa deformasi fisik crumple zone dan elastisitas airbag memperpanjang durasi waktu penghentian tubuh dari beberapa milidetik menjadi puluhan kali lipat lebih lama.",
+        "weight": 1
+      },
+      {
+        "id": "crit-momentum-dan-impuls-reduksi-gaya-impak",
+        "name": "Pelemahan Gaya Hantam F = Delta p / Delta t",
+        "description": "Mengaitkan penambahan Δt dengan penurunan tajam gaya impak rata-rata F = Δp/Δt yang bekerja pada organ vital tubuh manusia.",
+        "weight": 1
+      },
+      {
+        "id": "crit-momentum-dan-impuls-bahaya-rangka-kaku",
+        "name": "Komparasi Bahaya Mobil Kaku Konvensional",
+        "description": "Menerangkan bahwa mobil yang terlalu kokoh tanpa zona remuk menghentikan kabin secara seketika sehingga organ tubuh penumpang mengalami deselerasi mematikan.",
+        "weight": 1
+      }
+    ]
+  }
+}

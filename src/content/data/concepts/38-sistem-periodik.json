@@ -1,0 +1,182 @@
+{
+  "id": "30000000-0000-4000-8000-000000000038",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "sistem-periodik",
+  "title": "Tabel Periodik Unsur: Golongan, Periode, dan Tren Sifat Keperiodikan",
+  "summary": "Menjelajahi peta kompas ilmu kimia modern: susunan tabel periodik berdasarkan nomor atom, kemiripan sifat kimiawi satu golongan, serta tren periodik jari-jari atom, energi ionisasi, dan keelektronegatifan.",
+  "difficulty": "standard",
+  "learningObjectives": [
+    "Membedakan fungsi periode (jumlah kulit elektron) dan golongan (elektron valensi penentu sifat kimia)",
+    "Menganalisis tren keperiodikan jari-jari atom melintasi periode dan menuruni golongan",
+    "Memprediksi kereaktifan dan kecenderungan energi ionisasi serta keelektronegatifan unsur"
+  ],
+  "prerequisites": [
+    "atom",
+    "unsur-dan-senyawa"
+  ],
+  "misconceptions": [
+    {
+      "code": "ATOMIC_RADIUS_INCREASES_ACROSS_PERIOD",
+      "label": "Menganggap jari-jari atom semakin membesar dari kiri ke kanan dalam satu periode karena nomor atomnya bertambah",
+      "remediation": "Dari kiri ke kanan dalam satu periode, jumlah kulit elektron TETAP sama, namun jumlah proton di inti bertambah (+Z). Muatan inti efektif yang semakin kuat menarik awan elektron lebih rapat ke pusat, sehingga jari-jari atom justru semakin MENYUSUT dari kiri ke kanan."
+    },
+    {
+      "code": "MENDELEEV_ORDERED_BY_ATOMIC_NUMBER",
+      "label": "Mengira Dmitri Mendeleev menyusun tabel periodik pertamanya berdasarkan nomor atom proton",
+      "remediation": "Pada zaman Mendeleev (1869), proton belum ditemukan! Mendeleev menyusun unsur berdasarkan kenaikan massa atom relatif dan kemiripan sifat kimiawi, bahkan berani mengosongkan kotak untuk memprediksi unsur yang belum ditemukan (seperti Gallium dan Germanium). Tabel modern baru disempurnakan oleh Henry Moseley berdasarkan nomor atom Z."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003801",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Ramalan Dmitri Mendeleev: Kartu Solitaire yang Membaca Alam",
+      "instruction": "Pikirkan bagaimana sebuah tabel dapat meramalkan keberadaan unsur alam yang belum pernah dilihat manusia.",
+      "content": "Pada tahun 1869 di Rusia, kimiawan Dmitri Mendeleev menuliskan nama 63 unsur yang telah diketahui saat itu pada kartu-kartu kecil mirip kartu remi solitaire.\nIa menata kartu-kartu itu berulang-ulang hingga melihat suatu pola periodik yang berulang secara berkala.\n\nYang paling mencengangkan: di beberapa tempat, polanya terasa 'lompat'.\nAlih-alih memaksakan kartu yang ada, **Mendeleev dengan berani membiarkan kotak-kotak itu kosong**!\nIa meramalkan:\n> *'Di kotak kosong di bawah Aluminium, ada unsur yang belum kita temukan. Massanya sekitar 68, titik lelehnya rendah, dan massa jenisnya 5,9 g/cm³.'*\n\nEnam tahun kemudian di Prancis, para ilmuwan menemukan unsur baru tersebut: **Gallium**! Massanya 69,9 dan massa jenisnya tepat 5,9 g/cm³!\nTabel periodik bukan sekadar tabel hafalan, melainkan hukum alam semesta yang sangat teratur.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi tabel periodik modern berwarna dengan kode blok s, p, d, f dan penandaan periode horizontal serta golongan vertikal.",
+        "screenReaderNote": "Materi pengantar menguraikan kejeniusan ramalan Mendeleev dan struktur organisasi tabel periodik modern."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003802",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Jari-Jari Atom Natrium vs Klorin",
+      "instruction": "Bandingkan ukuran fisik atom Natrium (Z=11) dengan atom Klorin (Z=17) yang berada pada periode yang sama.",
+      "content": "Atom Natrium ($\\text{Na}$, $Z = 11$) dan atom Klorin ($\\text{Cl}$, $Z = 17$) keduanya berada di **Periode 3** (keduanya sama-sama memiliki 3 kulit elektron terisi: K, L, dan M).\n- Natrium memiliki $11\\text{ proton}$ di intinya.\n- Klorin memiliki $17\\text{ proton}$ di intinya.\n\nManakah di antara kedua atom tersebut yang memiliki ukuran jari-jari atom lebih besar?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Pertimbangkan tarikan muatan inti efektif (+Z) terhadap elektron pada kulit yang sama.",
+        "concept": "Kedua atom memiliki 3 lapisan kulit yang sama. Namun inti Klorin memiliki 17 proton penarik dibanding 11 proton Natrium.",
+        "strategy": "Muatan inti +17 menarik kulit elektron lebih kuat merapat ke dalam dibanding +11.",
+        "solution": "Atom Natrium memiliki jari-jari lebih besar dibanding atom Klorin."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-natrium-lebih-besar",
+            "label": "Natrium (Na) lebih besar — karena muatan inti protonnya lebih sedikit (+11) sehingga daya tarik ke awan elektron lebih longgar dibanding Klorin (+17)",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Karena jumlah kulitnya sama (3 kulit), inti Klorin yang bermuatan +17 menarik elektron valensi jauh lebih kuat ke pusat, menciutkan ukuran atom Klorin lebih kecil daripada Natrium."
+          },
+          {
+            "id": "opt-klorin-lebih-besar",
+            "label": "Klorin (Cl) lebih besar — karena memiliki 17 elektron dan 17 proton yang jumlah partikelnya lebih banyak",
+            "isCorrect": false,
+            "explanation": "Penambahan partikel di kulit yang sama memperkuat tarikan inti ke pusat, bukan memperluas volume atom."
+          },
+          {
+            "id": "opt-sama-besar",
+            "label": "Keduanya sama besar — karena sama-sama berada di Periode 3 dengan 3 kulit elektron",
+            "isCorrect": false,
+            "explanation": "Jumlah kulit menentukan batas kasar, namun gaya elektrostatik inti menentukan pemadatan aktual jari-jari."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003803",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Menjelajah Tabel Periodik Interaktif",
+      "instruction": "Pilih elemen pada tabel periodik dan amati tren warna sifat keperiodikannya.",
+      "content": "Pahami empat tren periodik utama:\n1. **Jari-Jari Atom:** Membesar ke **bawah** (tambah kulit) dan membesar ke **kiri** (tarikan inti lebih lemah). Paling besar: Sesium ($\\text{Cs}$) / Fransium ($\\text{Fr}$).\n2. **Energi Ionisasi:** Energi untuk melepas 1 elektron terluar. Meningkat ke **kanan** dan ke **atas**. Paling tinggi: Helium ($\\text{He}$).\n3. **Keelektronegatifan:** Kemampuan atom menarik pasangan elektron ikatan. Meningkat ke **kanan** dan ke **atas**. Paling elektronegatif: Fluorin ($\\text{F} = 4{,}0$).\n4. **Karakter Logam:** Paling kuat di sudut kiri bawah, memudar menjadi nonlogam di sudut kanan atas.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Peta visual tren keperiodikan tabel periodik dengan panah arah peningkatan jari-jari atom, energi ionisasi, dan keelektronegatifan.",
+        "screenReaderNote": "Materi interaktif menyajikan diagram vektor arah tren sifat keperiodikan unsur."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003804",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Periode, Golongan, dan Muatan Inti Efektif",
+      "instruction": "Pelajari organisasi matematis dan fisis susunan tabel periodik.",
+      "content": "### 1. Periode (Baris Horizontal: 1 s.d. 7)\nMenunjukkan **jumlah kulit elektron utama ($n$)** yang terisi elektron:\n- Periode 1: $n = 1$ (maksimal 2 unsur: H, He)\n- Periode 2: $n = 2$ (8 unsur: Li s.d. Ne)\n- Periode 3: $n = 3$ (8 unsur: Na s.d. Ar)\n\n### 2. Golongan (Kolom Vertikal: 1 s.d. 18 / IA s.d. VIIIA)\nMenunjukkan kesamaan konfigurasi elektron terluar (**elektron valensi**) $\\implies$ menentukan **kemiripan sifat reaksi kimiawi**:\n- Golongan 1 (IA) / Logam Alkali: elektron valensi $ns^1$ (sangat reaktif melepas 1e)\n- Golongan 17 (VIIA) / Halogen: elektron valensi $ns^2 np^5$ (sangat reaktif menangkap 1e)\n- Golongan 18 (VIIIA) / Gas Mulia: elektron valensi $ns^2 np^6$ (oktet stabil, inert)\n\n### 3. Muatan Inti Efektif ($Z_{\\text{eff}}$)\nMuatan positif inti yang benar-benar dirasakan oleh elektron valensi setelah dikurangi efek perisai elektron kulit dalam (screening effect $S$):\n$$Z_{\\text{eff}} = Z - S$$\nMelintasi periode dari kiri ke kanan: $Z$ bertambah sementara $S$ relatif tetap $\\implies Z_{\\text{eff}}$ melonjak tajam, menarik elektron lebih dekat ke inti.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Formulasi analitik hubungan periode dengan kulit n, golongan dengan elektron valensi, dan rumus muatan inti efektif Z_eff = Z - S.",
+        "screenReaderNote": "Halaman merangkum definisi analitis periode, golongan kimiawi, dan perumusan muatan inti efektif Slater Z_eff = Z - S."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003805",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Mengurutkan Tingkat Keelektronegatifan Halogen",
+      "instruction": "Urutkan unsur satu golongan berdasarkan jarak kulit dari inti.",
+      "content": "Diberikan empat unsur dalam Golongan 17 (Halogen):\n- Fluorin ($\\text{F}$, Periode 2)\n- Klorin ($\\text{Cl}$, Periode 3)\n- Bromin ($\\text{Br}$, Periode 4)\n- Iodin ($\\text{I}$, Periode 5)\n\nManakah di antara keempat unsur tersebut yang memiliki keelektronegatifan (daya tarik pasangan elektron ikatan) paling kuat?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Ingat bahwa keelektronegatifan meningkat dari bawah ke atas dalam satu golongan.",
+        "concept": "Semakin sedikit kulitnya, semakin dekat pasangan elektron ikatan dengan tarikan proton inti.",
+        "strategy": "Fluorin berada di paling atas (Periode 2) dengan hanya 2 lapisan kulit.",
+        "solution": "Fluorin (F) adalah unsur paling elektronegatif di seluruh tabel periodik."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-fluorin",
+            "label": "Fluorin (F) — dengan skala Pauling 4,0, jari-jarinya paling kecil sehingga intinya paling kuat menarik elektron ikatan luar",
+            "isCorrect": true,
+            "explanation": "Benar! Fluorin hanya memiliki 2 kulit elektron. Jarak inti ke elektron ikatan sangat dekat tanpa banyak terhalang perisai, menjadikannya penarik elektron terkuat di alam semesta."
+          },
+          {
+            "id": "opt-iodin",
+            "label": "Iodin (I) — karena memiliki nomor atom dan massa paling besar",
+            "isCorrect": false,
+            "explanation": "Iodin memiliki 5 kulit elektron; jarak yang jauh dan perisai tebal membuat intinya lemah menarik elektron ikatan luar."
+          },
+          {
+            "id": "opt-klorin",
+            "label": "Klorin (Cl) — berada di posisi seimbang",
+            "isCorrect": false,
+            "explanation": "Keelektronegatifan Klorin (3,16) lebih rendah dibandingkan Fluorin (4,0)."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003806",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Mengapa Gas Mulia Begitu Stabil dan Sukar Bereaksi?",
+      "instruction": "Jelaskan rahasia di balik keengganan gas mulia (Helium, Neon, Argon) untuk berikatan secara kimiawi.",
+      "content": "Uraikan dalam 2–3 paragraf analitis:\n1. Karakteristik konfigurasi elektron valensi gas mulia (aturan duplet dan oktet penuh $ns^2 np^6$).\n2. Mengapa energi ionisasinya merupakan yang tertinggi di setiap periodenya dan afinitas elektronnya mendekati nol atau positif.\n3. Bagaimana stabilitas konfigurasi gas mulia menjadi pendorong utama bagi atom-atom lain untuk membentuk ikatan kimia.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-sistem-periodik",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-sistem-periodik-konfigurasi-oktet-penuh",
+        "name": "Konfigurasi Kulit Terisi Penuh",
+        "description": "Menjelaskan bahwa orbital s dan p terluar terisi penuh elektron menghasilkan simetri rapatan muatan yang meminimalkan energi potensial sistem.",
+        "weight": 1
+      },
+      {
+        "id": "crit-sistem-periodik-energi-ionisasi-maksimum",
+        "name": "Analisis Energi Ionisasi Ekstrem",
+        "description": "Menjelaskan bahwa melepas satu elektron menuntut energi sangat masif sementara menambah satu elektron harus masuk ke kulit baru yang jauh, sehingga atom gas mulia inert.",
+        "weight": 1
+      },
+      {
+        "id": "crit-sistem-periodik-pendorong-ikatan-kimia",
+        "name": "Peran Sebagai Target Kestabilan Ikatan",
+        "description": "Menghubungkan sifat ini dengan dorongan termodinamika atom-atom lain untuk berikatan agar dapat meniru konfigurasi elektron stabil gas mulia.",
+        "weight": 1
+      }
+    ]
+  }
+}

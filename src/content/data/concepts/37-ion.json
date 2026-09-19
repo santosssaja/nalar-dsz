@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000037",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "ion",
+  "title": "Ion: Kation, Anion, Ketidakseimbangan Muatan, dan Kisi Kristal Ionik",
+  "summary": "Memahami terbentuknya partikel bermuatan listrik akibat pelepasan atau penangkapan elektron: kation positif, anion negatif, gaya elektrostatik Coulomb dalam kristal garam, dan konduktivitas elektrolit.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Memahami bahwa pembentukan ion terjadi murni karena transfer elektron, bukan perubahan jumlah proton",
+    "Membedakan kation (bermuatan positif karena kehilangan elektron) dan anion (bermuatan negatif karena kelebihan elektron)",
+    "Menjelaskan struktur kisi kristal ionik dan daya hantar listrik larutan elektrolit"
+  ],
+  "prerequisites": [
+    "atom",
+    "materi-dan-sifatnya"
+  ],
+  "misconceptions": [
+    {
+      "code": "PROTONS_CHANGE_IN_IONIZATION",
+      "label": "Menganggap kation positif terbentuk karena atom menerima tambahan proton di intinya",
+      "remediation": "Jumlah proton di inti atom terkunci rapat dan TIDAK pernah berubah dalam reaksi kimia biasa. Atom menjadi kation positif semata-mata karena KEHILANGAN elektron valensi terluar, sehingga muatan positif proton di inti menjadi tidak terimbangi."
+    },
+    {
+      "code": "SOLID_SALT_CONDUCTS_ELECTRICITY",
+      "label": "Mengira kristal garam dapur padat dapat menghantarkan arus listrik seperti logam",
+      "remediation": "Dalam bentuk padat, ion-ion Na⁺ dan Cl⁻ terkunci mati dalam kisi kristal rigid sehingga tidak bisa bergerak membawa muatan listrik. Garam hanya bisa menghantarkan listrik saat dilelehkan atau dilarutkan dalam air (larutan elektrolit) di mana ion-ion terhidrasi dan bebas bermigrasi."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003701",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Garam Dapur: Paduan Logam Peledak dan Gas Racun Mematikan",
+      "instruction": "Renungkan transformasi kimiawi dramatis pada bumbu masak sehari-hari.",
+      "content": "Pernahkah kamu menyadari bahan penyusun garam dapur ($\\text{NaCl}$) yang kita taburkan di makanan setiap hari?\n- **Natrium ($\\text{Na}$)** adalah logam perak lunak yang begitu reaktif hingga meledak berkobar jika tersentuh setetes air.\n- **Klorin ($\\text{Cl}$)** adalah gas kuning kehijauan berbau menyengat yang sangat beracun dan mematikan paru-paru.\n\nNamun ketika keduanya bertemu, terjadi reaksi hebat menyilaukan mata!\nAtom Natrium melepas satu elektronnya dan memberikannya kepada atom Klorin.\nSeketika itu juga, terbentuklah **ion $\\text{Na}^+$** dan **ion $\\text{Cl}^-$**.\nKeduanya saling tarik-menarik dengan gaya elektrostatik luar biasa kuat membentuk kristal putih kubus yang stabil, aman, dan menjadi mineral vital bagi kehidupan sel tubuh kita: Garam Dapur!\nInilah keajaiban dunia **Ion**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi transfer elektron dari kulit terluar atom Natrium ke kulit terluar atom Klorin membentuk pasangan ion Na+ dan Cl-.",
+        "screenReaderNote": "Materi pengantar menguraikan reaksi pembentukan garam dapur melalui transfer elektron antara natrium dan klorin."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003702",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menghitung Muatan Ion Magnesium",
+      "instruction": "Tentukan muatan netto partikel jika jumlah elektron dan proton diketahui.",
+      "content": "Atom netral Magnesium memiliki nomor atom $Z = 12$ (memiliki $12\\text{ proton}$ positif $+12e$ dan $12\\text{ elektron}$ negatif $-12e$).\nUntuk mencapai kestabilan konfigurasi gas mulia, atom Magnesium melepas $2\\text{ elektron}$ valensinya.\n\nBerapakah muatan listrik netto dari ion Magnesium ($\\text{Mg}$) yang terbentuk?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Muatan netto = jumlah proton (+) + jumlah elektron (-).",
+        "concept": "Proton tetap 12 (+12). Elektron sekarang tersisa 12 - 2 = 10 (-10).",
+        "strategy": "Hitung: (+12) + (-10) = +2.",
+        "solution": "Ion Magnesium bermuatan +2 (ditulis Mg²⁺, merupakan kation)."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-plus-2",
+            "label": "Bermuatan +2 (Mg²⁺, kation) — karena inti masih memiliki 12 proton positif sementara elektron tersisa 10, menghasilkan kelebihan 2 muatan positif",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Muatan ion = (+12) + (-10) = +2. Karena kehilangan 2 partikel negatif, ia menjadi ion positif (kation divalent Mg²⁺)."
+          },
+          {
+            "id": "opt-minus-2",
+            "label": "Bermuatan -2 (Mg²⁻, anion) — karena kehilangan dua partikel",
+            "isCorrect": false,
+            "explanation": "Elektron bermuatan negatif. Kehilangan muatan negatif membuat partikel menjadi bermuatan positif, bukan negatif."
+          },
+          {
+            "id": "opt-netral",
+            "label": "Tetap netral 0 — karena proton di dalam inti atom tidak berubah sama sekali",
+            "isCorrect": false,
+            "explanation": "Netralitas atom bergantung pada keseimbangan jumlah proton dan elektron; jika elektron berkurang, atom kehilangan netralitasnya."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003703",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Kisi Kristal Ionik vs Larutan Elektrolit",
+      "instruction": "Amati mengapa garam padat mengisolasi listrik, tetapi larutan garam menyalakan lampu.",
+      "content": "Perhatikan perbedaan mobilitas ion pada dua keadaan zat:\n1. **Kisi Kristal Padat:**\n   - Ion $\\text{Na}^+$ dan $\\text{Cl}^-$ terkunci erat dalam struktur kubus 3D teratur oleh ikatan ionik yang sangat kokoh.\n   - Tidak ada elektron bebas atau ion yang dapat berpindah tempat.\n   - Hasil uji hantaran: **Lampu mati (isolator)**.\n2. **Larutan dalam Air (Fase Akuatik $\\text{aq}$):**\n   - Molekul air polar menyusup dan memecah kisi kristal (proses hidrasi/solvasi).\n   - Ion $\\text{Na}^+(aq)$ dan $\\text{Cl}^-(aq)$ kini mengapung bebas di air.\n   - Saat dialiri beda potensial listrik, kation mengalir ke katoda dan anion mengalir ke anoda.\n   - Hasil uji hantaran: **Lampu menyala terang (konduktor elektrolit kuat)!**",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram uji elektrolit membandingkan garam padat lampu mati dengan larutan garam dalam air lampu menyala benderang.",
+        "screenReaderNote": "Materi interaktif menguraikan mobilitas ion pada kisi kristal padat vs disosiasi ion bebas pada larutan elektrolit."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003704",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Neraca Muatan Ion dan Senyawa Netral",
+      "instruction": "Pelajari aturan formulasi pembentukan senyawa ionik netral.",
+      "content": "### 1. Klasifikasi Ion\n- **Kation:** Ion bermuatan positif akibat **melepas** elektron: $M \\rightarrow M^{n+} + n e^-$.\n- **Anion:** Ion bermuatan negatif akibat **menangkap** elektron: $X + m e^- \\rightarrow X^{m-}$.\n- **Ion Poliatomik:** Kelompok atom yang berikatan kovalen namun memiliki muatan netto kolektif (contoh: $\\text{NH}_4^+$, $\\text{SO}_4^{2-}$, $\\text{NO}_3^-$, $\\text{PO}_4^{3-}$).\n\n### 2. Prinsip Kenetralan Senyawa Ionik\nSetiap senyawa ionik makroskopis harus bersifat **netral secara listrik**:\n$$\\Sigma \\text{Muatan Positif} + \\Sigma \\text{Muatan Negatif} = 0$$\nJika kation bermuatan $+n$ ($A^{n+}$) bergabung dengan anion bermuatan $-m$ ($B^{m-}$), rumus kimia kimianya mengikuti aturan silang muatan (cross-over rule):\n$$m \\cdot A^{n+} + n \\cdot B^{m-} \\longrightarrow A_m B_n$$\nContoh: Ion Aluminium ($\\text{Al}^{3+}$) dan ion Oksida ($\\text{O}^{2-}$):\n$$2(\\text{Al}^{3+}) + 3(\\text{O}^{2-}) = (+6) + (-6) = 0 \\implies \\text{Al}_2\\text{O}_3$$",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Penjelasan formulasi aturan silang muatan senyawa ionik kation dan anion menghasilkan rumus molekul netral AmBn.",
+        "screenReaderNote": "Halaman merangkum definisi kation, anion, ion poliatomik, dan aturan silang aljabar senyawa ionik netral."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003705",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menentukan Indeks Senyawa Kalsium Fosfat",
+      "instruction": "Tentukan jumlah total atom dalam satu unit formula senyawa ionik netral.",
+      "content": "Ion Kalsium bermuatan $+2$ ($\\text{Ca}^{2+}$) berikatan dengan ion Poliatomik Fosfat bermuatan $-3$ ($\\text{PO}_4^{3-}$).\nAgar muatan listrik totalnya seimbang netral ($+6$ dan $-6$), rumus senyawa yang terbentuk adalah $\\text{Ca}_3(\\text{PO}_4)_2$.\n\nBerapakah jumlah total seluruh atom (Kalsium + Fosfor + Oksigen) yang terkandung dalam satu unit formula $\\text{Ca}_3(\\text{PO}_4)_2$ tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Urai tiap unsur: Ca ada 3 atom, lalu kalikan indeks di dalam kurung dengan angka 2 di luar kurung.",
+        "concept": "Ca = 3 atom. P = 1 × 2 = 2 atom. O = 4 × 2 = 8 atom.",
+        "strategy": "Total atom = 3 (Ca) + 2 (P) + 8 (O) = 13 atom.",
+        "solution": "Total atom adalah 13."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 13,
+        "units": "atom",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003706",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Sifat Mekanis Kristal Garam — Keras Tapi Rapuh",
+      "instruction": "Jelaskan mengapa batu kristal garam sangat keras saat ditekan namun seketika hancur berkeping-keping saat dipukul martil.",
+      "content": "Analisis fenomena kristalografi ionik ini:\n1. Jelaskan bagaimana susunan selang-seling ion positif dan negatif (kisi kristal) memberikan titik leleh tinggi dan kekerasan mekanik yang sangat kokoh.\n2. Apa yang terjadi pada bidang atomik kristal ketika terkena benturan palu geser (shearing force): bagaimana pergeseran satu lapisan atom memicu gaya tolak elektrostatik yang memecahnya.\n3. Bandingkan perilaku mekanik garam rapuh ini dengan logam yang justru bisa ditempa dan diregangkan tanpa pecah.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-ion",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-ion-daya-tarik-kisi-selang-seling",
+        "name": "Kestabilan Kisi Selang-Seling",
+        "description": "Menjelaskan bahwa struktur selang-seling ion positif yang dikelilingi ion negatif menghasilkan energi kisi yang luar biasa besar dan stabil menahan kompresi statis.",
+        "weight": 1
+      },
+      {
+        "id": "crit-ion-mekanisme-kerapuhan-gaya-geser",
+        "name": "Mekanisme Tolakan Elektrostatik Akibat Geser",
+        "description": "Menerangkan bahwa pukulan martil menggeser satu bidang ion sehingga ion-ion bermuatan sejenis (positif dengan positif, negatif dengan negatif) mendadak berhadapan, memicu tolakan elektrostatik instan yang membelah kristal.",
+        "weight": 1
+      },
+      {
+        "id": "crit-ion-komparasi-ikatan-logam",
+        "name": "Komparasi Lautan Elektron Logam",
+        "description": "Mengontraskan kerapuhan garam dengan logam yang memiliki 'lautan elektron' bebas berpindah sehingga bidang atomik logam dapat bergeser tanpa mengalami tolakan elektrostatik pemecah.",
+        "weight": 1
+      }
+    ]
+  }
+}

@@ -61,17 +61,24 @@ describe("Curated Content Loader", () => {
     expect(stepInfo?.concept.slug).toBe("definisi-turunan");
   });
 
-  it("should load Fondasi Matematika module and its 3 concepts", () => {
+  it("should load Fondasi Matematika module and its 9 concepts", () => {
     const mod = getModuleBySlug("fondasi-matematika");
     expect(mod).toBeDefined();
     expect(mod?.title).toContain("Fondasi Matematika");
-    expect(mod?.conceptSlugs).toEqual(["bilangan", "operasi-aritmetika", "pecahan-dan-desimal"]);
-    expect(mod?.learningPath.nodes.length).toBe(3);
+    expect(mod?.conceptSlugs.length).toBe(9);
+    expect(mod?.conceptSlugs).toContain("bilangan");
+    expect(mod?.conceptSlugs).toContain("operasi-aritmetika");
+    expect(mod?.conceptSlugs).toContain("pecahan-dan-desimal");
+    expect(mod?.conceptSlugs).toContain("rasio-dan-proporsi");
+    expect(mod?.learningPath.nodes.length).toBe(9);
 
     const concepts = getConcepts("fondasi-matematika");
-    expect(concepts.length).toBe(3);
+    expect(concepts.length).toBe(9);
     const slugs = concepts.map((c) => c.slug);
-    expect(slugs).toEqual(["bilangan", "operasi-aritmetika", "pecahan-dan-desimal"]);
+    expect(slugs).toContain("bilangan");
+    expect(slugs).toContain("operasi-aritmetika");
+    expect(slugs).toContain("pecahan-dan-desimal");
+    expect(slugs).toContain("satuan-dan-pengukuran-matematika");
   });
 
   it("should validate concept bilangan steps, misconceptions, and evaluation", () => {
@@ -133,11 +140,16 @@ describe("Curated Content Loader", () => {
     expect(fisikaModules[0].slug).toBe("fisika-mekanika");
   });
 
-  it("should validate Fisika Mekanika concepts (Pengukuran, Vektor, Kinematika)", () => {
+  it("should validate Fisika Mekanika concepts (18 concepts from Pengukuran to Osilasi)", () => {
     const concepts = getConcepts("fisika-mekanika");
-    expect(concepts.length).toBe(3);
+    expect(concepts.length).toBe(18);
     const slugs = concepts.map((c) => c.slug);
-    expect(slugs).toEqual(["pengukuran-dan-besaran", "vektor", "kinematika"]);
+    expect(slugs).toContain("pengukuran-dan-besaran");
+    expect(slugs).toContain("vektor");
+    expect(slugs).toContain("kinematika");
+    expect(slugs).toContain("gerak-lurus");
+    expect(slugs).toContain("gerak-parabola");
+    expect(slugs).toContain("osilasi");
 
     const vektor = getConceptBySlug("vektor");
     expect(vektor).toBeDefined();
@@ -150,11 +162,15 @@ describe("Curated Content Loader", () => {
     expect(kinematika?.prerequisites).toContain("vektor");
   });
 
-  it("should validate Kimia Dasar concepts (Materi dan Sifatnya, Unsur dan Senyawa, Atom)", () => {
+  it("should validate Kimia Dasar concepts (11 concepts from Materi to Geometri Molekul)", () => {
     const concepts = getConcepts("kimia-dasar");
-    expect(concepts.length).toBe(3);
+    expect(concepts.length).toBe(11);
     const slugs = concepts.map((c) => c.slug);
-    expect(slugs).toEqual(["materi-dan-sifatnya", "unsur-dan-senyawa", "atom"]);
+    expect(slugs).toContain("materi-dan-sifatnya");
+    expect(slugs).toContain("unsur-dan-senyawa");
+    expect(slugs).toContain("atom");
+    expect(slugs).toContain("molekul");
+    expect(slugs).toContain("geometri-molekul");
 
     const atom = getConceptBySlug("atom");
     expect(atom).toBeDefined();
@@ -163,11 +179,14 @@ describe("Curated Content Loader", () => {
     expect(atom?.misconceptions.length).toBeGreaterThanOrEqual(2);
   });
 
-  it("should validate Biologi Dasar concepts (Karakteristik Kehidupan, Tingkatan Organisasi)", () => {
+  it("should validate Biologi Dasar concepts (6 concepts from Karakteristik to Energi)", () => {
     const concepts = getConcepts("biologi-dasar");
-    expect(concepts.length).toBe(2);
+    expect(concepts.length).toBe(6);
     const slugs = concepts.map((c) => c.slug);
-    expect(slugs).toEqual(["karakteristik-kehidupan", "tingkatan-organisasi-kehidupan"]);
+    expect(slugs).toContain("karakteristik-kehidupan");
+    expect(slugs).toContain("tingkatan-organisasi-kehidupan");
+    expect(slugs).toContain("sel");
+    expect(slugs).toContain("energi-dalam-sistem-biologis");
 
     const tingkatan = getConceptBySlug("tingkatan-organisasi-kehidupan");
     expect(tingkatan).toBeDefined();

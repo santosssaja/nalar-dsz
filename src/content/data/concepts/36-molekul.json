@@ -1,0 +1,166 @@
+{
+  "id": "30000000-0000-4000-8000-000000000036",
+  "moduleId": "20000000-0000-4000-8000-000000000004",
+  "slug": "molekul",
+  "title": "Molekul: Agregat Atomik, Rumus Kimia, dan Arsitektur Senyawa Kovalen",
+  "summary": "Mempelajari entitas partikel netral hasil persekutuan dua atau lebih atom yang berikatan kovalen: pembedaan molekul unsur vs senyawa, interpretasi rumus kimia, serta korelasi rumus empiris terhadap rumus molekul.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Membedakan molekul unsur (atom sejenis) dan molekul senyawa (atom berlainan jenis)",
+    "Menginterpretasikan indeks subskrip dan koefisien dalam rumus kimia",
+    "Menghitung rumus molekul dari rumus empiris dan massa molekul relatif (Mr)"
+  ],
+  "prerequisites": [
+    "atom",
+    "unsur-dan-senyawa"
+  ],
+  "misconceptions": [
+    {
+      "code": "MOLECULES_CANNOT_BE_ELEMENTS",
+      "label": "Menganggap semua molekul pasti merupakan senyawa",
+      "remediation": "Molekul didefinisikan sebagai kumpulan atom yang berikatan kovalen, tidak peduli jenis atomnya sama atau beda. Gas oksigen (O₂) dan ozon (O₃) adalah molekul sejati, tetapi keduanya adalah molekul UNSUR karena hanya terdiri dari satu jenis atom oksigen."
+    },
+    {
+      "code": "CONFUSING_COEFFICIENT_AND_SUBSCRIPT",
+      "label": "Menyamakan arti koefisien di depan rumus kimia dengan angka indeks subskrip",
+      "remediation": "Indeks subskrip (seperti angka 2 pada H₂O) menyatakan ikatan permanen jumlah atom dalam 1 molekul. Angka koefisien (seperti 3 pada 3 H₂O) menyatakan jumlah molekul independen yang terpisah (3 molekul air terpisah, total 6 atom H dan 3 atom O)."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000003601",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Setetes Air: Triliunan Arsitektur Mikroskopis H2O",
+      "instruction": "Bayangkan memperbesar setetes air minum hingga ke skala submikroskopis.",
+      "content": "Jika kamu memperbesar setetes air hujan sebanyak satu miliar kali:\n- Kamu tidak akan melihat zat cair biru pejal yang homogen.\n- Kamu akan melihat parade triliunan kelompok partikel kecil berbentuk mirip 'kepala Mickey Mouse'!\n- Satu atom Oksigen besar di tengah, merangkul erat dua atom Hidrogen kecil di kedua sisinya.\n\nUnit trio ini bernama **Molekul Air ($\\text{H}_2\\text{O}$)**.\nSetiap molekul bertindak sebagai satu kesatuan mandiri. Jika kamu memotong setetes air menjadi dua, kamu memisahkan kumpulan molekul-molekulnya; namun jika kamu memecah ikatan di dalam molekul itu sendiri, sifat 'air' seketika lenyap dan berubah menjadi gas hidrogen yang mudah meledak dan gas oksigen yang menyalakan api!",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi 3D molekul air H2O dengan satu atom oksigen merah mengikat dua atom hidrogen putih.",
+        "screenReaderNote": "Materi pengantar menguraikan konsep molekul sebagai unit independen materi dengan sifat khas kimiawinya."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003602",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Menghitung Total Atom dalam Notasi Kimia",
+      "instruction": "Hitung jumlah total seluruh atom yang terkandung dalam ekspresi rumus molekul glukosa berganda.",
+      "content": "Sebuah larutan biologi mengandung dua molekul gula glukosa, yang ditulis dengan notasi kimia:\n$$2\\,\\text{C}_6\\text{H}_{12}\\text{O}_6$$\n\nBerapakah jumlah total seluruh atom (Karbon, Hidrogen, dan Oksigen digabungkan) yang terkandung dalam notasi tersebut?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Hitung dulu total atom dalam 1 molekul glukosa (C6H12O6), lalu kalikan dengan koefisien di depannya.",
+        "concept": "1 molekul glukosa = 6 atom C + 12 atom H + 6 atom O = 24 atom.",
+        "strategy": "Karena ada koefisien 2 di depan rumus: total atom = 2 × 24.",
+        "solution": "Total atom adalah 48 atom."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-48-atom",
+            "label": "48 atom — 1 molekul glukosa memiliki 24 atom (6 C + 12 H + 6 O), sehingga 2 molekul memuat 2 × 24 = 48 atom",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Koefisien 2 mengalikan seluruh indeks subskrip di dalamnya: 12 atom C + 24 atom H + 12 atom O = 48 atom total."
+          },
+          {
+            "id": "opt-24-atom",
+            "label": "24 atom — hanya menghitung indeks subskrip tanpa mengalikan koefisien 2 di depan",
+            "isCorrect": false,
+            "explanation": "Koefisien 2 di depan menyatakan terdapat dua unit molekul glukosa independen."
+          },
+          {
+            "id": "opt-26-atom",
+            "label": "26 atom — menjumlahkan koefisien 2 dengan 24 atom",
+            "isCorrect": false,
+            "explanation": "Koefisien bekerja sebagai faktor pengali, bukan operasi penjumlahan."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003603",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Galeri Molekul Unsur vs Molekul Senyawa",
+      "instruction": "Amati variasi geometri dan komposisi penyusun berbagai molekul di alam.",
+      "content": "Pelajari dua kategori besar molekul:\n1. **Molekul Unsur (Homointi):** Dibangun oleh atom-atom dari satu unsur yang identik.\n   - Gas Oksigen: $\\text{O}_2$ (diatomik)\n   - Gas Ozon: $\\text{O}_3$ (triatomik)\n   - Fosfor putih: $\\text{P}_4$ (tetraatomik tetrahedral)\n   - Belerang padat: $\\text{S}_8$ (oktaatomik mahkota)\n2. **Molekul Senyawa (Heterointi):** Dibangun oleh atom-atom dari dua atau lebih unsur yang berbeda.\n   - Karbon dioksida: $\\text{CO}_2$ (linear)\n   - Amonia: $\\text{NH}_3$ (piramida trigonal)\n   - Metana: $\\text{CH}_4$ (tetrahedral)",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Galeri struktur bola-dan-batang molekul unsur O2, O3, S8 dan molekul senyawa H2O, CO2, CH4.",
+        "screenReaderNote": "Materi interaktif mengklasifikasikan molekul unsur berinti sejenis dan molekul senyawa heterointi."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003604",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Rumus Empiris dan Rumus Molekul",
+      "instruction": "Pelajari korelasi kuantitatif rumus perbandingan paling sederhana dengan jumlah atom nyata.",
+      "content": "### 1. Rumus Empiris (RE)\nRumus kimia yang menyatakan **rasio perbandingan bilangan bulat paling sederhana** dari atom-atom penyusun senyawa.\n- Glukosa ($\\text{C}_6\\text{H}_{12}\\text{O}_6$) memiliki rasio $6:12:6 = 1:2:1 \\implies \\text{RE} = \\text{CH}_2\\text{O}$.\n- Air ($\\text{H}_2\\text{O}$) memiliki rasio $2:1$ yang sudah paling sederhana $\\implies \\text{RE} = \\text{H}_2\\text{O}$.\n\n### 2. Rumus Molekul (RM)\nRumus kimia yang menyatakan **jumlah kuantitas aktual yang sebenarnya** dari tiap-tiap atom dalam satu molekul tunggal:\n$$\\text{Rumus Molekul} = (\\text{Rumus Empiris})_n$$\nDi mana $n$ adalah bilangan bulat positif ($n = 1, 2, 3, \\dots$).\n\n### 3. Hubungan Massa Molekul Relatif ($M_r$)\n$$M_r(\\text{RM}) = n \\times M_r(\\text{RE})$$\n$$n = \\frac{M_r(\\text{Senyawa Aktual})}{M_r(\\text{Rumus Empiris})}$$\nContoh: $M_r$ glukosa adalah $180$. $M_r$ dari $\\text{CH}_2\\text{O} = 12 + (2 \\times 1) + 16 = 30$. Maka $n = \\frac{180}{30} = 6 \\implies (\\text{CH}_2\\text{O})_6 = \\text{C}_6\\text{H}_{12}\\text{O}_6$.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Penjelasan formulasi analitik rasio rumus empiris terhadap rumus molekul menggunakan faktor pengali n dan Mr.",
+        "screenReaderNote": "Halaman merangkum definisi rumus empiris rasio terkecil, rumus molekul jumlah aktual, dan perhitungan faktor n pengali Mr."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003605",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menentukan Pengali n Rumus Molekul Benzena",
+      "instruction": "Hitung faktor pengali n rumus molekul dari data massa molekul relatif.",
+      "content": "Suatu hidrokarbon murni memiliki rumus empiris $\\text{CH}$ (Ar $\\text{C} = 12$, Ar $\\text{H} = 1$, sehingga $M_r(\\text{CH}) = 13$).\nDari pengukuran spektrometri massa, diketahui massa molekul relatif aktual senyawa tersebut adalah $M_r = 78$.\n\nBerapakah nilai faktor pengali bulat $n$ untuk senyawa tersebut (sehingga $\\text{RM} = (\\text{CH})_n$)?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Gunakan persamaan n = Mr(RM) / Mr(RE).",
+        "concept": "Mr(RM) = 78 dan Mr(RE) = 13.",
+        "strategy": "Hitung: n = 78 / 13.",
+        "solution": "n = 6 (senyawa tersebut adalah benzena C6H6)."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 6,
+        "units": "",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000003606",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Alotrop Karbon — Grafit Pensil vs Berlian Intan",
+      "instruction": "Jelaskan bagaimana atom-atom yang sama persis dapat menghasilkan materi dengan sifat yang bertolak belakang hanya karena penataan geometris molekulernya.",
+      "content": "Tuliskan refleksi kimiawi mengenai:\n1. Fakta bahwa mata pensil hitam lunak (grafit) dan batu permata terkeras di bumi (intan/berlian) tersusun $100\\%$ dari atom yang identik: Karbon ($\\text{C}$).\n2. Bagaimana perbedaan susunan ikatan molekuler (lapisan lembaran heksagonal 2D vs kisi tetrahedral 3D kokoh) menciptakan perbedaan drastis pada kekerasan dan daya hantar listrik.\n3. Mengapa dalam ilmu kimia, 'struktur geometri susunan atom' sama pentingnya dengan 'jenis atom penyusunnya'.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-molekul",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-molekul-definisi-alotrop-karbon",
+        "name": "Pemahaman Konsep Alotropi",
+        "description": "Menjelaskan bahwa grafit dan intan adalah alotrop dari unsur karbon murni tanpa campuran unsur lain.",
+        "weight": 1
+      },
+      {
+        "id": "crit-molekul-arsitektur-ikatan-geometris",
+        "name": "Arsitektur Kisi 2D Grafit vs 3D Intan",
+        "description": "Mengontraskan lembaran datar grafit yang mudah bergeser dengan kisi tetrahedral intan yang luar biasa rigid, serta menjelaskan konduktivitas listrik grafit akibat elektron bebas terdelokalisasi.",
+        "weight": 1
+      },
+      {
+        "id": "crit-molekul-filosofi-struktur-menentukan-fungsi",
+        "name": "Prinsip Struktur Menentukan Sifat",
+        "description": "Menyimpulkan hukum fundamental kimia bahwa sifat makroskopis materi didikte secara mutlak oleh arsitektur tata ruang ikatannya.",
+        "weight": 1
+      }
+    ]
+  }
+}

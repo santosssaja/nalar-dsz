@@ -1,0 +1,165 @@
+{
+  "id": "30000000-0000-4000-8000-000000000044",
+  "moduleId": "20000000-0000-4000-8000-000000000005",
+  "slug": "metode-ilmiah",
+  "title": "Metode Ilmiah: Observasi, Hipotesis Teruji, Desain Variabel, dan Validitas Empiris",
+  "summary": "Memahami metode penyelidikan sistematis sains: perumusan hipotesis yang dapat diuji (falsifiable), isolasi variabel bebas, terikat, dan kontrol dalam eksperimen, serta etika replikasi data ilmiah.",
+  "difficulty": "introductory",
+  "learningObjectives": [
+    "Memahami alur tahapan investigasi metode ilmiah dari observasi hingga penarikan kesimpulan",
+    "Membedakan variabel bebas (independen), variabel terikat (dependen), dan variabel kontrol",
+    "Merancang eksperimen biologi yang valid dengan kelompok kontrol dan kelompok perlakuan"
+  ],
+  "prerequisites": [
+    "karakteristik-kehidupan"
+  ],
+  "misconceptions": [
+    {
+      "code": "HYPOTHESIS_IS_JUST_A_RANDOM_GUESS",
+      "label": "Mengira hipotesis hanyalah tebakan asal tanpa dasar ilmiah",
+      "remediation": "Hipotesis ilmiah bukan tebakan sembarangan, melainkan penjelasan sementara yang logis berdasarkan observasi dan teori yang telah ada, serta WAJIB memenuhi syarat dapat diuji (testable) dan memiliki peluang dibuktikan salah (falsifiable)."
+    },
+    {
+      "code": "THEORY_IS_AN_UNPROVEN_HYPOTHESIS",
+      "label": "Menganggap kata 'teori' berarti dugaan samar yang belum terbukti kebenarannya",
+      "remediation": "Dalam bahasa ilmiah, Teori (seperti Teori Sel, Teori Evolusi, Teori Gravitasi) adalah tingkat penjelasan tertinggi yang telah teruji berulang kali melalui ribuan eksperimen independen dan didukung oleh bukti empiris masif. Teori ilmiah tidak akan pernah 'naik pangkat' menjadi hukum karena hukum menjelaskan 'apa yang terjadi' secara matematis, sedangkan teori menjelaskan 'mengapa dan bagaimana mekanisme terjadinya'."
+    }
+  ],
+  "steps": [
+    {
+      "id": "40000000-0000-4000-8000-000000004401",
+      "kind": "encounter",
+      "sortOrder": 1,
+      "title": "Eksperimen Labu Berleher Angsa Louis Pasteur: Membantah Teori Generatio Spontanea",
+      "instruction": "Amati bagaimana sebuah desain eksperimen yang cerdas berhasil menumbangkan mitos berumur ribuan tahun.",
+      "content": "Selama berabad-abad, orang percaya pada *Generatio Spontanea*:\n- Mengira belatung tercipta begitu saja dari daging busuk.\n- Mengira tikus muncul secara gaib dari tumpukan jerami kotor.\n\nPada tahun 1859, Louis Pasteur melakukan eksperimen yang mengubah sejarah biologi dunia:\n1. Ia memasukkan kaldu daging ke dalam labu kaca dengan leher panjang melengkung seperti **leher angsa**.\n2. Kaldu dididihkan hingga seluruh mikroba mati steril.\n3. Udara bebas tetap bisa masuk ke labu, namun debu dan spora mikroba mengendap di lekukan leher angsa dan tidak bisa mencapai kaldu.\n\nHasilnya? Kaldu tetap bening dan steril selama berbulan-bulan!\nNamun ketika leher angsa dipatahkan, kaldu seketika keruh dipenuhi koloni bakteri dalam hitungan hari.\nPasteur membuktikan secara mutlak: kehidupan hanya berasal dari kehidupan sebelumnya (*Omne vivum ex vivo*) melalui penerapan murni **Metode Ilmiah**.",
+      "estimatedMinutes": 3,
+      "accessibility": {
+        "altText": "Visualisasi eksperimen labu leher angsa Louis Pasteur membandingkan kaldu steril di labu utuh dengan kaldu keruh di labu patah.",
+        "screenReaderNote": "Materi pengantar menguraikan eksperimen legendaris Louis Pasteur dalam menerapkan metode ilmiah membantah abiogenesis."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004402",
+      "kind": "predict",
+      "sortOrder": 2,
+      "title": "Prediksi: Mengidentifikasi Variabel dalam Eksperimen Pupuk",
+      "instruction": "Tentukan variabel bebas dan terikat pada percobaan pertumbuhan tanaman kacang hijau.",
+      "content": "Seorang peneliti ingin menguji pengaruh konsentrasi pupuk organik cair terhadap laju pertumbuhan tanaman tomat.\nIa menyiapkan 20 pot tanaman tomat dengan jenis tanah, intensitas cahaya matahari, dan volume penyiraman air yang sama persis.\nSetiap kelompok pot diberi dosis pupuk yang berbeda: $0\\text{ mL}$, $5\\text{ mL}$, $10\\text{ mL}$, dan $20\\text{ mL}$.\nSetelah dua minggu, peneliti mengukur pertambahan tinggi batang tanaman tomat dalam sentimeter.\n\nDalam desain percobaan tersebut, manakah yang bertindak sebagai **Variabel Bebas (Independen)**?",
+      "estimatedMinutes": 2,
+      "hints": {
+        "orientation": "Variabel bebas adalah faktor yang sengaja dimanipulasi atau diubah-ubah oleh peneliti.",
+        "concept": "Peneliti sengaja mengubah dosis pupuk untuk melihat pengaruhnya.",
+        "strategy": "Tinggi tanaman adalah hasil respon (variabel terikat), sedangkan dosis pupuk adalah faktor perlakuan.",
+        "solution": "Variabel bebas adalah dosis konsentrasi pupuk organik cair."
+      },
+      "evaluation": {
+        "type": "choice",
+        "options": [
+          {
+            "id": "opt-dosis-pupuk",
+            "label": "Dosis konsentrasi pupuk organik cair — karena merupakan faktor perlakuan yang sengaja divariasikan oleh peneliti",
+            "isCorrect": true,
+            "explanation": "Tepat sekali! Variabel bebas adalah variabel independen yang dikontrol dan dimanipulasi peneliti untuk melihat dampaknya terhadap respons sistem."
+          },
+          {
+            "id": "opt-tinggi-tanaman",
+            "label": "Pertambahan tinggi batang tanaman — karena nilainya bertambah seiring waktu",
+            "isCorrect": false,
+            "explanation": "Pertambahan tinggi tanaman adalah hasil yang diukur sebagai respons, sehingga merupakan variabel terikat (dependen)."
+          },
+          {
+            "id": "opt-volume-air",
+            "label": "Volume penyiraman air dan intensitas cahaya matahari",
+            "isCorrect": false,
+            "explanation": "Air dan cahaya dibuat sama persis untuk semua pot, sehingga bertindak sebagai variabel kontrol."
+          }
+        ],
+        "allowRetry": true
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004403",
+      "kind": "explore",
+      "sortOrder": 3,
+      "title": "Eksplorasi: Siklus Berkelanjutan Penyelidikan Ilmiah",
+      "instruction": "Pelajari diagram siklus berulang metode ilmiah modern.",
+      "content": "Pahami siklus metode ilmiah yang tidak pernah berhenti:\n1. **Observasi:** Mengamati anomali atau fenomena alam yang memicu rasa ingin tahu.\n2. **Pertanyaan Penelitian:** Merumuskan masalah spesifik yang terdefinisi dengan jelas.\n3. **Hipotesis Teruji:** Mengajukan dugaan mekanisme yang dapat diuji dengan eksperimen.\n4. **Eksperimen Terkontrol:** Mengisolasi variabel dengan membandingkan kelompok kontrol dan eksperimen.\n5. **Analisis Data & Statistik:** Menguji signifikansi data kuantitatif (bukan sekadar kebetulan acak).\n6. **Kesimpulan & Peer Review:** Mempublikasikan metodologi secara transparan agar dapat direplikasi ilmuwan lain di seluruh dunia.",
+      "estimatedMinutes": 4,
+      "accessibility": {
+        "altText": "Diagram siklus melingkar metode ilmiah dari observasi, hipotesis, eksperimen, analisis, hingga evaluasi kesimpulan.",
+        "screenReaderNote": "Materi interaktif menyajikan tahapan siklus metode ilmiah sebagai proses iteratif penemuan pengetahuan baru."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004404",
+      "kind": "understand",
+      "sortOrder": 4,
+      "title": "Struktur Matematis: Taksonomi Variabel dan Desain Kelompok Kontrol",
+      "instruction": "Kuasai arsitektur metodologis eksperimen ilmiah yang valid.",
+      "content": "### 1. Taksonomi Tiga Variabel Eksperimen\n- **Variabel Bebas ($X$, Independen):** Variabel perlakuan yang sengaja diubah oleh peneliti untuk menguji pengaruhnya.\n- **Variabel Terikat ($Y$, Dependen):** Variabel respons terukur yang dipengaruhi oleh perubahan variabel bebas: $Y = f(X)$.\n- **Variabel Kontrol ($C$):** Seluruh variabel luar lainnya yang dijaga konstan secara ketat agar perubahan pada $Y$ terbukti murni akibat pengaruh $X$, bukan karena faktor lain.\n\n### 2. Desain Kelompok Kontrol vs Kelompok Perlakuan\n- **Kelompok Kontrol:** Kelompok yang tidak diberi perlakuan manipulasi variabel bebas (misal: tanaman diberi dosis $0\\text{ mL}$ pupuk atau pasien diberi plasebo). Berfungsi sebagai garis dasar (baseline) pembanding.\n- **Kelompok Eksperimen / Perlakuan:** Kelompok yang menerima dosis variabel bebas.\n\n### 3. Kriteria Falsifiabilitas Karl Popper\nSuatu hipotesis hanya diakui sebagai ilmiah jika terdapat skenario observasi yang secara prinsip dapat membuktikan bahwa hipotesis tersebut **salah** jika fenomena itu memang salah.",
+      "estimatedMinutes": 5,
+      "accessibility": {
+        "altText": "Tabel taksonomi variabel bebas, terikat, kontrol dan diagram pemisahan kelompok perlakuan dengan kelompok kontrol plasebo.",
+        "screenReaderNote": "Halaman merangkum formulasi analitis klasifikasi variabel X dan Y, desain kelompok kontrol, dan prinsip falsifiabilitas ilmiah."
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004405",
+      "kind": "practice",
+      "sortOrder": 5,
+      "title": "Latihan: Menghitung Tingkat Replikasi Minimal Eksperimen",
+      "instruction": "Hitung jumlah total sampel yang dibutuhkan untuk memenuhi protokol eksperimen biologi terstandar.",
+      "content": "Sebuah uji klinis menguji $4\\text{ variasi suhu inkubasi}$ enzim bakteri ($20^\\circ\\text{C}, 30^\\circ\\text{C}, 40^\\circ\\text{C}, 50^\\circ\\text{C}$).\nUntuk memastikan keandalan data statistik dari galat acak, protokol menuntut setiap variasi perlakuan suhu harus diuji dengan minimal $5\\text{ kali pengulangan independen (replikasi/triplo)}$ serta menyertakan $1\\text{ kelompok kontrol netral}$ yang juga memiliki $5\\text{ kali replikasi}$.\n\nBerapakah jumlah tabung reaksi sampel total ($N$) yang harus disiapkan peneliti?",
+      "estimatedMinutes": 3,
+      "hints": {
+        "orientation": "Hitung total kelompok: 4 kelompok suhu perlakuan + 1 kelompok kontrol = 5 kelompok.",
+        "concept": "Setiap kelompok membutuhkan 5 tabung replikasi.",
+        "strategy": "Hitung: N = 5 kelompok × 5 tabung per kelompok.",
+        "solution": "Total tabung sampel adalah 25 tabung."
+      },
+      "evaluation": {
+        "type": "numeric",
+        "tolerance": 0.1,
+        "expectedValue": 25,
+        "units": "tabung",
+        "feedbackCorrect": "Jawabanmu tepat!",
+        "misconceptions": []
+      }
+    },
+    {
+      "id": "40000000-0000-4000-8000-000000004406",
+      "kind": "explain",
+      "sortOrder": 6,
+      "title": "Refleksi Mandiri: Eksperimen Buta Ganda (Double-Blind) pada Uji Obat",
+      "instruction": "Jelaskan mengapa metode ilmiah modern menuntut protokol uji buta ganda saat menguji khasiat vaksin atau obat baru pada manusia.",
+      "content": "Tuliskan analisis metodologis mengenai:\n1. Apa yang dimaksud dengan **efek plasebo** (kondisi di mana pasien sembuh murni karena sugesti psikologis menerima obat palsu berupa tablet gula).\n2. Mengapa protokol **buta ganda (double-blind)** merahasiakan identitas obat asli vs plasebo baik dari pasien maupun dari dokter/perawat yang memeriksa.\n3. Bagaimana metode ini meniadakan bias konfirmasi peneliti dan memastikan bahwa efek kesembuhan murni berasal dari senyawa kimia aktif obat.",
+      "estimatedMinutes": 5
+    }
+  ],
+  "rubric": {
+    "type": "rubric",
+    "rubricId": "rubric-metode-ilmiah",
+    "passingThreshold": 70,
+    "criteria": [
+      {
+        "id": "crit-metode-ilmiah-pemahaman-efek-plasebo",
+        "name": "Definisi Efek Plasebo",
+        "description": "Menjelaskan bahwa respons psikologis keyakinan pasien dapat merangsang perbaikan fisiologis tubuh meski hanya diberi pil tiruan tanpa zat aktif.",
+        "weight": 1
+      },
+      {
+        "id": "crit-metode-ilmiah-mekanisme-buta-ganda",
+        "name": "Mekanisme Protokol Double-Blind",
+        "description": "Menerangkan bahwa pasien maupun tenaga medis yang berinteraksi langsung tidak mengetahui siapa yang menerima obat aktif atau plasebo hingga seluruh data terkumpul dan dikunci.",
+        "weight": 1
+      },
+      {
+        "id": "crit-metode-ilmiah-eliminasi-bias-konfirmasi",
+        "name": "Eliminasi Bias Pengamat Peneliti",
+        "description": "Menyimpulkan bahwa ketiadaan bias bawah sadar dokter dalam mencatat gejala memastikan bahwa keunggulan obat aktif terbukti secara objektif dan signifikan secara statistik.",
+        "weight": 1
+      }
+    ]
+  }
+}

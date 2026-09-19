@@ -4,8 +4,8 @@
   "domainSlug": "fisika",
   "slug": "fisika-mekanika",
   "title": "Fisika: Mekanika Klasik",
-  "summary": "Memahami fondasi gerak dan interaksi benda: ketepatan pengukuran besaran, representasi geometris vektor, dan analisis kinematika perpindahan serta laju perubahan kecepatan.",
-  "estimatedMinutes": 240,
+  "summary": "Memahami fondasi gerak dan interaksi benda: pengukuran besaran, vektor, kinematika 1D & 2D, dinamika hukum Newton, gaya kontak & medan, usaha-energi, momentum-tumbukan, rotasi tegar, gravitasi semesta, statika kesetimbangan, dan getaran osilasi.",
+  "estimatedMinutes": 600,
   "prerequisites": [
     {
       "slug": "fondasi-matematika",
@@ -13,7 +13,26 @@
       "required": true
     }
   ],
-  "conceptSlugs": ["pengukuran-dan-besaran", "vektor", "kinematika"],
+  "conceptSlugs": [
+    "pengukuran-dan-besaran",
+    "vektor",
+    "kinematika",
+    "gerak-lurus",
+    "gerak-parabola",
+    "gerak-melingkar",
+    "hukum-newton",
+    "gaya",
+    "gesekan",
+    "usaha-dan-energi",
+    "momentum-dan-impuls",
+    "tumbukan",
+    "rotasi",
+    "torsi",
+    "momentum-sudut",
+    "gravitasi",
+    "kesetimbangan",
+    "osilasi"
+  ],
   "learningPath": {
     "slug": "jalur-fisika-mekanika",
     "title": "Jalur Utama Mekanika Fisika",
@@ -31,6 +50,81 @@
       {
         "conceptSlug": "kinematika",
         "sortOrder": 3,
+        "required": true
+      },
+      {
+        "conceptSlug": "gerak-lurus",
+        "sortOrder": 4,
+        "required": true
+      },
+      {
+        "conceptSlug": "gerak-parabola",
+        "sortOrder": 5,
+        "required": true
+      },
+      {
+        "conceptSlug": "gerak-melingkar",
+        "sortOrder": 6,
+        "required": true
+      },
+      {
+        "conceptSlug": "hukum-newton",
+        "sortOrder": 7,
+        "required": true
+      },
+      {
+        "conceptSlug": "gaya",
+        "sortOrder": 8,
+        "required": true
+      },
+      {
+        "conceptSlug": "gesekan",
+        "sortOrder": 9,
+        "required": true
+      },
+      {
+        "conceptSlug": "usaha-dan-energi",
+        "sortOrder": 10,
+        "required": true
+      },
+      {
+        "conceptSlug": "momentum-dan-impuls",
+        "sortOrder": 11,
+        "required": true
+      },
+      {
+        "conceptSlug": "tumbukan",
+        "sortOrder": 12,
+        "required": true
+      },
+      {
+        "conceptSlug": "rotasi",
+        "sortOrder": 13,
+        "required": true
+      },
+      {
+        "conceptSlug": "torsi",
+        "sortOrder": 14,
+        "required": true
+      },
+      {
+        "conceptSlug": "momentum-sudut",
+        "sortOrder": 15,
+        "required": true
+      },
+      {
+        "conceptSlug": "gravitasi",
+        "sortOrder": 16,
+        "required": true
+      },
+      {
+        "conceptSlug": "kesetimbangan",
+        "sortOrder": 17,
+        "required": true
+      },
+      {
+        "conceptSlug": "osilasi",
+        "sortOrder": 18,
         "required": true
       }
     ]
