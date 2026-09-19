@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import { DbClient } from "./index";
 import {
   domains,
@@ -12,21 +11,6 @@ import { contentVersionOfStep } from "@/content/versioning";
 
 export async function seedCuratedContent(db: DbClient): Promise<void> {
   const allConcepts = getConcepts();
-  const firstStep = allConcepts.find((c) => c.steps.length > 0)?.steps[0];
-  const firstVersionId = firstStep ? contentVersionOfStep(firstStep).id : null;
-
-  // Guard: if curated step content versions already exist, skip redundant inserts
-  if (firstVersionId) {
-    const existing = await db
-      .select({ id: contentVersions.id })
-      .from(contentVersions)
-      .where(eq(contentVersions.id, firstVersionId))
-      .limit(1);
-
-    if (existing.length > 0) {
-      return;
-    }
-  }
 
   // 1. Seed immutable per-step content versions (deterministic ids derived from content)
   const contentVersionRows = allConcepts.flatMap((concept) =>
@@ -75,7 +59,7 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     await db.insert(modules).values(moduleRows).onConflictDoNothing();
   }
 
-  // 4. Batch Seed Concepts
+  // 4. Batch Seed Concepts (upsert to reconcile changes)
   const conceptRows = allConcepts.map((concept) => ({
     id: concept.id,
     moduleId: concept.moduleId,
@@ -86,7 +70,22 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     status: "published" as const,
   }));
   if (conceptRows.length > 0) {
-    await db.insert(concepts).values(conceptRows).onConflictDoNothing();
+    for (const row of conceptRows) {
+      await db
+        .insert(concepts)
+        .values(row)
+        .onConflictDoUpdate({
+          target: concepts.id,
+          set: {
+            moduleId: row.moduleId,
+            slug: row.slug,
+            title: row.title,
+            summary: row.summary,
+            difficulty: row.difficulty,
+            status: row.status,
+          },
+        });
+    }
   }
 
   // 5. Seed Learning Steps linked to their real content version
@@ -108,6 +107,7 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
         .onConflictDoUpdate({
           target: learningSteps.id,
           set: {
+            conceptId: row.conceptId,
             contentVersionId: row.contentVersionId,
             kind: row.kind,
             sortOrder: row.sortOrder,

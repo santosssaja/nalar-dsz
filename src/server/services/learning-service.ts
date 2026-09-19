@@ -9,11 +9,13 @@ import {
   conceptProgress,
   mistakeEvents,
   contentVersions,
+  domains,
+  modules,
   concepts,
   learningSteps,
 } from "@/server/db";
 import { Actor } from "@/server/auth/actor-resolver";
-import { getStepById, getConceptById, getConcepts } from "@/content/loader";
+import { getStepById, getConceptById, getConcepts, getModuleForConcept, getDomains } from "@/content/loader";
 import { contentVersionOfStep } from "@/content/versioning";
 import { notFound } from "@/lib/errors";
 import { evaluateStepResponse, EvaluationResult } from "./evaluator";
@@ -111,7 +113,42 @@ export async function submitAttempt(
       };
     }
 
-    // 3. Ensure immutable content rows exist. The version id is derived
+    // 3a. Ensure parent FK rows exist: domain → module → concept.
+    // The seed in ensureDbInitialized should have created these, but if the
+    // seed failed silently (error is caught with console.warn), these rows
+    // may be missing. Upsert them here inside the transaction so the concept
+    // and learning_evidence inserts never hit a FK violation.
+    const parentModule = getModuleForConcept(concept.slug);
+    if (parentModule) {
+      const parentDomain = getDomains().find((d) => d.id === parentModule.domainId);
+      if (parentDomain) {
+        await tx
+          .insert(domains)
+          .values({
+            id: parentDomain.id,
+            slug: parentDomain.slug,
+            title: parentDomain.title,
+            sortOrder: parentDomain.sortOrder,
+            status: "published",
+          })
+          .onConflictDoNothing();
+      }
+
+      await tx
+        .insert(modules)
+        .values({
+          id: parentModule.id,
+          domainId: parentModule.domainId,
+          slug: parentModule.slug,
+          title: parentModule.title,
+          summary: parentModule.summary,
+          estimatedMinutes: parentModule.estimatedMinutes,
+          status: "published",
+        })
+        .onConflictDoNothing();
+    }
+
+    // 3b. Ensure immutable content rows exist. The version id is derived
     // deterministically from the step content checksum, so identical content
     // maps to the same row and changed content creates a new version row.
     await tx

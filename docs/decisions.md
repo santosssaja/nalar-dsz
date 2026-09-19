@@ -92,6 +92,13 @@ Dokumen ini menyimpan keputusan implementasi yang perlu dipertahankan lintas tug
 **Konsekuensi:** Mengurangi risiko email bombing/abuse endpoint login; tidak memerlukan dependency baru (memanfaatkan tabel yang sudah ada), dan konsisten lintas instance karena dihitung dari database.  
 **Rujukan:** D-009, schema `verification_tokens`.
 
+## D-014 — Seed kurasi rekonsiliasi idempoten setiap boot
+
+**Status:** Locked  
+**Keputusan:** Penghapusan guard yang melewati `seedCuratedContent` saat version step pertama sudah ada. Seed kini berjalan penuh dan idempoten di semua proses (domain, modul, konsep, version per-step, step, dengan `onConflictDoNothing`/`onConflictDoUpdate`), sehingga isi database selalu sinkron dengan registry kurasi terbaru, tanpa duplikasi.  
+**Konsekuensi:** Menambahkan konten kurasi baru (konsep/modul) otomatis ter-seed pada boot berikutnya tanpa re-seed manual; biaya ~300 query upsert pada request pertama tiap proses (diterima untuk MVP). Mencegah FK violation akibat DB runtime (Neon) yang tidak lengkap.  
+**Rujukan:** D-002, D-010, `seed.ts`.
+
 ## Cara menambah atau mengubah keputusan
 
 Setiap decision baru berisi ID unik, status, keputusan/pertanyaan, konsekuensi, rujukan requirement, dan pemicu review bila statusnya Open. Jangan mengedit decision Locked untuk mengubah substansinya; tambahkan decision baru yang secara eksplisit menggantikan ID lama dan jelaskan alasan perubahan.
