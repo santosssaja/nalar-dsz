@@ -1,0 +1,44 @@
+# Vercel Ignore File — Nalar
+# Prevents uploading local caches, builds, and dev artifacts to Vercel
+
+# Local Build Output & Compiler Cache (Must be built on Vercel, NEVER uploaded from local machine!)
+.next
+.next/
+.next-dev
+.next-dev/
+out
+out/
+build
+build/
+
+# Local Dependencies (Installed cleanly on Vercel build servers)
+node_modules
+node_modules/
+
+# Local databases & test outputs
+*.db
+local
+local/
+coverage
+coverage/
+test-results
+test-results/
+vitest-test-results
+vitest-test-results/
+
+# Tests & Markdown Docs (Not needed in runtime bundle)
+tests
+tests/
+
+# Debug and Log files
+*.log
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+
+# Environment local overrides (handled via Vercel Project Environment Variables)
+.env*.local
+
+# OS Metadata
+.DS_Store
+Thumbs.db

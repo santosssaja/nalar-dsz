@@ -6,8 +6,7 @@ export default (phase: string): NextConfig => {
 
   return {
     reactStrictMode: true,
-    poweredByHeader: false,
-    serverExternalPackages: ["@electric-sql/pglite", "postgres", "zod", "katex"],
+    serverExternalPackages: ["@electric-sql/pglite", "postgres"],
     distDir: process.env.NEXT_DIST_DIR || (isDev ? ".next-dev" : ".next"),
     experimental: {
       optimizePackageImports: ["lucide-react"],

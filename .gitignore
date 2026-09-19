@@ -15,8 +15,11 @@
 /vitest-test-results
 
 # next.js
+.next/
 /.next/
+.next-dev/
 /.next-dev/
+out/
 /out/
 
 # production
