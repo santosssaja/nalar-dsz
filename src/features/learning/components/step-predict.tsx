@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle, Zap, Sparkles, AlertCircle, Loader2, RotateCcw } from "lucide-react";
+import { CheckCircle, Zap, Sparkles, AlertCircle, Loader2, RotateCcw, Info } from "lucide-react";
 import { StepContent, ChoiceEvaluationSchema } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { HintDrawer } from "./hint-drawer";
 import { AiPredictAnalysis } from "@/server/ai/types";
+import { useAiModel } from "@/features/learning/context/ai-model-context";
 
 export interface StepPredictSavedState {
   selectedOptionId?: string;
@@ -59,7 +60,10 @@ export function StepPredict({
   const [llmAnalysis, setLlmAnalysis] = useState<AiPredictAnalysis | null>(
     savedState?.llmAnalysis ?? null
   );
+  const [llmError, setLlmError] = useState<string | null>(null);
   const [usedHintsCount, setUsedHintsCount] = useState<number>(0);
+
+  const { selectedProvider, selectedModel, activeModelLabel } = useAiModel();
 
   const evaluation =
     step.evaluation?.type === "choice"
@@ -165,6 +169,7 @@ export function StepPredict({
     let fetchedLlmAnalysis: AiPredictAnalysis | null = null;
 
     // 2. If user requested LLM analysis, fetch from /api/v1/ai/predict
+    setLlmError(null);
     if (useLlm && conceptSlug) {
       setIsAnalyzingLlm(true);
       try {
@@ -177,10 +182,12 @@ export function StepPredict({
             selectedOptionId,
             confidence,
             reasoning: reasoning.trim() || undefined,
+            provider: selectedProvider,
+            model: selectedModel,
           }),
         });
-        const aiJson = await aiRes.json();
-        if (aiRes.ok && aiJson.data) {
+        const aiJson = await aiRes.json().catch(() => null);
+        if (aiRes.ok && aiJson?.data) {
           fetchedLlmAnalysis = aiJson.data;
           setLlmAnalysis(fetchedLlmAnalysis);
           onSaveState?.({
@@ -191,9 +198,17 @@ export function StepPredict({
             submittedFeedback: newFeedback,
             llmAnalysis: fetchedLlmAnalysis,
           });
+        } else {
+          const errorMsg =
+            aiJson?.error?.message ||
+            (aiRes.status === 429
+              ? `Batas kuota atau rate limit model ${activeModelLabel || "AI"} sedang penuh (HTTP 429). Silakan tunggu beberapa saat atau coba model lain.`
+              : "Analisis nalar AI tidak dapat dimuat saat ini.");
+          setLlmError(errorMsg);
         }
       } catch (err) {
         console.warn("AI Predict analysis request failed:", err);
+        setLlmError("Terjadi kendala jaringan saat menghubungi model AI. Hipotesismu tetap berhasil tercatat.");
       } finally {
         setIsAnalyzingLlm(false);
       }
@@ -206,6 +221,7 @@ export function StepPredict({
   const handleRetry = () => {
     setSubmittedFeedback(null);
     setLlmAnalysis(null);
+    setLlmError(null);
     onSaveStateRef.current?.({
       selectedOptionId,
       confidence,
@@ -322,22 +338,35 @@ export function StepPredict({
                         Gunakan AI / LLM untuk Analisis Nalar Hipotesis
                       </span>
                     </label>
-                    <input
-                      id="predict-use-llm"
-                      type="checkbox"
-                      checked={useLlm}
-                      onChange={(e) => setUseLlm(e.target.checked)}
-                      disabled={isCompleted || isSubmitting || isAnalyzingLlm}
-                      className="w-4 h-4 rounded border-border text-accent focus:ring-accent cursor-pointer"
-                    />
+                    <div className="flex items-center gap-2">
+                      {activeModelLabel && (
+                        <span className="hidden sm:inline-block text-3xs font-mono px-2 py-0.5 rounded-full bg-surface-raised border border-border text-text-muted">
+                          {activeModelLabel}
+                        </span>
+                      )}
+                      <input
+                        id="predict-use-llm"
+                        type="checkbox"
+                        checked={useLlm}
+                        onChange={(e) => setUseLlm(e.target.checked)}
+                        disabled={isCompleted || isSubmitting || isAnalyzingLlm}
+                        className="w-4 h-4 rounded border-border text-accent focus:ring-accent cursor-pointer"
+                      />
+                    </div>
                   </div>
 
                   {useLlm && (
-                    <div className="flex items-start gap-2 text-2xs sm:text-xs text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded-lg leading-relaxed animate-in fade-in duration-200">
+                    <div className="flex items-start gap-2 text-2xs sm:text-xs text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20 px-3 py-2.5 rounded-lg leading-relaxed animate-in fade-in duration-200">
                       <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                      <span>
-                        <strong>Perhatian:</strong> Analisis mendalam dengan LLM (Nai) memerlukan waktu <strong>sedikit lebih lama</strong> (~3–8 detik) karena model AI memproses penalaran, tingkat keyakinan, dan intuisimu secara menyeluruh.
-                      </span>
+                      <div className="space-y-1">
+                        <div>
+                          <strong>Perhatian:</strong> Analisis mendalam dengan model <strong>{activeModelLabel || "LLM"}</strong> memerlukan waktu <strong>sedikit lebih lama</strong> (~3–8 detik) karena model AI memproses penalaran, tingkat keyakinan, dan intuisimu secara menyeluruh.
+                        </div>
+                        <div className="flex items-center gap-1 text-2xs text-text-muted">
+                          <Info className="w-3 h-3 text-accent shrink-0" />
+                          <span>Kecepatan respons bergantung pada beban server penyedia.</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -446,6 +475,13 @@ export function StepPredict({
                   )}
                 </div>
 
+                {llmAnalysis.notice && (
+                  <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2 leading-relaxed">
+                    <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                    <span>{llmAnalysis.notice}</span>
+                  </div>
+                )}
+
                 <div className="text-xs sm:text-sm text-text leading-relaxed">
                   <MathRenderer content={llmAnalysis.cognitiveAnalysis} />
                 </div>
@@ -462,6 +498,17 @@ export function StepPredict({
                     💡 {llmAnalysis.conceptualNudge}
                   </p>
                 )}
+              </div>
+            )}
+
+            {/* LLM Error or Rate Limit Banner */}
+            {llmError && (
+              <div className="p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2.5 leading-relaxed animate-in fade-in">
+                <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="block text-amber-900 dark:text-amber-200">Catatan Analisis AI:</strong>
+                  <span>{llmError}</span>
+                </div>
               </div>
             )}
 

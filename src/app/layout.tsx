@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NavHeader } from "@/components/layout/nav-header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { AiModelProvider } from "@/features/learning/context/ai-model-context";
 
 export const metadata: Metadata = {
   title: "Nalar — Belajar Sampai Paham",
@@ -63,23 +64,25 @@ export default function RootLayout({
       </head>
       <body className="flex flex-col min-h-screen overflow-x-hidden">
         <ThemeProvider />
-        <a href="#main-content" className="skip-to-content">
-          Lewati ke konten utama
-        </a>
+        <AiModelProvider>
+          <a href="#main-content" className="skip-to-content">
+            Lewati ke konten utama
+          </a>
 
-        <NavHeader />
+          <NavHeader />
 
-        <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-4 py-2 sm:py-3 md:py-4">
-          {children}
-        </main>
+          <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-4 py-2 sm:py-3 md:py-4">
+            {children}
+          </main>
 
-        <footer className="border-t border-border py-6 text-xs text-text-muted bg-surface-raised">
-          <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
-            <p>© {new Date().getFullYear()} Nalar — Platform Pembelajaran STEM Berbasis Pemahaman &amp; Intuisi.</p>
-            <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-3 gap-y-1 text-text-muted">
+          <footer className="border-t border-border py-6 text-xs text-text-muted bg-surface-raised">
+            <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-center sm:text-left">
+              <p>© {new Date().getFullYear()} Nalar — Platform Pembelajaran STEM Berbasis Pemahaman &amp; Intuisi.</p>
+              <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-3 gap-y-1 text-text-muted">
+              </div>
             </div>
-          </div>
-        </footer>
+          </footer>
+        </AiModelProvider>
       </body>
     </html>
   );

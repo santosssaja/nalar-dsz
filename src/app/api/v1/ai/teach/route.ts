@@ -4,6 +4,7 @@ import { getAiProvider } from "@/server/ai/factory";
 import { AiProviderName, AiTeachContext } from "@/server/ai/types";
 import { getConceptBySlug } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
+import { parseAiError } from "@/server/ai/error-utils";
 
 const TeachRequestSchema = z.object({
   conceptSlug: z.string(),
@@ -92,9 +93,10 @@ export async function POST(req: NextRequest) {
             controller.close();
           } catch (err) {
             console.error("Stream error in AI Teach route:", err);
+            const parsed = parseAiError(err, model);
             controller.enqueue(
               encoder.encode(
-                `data: ${JSON.stringify({ type: "error", content: "Terjadi gangguan saat streaming evaluasi." })}\n\n`
+                `data: ${JSON.stringify({ type: "error", content: parsed.message, code: parsed.code })}\n\n`
               )
             );
             controller.close();
@@ -127,9 +129,10 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error in AI Teach route:", error);
+    const parsed = parseAiError(error);
     return NextResponse.json(
-      { error: "Gagal memproses sesi Teach Mode." },
-      { status: 500 }
+      { error: { code: parsed.code, message: parsed.message } },
+      { status: parsed.status }
     );
   }
 }

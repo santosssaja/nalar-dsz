@@ -106,3 +106,39 @@ export async function* transformThinkTags(
     yield { type: isThinking ? "thought" : "text", content: buffer };
   }
 }
+
+/**
+ * Sanitizes and formats multi-turn chat messages into Google Generative API contents schema.
+ * Ensures:
+ * 1. Roles alternate strictly between 'user' and 'model' (merges consecutive identical roles).
+ * 2. First message starts with role 'user'.
+ * 3. System messages are excluded (should be placed in system_instruction instead).
+ */
+export function sanitizeGoogleContents(
+  messages: Array<{ role: "system" | "user" | "assistant"; content: string }>
+): Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> {
+  const filtered = messages.filter((m) => m.role !== "system" && m.content.trim().length > 0);
+  if (filtered.length === 0) {
+    return [{ role: "user", parts: [{ text: "Halo Nai" }] }];
+  }
+
+  const result: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
+
+  for (const m of filtered) {
+    const targetRole = m.role === "assistant" ? "model" : "user";
+    const lastItem = result[result.length - 1];
+
+    if (!lastItem) {
+      if (targetRole === "model") {
+        result.push({ role: "user", parts: [{ text: "Halo Nai" }] });
+      }
+      result.push({ role: targetRole, parts: [{ text: m.content }] });
+    } else if (lastItem.role === targetRole) {
+      lastItem.parts.push({ text: m.content });
+    } else {
+      result.push({ role: targetRole, parts: [{ text: m.content }] });
+    }
+  }
+
+  return result;
+}

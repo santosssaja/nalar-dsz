@@ -4,6 +4,7 @@ import { getAiProvider } from "@/server/ai/factory";
 import { AiProviderName, AiSocraticContext } from "@/server/ai/types";
 import { getStepById, getConceptBySlug } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
+import { parseAiError } from "@/server/ai/error-utils";
 
 const TutorRequestSchema = z.object({
   conceptSlug: z.string(),
@@ -14,6 +15,15 @@ const TutorRequestSchema = z.object({
   apiKey: z.string().optional(),
   endpoint: z.string().optional(),
   stream: z.boolean().optional().default(false),
+  chatHistory: z
+    .array(
+      z.object({
+        role: z.enum(["user", "assistant"]),
+        content: z.string().max(4000),
+      })
+    )
+    .max(20)
+    .optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -29,7 +39,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { conceptSlug, stepId, userQuestion, provider, model, apiKey, endpoint, stream: requestStream } = parsed.data;
+    const {
+      conceptSlug,
+      stepId,
+      userQuestion,
+      provider,
+      model,
+      apiKey,
+      endpoint,
+      stream: requestStream,
+      chatHistory,
+    } = parsed.data;
     const isStreamRequested = requestStream || req.headers.get("accept")?.includes("text/event-stream");
 
     const concept = getConceptBySlug(conceptSlug);
@@ -51,6 +71,10 @@ export async function POST(req: NextRequest) {
       stepContent: step?.content ?? concept.summary,
       userQuestion,
       misconceptions: concept.misconceptions,
+      recentChatHistory: chatHistory?.map((m) => ({
+        role: m.role,
+        content: m.content,
+      })),
     };
 
     const ai = getAiProvider(provider as AiProviderName);
@@ -75,9 +99,10 @@ export async function POST(req: NextRequest) {
             controller.close();
           } catch (err) {
             console.error("Stream error in AI Tutor route:", err);
+            const parsed = parseAiError(err, model);
             controller.enqueue(
               encoder.encode(
-                `data: ${JSON.stringify({ type: "error", content: "Terjadi gangguan saat streaming jawaban." })}\n\n`
+                `data: ${JSON.stringify({ type: "error", content: parsed.message, code: parsed.code })}\n\n`
               )
             );
             controller.close();
@@ -111,9 +136,10 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error in AI Tutor route:", error);
+    const parsed = parseAiError(error);
     return NextResponse.json(
-      { error: "Gagal memproses sesi konsultasi dengan Nai." },
-      { status: 500 }
+      { error: { code: parsed.code, message: parsed.message } },
+      { status: parsed.status }
     );
   }
 }

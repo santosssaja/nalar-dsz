@@ -57,6 +57,20 @@
   - **In-Memory Initialized Cache (`globalForDb.isInitialized`):** Menjamin panggilan `ensureDbInitialized()` berikutnya pada worker Next.js langsung selesai secara instan (<0.01 ms).
   - **Indeks Performa Basis Data:** Menambahkan indeks komposit performa pada tabel `reviewQueue` (`learnerDeviceId, conceptId` dan `learnerDeviceId, state, dueAt`), `mistakeEvents` (`attemptId` dan `conceptId`), serta `learningEvidence` (`learnerDeviceId, conceptId`) di [`src/server/db/schema.ts`](file:///D:/projects/nalar-v2/src/server/db/schema.ts) untuk mengeliminasi *sequential table scan*.
   - **Deduplikasi Query Dashboard:** Memperbarui `getGlobalLearnerRecommendation` di [`src/server/services/recommendation-engine.ts`](file:///D:/projects/nalar-v2/src/server/services/recommendation-engine.ts) dan [`src/app/dashboard/page.tsx`](file:///D:/projects/nalar-v2/src/app/dashboard/page.tsx) agar menggunakan data kemajuan yang telah di-fetch sebelumnya, menghilangkan query ganda yang redundan.
+- **Integrasi Penuh Google Gemma 4 31B IT & Resilient Socratic Streaming (`2026-09-20`):**
+  - **Dukungan Thinking Model Gemma 4 31B IT:** Mengonfigurasi `GEMMA_API_KEY` dan `GEMMA_MODEL=gemma-4-31b-it` pada `.env`. Mengimplementasikan arsitektur *direct resilient SSE reader* pada [`src/server/ai/providers/gemma-provider.ts`](file:///D:/projects/nalar-v2/src/server/ai/providers/gemma-provider.ts) yang mengisolasi token monolog internal model (`thought: true`) secara ketat ke kanal animasi berpikir Nai (`type: "thought"`), mencegah bocornya coretan pemikiran/draft model ke percakapan murid, serta mengalirkan teks sokratis ramah ke antarmuka belajar (`type: "text"`).
+  - **Ketahanan Terhadap Gangguan Google API (Resilient Error Handling):** Mengatasi crash parser stream bawaan SDK saat server Google mengalami lonjakan beban atau HTTP 503 di tengah streaming. Jika terjadi pemutusan jaringan sebelum teks terpancar, sistem secara halus melakukan *fallback* ke mesin kurasi lokal; jika teks sudah terpancar sebagian, stream diakhiri secara anggun (`type: "done"`) tanpa restart berulang.
+  - **Mode Guru & Evaluasi JSON Terstruktur:** Mengaktifkan konfigurasi `response_mime_type: "application/json"` dengan `system_instruction` terstruktur untuk penilaian Mode Guru (Teach Mode) dan Mode Prediksi, menghasilkan skor akurat, umpan balik pedagogis, serta rekomendasi perbaikan pemahaman siswa secara konsisten.
+- **Pemilih Model AI Dinamis Frontend & Sinkronisasi Lintas-Fitur (`2026-09-20`):**
+  - **Pemilih Model di Header Side Chat (`NaiTutorDrawer`):** Menambahkan antarmuka pemilihan model AI langsung di header laci obrolan tutor Nai. Pilihan model dikelompokkan rapi per penyedia:
+    - *Gemma:* `gemma-4-31b-it` (default/utama) dan `gemma-4-26b-it`.
+    - *Gemini:* `gemini-3.1-flash-lite`, `gemini-3.5-flash-lite`, `gemini-3.5-flash`, dan `gemini-3.8-flash` — **hanya muncul/dapat dipilih jika `GEMINI_API_KEY` atau `GOOGLE_API_KEY` diset di environment**.
+    - *Mesin Kurasi Lokal Sokratis:* Selalu tersedia untuk keandalan 100% offline.
+  - **Sinkronisasi Global Lintas Fitur AI (`AiModelContext`):** Model yang dipilih di side chat otomatis disimpan ke `localStorage` dan disinkronkan secara global ke seluruh fitur AI lain di aplikasi:
+    - *Tutor Percakapan Laci Samping (`NaiTutorDrawer`):* Mengirim `{ provider, model }` ke rute `/api/v1/ai/tutor`.
+    - *Mode Guru (`TeachModeModal`):* Menampilkan badge model aktif di header dan mengirim `{ provider, model }` ke rute `/api/v1/ai/teach`.
+    - *Analisis Nalar Prediksi Hipotesis (`StepPredict`):* Menampilkan badge model aktif di samping toggle AI serta mengirim `{ provider, model }` ke rute `/api/v1/ai/predict`.
+  - **Katalog Terpusat & Endpoint `/api/v1/ai/providers`:** Backend mengekspos daftar penyedia dan status ketersediaan dinamis secara aman tanpa membocorkan API key ke klien.
 
 ## Target implementasi berikutnya
 

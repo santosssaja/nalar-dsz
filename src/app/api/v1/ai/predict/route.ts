@@ -5,6 +5,7 @@ import { AiProviderName, AiPredictContext } from "@/server/ai/types";
 import { getStepById, getConceptBySlug } from "@/content/loader";
 import { resolveActor } from "@/server/auth/actor-resolver";
 import { ChoiceEvaluationSchema } from "@/content/schema";
+import { parseAiError } from "@/server/ai/error-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -116,14 +117,15 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error in AI Predict route:", error);
+    const parsed = parseAiError(error);
     return NextResponse.json(
       {
         error: {
-          code: "INTERNAL_ERROR",
-          message: "Gagal menganalisis prediksi dengan AI.",
+          code: parsed.code,
+          message: parsed.message,
         },
       },
-      { status: 500 }
+      { status: parsed.status }
     );
   }
 }

@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { GraduationCap, X, CheckCircle, AlertCircle, Sparkles, Loader2 } from "lucide-react";
+import { GraduationCap, X, CheckCircle, AlertCircle, Sparkles, Loader2, Info } from "lucide-react";
 import Image from "next/image";
 import { ConceptContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
+import { useAiModel } from "@/features/learning/context/ai-model-context";
 import { AiTeachEvaluation, AiTeachChunk } from "@/server/ai/types";
 
 interface TeachModeModalProps {
@@ -15,6 +16,7 @@ interface TeachModeModalProps {
 }
 
 export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps) {
+  const { selectedProvider, selectedModel, activeModelLabel } = useAiModel();
   const [mounted, setMounted] = useState(false);
   const [teachingText, setTeachingText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,6 +24,7 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
   const [thoughtText, setThoughtText] = useState("");
   const [streamingNaiResponse, setStreamingNaiResponse] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [noticeMessage, setNoticeMessage] = useState<string | null>(null);
   const [evaluation, setEvaluation] = useState<AiTeachEvaluation | null>(null);
 
   useEffect(() => {
@@ -150,6 +153,7 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
     setIsSubmitting(true);
     setIsStreaming(true);
     setErrorMessage(null);
+    setNoticeMessage(null);
     setThoughtText("");
     setStreamingNaiResponse("");
     setEvaluation(null);
@@ -162,14 +166,21 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
           conceptSlug: concept.slug,
           naiQuestion,
           userTeachingExplanation: teachingText,
-          provider: "gemma",
+          provider: selectedProvider,
+          model: selectedModel,
           stream: true,
         }),
       });
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => null);
-        throw new Error(errorData?.error?.message ?? "Gagal memproses pengajaran.");
+        const message =
+          errorData?.error?.message ??
+          (typeof errorData?.error === "string" ? errorData.error : null) ??
+          (res.status === 429
+            ? "Batas kuota atau rate limit model sedang penuh (HTTP 429). Silakan tunggu sejenak atau beralih ke model lain di menu atas."
+            : "Gagal memproses pengajaran.");
+        throw new Error(message);
       }
 
       const reader = res.body?.getReader();
@@ -205,6 +216,8 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
               setThoughtText((prev) => prev + chunk.content);
             } else if (chunk.type === "nai_response" && chunk.content) {
               setStreamingNaiResponse((prev) => prev + chunk.content);
+            } else if (chunk.type === "notice" && chunk.content) {
+              setNoticeMessage(chunk.content);
             } else if (chunk.type === "evaluation" && chunk.evaluation) {
               setEvaluation(chunk.evaluation);
             } else if (chunk.type === "error" && chunk.content) {
@@ -229,6 +242,7 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
     setStreamingNaiResponse("");
     setThoughtText("");
     setErrorMessage(null);
+    setNoticeMessage(null);
   };
 
   if (!isOpen || !mounted) return null;
@@ -253,7 +267,12 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
               <GraduationCap className="w-5 h-5" />
             </span>
             <div>
-              <h2 id="teach-mode-title" className="text-base font-bold text-text">Mode Guru (Teach Nai)</h2>
+              <div className="flex items-center gap-2">
+                <h2 id="teach-mode-title" className="text-base font-bold text-text">Mode Guru (Teach Nai)</h2>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/30">
+                  {activeModelLabel}
+                </span>
+              </div>
               <p className="text-xs text-text-muted">
                 Jadilah guru bagi Nai untuk membuktikan penguasaan konsepmu
               </p>
@@ -304,9 +323,13 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
                 className="w-full p-3 text-xs rounded-xl bg-surface border border-border text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent leading-relaxed"
                 disabled={isSubmitting}
               />
-              <span className="text-[11px] text-text-muted block mt-1">
-                Tips: Penjelasan yang baik menghubungkan sebab-akibat dan memakai contoh nyata.
-              </span>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-[11px] text-text-muted mt-1.5">
+                <span>Tips: Penjelasan yang baik menghubungkan sebab-akibat dan memakai contoh nyata.</span>
+                <span className="flex items-center gap-1 text-[10px] text-text-muted/80">
+                  <Info className="w-3 h-3 text-accent shrink-0" />
+                  <span>Kecepatan respons bergantung pada beban server.</span>
+                </span>
+              </div>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">
@@ -390,6 +413,14 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
                     />
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* Notice banner if any (e.g. rate limit fallback) */}
+            {noticeMessage && (
+              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2 leading-relaxed animate-in fade-in">
+                <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <span>{noticeMessage}</span>
               </div>
             )}
 

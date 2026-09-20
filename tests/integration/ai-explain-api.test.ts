@@ -132,6 +132,33 @@ describe("AI Engine Endpoints (Providers, Tutor, Teach Mode)", () => {
     expect(streamText).toContain('"type":"done"');
   });
 
+  it("POST /api/v1/ai/tutor accepts multi-turn chatHistory context", async () => {
+    const { POST: tutorHandler } = await import("@/app/api/v1/ai/tutor/route");
+    const payload = {
+      conceptSlug: "definisi-turunan",
+      userQuestion: "Lalu bagaimana jika h mendekati 0?",
+      provider: "curated",
+      chatHistory: [
+        { role: "user", content: "Apa itu garis sekan?" },
+        { role: "assistant", content: "Garis sekan adalah garis lurus yang memotong kurva di dua titik berjarak h." },
+      ],
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/v1/ai/tutor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const res = await tutorHandler(req);
+    expect(res.status).toBe(200);
+
+    const json = await res.json();
+    expect(json.data).toBeDefined();
+    expect(json.data.answer).toBeDefined();
+    expect(json.data.answer.length).toBeGreaterThan(10);
+  });
+
   it("POST /api/v1/ai/teach evaluates learner teaching Nai in Teach Mode", async () => {
     const { POST: teachHandler } = await import("@/app/api/v1/ai/teach/route");
     const payload = {

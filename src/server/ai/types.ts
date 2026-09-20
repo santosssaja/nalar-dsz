@@ -51,15 +51,17 @@ export interface AiTeachEvaluation {
 }
 
 export interface AiChatChunk {
-  type: "thought" | "text" | "done" | "error";
+  type: "thought" | "text" | "done" | "error" | "notice";
   content?: string;
+  code?: string;
   provider?: AiProviderName;
   model?: string;
 }
 
 export interface AiTeachChunk {
-  type: "thought" | "nai_response" | "evaluation" | "done" | "error";
+  type: "thought" | "nai_response" | "evaluation" | "done" | "error" | "notice";
   content?: string;
+  code?: string;
   evaluation?: AiTeachEvaluation;
   provider?: AiProviderName;
   model?: string;
@@ -85,6 +87,7 @@ export interface AiPredictAnalysis {
   cognitiveAnalysis: string;
   conceptualNudge: string;
   misconceptionAlert?: string;
+  notice?: string;
   provider?: AiProviderName;
   model?: string;
 }
