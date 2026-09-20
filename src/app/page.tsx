@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   FlaskConical,
   Network,
@@ -18,81 +19,192 @@ import {
 
 export default function HomePage() {
   return (
-    <div className="space-y-20 py-6">
-      {/* Hero Section */}
-      <section className="space-y-8 max-w-4xl">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Nalar • Platform Pembelajaran STEM Terpadu</span>
-          </span>
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-surface-raised border border-border text-text-muted">
-            Tersedia Langsung • Tanpa Wajib Login
-          </span>
-        </div>
+    <div className="relative space-y-12 sm:space-y-16 py-1 sm:py-2 md:py-3 overflow-x-clip">
+      {/* Visual Ambient Background Decorative Layers */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[600px] pointer-events-none -z-10 overflow-hidden">
+        <Image
+          src="/figma-assets/hero-bg-blur.svg"
+          alt=""
+          width={1200}
+          height={600}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-auto max-w-none opacity-60 dark:opacity-15 pointer-events-none"
+        />
+        <Image
+          src="/figma-assets/hero-bg-pattern.svg"
+          alt=""
+          width={320}
+          height={320}
+          className="absolute top-[40px] right-0 w-[320px] h-[320px] opacity-60 dark:opacity-15 pointer-events-none hidden sm:block"
+        />
+        <Image
+          src="/figma-assets/hero-bg-lines.svg"
+          alt=""
+          width={900}
+          height={400}
+          className="absolute top-[60px] left-0 w-[900px] h-[400px] opacity-50 dark:opacity-10 pointer-events-none hidden sm:block"
+        />
+      </div>
 
-        <div className="space-y-4">
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-text leading-[1.15]">
-            Belajar bukan hanya sampai bisa menjawab.{" "}
-            <span className="text-accent underline decoration-accent/30 decoration-wavy">
-              Belajar sampai tahu mengapa ini bekerja.
+      {/* Hero Section — 2-Column Desktop Grid */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center pt-1 pb-2 sm:pb-4 relative z-10">
+        {/* Left Column: Headline, Subtext & Primary Action Buttons */}
+        <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent-muted text-accent">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Nalar • Platform Pembelajaran STEM Terpadu</span>
             </span>
-          </h1>
+            <span className="inline-flex items-center px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium bg-surface-raised border border-border text-text-muted">
+              Tersedia Langsung • Tanpa Wajib Login
+            </span>
+          </div>
 
-          <p className="text-lg sm:text-xl text-text-muted leading-relaxed max-w-3xl">
-            Nalar mentransformasi pendidikan sains dan matematika menjadi penjelajahan interaktif:
-            manipulasi parameter visual seketika, temukan relasi antarilmu dalam graf konsep 2D,
-            dan asah pemikiran mendalam bersama tutor Sokratis Nai.
-          </p>
+          <div className="space-y-2.5 sm:space-y-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-extrabold tracking-[-0.5px] text-text leading-[1.15]">
+              Belajar bukan hanya sampai bisa menjawab.{" "}
+              <span className="text-accent block mt-0.5 sm:mt-1">
+                Belajar sampai tahu mengapa ini bekerja.
+              </span>
+            </h1>
+
+            <p className="text-sm sm:text-base text-text-muted leading-[1.7] font-normal max-w-xl">
+              Nalar mentransformasi pendidikan sains dan matematika menjadi penjelajahan interaktif:
+              manipulasi parameter visual seketika, temukan relasi antarilmu dalam graf konsep 2D,
+              dan asah pemikiran mendalam bersama tutor Sokratis Nai.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
+            <Link
+              href="/lab"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-accent text-sm sm:text-base"
+            >
+              <FlaskConical className="w-4 h-4" />
+              <span>Buka Nalar Lab (14 Stasiun)</span>
+              <ArrowRight className="w-4 h-4 ml-0.5" />
+            </Link>
+            <Link
+              href="/graph"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl font-medium bg-accent-muted text-accent border border-accent/30 hover:bg-accent-muted/80 transition-colors shadow-2xs text-sm sm:text-base"
+            >
+              <Network className="w-4 h-4 text-accent" />
+              <span>Peta Graf Konsep</span>
+            </Link>
+            <Link
+              href="/domains"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl font-medium bg-surface-raised border border-border hover:bg-surface text-text transition-colors shadow-xs text-sm sm:text-base"
+            >
+              <Compass className="w-4 h-4 text-accent" />
+              <span>4 Domain STEM</span>
+            </Link>
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 pt-2">
-          <Link
-            href="/lab"
-            className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-semibold bg-accent text-surface-raised hover:bg-accent-hover transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-accent"
-          >
-            <FlaskConical className="w-4 h-4" />
-            <span>Buka Nalar Lab (14 Stasiun)</span>
-            <ArrowRight className="w-4 h-4 ml-0.5" />
-          </Link>
-          <Link
-            href="/graph"
-            className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-medium bg-surface-raised border border-border hover:bg-surface text-text transition-colors shadow-xs"
-          >
-            <Network className="w-4 h-4 text-accent" />
-            <span>Peta Graf Konsep STEM</span>
-          </Link>
-          <Link
-            href="/domains"
-            className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-medium bg-surface-raised border border-border hover:bg-surface text-text transition-colors shadow-xs"
-          >
-            <Compass className="w-4 h-4 text-accent" />
-            <span>Jelajahi 4 Domain</span>
-          </Link>
-        </div>
-      </section>
+        {/* Right Column: Hero Mascot Illustration & Floating Cognitive Cards */}
+        <div className="lg:col-span-5 flex flex-col items-center justify-center pt-2 lg:pt-0">
+          {/* Main Hero Illustration & Floating Badges Container */}
+          <div className="relative w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[340px] xl:max-w-[360px] aspect-square flex items-center justify-center">
+            {/* Card 1: 47 Konsep Terkurasi (Top-Left) */}
+            <div className="absolute -top-3 -left-4 sm:-left-8 lg:-left-6 xl:-left-10 z-20 hidden sm:flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-surface-raised/95 border border-accent/40 shadow-md backdrop-blur-xs transition-transform hover:-translate-y-0.5">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent p-1.5 sm:p-2 flex items-center justify-center shrink-0 shadow-xs">
+                <Image
+                  src="/figma-assets/icon-online-education.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <div className="text-base sm:text-lg font-bold text-text leading-tight">47</div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-text-muted">Konsep Terkurasi</div>
+              </div>
+            </div>
 
-      {/* Metrics & Foundation Stats Bar */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl bg-surface-raised border border-border">
-        <div className="p-3 text-center sm:text-left space-y-1">
-          <div className="text-3xl font-extrabold text-accent">47</div>
-          <div className="text-xs font-semibold text-text uppercase tracking-wider">Konsep Terkurasi</div>
-          <p className="text-[11px] text-text-muted">6 tahap kognitif lengkap per konsep</p>
-        </div>
-        <div className="p-3 text-center sm:text-left space-y-1">
-          <div className="text-3xl font-extrabold text-accent">14</div>
-          <div className="text-xs font-semibold text-text uppercase tracking-wider">Stasiun Nalar Lab</div>
-          <p className="text-[11px] text-text-muted">Simulasi visual interaktif waktu nyata</p>
-        </div>
-        <div className="p-3 text-center sm:text-left space-y-1">
-          <div className="text-3xl font-extrabold text-accent">4</div>
-          <div className="text-xs font-semibold text-text uppercase tracking-wider">Pilar Sains Terpadu</div>
-          <p className="text-[11px] text-text-muted">Matematika, Fisika, Kimia, Biologi</p>
-        </div>
-        <div className="p-3 text-center sm:text-left space-y-1">
-          <div className="text-3xl font-extrabold text-accent">100%</div>
-          <div className="text-xs font-semibold text-text uppercase tracking-wider">Zero-Friction Access</div>
-          <p className="text-[11px] text-text-muted">Mulai eksplorasi tanpa syarat pendaftaran</p>
+            {/* Card 2: AI Tutor NAI (Top-Right) */}
+            <div className="absolute -top-2 -right-3 sm:-right-6 lg:-right-4 xl:-right-6 z-20 hidden sm:flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-surface-raised/95 border border-accent/40 shadow-md backdrop-blur-xs transition-transform hover:-translate-y-0.5">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent p-1.5 sm:p-2 flex items-center justify-center shrink-0 shadow-xs text-surface-raised">
+                <Image
+                  src="/figma-assets/chip-briefcase.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain invert brightness-0"
+                />
+              </div>
+              <div>
+                <div className="text-xs sm:text-sm font-bold text-text leading-tight">AI Tutor NAI</div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-text-muted">Bimbingan Sokratis</div>
+              </div>
+            </div>
+
+            {/* Background Decorative Thin Circle right behind Panda */}
+            <Image
+              src="/figma-assets/hero-bg-pattern.svg"
+              alt=""
+              width={360}
+              height={360}
+              className="absolute inset-0 w-full h-full object-contain scale-110 opacity-70 dark:opacity-25 pointer-events-none -z-10"
+            />
+            <Image
+              src="/figma-assets/hero-illustration.webp"
+              alt="Ilustrasi Pembelajaran STEM Nalar"
+              width={360}
+              height={360}
+              priority
+              className="w-full h-full object-contain drop-shadow-md rounded-2xl relative z-10"
+            />
+
+            {/* Card 3: 14 Station Lab (Bottom-Right) */}
+            <div className="absolute -bottom-3 -right-2 sm:-right-4 lg:-right-3 xl:-right-5 z-20 hidden sm:flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-surface-raised/95 border border-accent/40 shadow-md backdrop-blur-xs transition-transform hover:-translate-y-0.5">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent p-1.5 sm:p-2 flex items-center justify-center shrink-0 shadow-xs">
+                <Image
+                  src="/figma-assets/icon-board.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <div className="text-[10px] sm:text-[11px] font-medium text-text-muted">Station Lab</div>
+                <div className="text-base sm:text-lg font-bold text-text leading-tight">14</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Fallback Grid for Floating Stat Cards */}
+          <div className="w-full grid grid-cols-1 sm:hidden gap-2.5 mt-4">
+            <div className="p-3 rounded-xl bg-surface-raised border border-border shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-accent p-2 flex items-center justify-center shrink-0">
+                <Image src="/figma-assets/icon-online-education.svg" alt="" width={20} height={20} className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <div className="text-base font-bold text-text">47 Konsep Terkurasi</div>
+                <div className="text-xs text-text-muted">6 tahap kognitif lengkap per konsep</div>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-surface-raised border border-border shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-accent p-2 flex items-center justify-center shrink-0">
+                <Image src="/figma-assets/chip-briefcase.svg" alt="" width={20} height={20} className="w-full h-full object-contain invert brightness-0" />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-text">AI Tutor NAI</div>
+                <div className="text-xs text-text-muted">Bimbingan Sokratis waktu nyata</div>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-surface-raised border border-border shadow-xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-accent p-2 flex items-center justify-center shrink-0">
+                <Image src="/figma-assets/icon-board.svg" alt="" width={20} height={20} className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <div className="text-base font-bold text-text">14 Stasiun Nalar Lab</div>
+                <div className="text-xs text-text-muted">Simulasi visual interaktif waktu nyata</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

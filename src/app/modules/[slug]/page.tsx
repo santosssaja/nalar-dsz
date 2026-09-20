@@ -49,6 +49,10 @@ export default async function ModuleOverviewPage({
     ])
   );
 
+  const masteredCount = allConcepts.filter(
+    (c) => progressMap.get(c.id)?.status === "mastered"
+  ).length;
+
   return (
     <div className="space-y-10 py-4 max-w-4xl mx-auto">
       {/* Module Header */}
@@ -91,18 +95,23 @@ export default async function ModuleOverviewPage({
           </div>
 
           <div className="p-4 rounded-xl bg-surface-raised border border-border col-span-2 sm:col-span-1">
-            <span className="text-xs text-text-muted block">Status Mode</span>
+            <span className="text-xs text-text-muted block">Penguasaan Modul</span>
             <span className="text-xl font-bold text-accent mt-0.5 block">
-              Tamu Aktif
+              {masteredCount} / {mod.conceptSlugs.length} Dikuasai
             </span>
           </div>
         </div>
       </div>
 
-      {/* Spaced Review Due Banner */}
-      {dueReviews.length > 0 && (
-        <SpacedReviewBanner dueReviews={dueReviews} />
-      )}
+      {/* Spaced Review Due Banner (Hanya konsep yang termasuk dalam modul ini) */}
+      {(() => {
+        const moduleDueReviews = dueReviews.filter((r) =>
+          mod.conceptSlugs.includes(r.conceptSlug)
+        );
+        return moduleDueReviews.length > 0 ? (
+          <SpacedReviewBanner dueReviews={moduleDueReviews} />
+        ) : null;
+      })()}
 
       {/* Adaptive Recommendation Card */}
       <RecommendationCard recommendation={recommendation} />

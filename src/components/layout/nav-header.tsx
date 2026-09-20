@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Network, FlaskConical, Settings, BookOpen } from "lucide-react";
+import Image from "next/image";
 import { PreferencesModal } from "@/components/ui/preferences-modal";
 import { AuthModal } from "@/components/ui/auth-modal";
 
@@ -97,41 +98,45 @@ export function NavHeader() {
     <>
       <header
         onFocusCapture={() => setIsVisible(true)}
-        className={`border-b border-border bg-surface-raised sticky top-0 z-30 transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
+        className={`sticky top-2 z-30 transition-transform duration-300 ease-in-out motion-reduce:transition-none max-w-6xl w-[94%] sm:w-full mx-auto ${
           isVisible || isPrefOpen || isAuthOpen ? "translate-y-0" : "-translate-y-full"
-        } ${isScrolled ? "shadow-xs" : ""}`}
+        }`}
       >
-        <div className="max-w-6xl mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-3">
-          {/* Brand Logo & Tagline */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="bg-surface/85 backdrop-blur-md border border-border shadow-md rounded-full px-3.5 sm:px-5 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-3">
+          {/* Left: Brand Logo */}
+          <div className="flex items-center shrink-0">
             <Link
               href="/"
               aria-label="Beranda Nalar"
-              className="font-bold text-lg sm:text-xl tracking-tight flex items-center gap-2 hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-accent rounded-lg p-1"
+              className="flex items-center gap-2 hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-accent rounded-full p-1"
             >
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-accent text-surface-raised flex items-center justify-center font-bold text-sm sm:text-base shadow-xs">
-                N
+              <Image
+                src="/figma-assets/logo-nalar.webp"
+                alt="Logo Nalar"
+                width={36}
+                height={36}
+                priority
+                className="h-8 sm:h-9 w-auto object-contain shrink-0"
+              />
+              <span className="hidden sm:inline font-bold text-base sm:text-lg text-text tracking-tight">
+                Nalar
               </span>
-              <span className="text-text">Nalar</span>
             </Link>
-            <span className="hidden md:inline text-xs text-text-muted border-l border-border pl-3">
-              Belajar sampai tahu mengapa
-            </span>
           </div>
 
-          {/* Navigation & Controls */}
-          <nav className="flex items-center gap-1 sm:gap-2 text-xs font-medium" aria-label="Navigasi Utama">
+          {/* Center: Navigation Links */}
+          <nav className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm font-medium" aria-label="Navigasi Utama">
             <Link
               href="/dashboard"
               aria-current={isDashboardActive ? "page" : undefined}
               title="Dashboard Belajar"
-              className={`p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all flex items-center gap-1.5 ${
                 isDashboardActive
                   ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
-                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+                  : "text-text-muted hover:text-text hover:bg-surface-overlay border border-transparent"
               }`}
             >
-              <LayoutDashboard className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0" />
+              <LayoutDashboard className="w-4 h-4 shrink-0" />
               <span className="hidden md:inline">Dashboard</span>
             </Link>
 
@@ -139,13 +144,13 @@ export function NavHeader() {
               href="/domains"
               aria-current={isCurriculumActive ? "page" : undefined}
               title="Kurikulum Modul"
-              className={`p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all flex items-center gap-1.5 ${
                 isCurriculumActive
                   ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
-                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+                  : "text-text-muted hover:text-text hover:bg-surface-overlay border border-transparent"
               }`}
             >
-              <BookOpen className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0" />
+              <BookOpen className="w-4 h-4 shrink-0" />
               <span className="hidden md:inline">Kurikulum</span>
             </Link>
 
@@ -153,13 +158,13 @@ export function NavHeader() {
               href="/graph"
               aria-current={isGraphActive ? "page" : undefined}
               title="Peta Graf Konsep (2D)"
-              className={`p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all flex items-center gap-1.5 ${
                 isGraphActive
                   ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
-                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+                  : "text-text-muted hover:text-text hover:bg-surface-overlay border border-transparent"
               }`}
             >
-              <Network className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0" />
+              <Network className="w-4 h-4 shrink-0" />
               <span className="hidden lg:inline">Peta Konsep</span>
             </Link>
 
@@ -167,16 +172,19 @@ export function NavHeader() {
               href="/lab"
               aria-current={isLabActive ? "page" : undefined}
               title="Nalar Lab (14 Stasiun Eksperimen)"
-              className={`p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all flex items-center gap-1.5 ${
                 isLabActive
                   ? "font-semibold bg-accent-muted text-accent border border-accent/30 shadow-2xs"
-                  : "text-text-muted hover:text-text hover:bg-surface border border-transparent"
+                  : "text-text-muted hover:text-text hover:bg-surface-overlay border border-transparent"
               }`}
             >
-              <FlaskConical className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0" />
+              <FlaskConical className="w-4 h-4 shrink-0" />
               <span className="hidden lg:inline">Nalar Lab</span>
             </Link>
+          </nav>
 
+          {/* Right: Actions (Accessibility & Auth) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Accessibility / Preferences Button */}
             <button
               type="button"
@@ -184,52 +192,46 @@ export function NavHeader() {
               aria-expanded={isPrefOpen}
               aria-label="Pengaturan Aksesibilitas dan Tampilan"
               title="Pengaturan Aksesibilitas"
-              className={`flex items-center gap-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-lg border transition-colors shadow-2xs ${
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full border text-xs sm:text-sm transition-colors shadow-2xs ${
                 isPrefOpen
                   ? "border-accent/40 bg-accent-muted text-accent font-semibold"
                   : "border-border bg-surface hover:bg-surface-overlay text-text"
               }`}
             >
-              <Settings className="w-4 h-4 sm:w-3.5 sm:h-3.5 shrink-0" />
-              <span className="hidden lg:inline">Aksesibilitas</span>
+              <Settings className="w-4 h-4 shrink-0" />
+              <span className="hidden xl:inline">Aksesibilitas</span>
             </button>
 
             {/* Auth / Account Button */}
-            <div className="border-l border-border pl-1.5 sm:pl-3 flex items-center shrink-0">
-              {authStatus.actorKind === "member" && authStatus.user ? (
-                <button
-                  type="button"
-                  onClick={() => setIsAuthOpen(true)}
-                  aria-label={`Akun pengguna: ${authStatus.user.displayName || authStatus.user.email}`}
-                  title={authStatus.user.displayName || authStatus.user.email}
-                  className="flex items-center gap-1.5 p-1 sm:px-2 sm:py-1.5 rounded-lg bg-accent-muted border border-accent/30 text-accent font-semibold hover:opacity-90 transition-opacity"
-                >
-                  <span className="w-5 h-5 rounded-full bg-accent text-surface-raised flex items-center justify-center text-[10px] font-bold shrink-0">
-                    {(authStatus.user.displayName || authStatus.user.email).charAt(0).toUpperCase()}
-                  </span>
-                  <span className="hidden sm:inline max-w-[80px] md:max-w-[100px] truncate text-xs">
-                    {authStatus.user.displayName || authStatus.user.email.split("@")[0]}
-                  </span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setIsAuthOpen(true)}
-                  aria-label="Masuk atau sinkronkan akun dari mode tamu"
-                  title="Mode Tamu / Masuk Akun"
-                  className={`inline-flex items-center gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                    isAuthActive || isAuthOpen
-                      ? "bg-accent-muted text-accent border border-accent/40 shadow-xs"
-                      : "bg-surface hover:bg-surface-overlay text-text border border-border"
-                  }`}
-                >
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse shrink-0" />
-                  <span className="hidden sm:inline">Mode Tamu • </span>
-                  <span>Masuk</span>
-                </button>
-              )}
-            </div>
-          </nav>
+            {authStatus.actorKind === "member" && authStatus.user ? (
+              <button
+                type="button"
+                onClick={() => setIsAuthOpen(true)}
+                aria-label={`Akun pengguna: ${authStatus.user.displayName || authStatus.user.email}`}
+                title={authStatus.user.displayName || authStatus.user.email}
+                className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full bg-accent text-surface-raised text-xs sm:text-sm font-semibold hover:bg-accent-hover transition-colors shadow-2xs"
+              >
+                <span className="w-5 h-5 rounded-full bg-surface-raised text-accent flex items-center justify-center text-xs font-bold shrink-0">
+                  {(authStatus.user.displayName || authStatus.user.email).charAt(0).toUpperCase()}
+                </span>
+                <span className="hidden sm:inline max-w-[80px] md:max-w-[110px] truncate text-xs font-semibold">
+                  {authStatus.user.displayName || authStatus.user.email.split("@")[0]}
+                </span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsAuthOpen(true)}
+                aria-label="Masuk atau sinkronkan akun dari mode tamu"
+                title="Mode Tamu / Masuk Akun"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold text-surface-raised bg-accent border border-accent shadow-xs hover:bg-accent-hover transition-all"
+              >
+                <span className="w-2 h-2 rounded-full bg-surface-raised animate-pulse shrink-0" />
+                <span className="hidden sm:inline">Mode Tamu • </span>
+                <span>Masuk</span>
+              </button>
+            )}
+          </div>
         </div>
       </header>
 

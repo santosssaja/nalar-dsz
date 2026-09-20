@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: "Nalar — Belajar Sampai Paham",
   description:
     "Platform pembelajaran STEM interaktif yang berpusat pada pemahaman, intuisi visual, dan jalur adaptif.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 const THEME_SCRIPT = `
@@ -54,7 +61,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen overflow-x-hidden">
         <ThemeProvider />
         <a href="#main-content" className="skip-to-content">
           Lewati ke konten utama
@@ -62,7 +69,7 @@ export default function RootLayout({
 
         <NavHeader />
 
-        <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-4 py-4 sm:py-6">
+        <main id="main-content" className="flex-1 max-w-6xl w-full mx-auto px-4 py-2 sm:py-3 md:py-4">
           {children}
         </main>
 
