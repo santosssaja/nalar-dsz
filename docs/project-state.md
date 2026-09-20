@@ -71,6 +71,10 @@
     - *Mode Guru (`TeachModeModal`):* Menampilkan badge model aktif di header dan mengirim `{ provider, model }` ke rute `/api/v1/ai/teach`.
     - *Analisis Nalar Prediksi Hipotesis (`StepPredict`):* Menampilkan badge model aktif di samping toggle AI serta mengirim `{ provider, model }` ke rute `/api/v1/ai/predict`.
   - **Katalog Terpusat & Endpoint `/api/v1/ai/providers`:** Backend mengekspos daftar penyedia dan status ketersediaan dinamis secara aman tanpa membocorkan API key ke klien.
+- **Refaktorisasi & Modularisasi Kode Skala Besar (`2026-09-20`):**
+  - **`src/server/services/explain-evaluator.ts` (599 baris → 205 baris):** Memisahkan 42 cabang logika evaluasi heuristik kriteria rubrik ke modul katalog deklaratif baru `explain-rules.ts` (`CRITERIA_RULES` dan `evaluateCriterionAgainstRubric`), memangkas ~394 baris kode repetitif dan menjaga evaluasi semantik terisolasi rapi dari orkestrasi mutasi database/mastery engine.
+  - **`src/features/learning/components/nai-tutor-drawer.tsx` (577 baris → 460 baris):** Mengekstraksi komponen visual gelembung percakapan individual, akordeon reasoning thinking model, alert batas kuota/error, dan kursor streaming ke komponen modular `nai-chat-message.tsx`.
+  - **`src/features/concept-graph/components/concept-graph-canvas.tsx` (931 baris → 750 baris):** Memisahkan konstanta palet domain, pemetaan label ringkas, dan koordinat 2D deterministik 47 node ke modul `concept-graph-layout.ts`, serta mengekstraksi kartu detail konsep yang dipilih ke `concept-node-detail-card.tsx`.
 
 ## Target implementasi berikutnya
 
