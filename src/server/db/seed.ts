@@ -8,9 +8,25 @@ import {
 } from "./schema";
 import { getDomains, getModules, getConcepts } from "@/content/loader";
 import { contentVersionOfStep } from "@/content/versioning";
+import { sql } from "drizzle-orm";
 
-export async function seedCuratedContent(db: DbClient): Promise<void> {
+export async function seedCuratedContent(db: DbClient, force = false): Promise<void> {
   const allConcepts = getConcepts();
+
+  // Fast path: if concepts and steps are already seeded and force is false, skip heavy operations
+  if (!force) {
+    try {
+      const [existing] = await db
+        .select({ count: sql<number>`count(*)::int` })
+        .from(concepts);
+
+      if (Number(existing?.count ?? 0) >= allConcepts.length) {
+        return;
+      }
+    } catch {
+      // Table might not exist yet during initial boot, proceed with seed
+    }
+  }
 
   // 1. Seed immutable per-step content versions (deterministic ids derived from content)
   const contentVersionRows = allConcepts.flatMap((concept) =>
@@ -59,7 +75,7 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     await db.insert(modules).values(moduleRows).onConflictDoNothing();
   }
 
-  // 4. Batch Seed Concepts (upsert to reconcile changes)
+  // 4. Batch Seed Concepts in a single upsert query
   const conceptRows = allConcepts.map((concept) => ({
     id: concept.id,
     moduleId: concept.moduleId,
@@ -70,25 +86,23 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     status: "published" as const,
   }));
   if (conceptRows.length > 0) {
-    for (const row of conceptRows) {
-      await db
-        .insert(concepts)
-        .values(row)
-        .onConflictDoUpdate({
-          target: concepts.id,
-          set: {
-            moduleId: row.moduleId,
-            slug: row.slug,
-            title: row.title,
-            summary: row.summary,
-            difficulty: row.difficulty,
-            status: row.status,
-          },
-        });
-    }
+    await db
+      .insert(concepts)
+      .values(conceptRows)
+      .onConflictDoUpdate({
+        target: concepts.id,
+        set: {
+          moduleId: sql`excluded.module_id`,
+          slug: sql`excluded.slug`,
+          title: sql`excluded.title`,
+          summary: sql`excluded.summary`,
+          difficulty: sql`excluded.difficulty`,
+          status: sql`excluded.status`,
+        },
+      });
   }
 
-  // 5. Seed Learning Steps linked to their real content version
+  // 5. Batch Seed Learning Steps in a single upsert query
   const stepRows = allConcepts.flatMap((concept) =>
     concept.steps.map((step) => ({
       id: step.id,
@@ -100,20 +114,18 @@ export async function seedCuratedContent(db: DbClient): Promise<void> {
     }))
   );
   if (stepRows.length > 0) {
-    for (const row of stepRows) {
-      await db
-        .insert(learningSteps)
-        .values(row)
-        .onConflictDoUpdate({
-          target: learningSteps.id,
-          set: {
-            conceptId: row.conceptId,
-            contentVersionId: row.contentVersionId,
-            kind: row.kind,
-            sortOrder: row.sortOrder,
-            config: row.config,
-          },
-        });
-    }
+    await db
+      .insert(learningSteps)
+      .values(stepRows)
+      .onConflictDoUpdate({
+        target: learningSteps.id,
+        set: {
+          conceptId: sql`excluded.concept_id`,
+          contentVersionId: sql`excluded.content_version_id`,
+          kind: sql`excluded.kind`,
+          sortOrder: sql`excluded.sort_order`,
+          config: sql`excluded.config`,
+        },
+      });
   }
 }

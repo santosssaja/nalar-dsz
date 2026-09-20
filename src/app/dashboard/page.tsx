@@ -53,12 +53,18 @@ export default async function DashboardPage() {
   }
 
   // 2. Fetch learning data in parallel
-  const [allProgress, recommendation, dueReviews, mistakes] = await Promise.all([
+  const [allProgress, dueReviews, mistakes] = await Promise.all([
     getAllLearnerProgress(actor),
-    getGlobalLearnerRecommendation(actor),
     getDueReviews(actor),
     getMistakeSummaryForLearner(actor),
   ]);
+
+  // 3. Compute recommendation using pre-fetched data (avoids duplicate round-trips)
+  const recommendation = await getGlobalLearnerRecommendation(actor, {
+    progressList: allProgress,
+    dueReviews,
+    mistakes,
+  });
 
   // 3. Metadata from content registry
   const allModules = getModules();

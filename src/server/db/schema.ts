@@ -8,6 +8,7 @@ import {
   timestamp,
   jsonb,
   uniqueIndex,
+  index,
   primaryKey,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
@@ -206,20 +207,26 @@ export const attempts = pgTable(
 );
 
 // 14. Learning Evidence
-export const learningEvidence = pgTable("learning_evidence", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  attemptId: uuid("attempt_id").references(() => attempts.id, { onDelete: "set null" }),
-  learnerDeviceId: uuid("learner_device_id")
-    .notNull()
-    .references(() => learnerDevices.id, { onDelete: "cascade" }),
-  conceptId: uuid("concept_id")
-    .notNull()
-    .references(() => concepts.id, { onDelete: "restrict" }),
-  dimension: text("dimension").notNull(),
-  score: integer("score").notNull(),
-  source: text("source").notNull(),
-  observedAt: timestamp("observed_at", { withTimezone: true }).defaultNow().notNull(),
-});
+export const learningEvidence = pgTable(
+  "learning_evidence",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    attemptId: uuid("attempt_id").references(() => attempts.id, { onDelete: "set null" }),
+    learnerDeviceId: uuid("learner_device_id")
+      .notNull()
+      .references(() => learnerDevices.id, { onDelete: "cascade" }),
+    conceptId: uuid("concept_id")
+      .notNull()
+      .references(() => concepts.id, { onDelete: "restrict" }),
+    dimension: text("dimension").notNull(),
+    score: integer("score").notNull(),
+    source: text("source").notNull(),
+    observedAt: timestamp("observed_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("learning_evidence_device_concept_idx").on(table.learnerDeviceId, table.conceptId),
+  ]
+);
 
 // 15. Concept Progress (Aggregate Cache)
 export const conceptProgress = pgTable(
@@ -246,33 +253,47 @@ export const conceptProgress = pgTable(
 );
 
 // 16. Mistake Events
-export const mistakeEvents = pgTable("mistake_events", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  attemptId: uuid("attempt_id")
-    .notNull()
-    .references(() => attempts.id, { onDelete: "cascade" }),
-  conceptId: uuid("concept_id")
-    .notNull()
-    .references(() => concepts.id, { onDelete: "restrict" }),
-  misconceptionCode: text("misconception_code").notNull(),
-  confidence: real("confidence").default(1.0).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-});
+export const mistakeEvents = pgTable(
+  "mistake_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    attemptId: uuid("attempt_id")
+      .notNull()
+      .references(() => attempts.id, { onDelete: "cascade" }),
+    conceptId: uuid("concept_id")
+      .notNull()
+      .references(() => concepts.id, { onDelete: "restrict" }),
+    misconceptionCode: text("misconception_code").notNull(),
+    confidence: real("confidence").default(1.0).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("mistake_events_attempt_idx").on(table.attemptId),
+    index("mistake_events_concept_idx").on(table.conceptId),
+  ]
+);
 
 // 17. Review Queue
-export const reviewQueue = pgTable("review_queue", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  learnerDeviceId: uuid("learner_device_id")
-    .notNull()
-    .references(() => learnerDevices.id, { onDelete: "cascade" }),
-  conceptId: uuid("concept_id")
-    .notNull()
-    .references(() => concepts.id, { onDelete: "restrict" }),
-  dueAt: timestamp("due_at", { withTimezone: true }).notNull(),
-  intervalDays: integer("interval_days").default(1).notNull(),
-  state: text("state").default("pending").notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
-});
+export const reviewQueue = pgTable(
+  "review_queue",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    learnerDeviceId: uuid("learner_device_id")
+      .notNull()
+      .references(() => learnerDevices.id, { onDelete: "cascade" }),
+    conceptId: uuid("concept_id")
+      .notNull()
+      .references(() => concepts.id, { onDelete: "restrict" }),
+    dueAt: timestamp("due_at", { withTimezone: true }).notNull(),
+    intervalDays: integer("interval_days").default(1).notNull(),
+    state: text("state").default("pending").notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("review_queue_device_concept_idx").on(table.learnerDeviceId, table.conceptId),
+    index("review_queue_due_idx").on(table.learnerDeviceId, table.state, table.dueAt),
+  ]
+);
 
 // 18. Recommendations
 export const recommendations = pgTable("recommendations", {

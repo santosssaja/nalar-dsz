@@ -130,11 +130,18 @@ export async function getNextRecommendation(
   };
 }
 
+export interface LearnerContextSnapshot {
+  progressList?: Awaited<ReturnType<typeof getAllLearnerProgress>>;
+  dueReviews?: Awaited<ReturnType<typeof getDueReviews>>;
+  mistakes?: Awaited<ReturnType<typeof getMistakeSummaryForLearner>>;
+}
+
 export async function getGlobalLearnerRecommendation(
-  actor: Actor
+  actor: Actor,
+  prefetched?: LearnerContextSnapshot
 ): Promise<RecommendationResult> {
   // 1. Spaced Retrieval Due across any concept
-  const dueReviews = await getDueReviews(actor);
+  const dueReviews = prefetched?.dueReviews ?? (await getDueReviews(actor));
   if (dueReviews.length > 0) {
     const firstDue = dueReviews[0];
     return {
@@ -149,8 +156,8 @@ export async function getGlobalLearnerRecommendation(
   }
 
   // 2. Active Misconception Remedial
-  const mistakes = await getMistakeSummaryForLearner(actor);
-  const progressList = await getAllLearnerProgress(actor);
+  const mistakes = prefetched?.mistakes ?? (await getMistakeSummaryForLearner(actor));
+  const progressList = prefetched?.progressList ?? (await getAllLearnerProgress(actor));
   const progressMap = new Map(progressList.map((p) => [p.conceptSlug, p]));
 
   for (const m of mistakes) {

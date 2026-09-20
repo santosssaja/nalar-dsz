@@ -17,6 +17,7 @@ const globalForDb = globalThis as unknown as {
   cachedDb?: DbClient;
   pgliteInstance?: PGlite;
   initPromise?: Promise<void>;
+  isInitialized?: boolean;
 };
 
 export function getDb(): DbClient {
@@ -28,10 +29,12 @@ export function getDb(): DbClient {
 
   if (databaseUrl && process.env.NODE_ENV !== "test") {
     // Production / Staging with real PostgreSQL
+    // prepare: false is required for connection poolers (e.g. Supabase port 6543 / PgBouncer)
     const client = postgres(databaseUrl, {
       max: 10,
       idle_timeout: 20,
       connect_timeout: 10,
+      prepare: false,
     });
     globalForDb.cachedDb = drizzlePostgres(client, { schema });
     return globalForDb.cachedDb;
@@ -46,6 +49,7 @@ export function getDb(): DbClient {
 }
 
 export async function ensureDbInitialized(): Promise<void> {
+  if (globalForDb.isInitialized) return;
   if (globalForDb.initPromise) return globalForDb.initPromise;
 
   globalForDb.initPromise = (async () => {
@@ -71,6 +75,7 @@ export async function ensureDbInitialized(): Promise<void> {
       try {
         const { seedCuratedContent } = await import("./seed");
         await seedCuratedContent(database);
+        globalForDb.isInitialized = true;
       } catch (err) {
         console.warn("Curated content seed notice:", err);
       }
