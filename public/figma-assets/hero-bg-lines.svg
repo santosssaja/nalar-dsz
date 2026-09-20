@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1212" height="535" viewBox="0 0 1212 535" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 515">
+<g id="Sketch-annotation-element-stroke-abstract-highlight-bling-line-1">
+<path id="Vector" d="M994.784 36.2606C988.327 45.8529 983.004 56.0436 977 65.8887" stroke="#FBCF9A" stroke-width="5.91667" stroke-miterlimit="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M1027.07 35.4375C1012 46.8281 997.949 60.0372 984.797 73.5463" stroke="#FBCF9A" stroke-width="5.91667" stroke-miterlimit="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M1031.84 68C1019.04 70.0181 1002.03 78.3988 989.658 83.5911" stroke="#FBCF9A" stroke-width="5.91667" stroke-miterlimit="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<circle id="Ellipse 156" cx="1201" cy="87" r="11" fill="url(#paint0_linear_16_731)"/>
+<circle id="Ellipse 158" cx="307" cy="524" r="11" fill="#20B486" fill-opacity="0.6"/>
+<circle id="Ellipse 159" cx="5" cy="5" r="5" transform="matrix(-1 0 0 1 10 0)" fill="#20B486"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_16_731" x1="1201" y1="76" x2="1206.5" y2="113" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FED19C"/>
+<stop offset="1" stop-color="#DEB483"/>
+</linearGradient>
+</defs>
+</svg>
