@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { GraduationCap, X, Bot, CheckCircle, AlertCircle, Sparkles, Loader2 } from "lucide-react";
+import { GraduationCap, X, CheckCircle, AlertCircle, Sparkles, Loader2 } from "lucide-react";
+import Image from "next/image";
 import { ConceptContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { AiTeachEvaluation, AiTeachChunk } from "@/server/ai/types";
@@ -272,7 +273,13 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
         {/* Nai's Student Prompt */}
         <div className="p-4 rounded-xl bg-accent-muted/20 border border-accent/30 space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold text-accent">
-            <Bot className="w-4 h-4" />
+            <Image
+              src="/figma-assets/logo-nalar.webp"
+              alt="Nai"
+              width={18}
+              height={18}
+              className="w-4.5 h-4.5 object-contain shrink-0"
+            />
             <span>Nai bertanya padamu:</span>
           </div>
           <p className="text-sm text-text font-medium leading-relaxed italic">
@@ -357,8 +364,14 @@ export function TeachModeModal({ concept, isOpen, onClose }: TeachModeModalProps
             {(streamingNaiResponse || (evaluation && evaluation.naiResponse)) && (
               <div className="text-xs text-text leading-relaxed bg-surface/80 p-3.5 rounded-lg border border-border-subtle space-y-1.5 animate-in fade-in">
                 <div className="font-semibold text-accent flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <Bot className="w-4 h-4" />
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/figma-assets/logo-nalar.webp"
+                      alt="Nai"
+                      width={18}
+                      height={18}
+                      className="w-4.5 h-4.5 object-contain shrink-0"
+                    />
                     <span>Tanggapan Murid Nai:</span>
                   </div>
                   {isStreaming && (

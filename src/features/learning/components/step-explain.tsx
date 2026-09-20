@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle, Lightbulb, Bot, Circle } from "lucide-react";
+import { CheckCircle, Lightbulb, Circle } from "lucide-react";
+import Image from "next/image";
 import { StepContent } from "@/content/schema";
 import { MathRenderer } from "@/components/ui/katex-math";
 import { ExplainEvaluationOutput } from "@/server/services/explain-evaluator";
@@ -213,7 +214,13 @@ export function StepExplain({
             {/* Nai Guidance Box */}
             <div className="p-3 rounded-lg bg-surface/80 border border-border-subtle text-xs leading-relaxed space-y-1">
               <span className="font-semibold text-accent flex items-center gap-1.5">
-                <Bot className="w-4 h-4 text-accent" />
+                <Image
+                  src="/figma-assets/logo-nalar.webp"
+                  alt="Nai"
+                  width={18}
+                  height={18}
+                  className="w-4 h-4 object-contain shrink-0"
+                />
                 <span>Ulasan Nai:</span>
               </span>
               <p className="text-text">{evaluation.naiGuidance}</p>

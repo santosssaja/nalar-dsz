@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Bot, X, Lightbulb, HelpCircle, BookOpen, Send, Brain, ChevronDown, ChevronUp } from "lucide-react";
+import { X, Lightbulb, HelpCircle, BookOpen, Send, Brain, ChevronDown, ChevronUp } from "lucide-react";
+import Image from "next/image";
 import { MathRenderer } from "@/components/ui/katex-math";
 
 interface NaiTutorDrawerProps {
@@ -233,9 +234,15 @@ export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawe
         type="button"
         onClick={() => setIsOpen(true)}
         aria-label="Buka AI Tutor Nai"
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-accent text-surface-raised font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition-all border border-accent-subtle"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-accent text-surface-raised font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition-all border border-accent-subtle"
       >
-        <Bot className="w-5 h-5" />
+        <Image
+          src="/figma-assets/logo-nalar.webp"
+          alt="Avatar Nai"
+          width={22}
+          height={22}
+          className="w-5 h-5 object-contain shrink-0"
+        />
         <span>Tanya Nai</span>
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
       </button>
@@ -262,8 +269,14 @@ export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawe
             {/* Header */}
             <div className="p-4 border-b border-border bg-surface flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="w-9 h-9 rounded-2xl bg-accent/15 flex items-center justify-center text-accent shadow-xs">
-                  <Bot className="w-5 h-5" />
+                <span className="w-9 h-9 rounded-full bg-accent/15 border border-accent/30 flex items-center justify-center p-1 overflow-hidden shrink-0 shadow-xs">
+                  <Image
+                    src="/figma-assets/logo-nalar.webp"
+                    alt="Nai"
+                    width={28}
+                    height={28}
+                    className="w-full h-full object-contain"
+                  />
                 </span>
                 <div>
                   <h3 className="font-bold text-sm text-text flex items-center gap-1.5">
@@ -369,7 +382,13 @@ export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawe
                     ) : (
                       msg.sender === "nai" && !msg.isThinking && (
                         <div className="flex items-center gap-2 text-xs text-text-muted">
-                          <Bot className="w-3.5 h-3.5 text-accent animate-pulse" />
+                          <Image
+                            src="/figma-assets/logo-nalar.webp"
+                            alt=""
+                            width={16}
+                            height={16}
+                            className="w-3.5 h-3.5 object-contain animate-pulse shrink-0"
+                          />
                           <span>Menyiapkan petunjuk pemantik...</span>
                         </div>
                       )
@@ -380,7 +399,13 @@ export function NaiTutorDrawer({ conceptSlug, stepId, stepTitle }: NaiTutorDrawe
 
               {isLoading && messages[messages.length - 1]?.sender === "user" && (
                 <div className="flex items-center gap-2 p-3 rounded-2xl bg-surface border border-border text-xs text-text-muted max-w-[75%] shadow-2xs">
-                  <Bot className="w-4 h-4 text-accent animate-pulse" />
+                  <Image
+                    src="/figma-assets/logo-nalar.webp"
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="w-4 h-4 object-contain animate-pulse shrink-0"
+                  />
                   <span>Nai sedang memikirkan petunjuk pemantik...</span>
                 </div>
               )}
